@@ -1,13 +1,7 @@
 import requests
-
-EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
-IMAGE_CAPTCHA_URL_REGEX = r"http:\/\/"+EMPIRE_MARKET_URL.replace(".", "\.")+"\/public\/captchaimg\/[0-9]{10}\.[0-9]{3}\.jpg"
-TOR_PORT = 9050
-
-PROXIES = {
-    'http': "socks5h://localhost:{}".format(TOR_PORT),
-    'https': "socks5h://localhost:{}".format(TOR_PORT)
-}
+from src.definitions import PROXIES, EMPIRE_MARKET_URL
+from lxml import html
+from bs4 import BeautifulSoup
 
 def login_and_set_cookie():
     return {
@@ -31,7 +25,8 @@ headers = {
 
 
 for pagenr in range(1, 2249):
-    url = "http://empiremktxgjovhm.onion/category/categories/2/" + str((pagenr-1)*15)
-    #url = "https://vg.no"
-    res = requests.get(url, proxies=PROXIES, headers=headers).content.decode('UTF-8')
-    print(res)
+    url = "http://"+EMPIRE_MARKET_URL+"/category/categories/2/" + str((pagenr-1)*15)
+    res = requests.get(url, proxies=PROXIES, headers=headers).content.decode('utf-8')
+    soup = BeautifulSoup(res)
+    td = soup.body.padp
+    pass
