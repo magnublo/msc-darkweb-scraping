@@ -1,0 +1,117 @@
+import abc
+import time
+from abc import abstractstaticmethod, abstractmethod
+
+import requests
+from bs4 import BeautifulSoup
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE
+engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
+Session = sessionmaker(bind=engine)
+Base = declarative_base()
+db_session = Session()
+
+from src.models.scraping_session import ScrapingSession
+
+
+class BaseFunctions(metaclass=abc.ABCMeta):
+
+    @abstractstaticmethod
+    def _accepts_currencies(soup_html):
+
+        soup_html_as_string = str(soup_html)
+
+        accepts_BTC = soup_html_as_string.find('btc_small.png') >= 0
+        accepts_LTC = soup_html_as_string.find('ltc_small.png') >= 0
+        accepts_XMR = soup_html_as_string.find('xmr_small.png') >= 0
+        return accepts_BTC, accepts_LTC, accepts_XMR
+
+    @abstractstaticmethod
+    def _get_title(soup_html):
+        a_tag = str(soup_html.findAll('a')[0])[1:]
+        return a_tag[a_tag.find(">")+1: a_tag.find("<")]
+
+    @abstractstaticmethod
+    def _get_description(soup_html):
+        descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent'})]
+        assert len(descriptions) == 1
+        return descriptions[0].text
+
+
+    @abstractstaticmethod
+    def _get_product_page_urls(soup_html):
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
+    def _get_seller_nr_sold_and_date(soup_html):
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
+    def _get_fiat_currency_and_price(soup_html):
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
+    def _get_origin_country_and_destinations(soup_html):
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
+    def _get_cryptocurrency_rates(soup_html):
+        raise NotImplementedError('')
+
+
+class BaseScraper(metaclass=abc.ABCMeta):
+
+    def __init__(self):
+        self.cookies = self._login_and_set_cookie()
+        self.headers = self._get_headers()
+        self.market_id = self._get_market_ID()
+        self.start_time = time.time()
+
+        self.session = ScrapingSession(
+            time_started=self.start_time,
+            market=self.market_id
+        )
+
+        db_session.add(self.session)
+        db_session.flush()
+
+        self.session_id = self.session.id
+
+    def _get_page_as_soup_html(self, url, file, debug=DEBUG_MODE):
+        working_dir = self._get_working_dir()
+
+        if debug:
+            saved_html = open(working_dir + file, "r")
+            soup_html = BeautifulSoup(saved_html)
+            saved_html.close()
+            return soup_html
+        else:
+            html = requests.get(url, proxies=PROXIES, headers=self.headers).text
+            return BeautifulSoup(html)
+
+    @abstractmethod
+    def scrape(self):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _login_and_set_cookie(self):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_market_URL(self):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_market_ID(self):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_working_dir(self):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_headers(self):
+        pass
