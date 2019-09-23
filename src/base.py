@@ -20,45 +20,35 @@ from src.models.scraping_session import ScrapingSession
 class BaseFunctions(metaclass=abc.ABCMeta):
 
     @abstractstaticmethod
-    def _accepts_currencies(soup_html):
-
-        soup_html_as_string = str(soup_html)
-
-        accepts_BTC = soup_html_as_string.find('btc_small.png') >= 0
-        accepts_LTC = soup_html_as_string.find('ltc_small.png') >= 0
-        accepts_XMR = soup_html_as_string.find('xmr_small.png') >= 0
-        return accepts_BTC, accepts_LTC, accepts_XMR
-
-    @abstractstaticmethod
-    def _get_title(soup_html):
-        a_tag = str(soup_html.findAll('a')[0])[1:]
-        return a_tag[a_tag.find(">")+1: a_tag.find("<")]
-
-    @abstractstaticmethod
-    def _get_description(soup_html):
-        descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent'})]
-        assert len(descriptions) == 1
-        return descriptions[0].text
-
-
-    @abstractstaticmethod
-    def _get_product_page_urls(soup_html):
+    def accepts_currencies(soup_html):
         raise NotImplementedError('')
 
     @abstractstaticmethod
-    def _get_seller_nr_sold_and_date(soup_html):
+    def get_title(soup_html):
         raise NotImplementedError('')
 
     @abstractstaticmethod
-    def _get_fiat_currency_and_price(soup_html):
+    def get_description(soup_html):
         raise NotImplementedError('')
 
     @abstractstaticmethod
-    def _get_origin_country_and_destinations(soup_html):
+    def get_product_page_urls(soup_html):
         raise NotImplementedError('')
 
     @abstractstaticmethod
-    def _get_cryptocurrency_rates(soup_html):
+    def get_seller_nr_sold_and_date(soup_html):
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
+    def get_fiat_currency_and_price(soup_html):
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
+    def get_origin_country_and_destinations(soup_html):
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
+    def get_cryptocurrency_rates(soup_html):
         raise NotImplementedError('')
 
 
