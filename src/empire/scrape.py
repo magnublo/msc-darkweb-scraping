@@ -27,7 +27,7 @@ class EmpireScrapingSession(BaseScraper):
     def _login_and_set_cookie(self):
         return {
             'ab': "1cc735432450e28fa3333f2904cd5ae3",
-            'shop': "5rjg8bg1qpbkjmm3ma8vhgod83jj2psj"
+            'shop': "0ql9gcn7dk6ga48tg4dhqtbpip22shni"
         }
 
     def _get_market_URL(self):
@@ -60,6 +60,8 @@ class EmpireScrapingSession(BaseScraper):
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
                 for product_page_url in product_page_urls:
+                    print(time.time())
+                    print("Trying to fetch URL: " + product_page_url)
                     soup_html = self._get_page_as_soup_html(product_page_url, 'saved_empire_html', DEBUG_MODE)
 
                     session_id = self.session_id
