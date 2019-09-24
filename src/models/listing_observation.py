@@ -7,6 +7,7 @@ import src.models.listing_text as listing_text
 import src.models.scraping_session as scraping_session
 from src.base import Base
 
+
 TABLE_NAME = 'listing_observation'
 PRIMARY_KEY = 'id'
 TABLE_NAME_AND_PRIMARY_KEY = TABLE_NAME + "." + PRIMARY_KEY
@@ -22,7 +23,6 @@ class ListingObservation(Base):
     listing_text_id = Column(String, ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY))
 
     title = Column(String)
-    category = Column(String)
 
     btc = Column(Boolean)
     ltc = Column(Boolean)

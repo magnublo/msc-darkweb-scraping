@@ -51,6 +51,10 @@ class BaseFunctions(metaclass=abc.ABCMeta):
     def get_cryptocurrency_rates(soup_html):
         raise NotImplementedError('')
 
+    @abstractstaticmethod
+    def get_categories_and_ids(soup_html):
+        raise NotImplementedError('')
+
 
 class BaseScraper(metaclass=abc.ABCMeta):
 
