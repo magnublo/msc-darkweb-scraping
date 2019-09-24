@@ -14,8 +14,9 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_title(soup_html):
-        a_tag = str(soup_html.findAll('a')[0])[1:]
-        return a_tag[a_tag.find(">") + 1: a_tag.find("<")]
+        a_tags = soup_html.findAll('title')
+        assert len(a_tags) == 1
+        return a_tags[0].text
 
     @staticmethod
     def get_description(soup_html):
@@ -124,3 +125,26 @@ class EmpireScrapingFunctions(BaseFunctions):
                         return vendor_level, trust_level
 
         assert False
+
+    @staticmethod
+    def get_categories_and_ids(soup_html):
+        divs = [div for div in soup_html.findAll('div', attrs={'class': 'sub_head_inner_header'})]
+
+        assert len(divs) == 1
+
+        a_tags = [a_tag for a_tag in divs[0].findAll('a', href=True)]
+
+        categories = []
+        category_ids = []
+
+        for a_tag in a_tags:
+            category = a_tag.text
+            url = str(a_tag['href'])
+            url_fragments = url.split("/")
+            category_id = url_fragments[-2]
+            categories.append(category)
+            category_ids.append(category_id)
+
+        assert len(category_ids) == len(categories)
+
+        return categories, category_ids

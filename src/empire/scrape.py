@@ -8,7 +8,9 @@ from src.base import Base, engine, db_session
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
+from src.models.listing_category import ListingCategory
 from src.models.listing_observation import ListingObservation
+from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
 
@@ -68,12 +70,32 @@ class EmpireScrapingSession(BaseScraper):
                     listing_text = scrapingFunctions.get_description(soup_html)
                     listing_text_id = hashlib.md5(listing_text.encode('utf-8')).hexdigest()
                     title = scrapingFunctions.get_title(soup_html)
+                    categories, website_category_ids = scrapingFunctions.get_categories_and_ids(soup_html)
                     accepts_BTC, accepts_LTC, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
                     seller, nr_sold, nr_sold_since_date = scrapingFunctions.get_seller_nr_sold_and_date(soup_html)
                     fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
                     origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
-
                     vendor_level, trust_level = scrapingFunctions.get_vendor_and_trust_level(soup_html)
+
+
+                    db_category_ids = []
+
+                    for i in range(0, len(categories)):
+                        category = db_session.query(ListingCategory).filter_by(
+                            website_id=website_category_ids[i],
+                            name=categories[i],
+                            market=self.market_id).first()
+
+                        if not category:
+                            category = ListingCategory(
+                                website_id=website_category_ids[i],
+                                name=categories[i],
+                                market=self.market_id
+                            )
+                            db_session.add(category)
+                            db_session.flush()
+
+                        db_category_ids.append(category.id)
 
                     db_session.merge(ListingText(
                         id=listing_text_id,
@@ -105,7 +127,8 @@ class EmpireScrapingSession(BaseScraper):
                         price=price,
                         origin_country=origin_country,
                         vendor_level=vendor_level,
-                        trust_level=trust_level)
+                        trust_level=trust_level
+                    )
 
                     db_session.add(listing_observation)
 
@@ -122,6 +145,13 @@ class EmpireScrapingSession(BaseScraper):
                             listing_observation_id=listing_observation.id,
                             country_id=destination_country
                         ))
+
+                    for db_category_id in db_category_ids:
+                        db_session.add(ListingObservationCategory(
+                            listing_observation_id=listing_observation.id,
+                            category_id=db_category_id
+                        ))
+
 
                     db_session.commit()
 
