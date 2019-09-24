@@ -1,5 +1,6 @@
 import hashlib
 import time
+from http.client import RemoteDisconnected
 
 from urllib3.exceptions import ProtocolError, NewConnectionError
 
@@ -155,7 +156,9 @@ class EmpireScrapingSession(BaseScraper):
 
                     db_session.commit()
 
-            except (ProtocolError, ConnectionError, NewConnectionError) as e:
+            except (KeyboardInterrupt, SystemExit):
+                raise
+            except BaseException as e:
                 print(e)
                 print("Retrying and rolling back page index by 1.")
                 pagenr -= 1
