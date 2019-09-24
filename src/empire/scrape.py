@@ -155,8 +155,9 @@ class EmpireScrapingSession(BaseScraper):
 
                     db_session.commit()
 
-            except ProtocolError:
-                print(ProtocolError)
+            except (ProtocolError, ConnectionError) as e:
+                print(e)
+                print("Retrying and rolling back page index by 1.")
                 pagenr -= 1
 
         self.session.time_finished = time.time()
