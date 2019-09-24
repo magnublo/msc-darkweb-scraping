@@ -1,7 +1,7 @@
 import hashlib
 import time
 
-from urllib3.exceptions import ProtocolError
+from urllib3.exceptions import ProtocolError, NewConnectionError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR
 from src.base import Base, engine, db_session
@@ -155,7 +155,7 @@ class EmpireScrapingSession(BaseScraper):
 
                     db_session.commit()
 
-            except (ProtocolError, ConnectionError) as e:
+            except (ProtocolError, ConnectionError, NewConnectionError) as e:
                 print(e)
                 print("Retrying and rolling back page index by 1.")
                 pagenr -= 1
