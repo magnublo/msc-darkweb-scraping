@@ -55,6 +55,7 @@ class EmpireScrapingSession(BaseScraper):
     def scrape(self):
 
         for pagenr in range(1, NR_OF_PAGES):
+            k = 0
 
             try:
                 search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
@@ -62,7 +63,8 @@ class EmpireScrapingSession(BaseScraper):
                 product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
-                for product_page_url in product_page_urls:
+                for k in range(0, len(product_page_urls)):
+                    product_page_url = product_page_urls[k]
                     print(time.time())
                     print("Trying to fetch URL: " + product_page_url)
                     soup_html = self._get_page_as_soup_html(product_page_url, 'saved_empire_html', DEBUG_MODE)
@@ -159,10 +161,16 @@ class EmpireScrapingSession(BaseScraper):
             except (KeyboardInterrupt, SystemExit):
                 raise
             except BaseException as e:
-                print(str(e))
-                print("Retrying and rolling back page index by 1.")
-                print(pagenr)
-                pagenr -= 1
+                print(e)
+                print("Error on pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
+                print("Retrying ...")
+                if k == 0:
+                    pagenr -= 1
+                    k = 14
+                    print("Rolled back to pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
+                else:
+                    k-=1
+                    print("Rolled back to pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
 
         self.session.time_finished = time.time()
         db_session.commit()
