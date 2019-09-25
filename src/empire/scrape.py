@@ -30,7 +30,7 @@ class EmpireScrapingSession(BaseScraper):
     def _login_and_set_cookie(self):
         return {
             'ab': "1cc735432450e28fa3333f2904cd5ae3",
-            'shop': "0ql9gcn7dk6ga48tg4dhqtbpip22shni"
+            'shop': "r2rk1vred4vh1a2rk38u150jv88r2a90"
         }
 
     def _get_market_URL(self):
@@ -159,8 +159,9 @@ class EmpireScrapingSession(BaseScraper):
             except (KeyboardInterrupt, SystemExit):
                 raise
             except BaseException as e:
-                print(e)
+                print(str(e))
                 print("Retrying and rolling back page index by 1.")
+                print(pagenr)
                 pagenr -= 1
 
         self.session.time_finished = time.time()
