@@ -55,9 +55,9 @@ class EmpireScrapingSession(BaseScraper):
     def scrape(self):
 
         for pagenr in range(1, NR_OF_PAGES):
-            k = 0
-
+            
             try:
+                k = 0
                 search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
                 soup_html = self._get_page_as_soup_html(search_result_url, file="saved_empire_search_result_html")
                 product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
