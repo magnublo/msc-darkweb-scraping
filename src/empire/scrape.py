@@ -177,6 +177,7 @@ class EmpireScrapingSession(BaseScraper):
 
                     db_session.commit()
                     k+=1
+                    self.logged_out_exceptions = 0
 
                 pagenr += 1
 
