@@ -27,8 +27,6 @@ class EmpireScrapingSession(BaseScraper):
     def _is_logged_out(response):
         for history_response in response.history:
             if history_response.is_redirect:
-                somestr = history_response.raw.headers._container['location'][1]
-                pass
                 if history_response.raw.headers._container['location'][1] == EMPIRE_MARKET_LOGIN_URL:
                     return True
 
