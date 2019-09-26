@@ -2,10 +2,11 @@ import hashlib
 import time
 from http.client import RemoteDisconnected
 
+import requests
 from urllib3.exceptions import ProtocolError, NewConnectionError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
-    EMPIRE_MARKET_LOGIN_URL
+    EMPIRE_MARKET_LOGIN_URL, PROXIES
 from src.base import Base, engine, db_session, LoggedOutException
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
@@ -183,7 +184,7 @@ class EmpireScrapingSession(BaseScraper):
                 self.session.time_finished = time.time()
                 db_session.commit()
                 try:
-                    print(self._get_page_as_soup_html(EMPIRE_BASE_CRAWLING_URL, "saved_empire_html", False).text)
+                    print(requests.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text)
                 except:
                     pass
                 raise
