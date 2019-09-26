@@ -4,8 +4,9 @@ from http.client import RemoteDisconnected
 
 from urllib3.exceptions import ProtocolError, NewConnectionError
 
-from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR
-from src.base import Base, engine, db_session
+from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
+    EMPIRE_MARKET_LOGIN_URL
+from src.base import Base, engine, db_session, LoggedOutException
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
@@ -19,7 +20,22 @@ NR_OF_PAGES = 2249
 
 Base.metadata.create_all(engine)
 
+
 class EmpireScrapingSession(BaseScraper):
+
+    @staticmethod
+    def _is_logged_out(response):
+        for history_response in response.history:
+            if history_response.is_redirect:
+                somestr = history_response.raw.headers._container['location'][1]
+                pass
+                if history_response.raw.headers._container['location'][1] == EMPIRE_MARKET_LOGIN_URL:
+                    return True
+
+        return False
+
+    def _handle_logged_out_session(self):
+        raise LoggedOutException()
 
     def __init__(self):
         super().__init__()
@@ -30,7 +46,7 @@ class EmpireScrapingSession(BaseScraper):
     def _login_and_set_cookie(self):
         return {
             'ab': "1cc735432450e28fa3333f2904cd5ae3",
-            'shop': "r2rk1vred4vh1a2rk38u150jv88r2a90"
+            'shop': ""
         }
 
     def _get_market_URL(self):
@@ -111,8 +127,6 @@ class EmpireScrapingSession(BaseScraper):
                         id=origin_country
                     ))
 
-                    db_session.add(self.session)
-
                     db_session.flush()
 
                     listing_observation = ListingObservation(
@@ -159,11 +173,11 @@ class EmpireScrapingSession(BaseScraper):
 
 
                     db_session.commit()
-
-                    pagenr+=1
                     k+=1
 
-            except (KeyboardInterrupt, SystemExit):
+                pagenr += 1
+
+            except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
                 raise
             except BaseException as e:
                 print(e)

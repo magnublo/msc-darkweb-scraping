@@ -17,6 +17,12 @@ db_session = Session()
 from src.models.scraping_session import ScrapingSession
 
 
+class LoggedOutException(Exception):
+
+    def __init__(self):
+        super().__init__("Cookie appears to have been invalidated by remote website.")
+
+
 class BaseFunctions(metaclass=abc.ABCMeta):
 
     @abstractstaticmethod
@@ -83,8 +89,11 @@ class BaseScraper(metaclass=abc.ABCMeta):
             saved_html.close()
             return soup_html
         else:
-            html = requests.get(url, proxies=PROXIES, headers=self.headers).text
-            return BeautifulSoup(html)
+            response = requests.get(url, proxies=PROXIES, headers=self.headers)
+            if self._is_logged_out(response):
+                self._handle_logged_out_session()
+                response = requests.get(url, proxies=PROXIES, headers=self.headers)
+            return BeautifulSoup(response.text)
 
     @abstractmethod
     def scrape(self):
@@ -109,3 +118,11 @@ class BaseScraper(metaclass=abc.ABCMeta):
     @abstractmethod
     def _get_headers(self):
         pass
+
+    @abstractstaticmethod
+    def _is_logged_out(response):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _handle_logged_out_session(self):
+        raise NotImplementedError('')
