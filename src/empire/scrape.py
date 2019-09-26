@@ -183,10 +183,13 @@ class EmpireScrapingSession(BaseScraper):
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
                 self.session.time_finished = time.time()
                 db_session.commit()
-                try:
-                    print(requests.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text)
-                except:
-                    pass
+                debug_html = None
+                while debug_html is None:
+                    try:
+                        debug_html = requests.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
+                    except:
+                        pass
+                print(debug_html)
                 raise
             except BaseException as e:
                 print(e)
