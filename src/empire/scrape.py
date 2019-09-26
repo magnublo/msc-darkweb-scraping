@@ -183,8 +183,8 @@ class EmpireScrapingSession(BaseScraper):
                 self.session.time_finished = time.time()
                 db_session.commit()
                 try:
-                    print(soup_html.text)
-                except NameError:
+                    print(self._get_page_as_soup_html(EMPIRE_BASE_CRAWLING_URL, "saved_empire_html", False).text)
+                except:
                     pass
                 raise
             except BaseException as e:
