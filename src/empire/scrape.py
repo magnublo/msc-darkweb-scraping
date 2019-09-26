@@ -44,7 +44,7 @@ class EmpireScrapingSession(BaseScraper):
     def _login_and_set_cookie(self):
         return {
             'ab': "1cc735432450e28fa3333f2904cd5ae3",
-            'shop': ""
+            'shop': "f62bggr5t6eucvdfvvfqvkv6lbs7pfeg"
         }
 
     def _get_market_URL(self):
@@ -178,6 +178,10 @@ class EmpireScrapingSession(BaseScraper):
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
                 self.session.time_finished = time.time()
                 db_session.commit()
+                try:
+                    print(soup_html.text)
+                except NameError:
+                    pass
                 raise
             except BaseException as e:
                 print(e)
