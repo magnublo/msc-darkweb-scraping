@@ -178,6 +178,8 @@ class EmpireScrapingSession(BaseScraper):
                 pagenr += 1
 
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
+                self.session.time_finished = time.time()
+                db_session.commit()
                 raise
             except BaseException as e:
                 print(e)
