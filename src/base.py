@@ -92,7 +92,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             response = requests.get(url, proxies=PROXIES, headers=self.headers)
             if self._is_logged_out(response):
                 self._handle_logged_out_session()
-                response = requests.get(url, proxies=PROXIES, headers=self.headers)
+                return self._get_page_as_soup_html(url, file, debug)
             return BeautifulSoup(response.text)
 
     @abstractmethod

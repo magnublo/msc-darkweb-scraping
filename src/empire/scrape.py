@@ -33,10 +33,14 @@ class EmpireScrapingSession(BaseScraper):
         return False
 
     def _handle_logged_out_session(self):
-        raise LoggedOutException()
+        if self.logged_out_exceptions >= 5:
+            raise LoggedOutException()
+        else:
+            self.logged_out_exceptions += 1
 
     def __init__(self):
         super().__init__()
+        self.logged_out_exceptions = 0
 
     def _get_working_dir(self):
         return EMPIRE_DIR
