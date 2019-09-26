@@ -184,11 +184,12 @@ class EmpireScrapingSession(BaseScraper):
                 self.session.time_finished = time.time()
                 db_session.commit()
                 debug_html = None
-                while debug_html is None:
+                tries = 0
+                while debug_html is None and tries < 10:
                     try:
                         debug_html = requests.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
                     except:
-                        pass
+                        tries += 1
                 print(debug_html)
                 raise
             except BaseException as e:
