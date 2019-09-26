@@ -188,6 +188,7 @@ class EmpireScrapingSession(BaseScraper):
                 while debug_html is None and tries < 10:
                     try:
                         debug_html = requests.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
+                        debug_html = "".join(debug_html.split())
                     except:
                         tries += 1
                 print(debug_html)
