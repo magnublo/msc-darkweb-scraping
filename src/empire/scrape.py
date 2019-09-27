@@ -41,8 +41,10 @@ class EmpireScrapingSession(BaseScraper):
         else:
             self.logged_out_exceptions += 1
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, session_id=None, initial_pagenr=0, initial_listingnr=0):
+        super().__init__(session_id=session_id)
+        self.initial_pagenr = initial_pagenr
+        self.initial_listingnr = initial_listingnr
         self.logged_out_exceptions = 0
 
     def _get_working_dir(self):
@@ -75,8 +77,8 @@ class EmpireScrapingSession(BaseScraper):
 
     def scrape(self):
 
-        pagenr = 1
-        k = 0
+        pagenr = self.initial_pagenr
+        k = self.initial_listingnr
 
         while pagenr < NR_OF_PAGES:
 

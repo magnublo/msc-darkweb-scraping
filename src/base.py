@@ -64,22 +64,29 @@ class BaseFunctions(metaclass=abc.ABCMeta):
 
 class BaseScraper(metaclass=abc.ABCMeta):
 
-    def __init__(self):
+    def __init__(self, session_id=None):
         self.cookies = self._login_and_set_cookie()
         self.headers = self._get_headers()
         self.market_id = self._get_market_ID()
         self.start_time = time.time()
 
-        self.session = ScrapingSession(
+        if session_id:
+            self.session = db_session.query(ScrapingSession).filter_by(
+                            id=session_id).first()
+        else:
+            self.session = self._initiate_session()
+
+        self.session_id = self.session.id
+        self.duplicates_this_session = 0
+
+    def _initiate_session(self):
+        scraping_session = ScrapingSession(
             time_started=self.start_time,
             market=self.market_id
         )
-
-        db_session.add(self.session)
+        db_session.add(scraping_session)
         db_session.flush()
-        self.duplicates_this_session = 0
-
-        self.session_id = self.session.id
+        return scraping_session
 
     def _get_page_as_soup_html(self, url, file, debug=DEBUG_MODE):
         working_dir = self._get_working_dir()
@@ -127,3 +134,5 @@ class BaseScraper(metaclass=abc.ABCMeta):
     @abstractmethod
     def _handle_logged_out_session(self):
         raise NotImplementedError('')
+
+
