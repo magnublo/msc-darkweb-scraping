@@ -42,7 +42,7 @@ class BaseFunctions(metaclass=abc.ABCMeta):
         raise NotImplementedError('')
 
     @abstractstaticmethod
-    def get_seller_nr_sold_and_date(soup_html):
+    def get_nr_sold_since_date(soup_html):
         raise NotImplementedError('')
 
     @abstractstaticmethod

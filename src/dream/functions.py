@@ -14,7 +14,7 @@ class ScrapingFunctions(BaseFunctions):
     def get_product_page_urls(soup_html):
         pass
 
-    def get_seller_nr_sold_and_date(soup_html):
+    def get_nr_sold_since_date(soup_html):
         pass
 
     def get_fiat_currency_and_price(soup_html):

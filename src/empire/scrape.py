@@ -1,5 +1,7 @@
 import hashlib
+import sys
 import time
+import traceback
 from http.client import RemoteDisconnected
 
 import requests
@@ -82,26 +84,42 @@ class EmpireScrapingSession(BaseScraper):
                 search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
                 soup_html = self._get_page_as_soup_html(search_result_url, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
+                titles, sellers = scrapingFunctions.get_titles_and_sellers(soup_html)
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
                 while k < len(product_page_urls):
+                    title = titles[k]
+                    seller = sellers[k]
+
+                    existing_listing_observation = db_session.query(ListingObservation).filter_by(
+                        title=title,
+                        seller=seller,
+                        session_id=self.session_id
+                    )
+
+                    if existing_listing_observation:
+                        print("Found duplicate listing stored, skipping...")
+                        k += 1
+                        continue
+
+
                     product_page_url = product_page_urls[k]
-                    is_sticky = urls_is_sticky[k]
                     print(time.time())
                     print("Trying to fetch URL: " + product_page_url)
+                    print("On pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
                     soup_html = self._get_page_as_soup_html(product_page_url, 'saved_empire_html', DEBUG_MODE)
 
                     session_id = self.session_id
                     listing_text = scrapingFunctions.get_description(soup_html)
                     listing_text_id = hashlib.md5(listing_text.encode('utf-8')).hexdigest()
-                    title = scrapingFunctions.get_title(soup_html)
                     categories, website_category_ids = scrapingFunctions.get_categories_and_ids(soup_html)
                     accepts_BTC, accepts_LTC, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
-                    seller, nr_sold, nr_sold_since_date = scrapingFunctions.get_seller_nr_sold_and_date(soup_html)
+                    nr_sold, nr_sold_since_date = scrapingFunctions.get_nr_sold_since_date(soup_html)
                     fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
                     origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
                     vendor_level, trust_level = scrapingFunctions.get_vendor_and_trust_level(soup_html)
 
+                    is_sticky = urls_is_sticky[k]
 
                     db_category_ids = []
 
@@ -178,7 +196,7 @@ class EmpireScrapingSession(BaseScraper):
 
 
                     db_session.commit()
-                    k = (k+1) % 15
+                    k += 1
                     self.logged_out_exceptions = 0
 
                 pagenr += 1
@@ -197,7 +215,7 @@ class EmpireScrapingSession(BaseScraper):
                 print(debug_html)
                 raise
             except BaseException as e:
-                print(e)
+                traceback.print_exc()
                 print("Error on pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
                 print("Retrying ...")
                 print("Rolled back to pagenr " + str(pagenr) + " and item nr " + str(k) + ".")

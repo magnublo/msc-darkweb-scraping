@@ -51,19 +51,16 @@ class EmpireScrapingFunctions(BaseFunctions):
         return product_page_urls, urls_is_sticky
 
     @staticmethod
-    def get_seller_nr_sold_and_date(soup_html):
+    def get_nr_sold_since_date(soup_html):
         list_descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'listDes'})]
         assert len(list_descriptions) == 1
         list_description = list_descriptions[0]
-        hrefs = [href for href in list_description.findAll('a', href=True)]
-        assert len(hrefs) == 1
-        seller = hrefs[0].text
 
         spans = [span for span in list_description.findAll('span')]
         span = spans[0]
         nr_sold, date = span.text.split(" sold since ")
 
-        return seller, nr_sold, date
+        return nr_sold, date
 
     @staticmethod
     def get_fiat_currency_and_price(soup_html):
@@ -158,3 +155,26 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert len(category_ids) == len(categories)
 
         return categories, category_ids
+
+    @staticmethod
+    def get_titles_and_sellers(soup_html):
+        titles = []
+        sellers = []
+
+        col_1centres = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
+        assert len(col_1centres) <= 15
+        assert len(col_1centres) > 0
+        for col1_centre in col_1centres:
+            head_tags = [div for div in col1_centre.findAll('div', attrs={'class': 'head'})]
+            assert len(head_tags) == 1
+            href_links = [href for href in head_tags[0].findAll('a', href=True)]
+            titles.append(href_links[0].text)
+            padp_p_tags = [p for p in head_tags[0].findAll('p', attrs={'class': 'padp'})]
+            assert len(padp_p_tags) == 1
+            user_href_links = [href for href in padp_p_tags[0].findAll('a', href=True)]
+            assert len(user_href_links) == 1
+            sellers.append(user_href_links[0].text)
+
+        assert len(titles) == len(sellers) == len(col_1centres)
+
+        return titles, sellers
