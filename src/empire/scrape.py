@@ -103,6 +103,7 @@ class EmpireScrapingSession(BaseScraper):
     def _set_cookies(self):
 
         cookie = create_cookie(
+            domain=EMPIRE_MARKET_URL,
             name='ab',
             value='1cc735432450e28fa3333f2904cd5ae3')
 
@@ -111,6 +112,7 @@ class EmpireScrapingSession(BaseScraper):
         )
 
         cookie = create_cookie(
+            domain=EMPIRE_MARKET_URL,
             name='shop',
             value='39o8ljpgfjspkliioqg0pq4632dodiqi')
 
@@ -293,6 +295,8 @@ class EmpireScrapingSession(BaseScraper):
                     try:
                         debug_html = self.web_session.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
                         debug_html = "".join(debug_html.split())
+                        pretty_print_GET(self.web_session.prepare_request(
+                        requests.Request('GET', url=EMPIRE_BASE_CRAWLING_URL, headers=self.headers)))
                     except:
                         tries += 1
                 print(debug_html)
