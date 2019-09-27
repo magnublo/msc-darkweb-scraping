@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, String, Integer, Date, ForeignKey, Boolean, DateTime, Float
+from sqlalchemy import Column, String, Integer, Date, ForeignKey, Boolean, DateTime, Float, Text
 
 import src.models.country as country
 import src.models.listing_text as listing_text
@@ -22,7 +22,7 @@ class ListingObservation(Base):
     session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY))
     listing_text_id = Column(String, ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY))
 
-    title = Column(String)
+    title = Column(Text)
 
     btc = Column(Boolean)
     ltc = Column(Boolean)

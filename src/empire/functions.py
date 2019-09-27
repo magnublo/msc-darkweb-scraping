@@ -1,6 +1,8 @@
 import json
 import time
 
+import dateparser as dateparser
+
 from src.base import BaseFunctions
 
 
@@ -62,6 +64,8 @@ class EmpireScrapingFunctions(BaseFunctions):
         spans = [span for span in list_description.findAll('span')]
         span = spans[0]
         nr_sold, date = span.text.split(" sold since ")
+
+        date = dateparser.parse(date)
 
         return nr_sold, date
 

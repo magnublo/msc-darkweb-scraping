@@ -139,20 +139,23 @@ class EmpireScrapingSession(BaseScraper):
         }
 
     def _get_web_response(self, url, debug=DEBUG_MODE):
-        response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+        if debug:
+            return None
+        else:
+            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
 
-        tries = 0
+            tries = 0
 
-        while tries < 5:
-            if self._is_logged_out(response):
-                tries += 1
-                response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
-            else:
-                return response
+            while tries < 5:
+                if self._is_logged_out(response):
+                    tries += 1
+                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+                else:
+                    return response
 
-        raise LoggedOutException
+            raise LoggedOutException
 
-        #self._login_and_set_cookie(response)
+            #self._login_and_set_cookie(response)
 
     def scrape(self):
 

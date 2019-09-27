@@ -1,6 +1,6 @@
 import os
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 
 TOR_PORT = 9050
 
@@ -11,7 +11,7 @@ PROXIES = {
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
-DB_ENGINE_URL = 'postgresql://postgres:Password123!@localhost:5432/scraping'
+DB_ENGINE_URL = 'mysql+mysqlconnector://msc-scraper:Password123!@localhost:3306/scraping'
 DB_CLIENT_ENCODING = "utf8"
 
 ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
