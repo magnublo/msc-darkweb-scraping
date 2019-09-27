@@ -98,7 +98,14 @@ class EmpireScrapingSession(BaseScraper):
                     ).first()
 
                     if existing_listing_observation:
-                        print("Found duplicate listing stored, skipping...")
+                        print("Database already contains listing with this seller and title for this session.")
+                        print("Seller: " + existing_listing_observation.seller)
+                        print("Listing title: " + existing_listing_observation.title)
+                        print("Duplicate listing, skipping...")
+                        print("Crawling listing nr " + str(pagenr * 15 + k) + " this session. " + str(
+                            self.duplicates_this_session) + " duplicates encountered.")
+                        print("\n")
+                        self.duplicates_this_session += 1
                         k += 1
                         continue
 
@@ -107,6 +114,8 @@ class EmpireScrapingSession(BaseScraper):
                     print(time.time())
                     print("Trying to fetch URL: " + product_page_url)
                     print("On pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
+                    print("Crawling listing nr " + str(pagenr*15+k) + " this session. " + str(self.duplicates_this_session) + " duplicates encountered.")
+                    print("\n")
                     soup_html = self._get_page_as_soup_html(product_page_url, 'saved_empire_html', DEBUG_MODE)
 
                     session_id = self.session_id

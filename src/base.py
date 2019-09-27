@@ -77,6 +77,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
         db_session.add(self.session)
         db_session.flush()
+        self.duplicates_this_session = 0
 
         self.session_id = self.session.id
 
