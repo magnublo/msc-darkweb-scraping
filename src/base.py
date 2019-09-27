@@ -70,7 +70,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.start_time = time.time()
         self.duplicates_this_session = 0
         self.web_session = requests.session()
-        self._login_and_set_cookie()
+        self._set_cookies()
 
         if session_id:
             self.session = db_session.query(ScrapingSession).filter_by(
@@ -157,7 +157,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         raise NotImplementedError('')
 
     @abstractmethod
-    def _handle_logged_out_session(self):
+    def _set_cookies(self):
         raise NotImplementedError('')
 
 

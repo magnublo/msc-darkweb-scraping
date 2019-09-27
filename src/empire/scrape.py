@@ -19,6 +19,7 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
+from src.utils import pretty_print_GET
 
 NR_OF_PAGES = 2249
 
@@ -101,16 +102,20 @@ class EmpireScrapingSession(BaseScraper):
 
     def _set_cookies(self):
 
-        self.web_session.cookies.set_cookie(
-            create_cookie(
+        cookie = create_cookie(
             name='ab',
             value='1cc735432450e28fa3333f2904cd5ae3')
-        )
 
         self.web_session.cookies.set_cookie(
-            create_cookie(
-                name='shop',
-                value='39o8ljpgfjspkliioqg0pq4632dodiqi')
+            cookie
+        )
+
+        cookie = create_cookie(
+            name='shop',
+            value='39o8ljpgfjspkliioqg0pq4632dodiqi')
+
+        self.web_session.cookies.set_cookie(
+            cookie
         )
 
     def _get_market_URL(self):
@@ -119,7 +124,7 @@ class EmpireScrapingSession(BaseScraper):
     def _get_market_ID(self):
         return EMPIRE_MARKET_ID
 
-    def _get_headers(self, cookies):
+    def _get_headers(self):
         return {
             "Host": self._get_market_URL(),
             "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0",
@@ -127,24 +132,25 @@ class EmpireScrapingSession(BaseScraper):
             "Accept-Language": "en-US,en;q=0.5",
             "Accept-Encoding": "gzip, deflate",
             "Referer": "http://" + self._get_market_URL() + "/login",
-            "Cookie": "ab=" + cookies['ab'] + ";shop=" + cookies['shop'] + ";",
             "Connection": "keep-alive",
             "Upgrade-Insecure-Requests": "1"
         }
 
     def _get_web_response(self, url, debug=DEBUG_MODE):
-        response = requests.get(url, proxies=PROXIES, headers=self.headers)
+        response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
 
         tries = 0
 
         while tries < 5:
             if self._is_logged_out(response):
                 tries += 1
-                response = requests.get(url, proxies=PROXIES, headers=self.headers)
+                response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
             else:
                 return response
 
-        self._login_and_set_cookie(response)
+        raise LoggedOutException
+
+        #self._login_and_set_cookie(response)
 
     def scrape(self):
 
@@ -156,9 +162,9 @@ class EmpireScrapingSession(BaseScraper):
             try:
                 search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
 
-                web_response = self._get_web_response(url)
+                web_response = self._get_web_response(search_result_url)
 
-                soup_html = self._get_page_as_soup_html(search_result_url, file="saved_empire_search_result_html")
+                soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
                 titles, sellers = scrapingFunctions.get_titles_and_sellers(soup_html)
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
@@ -183,7 +189,9 @@ class EmpireScrapingSession(BaseScraper):
 
                     scrapingFunctions.print_crawling_debug_message(product_page_url, pagenr, k, self.duplicates_this_session)
 
-                    soup_html = self._get_page_as_soup_html(product_page_url, 'saved_empire_html', DEBUG_MODE)
+                    web_response = self._get_web_response(product_page_url)
+
+                    soup_html = self._get_page_as_soup_html(web_response, 'saved_empire_html', DEBUG_MODE)
 
                     session_id = self.session_id
                     listing_text = scrapingFunctions.get_description(soup_html)
@@ -278,11 +286,12 @@ class EmpireScrapingSession(BaseScraper):
 
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
                 self._wrap_up_session()
+                traceback.print_exc()
                 debug_html = None
                 tries = 0
                 while debug_html is None and tries < 10:
                     try:
-                        debug_html = requests.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
+                        debug_html = self.web_session.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
                         debug_html = "".join(debug_html.split())
                     except:
                         tries += 1
