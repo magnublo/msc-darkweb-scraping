@@ -27,6 +27,7 @@ class ListingObservation(Base):
     btc = Column(Boolean)
     ltc = Column(Boolean)
     xmr = Column(Boolean)
+    promoted_listing = Column(Boolean)
     seller = Column(String)
     price = Column(Float)
     fiat_currency = Column(String)

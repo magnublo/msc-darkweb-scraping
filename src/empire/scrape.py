@@ -81,11 +81,12 @@ class EmpireScrapingSession(BaseScraper):
             try:
                 search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
                 soup_html = self._get_page_as_soup_html(search_result_url, file="saved_empire_search_result_html")
-                product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
+                product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
                 while k < len(product_page_urls):
                     product_page_url = product_page_urls[k]
+                    is_sticky = urls_is_sticky[k]
                     print(time.time())
                     print("Trying to fetch URL: " + product_page_url)
                     soup_html = self._get_page_as_soup_html(product_page_url, 'saved_empire_html', DEBUG_MODE)
@@ -139,6 +140,7 @@ class EmpireScrapingSession(BaseScraper):
                         btc=accepts_BTC,
                         ltc=accepts_LTC,
                         xmr=accepts_XMR,
+                        promoted_listing=is_sticky,
                         seller=seller,
                         btc_rate=btc_rate,
                         ltc_rate=ltc_rate,

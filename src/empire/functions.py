@@ -28,17 +28,27 @@ class EmpireScrapingFunctions(BaseFunctions):
     def get_product_page_urls(soup_html):
         centre_columns = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
         product_page_urls = []
+        urls_is_sticky = []
+
         for column in centre_columns:
+            is_sticky = False
             divs_with_head_name = [div for div in column.findAll('div', attrs={'class': 'head'})]
             assert len(divs_with_head_name) == 1
             hrefs = [href for href in divs_with_head_name[0].findAll('a', href=True)]
             assert len(hrefs) == 2
+            b_tags = [b_tag for b_tag in divs_with_head_name[0].findAll('b')]
+            for b_tag in b_tags:
+                if b_tag.text == "[sticky]":
+                    is_sticky = True
+
+            urls_is_sticky.append(is_sticky)
             product_page_urls.append(hrefs[0]['href'])
 
         assert len(product_page_urls) <= 15
         assert len(product_page_urls) > 0
+        assert len(urls_is_sticky) == len(product_page_urls)
 
-        return product_page_urls
+        return product_page_urls, urls_is_sticky
 
     @staticmethod
     def get_seller_nr_sold_and_date(soup_html):
