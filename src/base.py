@@ -69,6 +69,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.headers = self._get_headers()
         self.market_id = self._get_market_ID()
         self.start_time = time.time()
+        self.duplicates_this_session = 0
 
         if session_id:
             self.session = db_session.query(ScrapingSession).filter_by(
@@ -77,7 +78,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             self.session = self._initiate_session()
 
         self.session_id = self.session.id
-        self.duplicates_this_session = 0
+
 
     def _initiate_session(self):
         scraping_session = ScrapingSession(
