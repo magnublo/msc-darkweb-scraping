@@ -209,8 +209,9 @@ class EmpireScrapingFunctions(BaseFunctions):
         return payload
 
     @staticmethod
-    def print_duplicate_debug_message(existing_listing_observation, pagenr, k, duplicates):
+    def print_duplicate_debug_message(existing_listing_observation, pagenr, k, duplicates, parsing_time):
         print(time.time())
+        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Database already contains listing with this seller and title for this session.")
         print("Seller: " + existing_listing_observation.seller)
         print("Listing title: " + existing_listing_observation.title)
@@ -220,8 +221,9 @@ class EmpireScrapingFunctions(BaseFunctions):
         print("\n")
 
     @staticmethod
-    def print_crawling_debug_message(product_page_url, pagenr, k, duplicates):
+    def print_crawling_debug_message(product_page_url, pagenr, k, duplicates, parsing_time):
         print(time.time())
+        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Trying to fetch URL: " + product_page_url)
         print("On pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
         print("Crawling listing nr " + str((pagenr - 1) * 15 + k) + " this session. " + str(

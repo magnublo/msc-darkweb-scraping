@@ -114,7 +114,7 @@ class EmpireScrapingSession(BaseScraper):
         cookie = create_cookie(
             domain=EMPIRE_MARKET_URL,
             name='shop',
-            value='39o8ljpgfjspkliioqg0pq4632dodiqi')
+            value='ske8ud8vnlrsq18vi6r7rhss4vbnukv0')
 
         self.web_session.cookies.set_cookie(
             cookie
@@ -158,13 +158,16 @@ class EmpireScrapingSession(BaseScraper):
 
         pagenr = self.initial_pagenr
         k = self.initial_listingnr
+        time_of_last_response = time.time()
 
         while pagenr < NR_OF_PAGES:
 
             try:
                 search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
 
+                parsing_time = time.time() - time_of_last_response
                 web_response = self._get_web_response(search_result_url)
+                time_of_last_response = time.time()
 
                 soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
@@ -182,14 +185,14 @@ class EmpireScrapingSession(BaseScraper):
                     ).first()
 
                     if existing_listing_observation:
-                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, pagenr, k, self.duplicates_this_session)
+                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, pagenr, k, self.duplicates_this_session, parsing_time)
                         self.duplicates_this_session += 1
                         k += 1
                         continue
 
                     product_page_url = product_page_urls[k]
 
-                    scrapingFunctions.print_crawling_debug_message(product_page_url, pagenr, k, self.duplicates_this_session)
+                    scrapingFunctions.print_crawling_debug_message(product_page_url, pagenr, k, self.duplicates_this_session, parsing_time)
 
                     web_response = self._get_web_response(product_page_url)
 
