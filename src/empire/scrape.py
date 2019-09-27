@@ -214,8 +214,7 @@ class EmpireScrapingSession(BaseScraper):
                 k = 0
 
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
-                self.session.time_finished = time.time()
-                db_session.commit()
+                self._wrap_up_session()
                 debug_html = None
                 tries = 0
                 while debug_html is None and tries < 10:
@@ -232,6 +231,5 @@ class EmpireScrapingSession(BaseScraper):
                 print("Retrying ...")
                 print("Rolled back to pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
 
-        self.session.time_finished = time.time()
-        db_session.commit()
+        self._wrap_up_session()
 

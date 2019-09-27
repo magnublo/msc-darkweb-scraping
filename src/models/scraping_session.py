@@ -12,5 +12,6 @@ class ScrapingSession(Base):
 
     id = Column(PRIMARY_KEY, Integer, primary_key=True)
     market = Column(String)
+    duplicates_encountered = Column(Integer)
     time_started = Column(Float)
     time_finished = Column(Float)

@@ -82,11 +82,18 @@ class BaseScraper(metaclass=abc.ABCMeta):
     def _initiate_session(self):
         scraping_session = ScrapingSession(
             time_started=self.start_time,
-            market=self.market_id
+            market=self.market_id,
+            duplicates_encountered=self.duplicates_this_session
         )
         db_session.add(scraping_session)
         db_session.flush()
         return scraping_session
+
+
+    def _wrap_up_session(self):
+        self.session.time_finished = time.time()
+        self.session.duplicates_encountered = self.duplicates_this_session
+        db_session.commit()
 
     def _get_page_as_soup_html(self, url, file, debug=DEBUG_MODE):
         working_dir = self._get_working_dir()
