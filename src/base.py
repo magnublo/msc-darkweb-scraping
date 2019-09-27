@@ -96,8 +96,24 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.session.time_finished = time.time()
         self.session.duplicates_encountered = self.duplicates_this_session
         db_session.commit()
+        db_session.close()
 
-    def _get_page_as_soup_html(self, url, file, debug=DEBUG_MODE):
+
+    def _get_login_page_response(self, login_url):
+        tries = 0
+
+        while True:
+            print(time.time())
+            print("Trying to retrieve login page url...")
+            print("Try nr. " + str(tries))
+            try:
+                response = requests.get(login_url, proxies=PROXIES, headers=self.headers)
+                return response
+            except:
+                tries += 1
+
+
+    def _get_page_as_soup_html(self, web_response, file, debug=DEBUG_MODE):
         working_dir = self._get_working_dir()
 
         if debug:
@@ -106,11 +122,11 @@ class BaseScraper(metaclass=abc.ABCMeta):
             saved_html.close()
             return soup_html
         else:
-            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
-            if self._is_logged_out(response):
-                self._handle_logged_out_session()
-                return self._get_page_as_soup_html(url, file)
-            return BeautifulSoup(response.text)
+            return BeautifulSoup(web_response.text)
+
+    @abstractmethod
+    def _get_web_response(self, url, debug=DEBUG_MODE):
+        raise NotImplementedError('')
 
     @abstractmethod
     def scrape(self):

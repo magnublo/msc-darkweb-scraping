@@ -1,4 +1,6 @@
+import base64
 import hashlib
+import json
 import time
 import traceback
 
@@ -6,7 +8,8 @@ import requests
 from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, PROXIES
+    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, ANTI_CAPTCHA_CREATE_TASK_URL, \
+    ANTI_CAPTCHA_WAIT_INTERVAL, ANTI_CAPTCHA_GET_TASK_URL, ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL
 from src.base import Base, engine, db_session, LoggedOutException
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
@@ -33,12 +36,6 @@ class EmpireScrapingSession(BaseScraper):
 
         return False
 
-    def _handle_logged_out_session(self):
-        if self.logged_out_exceptions >= 5:
-            raise LoggedOutException()
-        else:
-            self.logged_out_exceptions += 1
-
     def __init__(self, session_id=None, initial_pagenr=0, initial_listingnr=0):
         super().__init__(session_id=session_id)
         self.initial_pagenr = initial_pagenr
@@ -48,7 +45,61 @@ class EmpireScrapingSession(BaseScraper):
     def _get_working_dir(self):
         return EMPIRE_DIR
 
-    def _login_and_set_cookie(self):
+    def _login_and_set_cookie(self, response=None):
+        if not response:
+            response = self._get_login_page_response(EMPIRE_MARKET_LOGIN_URL)
+
+        soup_html = self._get_page_as_soup_html(response, "saved_empire_login_html")
+        image_url = scrapingFunctions.get_captcha_image_url(soup_html)
+        image_response = self._get_login_page_response(image_url)
+
+        base64_image = base64.b64encode(image_response.content)
+
+        task_creation_payload = {
+            "clientKey": ANTI_CAPTCHA_ACCOUNT_KEY,
+            "task":
+                {
+                    "type": "ImageToTextTask",
+                    "body": base64_image,
+                    "phrase": "false",
+                    "case": "false",
+                    "numeric": 1,
+                    "math": "false",
+                    "minLength": 0,
+                    "maxLength": 0
+                }
+        }
+
+        anti_captcha_task_creation_response = requests.post(ANTI_CAPTCHA_CREATE_TASK_URL, data=task_creation_payload)
+        json_data = json.loads(anti_captcha_task_creation_response.text)
+        task_id = json_data["taskId"]
+        captcha_solution = self._get_anti_captcha_solution(task_id)
+
+        login_payload = scrapingFunctions.get_login_payload(soup_html, captcha_solution)
+        login_response = requests.post(EMPIRE_MARKET_LOGIN_URL, data=login_payload, proxies=PROXIES, headers=self.headers)
+
+
+
+    def _get_anti_captcha_solution(self, task_id):
+        task_solution_retrieval_payload = {
+            "clientKey": ANTI_CAPTCHA_ACCOUNT_KEY,
+            "taskId": task_id
+        }
+
+        print("Waiting " + str(ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL) + " seconds before requesting captcha solution...")
+        time.sleep(ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL)
+
+        while True:
+            anti_captcha_task_solution_response = requests.post(ANTI_CAPTCHA_GET_TASK_URL, data=task_solution_retrieval_payload)
+            json_data = json.loads(anti_captcha_task_solution_response.text)
+            anti_captcha_solution = json_data['text']
+            if len(anti_captcha_solution) > 0:
+                return anti_captcha_solution
+            else:
+                print("Solution was not ready from API. Waiting " + str(ANTI_CAPTCHA_WAIT_INTERVAL) + " before reattempting...")
+                time.sleep(ANTI_CAPTCHA_WAIT_INTERVAL)
+
+    def _set_cookies(self):
 
         self.web_session.cookies.set_cookie(
             create_cookie(
@@ -68,7 +119,7 @@ class EmpireScrapingSession(BaseScraper):
     def _get_market_ID(self):
         return EMPIRE_MARKET_ID
 
-    def _get_headers(self):
+    def _get_headers(self, cookies):
         return {
             "Host": self._get_market_URL(),
             "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0",
@@ -76,9 +127,24 @@ class EmpireScrapingSession(BaseScraper):
             "Accept-Language": "en-US,en;q=0.5",
             "Accept-Encoding": "gzip, deflate",
             "Referer": "http://" + self._get_market_URL() + "/login",
+            "Cookie": "ab=" + cookies['ab'] + ";shop=" + cookies['shop'] + ";",
             "Connection": "keep-alive",
             "Upgrade-Insecure-Requests": "1"
         }
+
+    def _get_web_response(self, url, debug=DEBUG_MODE):
+        response = requests.get(url, proxies=PROXIES, headers=self.headers)
+
+        tries = 0
+
+        while tries < 5:
+            if self._is_logged_out(response):
+                tries += 1
+                response = requests.get(url, proxies=PROXIES, headers=self.headers)
+            else:
+                return response
+
+        self._login_and_set_cookie(response)
 
     def scrape(self):
 
@@ -89,6 +155,9 @@ class EmpireScrapingSession(BaseScraper):
 
             try:
                 search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
+
+                web_response = self._get_web_response(url)
+
                 soup_html = self._get_page_as_soup_html(search_result_url, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
                 titles, sellers = scrapingFunctions.get_titles_and_sellers(soup_html)
@@ -105,24 +174,15 @@ class EmpireScrapingSession(BaseScraper):
                     ).first()
 
                     if existing_listing_observation:
-                        print("Database already contains listing with this seller and title for this session.")
-                        print("Seller: " + existing_listing_observation.seller)
-                        print("Listing title: " + existing_listing_observation.title)
-                        print("Duplicate listing, skipping...")
-                        print("Crawling listing nr " + str(pagenr * 15 + k) + " this session. " + str(
-                            self.duplicates_this_session) + " duplicates encountered.")
-                        print("\n")
+                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, pagenr, k, self.duplicates_this_session)
                         self.duplicates_this_session += 1
                         k += 1
                         continue
 
-
                     product_page_url = product_page_urls[k]
-                    print(time.time())
-                    print("Trying to fetch URL: " + product_page_url)
-                    print("On pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
-                    print("Crawling listing nr " + str(pagenr*15+k) + " this session. " + str(self.duplicates_this_session) + " duplicates encountered.")
-                    print("\n")
+
+                    scrapingFunctions.print_crawling_debug_message(product_page_url, pagenr, k, self.duplicates_this_session)
+
                     soup_html = self._get_page_as_soup_html(product_page_url, 'saved_empire_html', DEBUG_MODE)
 
                     session_id = self.session_id
@@ -134,7 +194,6 @@ class EmpireScrapingSession(BaseScraper):
                     fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
                     origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
                     vendor_level, trust_level = scrapingFunctions.get_vendor_and_trust_level(soup_html)
-
                     is_sticky = urls_is_sticky[k]
 
                     db_category_ids = []
@@ -213,7 +272,6 @@ class EmpireScrapingSession(BaseScraper):
 
                     db_session.commit()
                     k += 1
-                    self.logged_out_exceptions = 0
 
                 pagenr += 1
                 k = 0

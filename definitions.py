@@ -14,6 +14,12 @@ WORKING_DIR = os.getcwd() + "/"
 DB_ENGINE_URL = 'postgresql://postgres:Password123!@localhost:5432/scraping'
 DB_CLIENT_ENCODING = "utf8"
 
+ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
+ANTI_CAPTCHA_CREATE_TASK_URL = "http://api.anti-captcha.com/createTask"
+ANTI_CAPTCHA_GET_TASK_URL = "https://api.anti-captcha.com/getTaskResult "
+ANTI_CAPTCHA_WAIT_INTERVAL = 2
+ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL = 6
+
 #EMPIRE MARKET
 EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"

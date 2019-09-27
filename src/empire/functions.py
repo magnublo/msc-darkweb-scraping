@@ -1,3 +1,6 @@
+import json
+import time
+
 from src.base import BaseFunctions
 
 
@@ -178,3 +181,49 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert len(titles) == len(sellers) == len(col_1centres)
 
         return titles, sellers
+
+    @staticmethod
+    def get_captcha_image_url(soup_html):
+        image_divs = [div for div in soup_html.findAll('div', attrs={'class': 'image'})]
+        assert len(image_divs) == 1
+        img_tags = [img for img in soup_html.findAll('img')]
+        assert len(img_tags) == 1
+        return img_tags[0]['src']
+
+    @staticmethod
+    def get_login_payload(soup_html, captcha_solution):
+        divs = [div for div in soup_html.findAll('div', attrs={'class': 'login-textbox'})]
+        assert len(divs) == 1
+        forms = [form for form in divs[0].findAll('form')]
+        assert len(forms) == 1
+        inputs = [input for input in forms[0].findAll('input')]
+
+        payload = {}
+
+        for input in inputs:
+            if input['value']:
+                payload[input['name']] = input['value']
+            else:
+                payload[input['name']] = captcha_solution
+
+        return payload
+
+    @staticmethod
+    def print_duplicate_debug_message(existing_listing_observation, pagenr, k, duplicates):
+        print(time.time())
+        print("Database already contains listing with this seller and title for this session.")
+        print("Seller: " + existing_listing_observation.seller)
+        print("Listing title: " + existing_listing_observation.title)
+        print("Duplicate listing, skipping...")
+        print("Crawling listing nr " + str((pagenr - 1) * 15 + k) + " this session. " + str(
+            duplicates) + " duplicates encountered.")
+        print("\n")
+
+    @staticmethod
+    def print_crawling_debug_message(product_page_url, pagenr, k, duplicates):
+        print(time.time())
+        print("Trying to fetch URL: " + product_page_url)
+        print("On pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
+        print("Crawling listing nr " + str((pagenr - 1) * 15 + k) + " this session. " + str(
+            duplicates) + " duplicates encountered.")
+        print("\n")
