@@ -49,7 +49,7 @@ class EmpireScrapingSession(BaseScraper):
     def _login_and_set_cookie(self):
         return {
             'ab': "1cc735432450e28fa3333f2904cd5ae3",
-            'shop': "f62bggr5t6eucvdfvvfqvkv6lbs7pfeg"
+            'shop': "fjo87pktprgplm7nvk98s91nqf46odi7"
         }
 
     def _get_market_URL(self):
