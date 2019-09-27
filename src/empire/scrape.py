@@ -200,6 +200,7 @@ class EmpireScrapingSession(BaseScraper):
                     self.logged_out_exceptions = 0
 
                 pagenr += 1
+                k = 0
 
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
                 self.session.time_finished = time.time()
