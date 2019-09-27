@@ -65,11 +65,12 @@ class BaseFunctions(metaclass=abc.ABCMeta):
 class BaseScraper(metaclass=abc.ABCMeta):
 
     def __init__(self, session_id=None):
-        self.cookies = self._login_and_set_cookie()
         self.headers = self._get_headers()
         self.market_id = self._get_market_ID()
         self.start_time = time.time()
         self.duplicates_this_session = 0
+        self.web_session = requests.session()
+        self._login_and_set_cookie()
 
         if session_id:
             self.session = db_session.query(ScrapingSession).filter_by(
@@ -105,7 +106,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             saved_html.close()
             return soup_html
         else:
-            response = requests.get(url, proxies=PROXIES, headers=self.headers)
+            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
             if self._is_logged_out(response):
                 self._handle_logged_out_session()
                 return self._get_page_as_soup_html(url, file)

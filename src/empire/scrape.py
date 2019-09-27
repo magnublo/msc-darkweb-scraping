@@ -1,11 +1,9 @@
 import hashlib
-import sys
 import time
 import traceback
-from http.client import RemoteDisconnected
 
 import requests
-from urllib3.exceptions import ProtocolError, NewConnectionError
+from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES
@@ -51,10 +49,18 @@ class EmpireScrapingSession(BaseScraper):
         return EMPIRE_DIR
 
     def _login_and_set_cookie(self):
-        return {
-            'ab': "1cc735432450e28fa3333f2904cd5ae3",
-            'shop': "fjo87pktprgplm7nvk98s91nqf46odi7"
-        }
+
+        self.web_session.cookies.set_cookie(
+            create_cookie(
+            name='ab',
+            value='1cc735432450e28fa3333f2904cd5ae3')
+        )
+
+        self.web_session.cookies.set_cookie(
+            create_cookie(
+                name='shop',
+                value='39o8ljpgfjspkliioqg0pq4632dodiqi')
+        )
 
     def _get_market_URL(self):
         return EMPIRE_MARKET_URL
@@ -70,7 +76,6 @@ class EmpireScrapingSession(BaseScraper):
             "Accept-Language": "en-US,en;q=0.5",
             "Accept-Encoding": "gzip, deflate",
             "Referer": "http://" + self._get_market_URL() + "/login",
-            "Cookie": "ab=" + self.cookies['ab'] + ";shop=" + self.cookies['shop'] + ";",
             "Connection": "keep-alive",
             "Upgrade-Insecure-Requests": "1"
         }
