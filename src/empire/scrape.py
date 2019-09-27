@@ -95,7 +95,7 @@ class EmpireScrapingSession(BaseScraper):
                         title=title,
                         seller=seller,
                         session_id=self.session_id
-                    )
+                    ).first()
 
                     if existing_listing_observation:
                         print("Found duplicate listing stored, skipping...")

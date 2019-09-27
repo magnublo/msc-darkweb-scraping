@@ -1,6 +1,6 @@
 import os
 
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 TOR_PORT = 9050
 
