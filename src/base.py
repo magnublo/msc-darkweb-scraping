@@ -7,8 +7,10 @@ from bs4 import BeautifulSoup
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from python_anticaptcha import AnticaptchaClient, ImageToTextTask
 
-from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE
+from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
+
 engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
@@ -70,7 +72,8 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.start_time = time.time()
         self.duplicates_this_session = 0
         self.web_session = requests.session()
-        self._set_cookies()
+        self.anti_captcha_client = AnticaptchaClient(ANTI_CAPTCHA_ACCOUNT_KEY)
+        self._login_and_set_cookie()
 
         if session_id:
             self.session = db_session.query(ScrapingSession).filter_by(
@@ -99,15 +102,18 @@ class BaseScraper(metaclass=abc.ABCMeta):
         db_session.close()
 
 
-    def _get_login_page_response(self, login_url):
+    def _get_page_response_and_try_forever(self, url, stream=None):
         tries = 0
 
         while True:
             print(time.time())
-            print("Trying to retrieve login page url...")
+            print("Trying to retrieve page " + url + "...")
             print("Try nr. " + str(tries))
             try:
-                response = requests.get(login_url, proxies=PROXIES, headers=self.headers)
+                if stream:
+                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers, stream=True)
+                else:
+                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
                 return response
             except:
                 tries += 1

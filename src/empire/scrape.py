@@ -19,7 +19,8 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
-from src.utils import pretty_print_GET
+from src.utils import pretty_print_GET, pretty_print_POST
+from python_anticaptcha import AnticaptchaClient, ImageToTextTask
 
 NR_OF_PAGES = 2249
 
@@ -46,59 +47,31 @@ class EmpireScrapingSession(BaseScraper):
     def _get_working_dir(self):
         return EMPIRE_DIR
 
-    def _login_and_set_cookie(self, response=None):
+    def _login_and_set_cookie(self, response=None, debug=DEBUG_MODE):
         if not response:
-            response = self._get_login_page_response(EMPIRE_MARKET_LOGIN_URL)
+            if debug:
+                response = None
+            else:
+                response = self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL)
 
         soup_html = self._get_page_as_soup_html(response, "saved_empire_login_html")
         image_url = scrapingFunctions.get_captcha_image_url(soup_html)
-        image_response = self._get_login_page_response(image_url)
 
-        base64_image = base64.b64encode(image_response.content)
+        if debug:
+            base64_image_raw = None
+        else:
+            image_response = self._get_page_response_and_try_forever(image_url)
+            base64_image_raw = image_response.raw
 
-        task_creation_payload = {
-            "clientKey": ANTI_CAPTCHA_ACCOUNT_KEY,
-            "task":
-                {
-                    "type": "ImageToTextTask",
-                    "body": base64_image,
-                    "phrase": "false",
-                    "case": "false",
-                    "numeric": 1,
-                    "math": "false",
-                    "minLength": 0,
-                    "maxLength": 0
-                }
-        }
+        task = ImageToTextTask(base64_image_raw)
 
-        anti_captcha_task_creation_response = requests.post(ANTI_CAPTCHA_CREATE_TASK_URL, data=task_creation_payload)
-        json_data = json.loads(anti_captcha_task_creation_response.text)
-        task_id = json_data["taskId"]
-        captcha_solution = self._get_anti_captcha_solution(task_id)
+        job = self.anti_captcha_client.createTask(task)
+        job.join()
+        captcha_solution = job.get_captcha_text()
 
         login_payload = scrapingFunctions.get_login_payload(soup_html, captcha_solution)
-        login_response = requests.post(EMPIRE_MARKET_LOGIN_URL, data=login_payload, proxies=PROXIES, headers=self.headers)
+        self.web_session.post(EMPIRE_MARKET_LOGIN_URL, data=login_payload, proxies=PROXIES, headers=self.headers)
 
-
-
-    def _get_anti_captcha_solution(self, task_id):
-        task_solution_retrieval_payload = {
-            "clientKey": ANTI_CAPTCHA_ACCOUNT_KEY,
-            "taskId": task_id
-        }
-
-        print("Waiting " + str(ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL) + " seconds before requesting captcha solution...")
-        time.sleep(ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL)
-
-        while True:
-            anti_captcha_task_solution_response = requests.post(ANTI_CAPTCHA_GET_TASK_URL, data=task_solution_retrieval_payload)
-            json_data = json.loads(anti_captcha_task_solution_response.text)
-            anti_captcha_solution = json_data['text']
-            if len(anti_captcha_solution) > 0:
-                return anti_captcha_solution
-            else:
-                print("Solution was not ready from API. Waiting " + str(ANTI_CAPTCHA_WAIT_INTERVAL) + " before reattempting...")
-                time.sleep(ANTI_CAPTCHA_WAIT_INTERVAL)
 
     def _set_cookies(self):
 
