@@ -20,7 +20,7 @@ from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
 from src.utils import pretty_print_GET, pretty_print_POST
-from python_anticaptcha import AnticaptchaClient, ImageToTextTask
+from python3_anticaptcha import ImageToTextTask
 
 NR_OF_PAGES = 2249
 
@@ -58,16 +58,17 @@ class EmpireScrapingSession(BaseScraper):
         image_url = scrapingFunctions.get_captcha_image_url(soup_html)
 
         if debug:
-            base64_image_raw = None
+            base64_image = None
         else:
-            image_response = self._get_page_response_and_try_forever(image_url)
-            base64_image_raw = image_response.raw
+            image_response = self._get_page_response_and_try_forever(image_url).content
+            base64_image = base64.b64encode(image_response).decode("utf-8")
 
-        task = ImageToTextTask(base64_image_raw)
-
-        job = self.anti_captcha_client.createTask(task)
-        job.join()
-        captcha_solution = job.get_captcha_text()
+        time_before_requesting_captcha_solve = time.time()
+        print("Sending image to anti-catpcha.com API...")
+        captcha_solution = ImageToTextTask.ImageToTextTask(
+                                anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY
+                            ).captcha_handler(captcha_base64=base64_image)["solution"]["text"]
+        print("Captcha solved. Solving took " + str(time.time()-time_before_requesting_captcha_solve) + " seconds.")
 
         login_payload = scrapingFunctions.get_login_payload(soup_html, captcha_solution)
         self.web_session.post(EMPIRE_MARKET_LOGIN_URL, data=login_payload, proxies=PROXIES, headers=self.headers)
@@ -126,9 +127,8 @@ class EmpireScrapingSession(BaseScraper):
                 else:
                     return response
 
-            raise LoggedOutException
-
-            #self._login_and_set_cookie(response)
+            self._login_and_set_cookie(response)
+            return self._get_web_response(url)
 
     def scrape(self):
 

@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from python_anticaptcha import AnticaptchaClient, ImageToTextTask
 
 from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
 
@@ -72,7 +71,6 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.start_time = time.time()
         self.duplicates_this_session = 0
         self.web_session = requests.session()
-        self.anti_captcha_client = AnticaptchaClient(ANTI_CAPTCHA_ACCOUNT_KEY)
         self._login_and_set_cookie()
 
         if session_id:
