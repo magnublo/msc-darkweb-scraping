@@ -11,7 +11,7 @@ PROXIES = {
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
-DB_ENGINE_URL = 'postgresql://postgres:Password123!@localhost:5432/scraping'
+DB_ENGINE_URL = 'mysql+mysqlconnector://msc-scraper:Password123!@localhost:3306/scraping'
 DB_CLIENT_ENCODING = "utf8"
 
 ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
@@ -22,6 +22,8 @@ ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL = 6
 
 #EMPIRE MARKET
 EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
+EMPIRE_MARKET_USERNAME = "using_python3"
+EMPIRE_MARKET_PASSWORD = "Password123!"
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
 EMPIRE_IMAGE_CAPTCHA_URL_REGEX = r"http:\/\/"+EMPIRE_MARKET_URL.replace(".", "\.")+"\/public\/captchaimg\/[0-9]{10}\.[0-9]{3}\.jpg"
 EMPIRE_BASE_CRAWLING_URL = "http://" + EMPIRE_MARKET_URL + "/category/categories/2/"

@@ -1,6 +1,9 @@
 import json
 import time
 
+import dateparser as dateparser
+
+from definitions import EMPIRE_MARKET_USERNAME, EMPIRE_MARKET_PASSWORD
 from src.base import BaseFunctions
 
 
@@ -62,6 +65,8 @@ class EmpireScrapingFunctions(BaseFunctions):
         spans = [span for span in list_description.findAll('span')]
         span = spans[0]
         nr_sold, date = span.text.split(" sold since ")
+
+        date = dateparser.parse(date)
 
         return nr_sold, date
 
@@ -186,25 +191,26 @@ class EmpireScrapingFunctions(BaseFunctions):
     def get_captcha_image_url(soup_html):
         image_divs = [div for div in soup_html.findAll('div', attrs={'class': 'image'})]
         assert len(image_divs) == 1
-        img_tags = [img for img in soup_html.findAll('img')]
+        img_tags = [img for img in image_divs[0].findAll('img')]
         assert len(img_tags) == 1
         return img_tags[0]['src']
 
     @staticmethod
     def get_login_payload(soup_html, captcha_solution):
-        divs = [div for div in soup_html.findAll('div', attrs={'class': 'login-textbox'})]
-        assert len(divs) == 1
-        forms = [form for form in divs[0].findAll('form')]
-        assert len(forms) == 1
-        inputs = [input for input in forms[0].findAll('input')]
 
         payload = {}
 
-        for input in inputs:
-            if input['value']:
-                payload[input['name']] = input['value']
-            else:
-                payload[input['name']] = captcha_solution
+        div = soup_html.find('div', attrs={'class': 'login-textbox'})
+        inputs = [input for input in div.findAll('input')]
+
+        payload[inputs[0]['name']] = EMPIRE_MARKET_USERNAME
+        payload[inputs[1]['name']] = EMPIRE_MARKET_PASSWORD
+        payload[inputs[2]['name']] = captcha_solution
+
+        for input in inputs[3:]:
+            input_value = input['value']
+            payload[input['name']] = input_value
+
 
         return payload
 
