@@ -5,7 +5,7 @@ from definitions import EMPIRE_MARKET_CREDENTIALS
 from src.empire.scrape import EmpireScrapingSession
 
 
-class ScrapeManager:
+class EmpireScrapingManager:
 
     def __init__(self, nr_of_threads=1):
         assert nr_of_threads <= len(EMPIRE_MARKET_CREDENTIALS)
