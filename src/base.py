@@ -106,7 +106,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.db_session.close()
 
 
-    def _get_page_response_and_try_forever(self, url, stream=None):
+    def _get_page_response_and_try_forever(self, url, post_data=None):
         tries = 0
 
         while True:
@@ -114,8 +114,8 @@ class BaseScraper(metaclass=abc.ABCMeta):
             print("Trying to retrieve page " + url + "...")
             print("Try nr. " + str(tries))
             try:
-                if stream:
-                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers, stream=True)
+                if post_data:
+                    response = self.web_session.post(url, data=post_data, proxies=PROXIES, headers=self.headers)
                 else:
                     response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
                 return response

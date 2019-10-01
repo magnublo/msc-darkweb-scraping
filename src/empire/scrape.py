@@ -67,10 +67,10 @@ class EmpireScrapingSession(BaseScraper):
         print("Captcha solved. Solving took " + str(time.time()-time_before_requesting_captcha_solve) + " seconds.")
 
         login_payload = scrapingFunctions.get_login_payload(soup_html, self.username, self.password, captcha_solution)
-        self.web_session.post(EMPIRE_MARKET_LOGIN_URL, data=login_payload, proxies=PROXIES, headers=self.headers)
+        self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL, post_data=login_payload)
 
     def populate_queue(self):
-        web_response = self._get_web_response(EMPIRE_MARKET_HOME_URL)
+        web_response = self._get_page_response_and_try_forever(EMPIRE_MARKET_HOME_URL)
         soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
         pairs_of_category_base_urls_and_nr_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(soup_html)
         task_list = []
