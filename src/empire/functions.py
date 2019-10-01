@@ -2,8 +2,6 @@ import json
 import time
 
 import dateparser as dateparser
-
-from definitions import EMPIRE_MARKET_USERNAME, EMPIRE_MARKET_PASSWORD
 from src.base import BaseFunctions
 
 
@@ -196,15 +194,34 @@ class EmpireScrapingFunctions(BaseFunctions):
         return img_tags[0]['src']
 
     @staticmethod
-    def get_login_payload(soup_html, captcha_solution):
+    def get_category_urls_and_nr_of_listings(soup_html):
+        main_menu_uls = [ul for ul in soup_html.findAll('ul', attrs={'class': 'mainmenu'})]
+        assert len(main_menu_uls) == 1
+        main_menu_ul = main_menu_uls[0]
+        lis = [li for li in main_menu_ul.findAll('li', recursive=False)]
+        assert len(lis) == 11
+
+        category_urls_and_nr_of_listings = []
+
+        for li in lis:
+            url = li.find('a', href=True)["href"]
+            url_fragments = url.split("/")
+            category_url = "/".join(url_fragments[:-1]) + "/"
+            nr_of_listings = li.find('span').text
+            category_urls_and_nr_of_listings.append([category_url, nr_of_listings])
+
+        return category_urls_and_nr_of_listings
+
+    @staticmethod
+    def get_login_payload(soup_html, username, password, captcha_solution):
 
         payload = {}
 
         div = soup_html.find('div', attrs={'class': 'login-textbox'})
         inputs = [input for input in div.findAll('input')]
 
-        payload[inputs[0]['name']] = EMPIRE_MARKET_USERNAME
-        payload[inputs[1]['name']] = EMPIRE_MARKET_PASSWORD
+        payload[inputs[0]['name']] = username
+        payload[inputs[1]['name']] = password
         payload[inputs[2]['name']] = captcha_solution
 
         for input in inputs[3:]:
@@ -215,23 +232,22 @@ class EmpireScrapingFunctions(BaseFunctions):
         return payload
 
     @staticmethod
-    def print_duplicate_debug_message(existing_listing_observation, pagenr, k, duplicates, parsing_time):
+    def print_duplicate_debug_message(existing_listing_observation, initial_queue_size, queue_size, parsing_time):
         print(time.time())
         print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Database already contains listing with this seller and title for this session.")
         print("Seller: " + existing_listing_observation.seller)
         print("Listing title: " + existing_listing_observation.title)
         print("Duplicate listing, skipping...")
-        print("Crawling listing nr " + str((pagenr - 1) * 15 + k) + " this session. " + str(
-            duplicates) + " duplicates encountered.")
+        print("Crawling listing nr " + str(initial_queue_size - queue_size) + " this session. ")
+        print("Listings left, approximate: " + str(queue_size) + ".")
         print("\n")
 
     @staticmethod
-    def print_crawling_debug_message(product_page_url, pagenr, k, duplicates, parsing_time):
+    def print_crawling_debug_message(product_page_url, initial_queue_size, queue_size, parsing_time):
         print(time.time())
         print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Trying to fetch URL: " + product_page_url)
-        print("On pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
-        print("Crawling listing nr " + str((pagenr - 1) * 15 + k) + " this session. " + str(
-            duplicates) + " duplicates encountered.")
+        print("Crawling listing nr " + str(initial_queue_size-queue_size) + " this session. ")
+        print("Listings left, estimate: " + str(queue_size) + ".")
         print("\n")

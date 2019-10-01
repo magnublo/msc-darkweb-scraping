@@ -22,9 +22,11 @@ ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL = 6
 
 #EMPIRE MARKET
 EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
-EMPIRE_MARKET_USERNAME = "using_python3"
-EMPIRE_MARKET_PASSWORD = "Password123!"
+EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
+                            ["using_python4", "Password123!"]]
+
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
+EMPIRE_MARKET_HOME_URL = "http://" + EMPIRE_MARKET_URL + "/home"
 EMPIRE_IMAGE_CAPTCHA_URL_REGEX = r"http:\/\/"+EMPIRE_MARKET_URL.replace(".", "\.")+"\/public\/captchaimg\/[0-9]{10}\.[0-9]{3}\.jpg"
 EMPIRE_BASE_CRAWLING_URL = "http://" + EMPIRE_MARKET_URL + "/category/categories/2/"
 EMPIRE_MARKET_ID = "EMPIRE_MARKET"

@@ -1,3 +1,6 @@
+import sys
+from multiprocessing import Queue
+
 from definitions import DEBUG_MODE
 from src.empire.scrape import EmpireScrapingSession
 
@@ -25,5 +28,10 @@ else:
     pagenr = 1
     listing_nr = 0
 
-scraping_session = EmpireScrapingSession(session_id=session_id, initial_pagenr=pagenr, initial_listingnr=listing_nr)
+queue = Queue()
+
+scraping_session = EmpireScrapingSession(queue, username="using_python3", password="Password123!", session_id=session_id, initial_pagenr=pagenr, initial_listingnr=listing_nr)
+scraping_session.populate_queue()
+print(scraping_session.queue.qsize())
+
 scraping_session.scrape()

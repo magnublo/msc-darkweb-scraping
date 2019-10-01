@@ -65,8 +65,11 @@ class BaseFunctions(metaclass=abc.ABCMeta):
 
 class BaseScraper(metaclass=abc.ABCMeta):
 
-    def __init__(self, session_id=None):
+    def __init__(self, queue, username, password, session_id=None):
+        self.username = username
+        self.password = password
         self.headers = self._get_headers()
+        self.queue = queue
         self.market_id = self._get_market_ID()
         self.start_time = time.time()
         self.duplicates_this_session = 0
@@ -80,6 +83,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             self.session = self._initiate_session()
 
         self.session_id = self.session.id
+        self.initial_queue_size = self.queue.qsize()
 
 
     def _initiate_session(self):
@@ -162,6 +166,10 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
     @abstractmethod
     def _set_cookies(self):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def populate_queue(self):
         raise NotImplementedError('')
 
 

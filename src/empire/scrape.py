@@ -3,13 +3,15 @@ import hashlib
 import json
 import time
 import traceback
+from queue import Empty
+from random import shuffle
 
 import requests
 from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, ANTI_CAPTCHA_CREATE_TASK_URL, \
-    ANTI_CAPTCHA_WAIT_INTERVAL, ANTI_CAPTCHA_GET_TASK_URL, ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL
+    ANTI_CAPTCHA_WAIT_INTERVAL, ANTI_CAPTCHA_GET_TASK_URL, ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL, EMPIRE_MARKET_HOME_URL
 from src.base import Base, engine, db_session, LoggedOutException
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
@@ -38,8 +40,8 @@ class EmpireScrapingSession(BaseScraper):
 
         return False
 
-    def __init__(self, session_id=None, initial_pagenr=0, initial_listingnr=0):
-        super().__init__(session_id=session_id)
+    def __init__(self, queue, username, password, session_id=None, initial_pagenr=0, initial_listingnr=0):
+        super().__init__(queue, username, password, session_id=session_id)
         self.initial_pagenr = initial_pagenr
         self.initial_listingnr = initial_listingnr
         self.logged_out_exceptions = 0
@@ -48,20 +50,18 @@ class EmpireScrapingSession(BaseScraper):
         return EMPIRE_DIR
 
     def _login_and_set_cookie(self, response=None, debug=DEBUG_MODE):
+        if debug:
+            self._set_cookies()
+            return
+
         if not response:
-            if debug:
-                response = None
-            else:
-                response = self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL)
+            response = self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL)
 
         soup_html = self._get_page_as_soup_html(response, "saved_empire_login_html")
         image_url = scrapingFunctions.get_captcha_image_url(soup_html)
 
-        if debug:
-            base64_image = None
-        else:
-            image_response = self._get_page_response_and_try_forever(image_url).content
-            base64_image = base64.b64encode(image_response).decode("utf-8")
+        image_response = self._get_page_response_and_try_forever(image_url).content
+        base64_image = base64.b64encode(image_response).decode("utf-8")
 
         time_before_requesting_captcha_solve = time.time()
         print("Sending image to anti-catpcha.com API...")
@@ -70,9 +70,28 @@ class EmpireScrapingSession(BaseScraper):
                             ).captcha_handler(captcha_base64=base64_image)["solution"]["text"]
         print("Captcha solved. Solving took " + str(time.time()-time_before_requesting_captcha_solve) + " seconds.")
 
-        login_payload = scrapingFunctions.get_login_payload(soup_html, captcha_solution)
+        login_payload = scrapingFunctions.get_login_payload(soup_html, self.username, self.password, captcha_solution)
         self.web_session.post(EMPIRE_MARKET_LOGIN_URL, data=login_payload, proxies=PROXIES, headers=self.headers)
 
+    def populate_queue(self):
+        web_response = self._get_web_response(EMPIRE_MARKET_HOME_URL)
+        soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
+        pairs_of_category_base_urls_and_nr_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(soup_html)
+        task_list = []
+
+        for i in range(0, len(pairs_of_category_base_urls_and_nr_of_listings)):
+            nr_of_listings = int(pairs_of_category_base_urls_and_nr_of_listings[i][1])
+            url = pairs_of_category_base_urls_and_nr_of_listings[i][0]
+            nr_of_pages = nr_of_listings // 15
+            for k in range(0, nr_of_pages):
+                task_list.append(url + str(k*15))
+
+        shuffle(task_list)
+
+        for task in task_list:
+            self.queue.put(task)
+
+        self.initial_queue_size = self.queue.qsize()
 
     def _set_cookies(self):
 
@@ -130,21 +149,24 @@ class EmpireScrapingSession(BaseScraper):
             self._login_and_set_cookie(response)
             return self._get_web_response(url)
 
+
     def scrape(self):
-
-        pagenr = self.initial_pagenr
-        k = self.initial_listingnr
         time_of_last_response = time.time()
+        k = 0
 
-        while pagenr < NR_OF_PAGES:
+        while True:
 
             try:
-                search_result_url = EMPIRE_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
+                search_result_url = self.queue.get_nowait()
+            except Empty:
+                print("Job queue is empty. Wrapping up...")
+                self._wrap_up_session()
+                return
 
+            try:
                 parsing_time = time.time() - time_of_last_response
                 web_response = self._get_web_response(search_result_url)
                 time_of_last_response = time.time()
-
                 soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
                 titles, sellers = scrapingFunctions.get_titles_and_sellers(soup_html)
@@ -161,14 +183,14 @@ class EmpireScrapingSession(BaseScraper):
                     ).first()
 
                     if existing_listing_observation:
-                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, pagenr, k, self.duplicates_this_session, parsing_time)
+                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size, self.queue.qsize(), parsing_time)
                         self.duplicates_this_session += 1
                         k += 1
                         continue
 
                     product_page_url = product_page_urls[k]
 
-                    scrapingFunctions.print_crawling_debug_message(product_page_url, pagenr, k, self.duplicates_this_session, parsing_time)
+                    scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(), parsing_time)
 
                     web_response = self._get_web_response(product_page_url)
 
