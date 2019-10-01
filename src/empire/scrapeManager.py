@@ -15,7 +15,7 @@ class EmpireScrapingManager:
         username = EMPIRE_MARKET_CREDENTIALS[0][0]
         password = EMPIRE_MARKET_CREDENTIALS[0][1]
 
-        scrapingSession = EmpireScrapingSession(queue, username, password)
+        scrapingSession = EmpireScrapingSession(queue, username, password, thread_id=0)
         session_id = scrapingSession.session_id
         scrapingSession.populate_queue()
 
@@ -25,6 +25,6 @@ class EmpireScrapingManager:
         for i in range(1, nr_of_threads):
             username = EMPIRE_MARKET_CREDENTIALS[i][0]
             password = EMPIRE_MARKET_CREDENTIALS[i][1]
-            scrapingSession = EmpireScrapingSession(queue, username, password, session_id=session_id)
+            scrapingSession = EmpireScrapingSession(queue, username, password, thread_id=i, session_id=session_id)
             t = threading.Thread(target=scrapingSession.scrape())
             t.start()

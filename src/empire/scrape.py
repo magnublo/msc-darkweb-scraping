@@ -1,17 +1,16 @@
 import base64
 import hashlib
-import json
 import time
 import traceback
 from queue import Empty
 from random import shuffle
 
 import requests
+from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, ANTI_CAPTCHA_CREATE_TASK_URL, \
-    ANTI_CAPTCHA_WAIT_INTERVAL, ANTI_CAPTCHA_GET_TASK_URL, ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL, EMPIRE_MARKET_HOME_URL
+    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL
 from src.base import Base, engine, db_session, LoggedOutException
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
@@ -21,8 +20,7 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
-from src.utils import pretty_print_GET, pretty_print_POST
-from python3_anticaptcha import ImageToTextTask
+from src.utils import pretty_print_GET
 
 NR_OF_PAGES = 2249
 
@@ -40,10 +38,8 @@ class EmpireScrapingSession(BaseScraper):
 
         return False
 
-    def __init__(self, queue, username, password, session_id=None, initial_pagenr=0, initial_listingnr=0):
-        super().__init__(queue, username, password, session_id=session_id)
-        self.initial_pagenr = initial_pagenr
-        self.initial_listingnr = initial_listingnr
+    def __init__(self, queue, username, password, thread_id, session_id=None):
+        super().__init__(queue, username, password, thread_id=thread_id, session_id=session_id)
         self.logged_out_exceptions = 0
 
     def _get_working_dir(self):
@@ -167,6 +163,7 @@ class EmpireScrapingSession(BaseScraper):
                 parsing_time = time.time() - time_of_last_response
                 web_response = self._get_web_response(search_result_url)
                 time_of_last_response = time.time()
+                cookie = self._get_cookie_string()
                 soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
                 titles, sellers = scrapingFunctions.get_titles_and_sellers(soup_html)
@@ -183,14 +180,14 @@ class EmpireScrapingSession(BaseScraper):
                     ).first()
 
                     if existing_listing_observation:
-                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size, self.queue.qsize(), parsing_time)
+                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
                         self.duplicates_this_session += 1
                         k += 1
                         continue
 
                     product_page_url = product_page_urls[k]
 
-                    scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(), parsing_time)
+                    scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
 
                     web_response = self._get_web_response(product_page_url)
 
@@ -284,7 +281,6 @@ class EmpireScrapingSession(BaseScraper):
                     db_session.commit()
                     k += 1
 
-                pagenr += 1
                 k = 0
 
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
@@ -296,17 +292,21 @@ class EmpireScrapingSession(BaseScraper):
                     try:
                         debug_html = self.web_session.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
                         debug_html = "".join(debug_html.split())
-                        pretty_print_GET(self.web_session.prepare_request(
-                        requests.Request('GET', url=EMPIRE_BASE_CRAWLING_URL, headers=self.headers)))
+                        print(pretty_print_GET(self.web_session.prepare_request(
+                        requests.Request('GET', url=EMPIRE_BASE_CRAWLING_URL, headers=self.headers))))
                     except:
                         tries += 1
                 print(debug_html)
                 raise
             except BaseException as e:
                 traceback.print_exc()
-                print("Error on pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
-                print("Retrying ...")
-                print("Rolled back to pagenr " + str(pagenr) + " and item nr " + str(k) + ".")
-
-        self._wrap_up_session()
+                print("Error when trying to parse. ")
+                try:
+                    print("Product page url: " + str(product_page_url))
+                except:
+                    pass
+                try:
+                    print("Search result page url: " + str(search_result_url))
+                except:
+                    pass
 

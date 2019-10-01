@@ -9,6 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
+from src.utils import pretty_print_GET
 
 engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
 Session = sessionmaker(bind=engine)
@@ -65,9 +66,10 @@ class BaseFunctions(metaclass=abc.ABCMeta):
 
 class BaseScraper(metaclass=abc.ABCMeta):
 
-    def __init__(self, queue, username, password, session_id=None):
+    def __init__(self, queue, username, password, thread_id, session_id=None):
         self.username = username
         self.password = password
+        self.thread_id = thread_id
         self.headers = self._get_headers()
         self.queue = queue
         self.market_id = self._get_market_ID()
@@ -131,6 +133,14 @@ class BaseScraper(metaclass=abc.ABCMeta):
             return soup_html
         else:
             return BeautifulSoup(web_response.text)
+
+    def _get_cookie_string(self):
+        request_as_string = pretty_print_GET(self.web_session.prepare_request(
+            requests.Request('GET', url="http://"+self.headers["Host"], headers=self.headers)))
+        lines = request_as_string.split("\n")
+        for line in lines:
+            if line[0:7].lower() == "cookie:":
+                return line.strip().lower()
 
     @abstractmethod
     def _get_web_response(self, url, debug=DEBUG_MODE):

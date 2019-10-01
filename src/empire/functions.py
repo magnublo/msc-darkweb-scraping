@@ -232,22 +232,26 @@ class EmpireScrapingFunctions(BaseFunctions):
         return payload
 
     @staticmethod
-    def print_duplicate_debug_message(existing_listing_observation, initial_queue_size, queue_size, parsing_time):
+    def print_duplicate_debug_message(existing_listing_observation, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
         print(time.time())
         print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Database already contains listing with this seller and title for this session.")
         print("Seller: " + existing_listing_observation.seller)
         print("Listing title: " + existing_listing_observation.title)
         print("Duplicate listing, skipping...")
+        print("Thread nr. " + str(thread_id))
+        print("Web session " + cookie)
         print("Crawling listing nr " + str(initial_queue_size - queue_size) + " this session. ")
         print("Listings left, approximate: " + str(queue_size) + ".")
         print("\n")
 
     @staticmethod
-    def print_crawling_debug_message(product_page_url, initial_queue_size, queue_size, parsing_time):
+    def print_crawling_debug_message(product_page_url, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
         print(time.time())
         print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Trying to fetch URL: " + product_page_url)
+        print("Thread nr. " + str(thread_id))
+        print("Web session " + cookie)
         print("Crawling listing nr " + str(initial_queue_size-queue_size) + " this session. ")
         print("Listings left, estimate: " + str(queue_size) + ".")
         print("\n")
