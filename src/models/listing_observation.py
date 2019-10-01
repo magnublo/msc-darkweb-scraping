@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, Integer, Date, ForeignKey, Boolean, DateT
 import src.models.country as country
 import src.models.listing_text as listing_text
 import src.models.scraping_session as scraping_session
+import src.models.seller as seller
 from src.base import Base
 
 
@@ -28,7 +29,7 @@ class ListingObservation(Base):
     ltc = Column(Boolean)
     xmr = Column(Boolean)
     promoted_listing = Column(Boolean)
-    seller = Column(String)
+    seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY))
     price = Column(Float)
     fiat_currency = Column(String)
     origin_country = Column(String, ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY))
@@ -38,8 +39,6 @@ class ListingObservation(Base):
     btc_rate = Column(Float)
     ltc_rate = Column(Float)
     xmr_rate = Column(Float)
-    nr_sold = Column(Integer)
-    nr_sold_since_date = Column(Date)
     vendor_level = Column(Integer)
     trust_level = Column(Integer)
 

@@ -20,6 +20,7 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
+from src.models.seller import Seller, SellerObservation
 from src.utils import pretty_print_GET
 
 NR_OF_PAGES = 2249
@@ -166,12 +167,13 @@ class EmpireScrapingSession(BaseScraper):
                 cookie = self._get_cookie_string()
                 soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
-                titles, sellers = scrapingFunctions.get_titles_and_sellers(soup_html)
+                titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
                 while k < len(product_page_urls):
                     title = titles[k]
                     seller = sellers[k]
+                    seller_url = seller_urls[k]
 
                     existing_listing_observation = self.db_session.query(ListingObservation).filter_by(
                         title=title,
@@ -184,6 +186,16 @@ class EmpireScrapingSession(BaseScraper):
                         self.duplicates_this_session += 1
                         k += 1
                         continue
+
+                    existing_seller = self.db_session.query(SellerObservation).filter_by(
+                        name=seller,
+                        session_id=self.session_id
+                    ).first()
+
+                    if existing_seller:
+                        seller_id = existing_seller.id
+                    else:
+                        seller_id = self._scrape_seller(seller_url)
 
                     product_page_url = product_page_urls[k]
 
@@ -242,12 +254,10 @@ class EmpireScrapingSession(BaseScraper):
                         ltc=accepts_LTC,
                         xmr=accepts_XMR,
                         promoted_listing=is_sticky,
-                        seller=seller,
                         btc_rate=btc_rate,
                         ltc_rate=ltc_rate,
                         xmr_rate=xmr_rate,
-                        nr_sold=nr_sold,
-                        nr_sold_since_date=nr_sold_since_date,
+                        seller_id=seller_id,
                         fiat_currency=fiat_currency,
                         price=price,
                         origin_country=origin_country,
@@ -309,4 +319,8 @@ class EmpireScrapingSession(BaseScraper):
                     print("Search result page url: " + str(search_result_url))
                 except:
                     pass
+
+    def _scrape_seller(self, seller_url):
+        web_reponse = self._get_web_response(seller_url)
+        soup_html = self._get_page_as_soup_html(web_reponse, "saved_empire_user_html")
 

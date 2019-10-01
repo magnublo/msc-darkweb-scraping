@@ -177,6 +177,7 @@ class EmpireScrapingFunctions(BaseFunctions):
     def get_titles_and_sellers(soup_html):
         titles = []
         sellers = []
+        seller_urls = []
 
         col_1centres = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
         assert len(col_1centres) <= 15
@@ -191,10 +192,11 @@ class EmpireScrapingFunctions(BaseFunctions):
             user_href_links = [href for href in padp_p_tags[0].findAll('a', href=True)]
             assert len(user_href_links) == 1
             sellers.append(user_href_links[0].text)
+            seller_urls.append(user_href_links[0]["href"])
 
         assert len(titles) == len(sellers) == len(col_1centres)
 
-        return titles, sellers
+        return titles, sellers, seller_urls
 
     @staticmethod
     def get_captcha_image_url(soup_html):
