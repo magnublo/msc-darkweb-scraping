@@ -9,15 +9,15 @@ DEBUG_MODE = True
 TOR_PORT = 9050
 
 PROXIES = {
-    'http': "socks5h://localhost:{}".format(TOR_PORT),
-    'https': "socks5h://localhost:{}".format(TOR_PORT)
+    'http': "socks5h://sikkerhetshull.no:{}".format(TOR_PORT),
+    'https': "socks5h://sikkerhetshull.no:{}".format(TOR_PORT)
 }
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
 
-DB_USERNAME = "msc-scraper"
-DB_ENGINE_URL = 'mysql+mysqlconnector://'+DB_USERNAME+':Password123!@localhost:3306/scraping'
+DB_USERNAME = "magnublo"
+DB_ENGINE_URL = 'mysql+mysqlconnector://'+DB_USERNAME+':Password123!@mysql.stud.ntnu.no:3306/magnublo_scraping'
 DB_CLIENT_ENCODING = "utf8"
 
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535

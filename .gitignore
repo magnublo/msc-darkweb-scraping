@@ -39,6 +39,9 @@
 # *.iml
 # *.ipr
 
+#Virtual environment
+venv/**
+
 # CMake
 cmake-build-*/
 
