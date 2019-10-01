@@ -60,7 +60,7 @@ class EmpireScrapingSession(BaseScraper):
         base64_image = base64.b64encode(image_response).decode("utf-8")
 
         time_before_requesting_captcha_solve = time.time()
-        print("Sending image to anti-catpcha.com API...")
+        print("Thread nr. " + str(self.thread_id) + " sending image to anti-catpcha.com API...")
         captcha_solution = ImageToTextTask.ImageToTextTask(
                                 anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY
                             ).captcha_handler(captcha_base64=base64_image)["solution"]["text"]

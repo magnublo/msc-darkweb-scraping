@@ -95,7 +95,8 @@ class BaseScraper(metaclass=abc.ABCMeta):
             duplicates_encountered=self.duplicates_this_session
         )
         self.db_session.add(scraping_session)
-        self.db_session.flush()
+        self.db_session.commit()
+        print("Thread nr. " + str(self.thread_id) + "initiated scraping_session with ID: " + str(scraping_session.id))
         return scraping_session
 
 
