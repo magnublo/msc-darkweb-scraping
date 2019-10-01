@@ -11,7 +11,7 @@ from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL
-from src.base import Base, engine, db_session, LoggedOutException
+from src.base import Base, engine, LoggedOutException
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
@@ -38,8 +38,8 @@ class EmpireScrapingSession(BaseScraper):
 
         return False
 
-    def __init__(self, queue, username, password, thread_id, session_id=None):
-        super().__init__(queue, username, password, thread_id=thread_id, session_id=session_id)
+    def __init__(self, queue, username, password, db_session, thread_id, session_id=None):
+        super().__init__(queue, username, password, db_session, thread_id=thread_id, session_id=session_id)
         self.logged_out_exceptions = 0
 
     def _get_working_dir(self):
@@ -173,7 +173,7 @@ class EmpireScrapingSession(BaseScraper):
                     title = titles[k]
                     seller = sellers[k]
 
-                    existing_listing_observation = db_session.query(ListingObservation).filter_by(
+                    existing_listing_observation = self.db_session.query(ListingObservation).filter_by(
                         title=title,
                         seller=seller,
                         session_id=self.session_id
@@ -207,7 +207,7 @@ class EmpireScrapingSession(BaseScraper):
                     db_category_ids = []
 
                     for i in range(0, len(categories)):
-                        category = db_session.query(ListingCategory).filter_by(
+                        category = self.db_session.query(ListingCategory).filter_by(
                             website_id=website_category_ids[i],
                             name=categories[i],
                             market=self.market_id).first()
@@ -218,21 +218,21 @@ class EmpireScrapingSession(BaseScraper):
                                 name=categories[i],
                                 market=self.market_id
                             )
-                            db_session.add(category)
-                            db_session.flush()
+                            self.db_session.add(category)
+                            self.db_session.flush()
 
                         db_category_ids.append(category.id)
 
-                    db_session.merge(ListingText(
+                    self.db_session.merge(ListingText(
                         id=listing_text_id,
                         text=listing_text
                     ))
 
-                    db_session.merge(Country(
+                    self.db_session.merge(Country(
                         id=origin_country
                     ))
 
-                    db_session.flush()
+                    self.db_session.flush()
 
                     listing_observation = ListingObservation(
                         session_id=session_id,
@@ -255,30 +255,30 @@ class EmpireScrapingSession(BaseScraper):
                         trust_level=trust_level
                     )
 
-                    db_session.add(listing_observation)
+                    self.db_session.add(listing_observation)
 
-                    db_session.flush()
+                    self.db_session.flush()
 
                     for destination_country in destination_countries:
-                        db_session.merge(Country(
+                        self.db_session.merge(Country(
                             id=destination_country
                         ))
 
-                        db_session.flush()
+                        self.db_session.flush()
 
-                        db_session.add(ListingObservationCountry(
+                        self.db_session.add(ListingObservationCountry(
                             listing_observation_id=listing_observation.id,
                             country_id=destination_country
                         ))
 
                     for db_category_id in db_category_ids:
-                        db_session.add(ListingObservationCategory(
+                        self.db_session.add(ListingObservationCategory(
                             listing_observation_id=listing_observation.id,
                             category_id=db_category_id
                         ))
 
 
-                    db_session.commit()
+                    self.db_session.commit()
                     k += 1
 
                 k = 0

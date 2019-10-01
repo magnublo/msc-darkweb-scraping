@@ -14,7 +14,6 @@ from src.utils import pretty_print_GET
 engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
-db_session = Session()
 
 from src.models.scraping_session import ScrapingSession
 
@@ -66,10 +65,11 @@ class BaseFunctions(metaclass=abc.ABCMeta):
 
 class BaseScraper(metaclass=abc.ABCMeta):
 
-    def __init__(self, queue, username, password, thread_id, session_id=None):
+    def __init__(self, queue, username, password, db_session, thread_id, session_id=None):
         self.username = username
         self.password = password
         self.thread_id = thread_id
+        self.db_session = db_session
         self.headers = self._get_headers()
         self.queue = queue
         self.market_id = self._get_market_ID()
@@ -94,16 +94,16 @@ class BaseScraper(metaclass=abc.ABCMeta):
             market=self.market_id,
             duplicates_encountered=self.duplicates_this_session
         )
-        db_session.add(scraping_session)
-        db_session.flush()
+        self.db_session.add(scraping_session)
+        self.db_session.flush()
         return scraping_session
 
 
     def _wrap_up_session(self):
         self.session.time_finished = time.time()
         self.session.duplicates_encountered = self.duplicates_this_session
-        db_session.commit()
-        db_session.close()
+        self.db_session.commit()
+        self.db_session.close()
 
 
     def _get_page_response_and_try_forever(self, url, stream=None):

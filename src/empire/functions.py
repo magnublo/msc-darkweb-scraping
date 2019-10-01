@@ -1,5 +1,6 @@
 import json
 import time
+from datetime import datetime
 
 import dateparser as dateparser
 from src.base import BaseFunctions
@@ -233,7 +234,7 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def print_duplicate_debug_message(existing_listing_observation, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
-        print(time.time())
+        print(datetime.fromtimestamp(time.time()))
         print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Database already contains listing with this seller and title for this session.")
         print("Seller: " + existing_listing_observation.seller)
@@ -247,7 +248,7 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def print_crawling_debug_message(product_page_url, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
-        print(time.time())
+        print(datetime.fromtimestamp(time.time()))
         print("Last web response was parsed in " + str(parsing_time) + " seconds.")
         print("Trying to fetch URL: " + product_page_url)
         print("Thread nr. " + str(thread_id))
