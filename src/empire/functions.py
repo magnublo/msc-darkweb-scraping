@@ -3,6 +3,8 @@ import time
 from datetime import datetime
 
 import dateparser as dateparser
+
+from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH
 from src.base import BaseFunctions
 
 
@@ -27,7 +29,15 @@ class EmpireScrapingFunctions(BaseFunctions):
     def get_description(soup_html):
         descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent'})]
         assert len(descriptions) == 1
-        return descriptions[0].text
+        description = descriptions[0].text
+
+        mxlen = MYSQL_TEXT_COLUMN_MAX_LENGTH
+
+        while (description.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
+            mxlen -= 1
+
+        truncated_string = description.encode("utf8")[0:mxlen].decode("utf8")
+        return truncated_string
 
     @staticmethod
     def get_product_page_urls(soup_html):
