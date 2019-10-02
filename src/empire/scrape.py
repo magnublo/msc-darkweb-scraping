@@ -10,7 +10,7 @@ from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL
+    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS
 from src.base import Base, engine, LoggedOutException
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
@@ -20,7 +20,7 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
-from src.models.seller import Seller, SellerObservation
+from src.models.seller import SellerObservation
 from src.utils import pretty_print_GET
 
 NR_OF_PAGES = 2249
@@ -117,16 +117,10 @@ class EmpireScrapingSession(BaseScraper):
         return EMPIRE_MARKET_ID
 
     def _get_headers(self):
-        return {
-            "Host": self._get_market_URL(),
-            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate",
-            "Referer": "http://" + self._get_market_URL() + "/login",
-            "Connection": "keep-alive",
-            "Upgrade-Insecure-Requests": "1"
-        }
+        headers = EMPIRE_HTTP_HEADERS
+        headers["Host"] = self._get_market_URL()
+        headers["Referer"] = "http://" + self._get_market_URL() + "/login"
+        return headers
 
     def _get_web_response(self, url, debug=DEBUG_MODE):
         if debug:
@@ -175,11 +169,13 @@ class EmpireScrapingSession(BaseScraper):
                     seller = sellers[k]
                     seller_url = seller_urls[k]
 
-                    existing_listing_observation = self.db_session.query(ListingObservation).filter_by(
-                        title=title,
-                        seller=seller,
-                        session_id=self.session_id
-                    ).first()
+                    existing_listing_observation = self.db_session.query(ListingObservation) \
+                        .filter(ListingObservation.session_id == self.session_id) \
+                        .join(SellerObservation)\
+                        .filter(ListingObservation.seller_id == SellerObservation.id)\
+                        .filter(SellerObservation.name == seller)\
+                        .filter(ListingObservation.title == title)\
+                        .first()
 
                     if existing_listing_observation:
                         scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
@@ -213,7 +209,6 @@ class EmpireScrapingSession(BaseScraper):
                     nr_sold, nr_sold_since_date = scrapingFunctions.get_nr_sold_since_date(soup_html)
                     fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
                     origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
-                    vendor_level, trust_level = scrapingFunctions.get_vendor_and_trust_level(soup_html)
                     is_sticky = urls_is_sticky[k]
 
                     db_category_ids = []
@@ -253,6 +248,8 @@ class EmpireScrapingSession(BaseScraper):
                         btc=accepts_BTC,
                         ltc=accepts_LTC,
                         xmr=accepts_XMR,
+                        nr_sold=nr_sold,
+                        nr_sold_since_date=nr_sold_since_date,
                         promoted_listing=is_sticky,
                         btc_rate=btc_rate,
                         ltc_rate=ltc_rate,
@@ -260,9 +257,7 @@ class EmpireScrapingSession(BaseScraper):
                         seller_id=seller_id,
                         fiat_currency=fiat_currency,
                         price=price,
-                        origin_country=origin_country,
-                        vendor_level=vendor_level,
-                        trust_level=trust_level
+                        origin_country=origin_country
                     )
 
                     self.db_session.add(listing_observation)
@@ -323,4 +318,15 @@ class EmpireScrapingSession(BaseScraper):
     def _scrape_seller(self, seller_url):
         web_reponse = self._get_web_response(seller_url)
         soup_html = self._get_page_as_soup_html(web_reponse, "saved_empire_user_html")
+        description = scrapingFunctions.get_seller_about_description(soup_html)
 
+        disputes, orders, spendings, feedback_left,\
+        feedback_percent_positive, last_online = scrapingFunctions.get_buyer_statistics(soup_html)
+
+        positive_1m, positive_6m, positive_12m,\
+        neutral_1m, neutral_6m, neutral_12m,\
+        negative_1m, negative_6m, negative_12m = scrapingFunctions.get_seller_statistics(soup_html)
+
+        stealth_rating, quality_rating, value_price_rating = scrapingFunctions.get_star_ratings(soup_html)
+
+        vendor_level, trust_level = scrapingFunctions.get_vendor_and_trust_level(soup_html)

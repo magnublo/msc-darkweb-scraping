@@ -1,6 +1,6 @@
 import os
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 
 TOR_PORT = 9050
 
@@ -21,6 +21,7 @@ ANTI_CAPTCHA_GET_TASK_URL = "https://api.anti-captcha.com/getTaskResult "
 ANTI_CAPTCHA_WAIT_INTERVAL = 2
 ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL = 6
 
+
 #EMPIRE MARKET
 EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
 EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
@@ -33,5 +34,13 @@ EMPIRE_IMAGE_CAPTCHA_URL_REGEX = r"http:\/\/"+EMPIRE_MARKET_URL.replace(".", "\.
 EMPIRE_BASE_CRAWLING_URL = "http://" + EMPIRE_MARKET_URL + "/category/categories/2/"
 EMPIRE_MARKET_ID = "EMPIRE_MARKET"
 EMPIRE_DIR = ROOT_DIR + "src/empire/"
+EMPIRE_HTTP_HEADERS = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1"
+        }
 
 

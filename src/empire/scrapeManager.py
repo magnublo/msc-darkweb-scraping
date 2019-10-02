@@ -2,7 +2,7 @@ import threading
 from multiprocessing import Queue
 from time import sleep
 
-from definitions import EMPIRE_MARKET_CREDENTIALS
+from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE
 from src.base import Session
 from src.empire.scrape import EmpireScrapingSession
 
@@ -20,10 +20,14 @@ class EmpireScrapingManager:
         db_sesssion = Session()
         scrapingSession = EmpireScrapingSession(queue, username, password, db_sesssion, thread_id=0)
         session_id = scrapingSession.session_id
-        scrapingSession.populate_queue()
 
-        print("Sleeping 5 seconds to avoid race conditions...")
-        sleep(5)
+        if DEBUG_MODE:
+            for i in range(0, 100):
+                queue.put(str(i))
+        else:
+            scrapingSession.populate_queue()
+            print("Sleeping 5 seconds to avoid race conditions...")
+            sleep(5)
 
         t = threading.Thread(target=scrapingSession.scrape)
         t.start()

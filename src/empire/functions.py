@@ -8,6 +8,15 @@ from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH
 from src.base import BaseFunctions
 
 
+def _shorten_for_text_column(description):
+    mxlen = MYSQL_TEXT_COLUMN_MAX_LENGTH
+
+    while (description.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
+        mxlen -= 1
+
+    return description.encode("utf8")[0:mxlen].decode("utf8")
+
+
 class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
@@ -30,14 +39,8 @@ class EmpireScrapingFunctions(BaseFunctions):
         descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent'})]
         assert len(descriptions) == 1
         description = descriptions[0].text
+        return _shorten_for_text_column(description)
 
-        mxlen = MYSQL_TEXT_COLUMN_MAX_LENGTH
-
-        while (description.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
-            mxlen -= 1
-
-        truncated_string = description.encode("utf8")[0:mxlen].decode("utf8")
-        return truncated_string
 
     @staticmethod
     def get_product_page_urls(soup_html):
@@ -268,3 +271,22 @@ class EmpireScrapingFunctions(BaseFunctions):
         print("Crawling listing nr " + str(initial_queue_size-queue_size) + " this session. ")
         print("Listings left, estimate: " + str(queue_size) + ".")
         print("\n")
+
+    @staticmethod
+    def get_seller_about_description(soup_html):
+        tab_content_divs = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent_user_feedback'})]
+        assert len(tab_content_divs) == 1
+        description = tab_content_divs[0].text
+        return _shorten_for_text_column(description)
+
+    @staticmethod
+    def get_seller_statistics(soup_html):
+        pass
+
+    @staticmethod
+    def get_buyer_statistics(soup_html):
+        pass
+
+    @staticmethod
+    def get_star_ratings(soup_html):
+        pass

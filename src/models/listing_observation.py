@@ -24,10 +24,14 @@ class ListingObservation(Base):
     listing_text_id = Column(String, ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY))
 
     title = Column(Text)
+    url = Column(String)
 
     btc = Column(Boolean)
     ltc = Column(Boolean)
     xmr = Column(Boolean)
+    nr_sold = Column(Integer)
+    nr_sold_since_date = Column(Date)
+
     promoted_listing = Column(Boolean)
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY))
     price = Column(Float)
@@ -39,7 +43,4 @@ class ListingObservation(Base):
     btc_rate = Column(Float)
     ltc_rate = Column(Float)
     xmr_rate = Column(Float)
-    vendor_level = Column(Integer)
-    trust_level = Column(Integer)
-
 
