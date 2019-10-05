@@ -26,10 +26,8 @@ from src.models.seller_observation import SellerObservation
 from src.models.seller_observation_feedback import SellerObservationFeedback
 from src.utils import pretty_print_GET
 
-NR_OF_PAGES = 2249
 
 Base.metadata.create_all(engine)
-
 
 class EmpireScrapingSession(BaseScraper):
 

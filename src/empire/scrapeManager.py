@@ -3,7 +3,7 @@ from multiprocessing import Queue
 from time import sleep
 
 from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE
-from src.base import Session
+from src.base import Session, engine, Base
 from src.empire.scrape import EmpireScrapingSession
 
 
@@ -11,7 +11,7 @@ class EmpireScrapingManager:
 
     def __init__(self, nr_of_threads=1):
         assert nr_of_threads <= len(EMPIRE_MARKET_CREDENTIALS)
-
+        Base.metadata.create_all(engine)
         queue = Queue()
 
         username = EMPIRE_MARKET_CREDENTIALS[0][0]
