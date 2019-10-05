@@ -8,8 +8,8 @@ from python3_anticaptcha import ImageToTextTask, AntiCaptchaControl
 from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS
-from src.main import engine, Base
+    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, engine, \
+    Base
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country

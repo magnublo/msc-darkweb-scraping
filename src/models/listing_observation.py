@@ -6,7 +6,7 @@ import src.models.country as country
 import src.models.listing_text as listing_text
 import src.models.scraping_session as scraping_session
 import src.models.seller_observation as seller
-from src.main import Base
+from definitions import Base
 
 TABLE_NAME = 'listing_observation'
 PRIMARY_KEY = 'id'

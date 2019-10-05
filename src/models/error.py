@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, String, Text, DateTime, Integer
 
-from src.main import Base
+from definitions import Base
 
 TABLE_NAME = 'error'
 PRIMARY_KEY = 'id'

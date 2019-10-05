@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, String, Text, DateTime
 
-from src.main import Base
+from definitions import Base
 
 TABLE_NAME = 'seller_description_text'
 PRIMARY_KEY = 'id'
