@@ -5,7 +5,7 @@ from sqlalchemy import Column, String, Integer, Date, ForeignKey, Boolean, DateT
 import src.models.country as country
 import src.models.listing_text as listing_text
 import src.models.scraping_session as scraping_session
-import src.models.seller as seller
+import src.models.seller_observation as seller
 from src.base import Base
 
 

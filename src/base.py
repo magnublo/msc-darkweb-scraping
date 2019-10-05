@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
+from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE
 from src.utils import pretty_print_GET
 
 engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)

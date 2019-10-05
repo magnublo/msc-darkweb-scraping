@@ -9,12 +9,15 @@ from src.base import BaseFunctions
 
 
 def _shorten_for_text_column(description):
+    if len(description.encode("utf8")) <= MYSQL_TEXT_COLUMN_MAX_LENGTH:
+        return description.strip()
+
     mxlen = MYSQL_TEXT_COLUMN_MAX_LENGTH
 
     while (description.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
         mxlen -= 1
 
-    return description.encode("utf8")[0:mxlen].decode("utf8")
+    return description.encode("utf8")[0:mxlen].decode("utf8").strip()
 
 
 class EmpireScrapingFunctions(BaseFunctions):
@@ -132,16 +135,16 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_vendor_and_trust_level(soup_html):
-        list_descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'listDes'})]
-        assert len(list_descriptions) == 1
-        list_description = list_descriptions[0]
+        user_info_mid_heads = [h3 for h3 in soup_html.findAll('h3', attrs={'class': 'user_info_mid_head'})]
+        assert len(user_info_mid_heads) == 1
+        user_info_mid_head = user_info_mid_heads[0]
         spans = []
         vendor_level = None
         trust_level = None
 
         for i in range(0, 20):
-            className = "levelSet level-"+str(i)
-            spans = spans + [span for span in list_description.findAll('span', attrs={'class': className})]
+            className = "user_info_trust level-"+str(i)
+            spans = spans + [span for span in user_info_mid_head.findAll('span', attrs={'class': className})]
             if len(spans) > 0:
                 for span in spans:
                     if span.text.find("Vendor") >= 0:
@@ -273,20 +276,138 @@ class EmpireScrapingFunctions(BaseFunctions):
         print("\n")
 
     @staticmethod
-    def get_seller_about_description(soup_html):
+    def get_seller_about_description(soup_html, seller_name):
         tab_content_divs = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent_user_feedback'})]
         assert len(tab_content_divs) == 1
         description = tab_content_divs[0].text
-        return _shorten_for_text_column(description)
+        index_of_seller_name = description.find(seller_name)
+        description_after_standard_heading = description[index_of_seller_name+len(seller_name)+3:]
+        return _shorten_for_text_column(description_after_standard_heading)
 
     @staticmethod
     def get_seller_statistics(soup_html):
-        pass
+        seller_rating_divs = [div for div in soup_html.findAll('div', attrs={'class': 'seller_rating'})]
+        assert len(seller_rating_divs) == 1
+        hrefs = [href for href in seller_rating_divs[0].findAll('a', href=True)]
+        assert len(hrefs) == 9
+
+        feedbacks = []
+
+        for href in hrefs:
+            feedbacks.append(href.text)
+
+        assert len(feedbacks) == 9
+
+        return feedbacks
+
 
     @staticmethod
     def get_buyer_statistics(soup_html):
-        pass
+        buyer_statistics_divs = [div for div in soup_html.findAll('div', attrs={'class': 'buyer_statistics'})]
+        assert len(buyer_statistics_divs) == 1
+        tables = [table for table in buyer_statistics_divs[0].findAll('table')]
+        assert len(tables) == 1
+        trs = [tr for tr in tables[0].findAll('tr')]
+
+        tds = [td for td in trs[1].findAll('td')]
+        disputes, orders = [s.strip() for s in tds[1].text.split("/")]
+
+        tds = [td for td in trs[2].findAll('td')]
+        spendings = tds[1].text
+
+        tds = [td for td in trs[3].findAll('td')]
+        td_body = tds[1].text
+        td_body_parts = td_body.split(" ")
+        feedback_left = td_body_parts[0]
+        feedback_percent_positive = td_body_parts[1][1:-1]
+
+        tds = [td for td in trs[4].findAll('td')]
+        unparsed_date = tds[1].text
+        last_online = dateparser.parse(unparsed_date)
+
+        return disputes, orders, spendings, feedback_left, feedback_percent_positive, last_online
 
     @staticmethod
     def get_star_ratings(soup_html):
-        pass
+        rating_star_divs = [div for div in soup_html.findAll('div', attrs={'class': 'rating_star'})]
+        assert len(rating_star_divs) == 1
+        tables = [table for table in rating_star_divs[0].findAll('table')]
+        assert len(tables) == 1
+        trs = [tr for tr in tables[0].findAll('tr')]
+        assert len(trs) == 2
+        tds = [td for td in trs[1].findAll('td')]
+        assert len(tds) == 5
+
+        star_ratings = []
+
+        for td in tds[2:]:
+            star_icons = [star_icon for star_icon in td.findAll('i', attrs={'class': 'fa fa-star'})]
+            star_ratings.append(len(star_icons))
+
+        return star_ratings
+
+    @staticmethod
+    def get_feedback_categories_and_urls(soup_html):
+        tab_divs = [div for div in soup_html.findAll('div', attrs={'class': 'tab'})]
+        assert len(tab_divs) == 1
+        hrefs = [href for href in tab_divs[0].findAll('a', href=True)]
+        assert len(hrefs) == 6
+
+        feedback_categories = []
+        feedback_urls = []
+
+        for href in hrefs[1:5]:
+            feedback_categories.append(href.text)
+            feedback_urls.append(href["href"])
+
+        return feedback_categories, feedback_urls
+
+    @staticmethod
+    def get_feedbacks(soup_html):
+        autoshop_tables = [div for div in soup_html.findAll('table', attrs={'class': 'user_feedbackTbl autoshop_table'})]
+        assert len(autoshop_tables) == 1
+        autoshop_table = autoshop_tables[0]
+
+        feedbacks = []
+        trs = [tr for tr in autoshop_table.findAll('tr')]
+
+        for tr in trs[1:]:
+            feedback = {}
+            messages = [p for p in tr.findAll('p', attrs={'class': 'setp1 bold1 feedback_msg'})]
+            assert len(messages) == 2
+            feedback["feedback_message"] = _shorten_for_text_column(messages[0].text)
+            seller_response = messages[1].text.strip()
+            seller_response_header_text = "Seller Response: "
+
+            assert (seller_response[0:len(seller_response_header_text)] == seller_response_header_text)
+            feedback["seller_response_message"] = _shorten_for_text_column(seller_response[len(seller_response_header_text):])
+
+            buyers = [p for p in tr.findAll('font', attrs={'style': 'color:#dc6831;'})]
+            assert len(buyers) == 1
+            feedback["buyer"] = buyers[0].text
+
+            mid_columns = [p for p in tr.findAll('p', attrs={'class': 'setp1 c_424648'})]
+            assert len(mid_columns) == 2
+            lines = mid_columns[1].text.split("\n")
+            assert len(lines) == 2
+            parts = lines[1].split(" ")
+
+            feedback["currency"] = parts[-2]
+            feedback["price"] = parts[-1]
+
+            #<td style="text-align: right;">
+            right_columns = [td for td in tr.findAll('td', attrs={'style': 'text-align: right;'})]
+            assert len(right_columns) == 1
+            right_column = right_columns[0]
+            ps = [p for p in right_column.findAll('p')]
+            assert len(ps) == 1
+            parts = ps[0].text.split("\n")
+            feedback["date_published"] = dateparser.parse(parts[0])
+
+            hrefs = [href["href"] for href in right_column.findAll('a', href=True)]
+            assert len(hrefs) == 1
+
+            feedback["product_url"] = hrefs[0]
+            feedbacks.append(feedback)
+
+        return feedbacks
