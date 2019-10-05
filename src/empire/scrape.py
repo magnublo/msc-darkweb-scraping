@@ -201,7 +201,8 @@ class EmpireScrapingSession(BaseScraper):
                     seller_observation = SellerObservation(
                         name=seller_name,
                         session_id=self.session_id,
-                        url=seller_url
+                        url=seller_url,
+                        market=self.market_id
                     )
                     self.db_session.add(seller_observation)
                     self.db_session.commit()
@@ -308,6 +309,8 @@ class EmpireScrapingSession(BaseScraper):
         seller_url = seller_observation.url
         seller_name = seller_observation.name
 
+        scrapingFunctions.print_crawling_debug_message(seller_url, self.initial_queue_size, self.queue.qsize()
+                                                       ,self.thread_id, self._get_cookie_string(), "N/A")
         web_response = self._error_catch_wrapper(self._get_web_response(seller_url), EMPIRE_MARKET_HOME_URL, seller_url,
                                   " ")
 
@@ -349,6 +352,7 @@ class EmpireScrapingSession(BaseScraper):
         seller_observation.disputes = disputes
         seller_observation.orders = orders
         seller_observation.spendings = spendings
+        seller_observation.feedback_left = feedback_left
         seller_observation.feedback_percent_positive = feedback_percent_positive
 
         seller_observation.positive_1m = positive_1m
@@ -374,6 +378,9 @@ class EmpireScrapingSession(BaseScraper):
 
     def _scrape_feedback(self, seller_observation, category, url):
 
+        scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
+                                                       , self.thread_id, self._get_cookie_string(), "N/A")
+        
         web_response = self._error_catch_wrapper(self._get_web_response(url), EMPIRE_MARKET_HOME_URL, url,
                                   " ")
 

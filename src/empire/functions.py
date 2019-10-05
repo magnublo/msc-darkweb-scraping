@@ -251,31 +251,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         return payload
 
     @staticmethod
-    def print_duplicate_debug_message(existing_listing_observation, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
-        print(datetime.fromtimestamp(time.time()))
-        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
-        print("Database already contains listing with this seller and title for this session.")
-        print("Seller: " + existing_listing_observation.seller)
-        print("Listing title: " + existing_listing_observation.title)
-        print("Duplicate listing, skipping...")
-        print("Thread nr. " + str(thread_id))
-        print("Web session " + cookie)
-        print("Crawling listing nr " + str(initial_queue_size - queue_size) + " this session. ")
-        print("Listings left, approximate: " + str(queue_size) + ".")
-        print("\n")
-
-    @staticmethod
-    def print_crawling_debug_message(product_page_url, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
-        print(datetime.fromtimestamp(time.time()))
-        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
-        print("Trying to fetch URL: " + product_page_url)
-        print("Thread nr. " + str(thread_id))
-        print("Web session " + cookie)
-        print("Crawling listing nr " + str(initial_queue_size-queue_size) + " this session. ")
-        print("Listings left, estimate: " + str(queue_size) + ".")
-        print("\n")
-
-    @staticmethod
     def get_seller_about_description(soup_html, seller_name):
         tab_content_divs = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent_user_feedback'})]
         assert len(tab_content_divs) == 1
@@ -417,3 +392,28 @@ class EmpireScrapingFunctions(BaseFunctions):
             feedbacks.append(feedback)
 
         return feedbacks
+
+    @staticmethod
+    def print_duplicate_debug_message(existing_listing_observation, initial_queue_size, queue_size, thread_id, cookie,
+                                      parsing_time):
+        print(datetime.fromtimestamp(time.time()))
+        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
+        print("Database already contains listing with this seller and title for this session.")
+        print("Listing title: " + existing_listing_observation.title)
+        print("Duplicate listing, skipping...")
+        print("Thread nr. " + str(thread_id))
+        print("Web session " + cookie)
+        print("Crawling listing nr " + str(initial_queue_size - queue_size) + " this session. ")
+        print("Listings left, approximate: " + str(queue_size) + ".")
+        print("\n")
+
+    @staticmethod
+    def print_crawling_debug_message(product_page_url, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
+        print(datetime.fromtimestamp(time.time()))
+        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
+        print("Trying to fetch URL: " + product_page_url)
+        print("Thread nr. " + str(thread_id))
+        print("Web session " + cookie)
+        print("Crawling listing nr " + str(initial_queue_size - queue_size) + " this session. ")
+        print("Listings left, estimate: " + str(queue_size) + ".")
+        print("\n")
