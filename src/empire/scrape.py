@@ -354,6 +354,7 @@ class EmpireScrapingSession(BaseScraper):
         seller_observation.spendings = spendings
         seller_observation.feedback_left = feedback_left
         seller_observation.feedback_percent_positive = feedback_percent_positive
+        seller_observation.last_online = last_online
 
         seller_observation.positive_1m = positive_1m
         seller_observation.positive_6m = positive_6m
@@ -380,7 +381,7 @@ class EmpireScrapingSession(BaseScraper):
 
         scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
                                                        , self.thread_id, self._get_cookie_string(), "N/A")
-        
+
         web_response = self._error_catch_wrapper(self._get_web_response(url), EMPIRE_MARKET_HOME_URL, url,
                                   " ")
 

@@ -403,8 +403,8 @@ class EmpireScrapingFunctions(BaseFunctions):
         print("Duplicate listing, skipping...")
         print("Thread nr. " + str(thread_id))
         print("Web session " + cookie)
-        print("Crawling listing nr " + str(initial_queue_size - queue_size) + " this session. ")
-        print("Listings left, approximate: " + str(queue_size) + ".")
+        print("Crawling page nr " + str(initial_queue_size - queue_size) + " this session. ")
+        print("Pages left, approximate: " + str(queue_size) + ".")
         print("\n")
 
     @staticmethod
@@ -414,6 +414,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         print("Trying to fetch URL: " + product_page_url)
         print("Thread nr. " + str(thread_id))
         print("Web session " + cookie)
-        print("Crawling listing nr " + str(initial_queue_size - queue_size) + " this session. ")
-        print("Listings left, estimate: " + str(queue_size) + ".")
+        print("Crawling page nr " + str(initial_queue_size - queue_size) + " this session. ")
+        print("Pages left, estimate: " + str(queue_size) + ".")
         print("\n")
