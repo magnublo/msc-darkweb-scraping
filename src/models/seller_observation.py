@@ -28,6 +28,12 @@ class SellerObservation(Base):
     feedback_percent_positive = Column(Float)
     last_online = Column(Date)
 
+    parenthesis_number = Column(Integer)
+    dream_market_successful_sales = Column(Integer)
+    dream_market_star_rating = Column(Float)
+    positive_feedback_received_percent = Column(Float)
+    registration_date = Column(Date)
+
     positive_1m = Column(Integer)
     positive_6m = Column(Integer)
     positive_12m = Column(Integer)

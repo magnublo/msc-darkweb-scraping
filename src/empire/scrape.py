@@ -363,7 +363,11 @@ class EmpireScrapingSession(BaseScraper):
 
         stealth_rating, quality_rating, value_price_rating = scrapingFunctions.get_star_ratings(soup_html)
 
-        vendor_level, trust_level = scrapingFunctions.get_vendor_and_trust_level(soup_html)
+        parenthesis_number, vendor_level, trust_level = scrapingFunctions.get_parenthesis_number_and_vendor_and_trust_level(soup_html)
+
+        dream_market_successful_sales, dream_market_star_rating,\
+        positive_feedback_received_percent, registration_date = scrapingFunctions.get_mid_user_info(soup_html)
+
 
         existing_seller_description_text = self.db_session.query(SellerDescriptionText).filter_by(
                             id=hashlib.md5(description.encode('utf-8')).hexdigest()).first()
@@ -385,6 +389,12 @@ class EmpireScrapingSession(BaseScraper):
         seller_observation.feedback_left = feedback_left
         seller_observation.feedback_percent_positive = feedback_percent_positive
         seller_observation.last_online = last_online
+
+        seller_observation.parenthesis_number = parenthesis_number
+        seller_observation.dream_market_successful_sales = dream_market_successful_sales
+        seller_observation.dream_market_star_rating = dream_market_star_rating
+        seller_observation.positive_feedback_received_percent = positive_feedback_received_percent
+        seller_observation.registration_date = registration_date
 
         seller_observation.positive_1m = positive_1m
         seller_observation.positive_6m = positive_6m

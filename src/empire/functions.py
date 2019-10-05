@@ -134,10 +134,18 @@ class EmpireScrapingFunctions(BaseFunctions):
         return currency_rates
 
     @staticmethod
-    def get_vendor_and_trust_level(soup_html):
+    def get_parenthesis_number_and_vendor_and_trust_level(soup_html):
         user_info_mid_heads = [h3 for h3 in soup_html.findAll('h3', attrs={'class': 'user_info_mid_head'})]
         assert len(user_info_mid_heads) == 1
         user_info_mid_head = user_info_mid_heads[0]
+
+        first_span = [span for span in user_info_mid_head.findAll('span')][0]
+
+        if first_span.text.find("(") != -1:
+            parenthesis_number = first_span.text[1:-1]
+        else:
+            parenthesis_number = None
+
         spans = []
         vendor_level = None
         trust_level = None
@@ -152,7 +160,7 @@ class EmpireScrapingFunctions(BaseFunctions):
                     if span.text.find("Trust") >= 0:
                         trust_level = span.text.split(" ")[2]
                     if vendor_level is not None and trust_level is not None:
-                        return vendor_level, trust_level
+                        return parenthesis_number, vendor_level, trust_level
 
         assert False
 
@@ -417,3 +425,42 @@ class EmpireScrapingFunctions(BaseFunctions):
         print("Crawling page nr " + str(initial_queue_size - queue_size) + " this session. ")
         print("Pages left, estimate: " + str(queue_size) + ".")
         print("\n")
+
+    @staticmethod
+    def get_mid_user_info(soup_html):
+        user_info_mid_divs = [div for div in soup_html.findAll('div', attrs={'class': 'user_info_mid'})]
+        assert len(user_info_mid_divs) == 1
+        user_info_mid_div = user_info_mid_divs[0]
+
+        inner_divs = [div for div in user_info_mid_div.findAll('div')]
+        assert len(inner_divs) == 1
+        inner_div = inner_divs[0]
+
+        dream_market_successful_sales = None
+        dream_market_star_rating = None
+        spans = [span for span in inner_div.findAll('span')]
+        if len(spans) > 0:
+            for span in spans:
+                try:
+                    if span["title"].find("Verified Dream Market successful") != -1:
+                        parts = span.text.split(" ")
+                        dream_market_successful_sales = parts[1]
+                        dream_market_star_rating = parts[2][1:-1]
+                        break
+                except KeyError:
+                    pass
+
+        bold_ps = [p for p in inner_div.findAll('p', attrs={'class': 'bold', 'style': 'padding: 0;'})]
+        assert len(bold_ps) == 1
+        bold_p = bold_ps[0]
+        bolds = [b for b in bold_p.findAll('b')]
+        assert len(bolds) == 1
+        positive_feedback_received_percent = bolds[0].text
+        bold_spans = [span for span in inner_div.findAll('span', attrs={'class': 'bold1'})]
+        assert len(bold_spans) == 1
+        registration_date = dateparser.parse(bold_spans[0].text)
+
+        return dream_market_successful_sales, dream_market_star_rating, positive_feedback_received_percent, registration_date
+
+
+
