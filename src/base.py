@@ -146,7 +146,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             try:
                 return func
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
-                self.db_session.add(Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.print_exc()))
+                self.db_session.add(Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
                 self.db_session.commit()
                 self._wrap_up_session()
                 traceback.print_exc()
@@ -165,7 +165,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
             except BaseException as e:
                 self.db_session.add(
-                    Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.print_exc()))
+                    Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
                 self.db_session.commit()
                 traceback.print_exc()
                 print("Error when trying to parse. ")
