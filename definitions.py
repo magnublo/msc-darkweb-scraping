@@ -26,7 +26,8 @@ ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL = 6
 EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
 EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
                             ["using_python4", "Password123!"],
-                             ["using_python5", "Password123!"]]
+                             ["using_python5", "Password123!"],
+                             ["using_python6", "Password123!"]]
 
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
 EMPIRE_MARKET_HOME_URL = "http://" + EMPIRE_MARKET_URL + "/home"
