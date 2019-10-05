@@ -365,7 +365,10 @@ class EmpireScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_feedbacks(soup_html):
         autoshop_tables = [div for div in soup_html.findAll('table', attrs={'class': 'user_feedbackTbl autoshop_table'})]
-        assert len(autoshop_tables) == 1
+        assert len(autoshop_tables) <= 1
+        if len(autoshop_tables) == 0:
+            return []
+
         autoshop_table = autoshop_tables[0]
 
         feedbacks = []
@@ -374,13 +377,16 @@ class EmpireScrapingFunctions(BaseFunctions):
         for tr in trs[1:]:
             feedback = {}
             messages = [p for p in tr.findAll('p', attrs={'class': 'setp1 bold1 feedback_msg'})]
-            assert len(messages) == 2
+            assert len(messages) <= 2
             feedback["feedback_message"] = _shorten_for_text_column(messages[0].text)
-            seller_response = messages[1].text.strip()
-            seller_response_header_text = "Seller Response: "
+            if len(messages) == 2:
+                seller_response = messages[1].text.strip()
+                seller_response_header_text = "Seller Response: "
 
-            assert (seller_response[0:len(seller_response_header_text)] == seller_response_header_text)
-            feedback["seller_response_message"] = _shorten_for_text_column(seller_response[len(seller_response_header_text):])
+                assert (seller_response[0:len(seller_response_header_text)] == seller_response_header_text)
+                feedback["seller_response_message"] = _shorten_for_text_column(seller_response[len(seller_response_header_text):])
+            else:
+                feedback["seller_response_message"] = ""
 
             buyers = [p for p in tr.findAll('font', attrs={'style': 'color:#dc6831;'})]
             assert len(buyers) == 1

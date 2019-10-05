@@ -1,17 +1,15 @@
 import base64
 import hashlib
 import time
-import traceback
 from queue import Empty
 from random import shuffle
 
-import requests
-from python3_anticaptcha import ImageToTextTask
+from python3_anticaptcha import ImageToTextTask, AntiCaptchaControl
 from requests.cookies import create_cookie
 
-from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_BASE_CRAWLING_URL, EMPIRE_DIR, \
+from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS
-from src.base import Base, engine, LoggedOutException
+from src.base import Base, engine
 from src.base import BaseScraper
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
@@ -24,8 +22,6 @@ from src.models.listing_text import ListingText
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
 from src.models.seller_observation_feedback import SellerObservationFeedback
-from src.utils import pretty_print_GET
-
 
 Base.metadata.create_all(engine)
 
@@ -38,10 +34,13 @@ class EmpireScrapingSession(BaseScraper):
                 if history_response.raw.headers._container['location'][1] == EMPIRE_MARKET_LOGIN_URL:
                     return True
 
+        if response.text.find("Welcome to Empire Market! Please login to access the marketplace.") != -1:
+            return True
+
         return False
 
-    def __init__(self, queue, username, password, db_session, thread_id, session_id=None):
-        super().__init__(queue, username, password, db_session, thread_id=thread_id, session_id=session_id)
+    def __init__(self, queue, username, password, db_session, nr_of_threads, thread_id, session_id=None):
+        super().__init__(queue, username, password, db_session, nr_of_threads, thread_id=thread_id, session_id=session_id)
         self.logged_out_exceptions = 0
 
     def _get_working_dir(self):
@@ -63,13 +62,21 @@ class EmpireScrapingSession(BaseScraper):
 
         time_before_requesting_captcha_solve = time.time()
         print("Thread nr. " + str(self.thread_id) + " sending image to anti-catpcha.com API...")
-        captcha_solution = ImageToTextTask.ImageToTextTask(
+        captcha_solution_response = ImageToTextTask.ImageToTextTask(
                                 anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY
-                            ).captcha_handler(captcha_base64=base64_image)["solution"]["text"]
+                            ).captcha_handler(captcha_base64=base64_image)
+
+        captcha_solution = captcha_solution_response["solution"]["text"]
+
         print("Captcha solved. Solving took " + str(time.time()-time_before_requesting_captcha_solve) + " seconds.")
 
         login_payload = scrapingFunctions.get_login_payload(soup_html, self.username, self.password, captcha_solution)
-        self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL, post_data=login_payload)
+        response = self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL, post_data=login_payload)
+
+        if self._is_logged_out(response):
+            print("INCORRECTLY SOLVED CAPTCHA, TRYING AGAIN...")
+            self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
+            self._login_and_set_cookie(response)
 
     def populate_queue(self):
         web_response = self._get_page_response_and_try_forever(EMPIRE_MARKET_HOME_URL)
@@ -155,181 +162,156 @@ class EmpireScrapingSession(BaseScraper):
                 self._wrap_up_session()
                 return
 
-            try:
-                parsing_time = time.time() - time_of_last_response
-                web_response = self._get_web_response(search_result_url)
-                time_of_last_response = time.time()
-                cookie = self._get_cookie_string()
-                soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
-                product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
-                titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
-                btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+            parsing_time = time.time() - time_of_last_response
+            web_response = self._error_catch_wrapper(self._get_web_response(search_result_url), EMPIRE_MARKET_HOME_URL, " ", search_result_url)
+            time_of_last_response = time.time()
+            cookie = self._get_cookie_string()
+            soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
+            product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
+            titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
+            btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
-                while k < len(product_page_urls):
-                    title = titles[k]
-                    seller_name = sellers[k]
-                    seller_url = seller_urls[k]
+            while k < len(product_page_urls):
+                title = titles[k]
+                seller_name = sellers[k]
+                seller_url = seller_urls[k]
 
-                    existing_listing_observation = self.db_session.query(ListingObservation) \
-                        .filter(ListingObservation.session_id == self.session_id) \
-                        .join(SellerObservation)\
-                        .filter(ListingObservation.seller_id == SellerObservation.id)\
-                        .filter(SellerObservation.name == seller_name)\
-                        .filter(ListingObservation.title == title)\
-                        .first()
+                existing_listing_observation = self.db_session.query(ListingObservation) \
+                    .filter(ListingObservation.session_id == self.session_id) \
+                    .join(SellerObservation)\
+                    .filter(ListingObservation.seller_id == SellerObservation.id)\
+                    .filter(SellerObservation.name == seller_name)\
+                    .filter(ListingObservation.title == title)\
+                    .first()
 
-                    if existing_listing_observation:
-                        scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
-                        self.duplicates_this_session += 1
-                        k += 1
-                        continue
+                if existing_listing_observation:
+                    scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
+                    self.duplicates_this_session += 1
+                    k += 1
+                    continue
 
-                    existing_seller = self.db_session.query(SellerObservation).filter_by(
+                existing_seller = self.db_session.query(SellerObservation).filter_by(
+                    name=seller_name,
+                    session_id=self.session_id
+                ).first()
+
+                if existing_seller:
+                    seller_id = existing_seller.id
+                else:
+                    seller_observation = SellerObservation(
                         name=seller_name,
-                        session_id=self.session_id
-                    ).first()
+                        session_id=self.session_id,
+                        url=seller_url
+                    )
+                    self.db_session.add(seller_observation)
+                    self.db_session.commit()
+                    self._scrape_seller(seller_observation)
+                    seller_id = seller_observation.id
 
-                    if existing_seller:
-                        seller_id = existing_seller.id
-                    else:
-                        seller_observation = SellerObservation(
-                            name=seller_name,
-                            session_id=self.session_id,
-                            url=seller_url
-                        )
-                        self.db_session.add(seller_observation)
-                        self.db_session.commit()
-                        self._scrape_seller(seller_observation)
-                        seller_id = seller_observation.id
+                product_page_url = product_page_urls[k]
 
-                    product_page_url = product_page_urls[k]
+                scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
 
-                    scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
+                web_response = self._error_catch_wrapper(self._get_web_response(product_page_url), EMPIRE_MARKET_HOME_URL, " ",
+                                          search_result_url)
 
-                    web_response = self._get_web_response(product_page_url)
+                soup_html = self._get_page_as_soup_html(web_response, 'saved_empire_html', DEBUG_MODE)
 
-                    soup_html = self._get_page_as_soup_html(web_response, 'saved_empire_html', DEBUG_MODE)
+                session_id = self.session_id
+                listing_text = scrapingFunctions.get_description(soup_html)
+                listing_text_id = hashlib.md5(listing_text.encode('utf-8')).hexdigest()
+                categories, website_category_ids = scrapingFunctions.get_categories_and_ids(soup_html)
+                accepts_BTC, accepts_LTC, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
+                nr_sold, nr_sold_since_date = scrapingFunctions.get_nr_sold_since_date(soup_html)
+                fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
+                origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
+                is_sticky = urls_is_sticky[k]
 
-                    session_id = self.session_id
-                    listing_text = scrapingFunctions.get_description(soup_html)
-                    listing_text_id = hashlib.md5(listing_text.encode('utf-8')).hexdigest()
-                    categories, website_category_ids = scrapingFunctions.get_categories_and_ids(soup_html)
-                    accepts_BTC, accepts_LTC, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
-                    nr_sold, nr_sold_since_date = scrapingFunctions.get_nr_sold_since_date(soup_html)
-                    fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
-                    origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
-                    is_sticky = urls_is_sticky[k]
+                db_category_ids = []
 
-                    db_category_ids = []
+                for i in range(0, len(categories)):
+                    category = self.db_session.query(ListingCategory).filter_by(
+                        website_id=website_category_ids[i],
+                        name=categories[i],
+                        market=self.market_id).first()
 
-                    for i in range(0, len(categories)):
-                        category = self.db_session.query(ListingCategory).filter_by(
+                    if not category:
+                        category = ListingCategory(
                             website_id=website_category_ids[i],
                             name=categories[i],
-                            market=self.market_id).first()
-
-                        if not category:
-                            category = ListingCategory(
-                                website_id=website_category_ids[i],
-                                name=categories[i],
-                                market=self.market_id
-                            )
-                            self.db_session.add(category)
-                            self.db_session.flush()
-
-                        db_category_ids.append(category.id)
-
-                    self.db_session.merge(ListingText(
-                        id=listing_text_id,
-                        text=listing_text
-                    ))
-
-                    self.db_session.merge(Country(
-                        id=origin_country
-                    ))
-
-                    self.db_session.flush()
-
-                    listing_observation = ListingObservation(
-                        session_id=session_id,
-                        listing_text_id=listing_text_id,
-                        title=title,
-                        btc=accepts_BTC,
-                        ltc=accepts_LTC,
-                        xmr=accepts_XMR,
-                        nr_sold=nr_sold,
-                        nr_sold_since_date=nr_sold_since_date,
-                        promoted_listing=is_sticky,
-                        btc_rate=btc_rate,
-                        ltc_rate=ltc_rate,
-                        xmr_rate=xmr_rate,
-                        seller_id=seller_id,
-                        fiat_currency=fiat_currency,
-                        price=price,
-                        origin_country=origin_country
-                    )
-
-                    self.db_session.add(listing_observation)
-
-                    self.db_session.flush()
-
-                    for destination_country in destination_countries:
-                        self.db_session.merge(Country(
-                            id=destination_country
-                        ))
-
+                            market=self.market_id
+                        )
+                        self.db_session.add(category)
                         self.db_session.flush()
 
-                        self.db_session.add(ListingObservationCountry(
-                            listing_observation_id=listing_observation.id,
-                            country_id=destination_country
-                        ))
+                    db_category_ids.append(category.id)
 
-                    for db_category_id in db_category_ids:
-                        self.db_session.add(ListingObservationCategory(
-                            listing_observation_id=listing_observation.id,
-                            category_id=db_category_id
-                        ))
+                self.db_session.merge(ListingText(
+                    id=listing_text_id,
+                    text=listing_text
+                ))
+
+                self.db_session.merge(Country(
+                    id=origin_country
+                ))
+
+                self.db_session.flush()
+
+                listing_observation = ListingObservation(
+                    session_id=session_id,
+                    listing_text_id=listing_text_id,
+                    title=title,
+                    btc=accepts_BTC,
+                    ltc=accepts_LTC,
+                    xmr=accepts_XMR,
+                    nr_sold=nr_sold,
+                    nr_sold_since_date=nr_sold_since_date,
+                    promoted_listing=is_sticky,
+                    btc_rate=btc_rate,
+                    ltc_rate=ltc_rate,
+                    xmr_rate=xmr_rate,
+                    seller_id=seller_id,
+                    fiat_currency=fiat_currency,
+                    price=price,
+                    origin_country=origin_country
+                )
+
+                self.db_session.add(listing_observation)
+
+                self.db_session.flush()
+
+                for destination_country in destination_countries:
+                    self.db_session.merge(Country(
+                        id=destination_country
+                    ))
+
+                    self.db_session.flush()
+
+                    self.db_session.add(ListingObservationCountry(
+                        listing_observation_id=listing_observation.id,
+                        country_id=destination_country
+                    ))
+
+                for db_category_id in db_category_ids:
+                    self.db_session.add(ListingObservationCategory(
+                        listing_observation_id=listing_observation.id,
+                        category_id=db_category_id
+                    ))
 
 
-                    self.db_session.commit()
-                    k += 1
+                self.db_session.commit()
+                k += 1
 
-                k = 0
-
-            except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
-                self._wrap_up_session()
-                traceback.print_exc()
-                debug_html = None
-                tries = 0
-                while debug_html is None and tries < 10:
-                    try:
-                        debug_html = self.web_session.get(EMPIRE_BASE_CRAWLING_URL, proxies=PROXIES, headers=self.headers).text
-                        debug_html = "".join(debug_html.split())
-                        print(pretty_print_GET(self.web_session.prepare_request(
-                        requests.Request('GET', url=EMPIRE_BASE_CRAWLING_URL, headers=self.headers))))
-                    except:
-                        tries += 1
-                print(debug_html)
-                raise
-            except BaseException as e:
-                traceback.print_exc()
-                print("Error when trying to parse. ")
-                try:
-                    print("Product page url: " + str(product_page_url))
-                except NameError:
-                    pass
-                try:
-                    print("Search result page url: " + str(search_result_url))
-                except:
-                    pass
+            k = 0
 
     def _scrape_seller(self, seller_observation):
         seller_url = seller_observation.url
         seller_name = seller_observation.name
 
-        web_reponse = self._get_web_response(seller_url)
-        soup_html = self._get_page_as_soup_html(web_reponse, "saved_empire_user_html")
+        web_response = self._error_catch_wrapper(self._get_web_response(seller_url), EMPIRE_MARKET_HOME_URL, seller_url,
+                                  " ")
+
+        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_html")
 
         feedback_categories, feedback_urls = scrapingFunctions.get_feedback_categories_and_urls(soup_html)
         assert len(feedback_urls) == len(feedback_categories)
@@ -391,7 +373,10 @@ class EmpireScrapingSession(BaseScraper):
         self.db_session.commit()
 
     def _scrape_feedback(self, seller_observation, category, url):
-        web_reponse = self._get_web_response(url)
+
+        web_reponse = self._error_catch_wrapper(self._get_web_response(url), EMPIRE_MARKET_HOME_URL, url,
+                                  " ")
+
         soup_html = self._get_page_as_soup_html(web_reponse, "saved_empire_user_negative_feedback")
 
         feedback_array = scrapingFunctions.get_feedbacks(soup_html)

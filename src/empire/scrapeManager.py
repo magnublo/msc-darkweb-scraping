@@ -18,7 +18,7 @@ class EmpireScrapingManager:
         password = EMPIRE_MARKET_CREDENTIALS[0][1]
 
         db_sesssion = Session()
-        scrapingSession = EmpireScrapingSession(queue, username, password, db_sesssion, thread_id=0)
+        scrapingSession = EmpireScrapingSession(queue, username, password, db_sesssion, nr_of_threads, thread_id=0)
         session_id = scrapingSession.session_id
 
         if DEBUG_MODE:
@@ -36,6 +36,6 @@ class EmpireScrapingManager:
             username = EMPIRE_MARKET_CREDENTIALS[i][0]
             password = EMPIRE_MARKET_CREDENTIALS[i][1]
             db_sesssion = Session()
-            scrapingSession = EmpireScrapingSession(queue, username, password, db_sesssion, thread_id=i, session_id=session_id)
+            scrapingSession = EmpireScrapingSession(queue, username, password, db_sesssion, nr_of_threads, thread_id=i, session_id=session_id)
             t = threading.Thread(target=scrapingSession.scrape)
             t.start()
