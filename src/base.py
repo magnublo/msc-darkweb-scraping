@@ -141,43 +141,6 @@ class BaseScraper(metaclass=abc.ABCMeta):
             if line[0:7].lower() == "cookie:":
                 return line.strip().lower()
 
-    def _error_catch_wrapper(self, func, base_url, product_page_url, search_result_url):
-        while True:
-            try:
-                return func
-            except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
-                self.db_session.add(Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
-                self.db_session.commit()
-                self._wrap_up_session()
-                traceback.print_exc()
-                debug_html = None
-                tries = 0
-                while debug_html is None and tries < 10:
-                    try:
-                        debug_html = self.web_session.get(base_url, proxies=PROXIES, headers=self.headers).text
-                        debug_html = "".join(debug_html.split())
-                        print(pretty_print_GET(self.web_session.prepare_request(
-                            requests.Request('GET', url=base_url, headers=self.headers))))
-                    except:
-                        tries += 1
-                print(debug_html)
-                raise
-
-            except BaseException as e:
-                self.db_session.add(
-                    Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
-                self.db_session.commit()
-                traceback.print_exc()
-                print("Error when trying to parse. ")
-                try:
-                    print("Product page url: " + str(product_page_url))
-                except NameError:
-                    pass
-                try:
-                    print("Search result page url: " + str(search_result_url))
-                except NameError:
-                    pass
-
     @abstractmethod
     def _get_web_response(self, url, debug=DEBUG_MODE):
         raise NotImplementedError('')

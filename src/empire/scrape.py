@@ -1,18 +1,21 @@
 import base64
 import hashlib
 import time
+import traceback
 from queue import Empty
 from random import shuffle
 
-from python3_anticaptcha import ImageToTextTask, AntiCaptchaControl
+import requests
+from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, engine, \
     Base
-from src.base import BaseScraper
+from src.base import BaseScraper, LoggedOutException
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
+from src.models.error import Error
 from src.models.feedback import Feedback
 from src.models.listing_category import ListingCategory
 from src.models.listing_observation import ListingObservation
@@ -22,6 +25,7 @@ from src.models.listing_text import ListingText
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
 from src.models.seller_observation_feedback import SellerObservationFeedback
+from src.utils import pretty_print_GET
 
 Base.metadata.create_all(engine)
 
@@ -131,22 +135,49 @@ class EmpireScrapingSession(BaseScraper):
         return headers
 
     def _get_web_response(self, url, debug=DEBUG_MODE):
-        if debug:
-            return None
-        else:
-            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
-
-            tries = 0
-
-            while tries < 5:
-                if self._is_logged_out(response):
-                    tries += 1
-                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+        while True:
+            try:
+                if debug:
+                    return None
                 else:
-                    return response
+                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
 
-            self._login_and_set_cookie(response)
-            return self._get_web_response(url)
+                    tries = 0
+
+                    while tries < 5:
+                        if self._is_logged_out(response):
+                            tries += 1
+                            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+                        else:
+                            return response
+
+                    self._login_and_set_cookie(response)
+                    return self._get_web_response(url)
+            except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
+                self.db_session.add(Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
+                self.db_session.commit()
+                time.sleep(2)
+                self._wrap_up_session()
+                traceback.print_exc()
+                debug_html = None
+                tries = 0
+                while debug_html is None and tries < 10:
+                    try:
+                        debug_html = self.web_session.get(url, proxies=PROXIES, headers=self.headers).text
+                        debug_html = "".join(debug_html.split())
+                        print(pretty_print_GET(self.web_session.prepare_request(
+                            requests.Request('GET', url=url, headers=self.headers))))
+                    except:
+                        tries += 1
+                print(debug_html)
+                raise
+
+            except BaseException as e:
+                self.db_session.add(
+                    Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
+                self.db_session.commit()
+                time.sleep(2)
+                traceback.print_exc()
 
 
     def scrape(self):
@@ -163,7 +194,7 @@ class EmpireScrapingSession(BaseScraper):
                 return
 
             parsing_time = time.time() - time_of_last_response
-            web_response = self._error_catch_wrapper(self._get_web_response(search_result_url), EMPIRE_MARKET_HOME_URL, " ", search_result_url)
+            web_response = self._get_web_response(search_result_url)
             time_of_last_response = time.time()
             cookie = self._get_cookie_string()
             soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
@@ -213,8 +244,7 @@ class EmpireScrapingSession(BaseScraper):
 
                 scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(), self.thread_id, cookie, parsing_time)
 
-                web_response = self._error_catch_wrapper(self._get_web_response(product_page_url), EMPIRE_MARKET_HOME_URL, " ",
-                                          search_result_url)
+                web_response = self._get_web_response(product_page_url)
 
                 soup_html = self._get_page_as_soup_html(web_response, 'saved_empire_html', DEBUG_MODE)
 
@@ -312,8 +342,7 @@ class EmpireScrapingSession(BaseScraper):
 
         scrapingFunctions.print_crawling_debug_message(seller_url, self.initial_queue_size, self.queue.qsize()
                                                        ,self.thread_id, self._get_cookie_string(), "N/A")
-        web_response = self._error_catch_wrapper(self._get_web_response(seller_url), EMPIRE_MARKET_HOME_URL, seller_url,
-                                  " ")
+        web_response = self._get_web_response(seller_url)
 
         soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_html")
 
@@ -383,8 +412,7 @@ class EmpireScrapingSession(BaseScraper):
         scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
                                                        , self.thread_id, self._get_cookie_string(), "N/A")
 
-        web_response = self._error_catch_wrapper(self._get_web_response(url), EMPIRE_MARKET_HOME_URL, url,
-                                  " ")
+        web_response = self._get_web_response(url)
 
         soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_negative_feedback")
 
