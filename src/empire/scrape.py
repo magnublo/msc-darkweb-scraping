@@ -268,6 +268,7 @@ class EmpireScrapingSession(BaseScraper):
                     nr_sold=nr_sold,
                     nr_sold_since_date=nr_sold_since_date,
                     promoted_listing=is_sticky,
+                    url=product_page_url,
                     btc_rate=btc_rate,
                     ltc_rate=ltc_rate,
                     xmr_rate=xmr_rate,
