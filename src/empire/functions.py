@@ -399,7 +399,7 @@ class EmpireScrapingFunctions(BaseFunctions):
             parts = lines[1].split(" ")
 
             feedback["currency"] = parts[-2]
-            feedback["price"] = parts[-1]
+            feedback["price"] = parts[-1].replace(",", "")
 
             #<td style="text-align: right;">
             right_columns = [td for td in tr.findAll('td', attrs={'style': 'text-align: right;'})]

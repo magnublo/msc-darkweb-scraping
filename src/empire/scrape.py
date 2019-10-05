@@ -374,10 +374,10 @@ class EmpireScrapingSession(BaseScraper):
 
     def _scrape_feedback(self, seller_observation, category, url):
 
-        web_reponse = self._error_catch_wrapper(self._get_web_response(url), EMPIRE_MARKET_HOME_URL, url,
+        web_response = self._error_catch_wrapper(self._get_web_response(url), EMPIRE_MARKET_HOME_URL, url,
                                   " ")
 
-        soup_html = self._get_page_as_soup_html(web_reponse, "saved_empire_user_negative_feedback")
+        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_negative_feedback")
 
         feedback_array = scrapingFunctions.get_feedbacks(soup_html)
 
@@ -389,7 +389,13 @@ class EmpireScrapingSession(BaseScraper):
                             buyer=feedback["buyer"],
                             category=category,
                             text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
-                            market=self.market_id).first()
+                            market=self.market_id)\
+                            .join(SellerObservationFeedback)\
+                            .filter(SellerObservationFeedback.feedback_id == Feedback.id)\
+                            .join(SellerObservation)\
+                            .filter(SellerObservationFeedback.seller_observation_id == SellerObservation.id)\
+                            .filter(SellerObservation.name == seller_observation.name)\
+                            .first()
 
             if not existing_feedback:
                 db_feedback = Feedback(
