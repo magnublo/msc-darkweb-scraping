@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String
 
-from src.base import Base
+from src.main import Base
+
 TABLE_NAME = 'country'
 PRIMARY_KEY = 'id'
 TABLE_NAME_AND_PRIMARY_KEY = TABLE_NAME+"."+PRIMARY_KEY

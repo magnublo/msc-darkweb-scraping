@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Float, Integer
 
-from src.base import Base
+from src.main import Base
 
 TABLE_NAME = 'scraping_session'
 PRIMARY_KEY = 'id'

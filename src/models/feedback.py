@@ -3,7 +3,7 @@ import datetime
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float, Text
 
 import src.models.seller_observation as seller
-from src.base import Base
+from src.main import Base
 
 TABLE_NAME = 'feedback'
 PRIMARY_KEY = 'id'

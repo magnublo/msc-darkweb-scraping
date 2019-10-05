@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey, Integer
 
-from src.base import Base
+from src.main import Base
 from src.models import seller_observation, feedback
 
 TABLE_NAME = 'seller_observation_feedback'

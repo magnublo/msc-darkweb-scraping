@@ -6,20 +6,12 @@ from abc import abstractstaticmethod, abstractmethod
 import requests
 from bs4 import BeautifulSoup
 from python3_anticaptcha import AntiCaptchaControl
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 
-from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
+from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
 from src.models.error import Error
 from src.utils import pretty_print_GET
 
-engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
-Session = sessionmaker(bind=engine)
-Base = declarative_base()
-
 from src.models.scraping_session import ScrapingSession
-
 
 class LoggedOutException(Exception):
 

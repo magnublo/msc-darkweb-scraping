@@ -3,7 +3,7 @@ from multiprocessing import Queue
 from time import sleep
 
 from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE
-from src.base import Session, engine, Base
+from src.main import engine, Session, Base
 from src.empire.scrape import EmpireScrapingSession
 
 
