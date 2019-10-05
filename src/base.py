@@ -11,6 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
+from src.models.error import Error
 from src.utils import pretty_print_GET
 
 engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
@@ -153,6 +154,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             try:
                 return func
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
+                self.db_session.add(Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.print_exc()))
                 self._wrap_up_session()
                 traceback.print_exc()
                 debug_html = None
@@ -169,6 +171,8 @@ class BaseScraper(metaclass=abc.ABCMeta):
                 raise
 
             except BaseException as e:
+                self.db_session.add(
+                    Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.print_exc()))
                 traceback.print_exc()
                 print("Error when trying to parse. ")
                 try:
@@ -219,5 +223,6 @@ class BaseScraper(metaclass=abc.ABCMeta):
     @abstractmethod
     def populate_queue(self):
         raise NotImplementedError('')
+
 
 
