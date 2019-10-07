@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, Text, DateTime, Integer
+from sqlalchemy import Column, Text, DateTime, Integer, String
 
 from definitions import Base
 
@@ -13,8 +13,9 @@ class Error(Base):
     __tablename__ = TABLE_NAME
 
     id = Column(Integer, primary_key=True)
-    updated_date = Column(DateTime, onupdate=datetime.datetime.now)
+    updated_date = Column(DateTime, onupdate=datetime.datetime.utcnow, default=datetime.datetime.utcnow)
     session_id = Column(Integer)
     thread_id = Column(Integer)
+    type = Column(String)
     text = Column(Text)
 

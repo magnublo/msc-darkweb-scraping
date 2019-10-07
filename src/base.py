@@ -13,8 +13,6 @@ from src.utils import pretty_print_GET
 
 from src.models.scraping_session import ScrapingSession
 
-import ProtcolError
-
 class LoggedOutException(Exception):
 
     def __init__(self):
@@ -92,23 +90,26 @@ class BaseScraper(metaclass=abc.ABCMeta):
             time_started=self.start_time,
             market=self.market_id,
             duplicates_encountered=self.duplicates_this_session,
-            nr_of_threads=self.nr_of_threads
+            nr_of_threads=self.nr_of_threads,
+            initial_queue_size=self.initial_queue_size
         )
         self.db_session.add(scraping_session)
         self.db_session.commit()
         print("Thread nr. " + str(self.thread_id) + " initiated scraping_session with ID: " + str(scraping_session.id))
         return scraping_session
 
-    def _log_and_print_error(self):
+    def _log_and_print_error(self, e):
         errors = self.db_session.query(Error).order_by(Error.updated_date.asc())
+        error_type = type(e).__name__
 
         if errors.count() > MAX_NR_OF_ERRORS_STORED_IN_DATABASE:
             error = errors.first()
             error.session_id = self.session_id
             error.thread_id = self.thread_id
+            error.type = error_type
             error.text = traceback.format_exc()
         else:
-            error = Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc())
+            error = Error(session_id=self.session_id, thread_id=self.thread_id, type=error_type, text=traceback.format_exc())
             self.db_session.add(error)
 
         self.db_session.commit()

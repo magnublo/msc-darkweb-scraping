@@ -14,5 +14,6 @@ class ScrapingSession(Base):
     market = Column(String)
     duplicates_encountered = Column(Integer)
     nr_of_threads = Column(Integer)
+    initial_queue_size = Column(Integer)
     time_started = Column(Float)
     time_finished = Column(Float)

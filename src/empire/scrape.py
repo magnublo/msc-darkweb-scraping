@@ -152,14 +152,14 @@ class EmpireScrapingSession(BaseScraper):
 
                     self._login_and_set_cookie(response)
                     return self._get_web_response(url)
-            except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
-                self._log_and_print_error()
+            except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException) as e:
+                self._log_and_print_error(e)
                 self._wrap_up_session()
                 self._print_exception_triggering_request(url)
                 raise
 
-            except (HTTPError, BaseException):
-                self._log_and_print_error()
+            except (HTTPError, BaseException) as e:
+                self._log_and_print_error(e)
 
 
 
