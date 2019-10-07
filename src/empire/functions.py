@@ -4,7 +4,7 @@ from datetime import datetime
 
 import dateparser as dateparser
 
-from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH
+from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH, EMPIRE_BASE_CATEGORY_URL
 from src.base import BaseFunctions
 
 
@@ -166,22 +166,21 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_categories_and_ids(soup_html):
-        divs = [div for div in soup_html.findAll('div', attrs={'class': 'sub_head_inner_header'})]
-
-        assert len(divs) == 1
-
-        a_tags = [a_tag for a_tag in divs[0].findAll('a', href=True)]
+        h3s = [div for div in soup_html.findAll('h3')]
 
         categories = []
         category_ids = []
 
-        for a_tag in a_tags:
-            category = a_tag.text
-            url = str(a_tag['href'])
-            url_fragments = url.split("/")
-            category_id = url_fragments[-2]
-            categories.append(category)
-            category_ids.append(category_id)
+        for h3 in h3s:
+            a_tags = [a_tag for a_tag in h3.findAll('a', href=True)]
+            if len(a_tags) == 1:
+                if a_tags[0]["href"].find(EMPIRE_BASE_CATEGORY_URL) != -1:
+                    category = a_tags[0].text
+                    url = str(a_tags[0]['href'])
+                    url_fragments = url.split("/")
+                    category_id = url_fragments[-2]
+                    categories.append(category)
+                    category_ids.append(category_id)
 
         assert len(category_ids) == len(categories)
 
