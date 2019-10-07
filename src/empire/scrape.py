@@ -100,6 +100,8 @@ class EmpireScrapingSession(BaseScraper):
             self.queue.put(task)
 
         self.initial_queue_size = self.queue.qsize()
+        self.session.initial_queue_size = self.initial_queue_size
+        self.db_session.commit()
 
     def _set_cookies(self):
 

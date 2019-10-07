@@ -2,6 +2,7 @@ import abc
 import time
 import traceback
 from abc import abstractstaticmethod, abstractmethod
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -74,15 +75,17 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.duplicates_this_session = 0
         self.web_session = requests.session()
         self._login_and_set_cookie()
+        self.initial_queue_size = self.queue.qsize()
 
         if session_id:
             self.session = db_session.query(ScrapingSession).filter_by(
                             id=session_id).first()
+            self.session.initial_queue_size = self.initial_queue_size
+            self.db_session.commit()
         else:
             self.session = self._initiate_session()
 
         self.session_id = self.session.id
-        self.initial_queue_size = self.queue.qsize()
 
 
     def _initiate_session(self):
@@ -90,8 +93,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             time_started=self.start_time,
             market=self.market_id,
             duplicates_encountered=self.duplicates_this_session,
-            nr_of_threads=self.nr_of_threads,
-            initial_queue_size=self.initial_queue_size
+            nr_of_threads=self.nr_of_threads
         )
         self.db_session.add(scraping_session)
         self.db_session.commit()
@@ -99,11 +101,13 @@ class BaseScraper(metaclass=abc.ABCMeta):
         return scraping_session
 
     def _log_and_print_error(self, e):
+        traceback.print_exc()
         errors = self.db_session.query(Error).order_by(Error.updated_date.asc())
         error_type = type(e).__name__
 
-        if errors.count() > MAX_NR_OF_ERRORS_STORED_IN_DATABASE:
+        if errors.count() >= MAX_NR_OF_ERRORS_STORED_IN_DATABASE:
             error = errors.first()
+            error.updated_date = datetime.utcnow()
             error.session_id = self.session_id
             error.thread_id = self.thread_id
             error.type = error_type
