@@ -424,7 +424,7 @@ class EmpireScrapingSession(BaseScraper):
 
         web_response = self._get_web_response(url)
 
-        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_negative_feedback")
+        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_positive_feedback")
 
         feedback_array = scrapingFunctions.get_feedbacks(soup_html)
 
@@ -475,3 +475,8 @@ class EmpireScrapingSession(BaseScraper):
             self.db_session.add(seller_observation_feedback)
 
         self.db_session.commit()
+
+        next_url_with_feeback = scrapingFunctions.get_next_feedback_page(soup_html)
+
+        if next_url_with_feeback:
+            self._scrape_feedback(seller_observation, category, next_url_with_feeback)

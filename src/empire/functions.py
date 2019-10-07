@@ -463,4 +463,30 @@ class EmpireScrapingFunctions(BaseFunctions):
         return dream_market_successful_sales, dream_market_star_rating, positive_feedback_received_percent, registration_date
 
 
+    @staticmethod
+    def get_next_feedback_page(soup_html):
+        pagination_uls = [ul for ul in soup_html.findAll('ul', attrs={'class': 'pagination'})]
+        assert len(pagination_uls) == 1
+        pagination_ul = pagination_uls[0]
+
+        strongs = [strong for strong in pagination_ul.findAll('strong')]
+        assert len(strongs) == 1
+        strong = strongs[0]
+
+        current_page = int(strong.text)
+
+        data_ci_pagination_pages = [pagination_page for pagination_page in pagination_ul.findAll('a')]
+
+        for pagination_page_url in data_ci_pagination_pages:
+            try:
+                if int(pagination_page_url.text) > current_page:
+                    return pagination_page_url["href"]
+            except ValueError:
+                pass
+
+        return None
+
+
+
+
 
