@@ -22,9 +22,9 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
+from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
-from src.models.seller_observation_feedback import SellerObservationFeedback
 from src.utils import pretty_print_GET
 
 Base.metadata.create_all(engine)
@@ -154,30 +154,14 @@ class EmpireScrapingSession(BaseScraper):
                     self._login_and_set_cookie(response)
                     return self._get_web_response(url)
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException):
-                self.db_session.add(Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
-                self.db_session.commit()
-                time.sleep(2)
+                self._log_and_print_error()
                 self._wrap_up_session()
-                traceback.print_exc()
-                debug_html = None
-                tries = 0
-                while debug_html is None and tries < 10:
-                    try:
-                        debug_html = self.web_session.get(url, proxies=PROXIES, headers=self.headers).text
-                        debug_html = "".join(debug_html.split())
-                        print(pretty_print_GET(self.web_session.prepare_request(
-                            requests.Request('GET', url=url, headers=self.headers))))
-                    except:
-                        tries += 1
-                print(debug_html)
+                self._print_exception_triggering_request(url)
                 raise
 
             except BaseException as e:
-                self.db_session.add(
-                    Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc()))
-                self.db_session.commit()
-                time.sleep(2)
-                traceback.print_exc()
+                self._log_and_print_error()
+
 
 
     def scrape(self):
@@ -207,12 +191,24 @@ class EmpireScrapingSession(BaseScraper):
                 seller_name = sellers[k]
                 seller_url = seller_urls[k]
 
+                existing_seller = self.db_session.query(Seller) \
+                    .filter_by(name=seller_name).first()
+
+                if existing_seller:
+                    seller = existing_seller
+                    is_new_seller = False
+                else:
+                    seller = Seller(name=seller_name, market=self.market_id)
+                    self.db_session.add(seller)
+                    self.db_session.commit()
+                    is_new_seller = True
+
                 existing_listing_observation = self.db_session.query(ListingObservation) \
                     .filter(ListingObservation.session_id == self.session_id) \
-                    .join(SellerObservation)\
-                    .filter(ListingObservation.seller_id == SellerObservation.id)\
-                    .filter(SellerObservation.name == seller_name)\
-                    .filter(ListingObservation.title == title)\
+                    .filter(ListingObservation.title == title) \
+                    .join(Seller)\
+                    .filter(ListingObservation.seller_id == Seller.id)\
+                    .filter(Seller.name == seller_name)\
                     .first()
 
                 if existing_listing_observation:
@@ -221,24 +217,24 @@ class EmpireScrapingSession(BaseScraper):
                     k += 1
                     continue
 
-                existing_seller = self.db_session.query(SellerObservation).filter_by(
-                    name=seller_name,
-                    session_id=self.session_id
-                ).first()
+                existing_seller_observation = self.db_session.query(SellerObservation)\
+                    .filter(SellerObservation.session_id == self.session_id)\
+                    .join(Seller)\
+                    .filter(Seller.name == seller_name)\
+                    .filter(SellerObservation.seller_id == Seller.id)\
+                    .first()
 
-                if existing_seller:
-                    seller_id = existing_seller.id
-                else:
+                if not existing_seller_observation:
                     seller_observation = SellerObservation(
-                        name=seller_name,
+                        seller_id=seller.id,
                         session_id=self.session_id,
                         url=seller_url,
                         market=self.market_id
                     )
+
                     self.db_session.add(seller_observation)
                     self.db_session.commit()
-                    self._scrape_seller(seller_observation)
-                    seller_id = seller_observation.id
+                    self._scrape_seller(seller_observation, seller, is_new_seller)
 
                 product_page_url = product_page_urls[k]
 
@@ -302,7 +298,7 @@ class EmpireScrapingSession(BaseScraper):
                     btc_rate=btc_rate,
                     ltc_rate=ltc_rate,
                     xmr_rate=xmr_rate,
-                    seller_id=seller_id,
+                    seller_id=seller.id,
                     fiat_currency=fiat_currency,
                     price=price,
                     origin_country=origin_country
@@ -336,9 +332,9 @@ class EmpireScrapingSession(BaseScraper):
 
             k = 0
 
-    def _scrape_seller(self, seller_observation):
+    def _scrape_seller(self, seller_observation, seller, is_new_seller):
         seller_url = seller_observation.url
-        seller_name = seller_observation.name
+        seller_name = seller.name
 
         scrapingFunctions.print_crawling_debug_message(seller_url, self.initial_queue_size, self.queue.qsize()
                                                        ,self.thread_id, self._get_cookie_string(), "N/A")
@@ -350,7 +346,7 @@ class EmpireScrapingSession(BaseScraper):
         assert len(feedback_urls) == len(feedback_categories)
 
         for i in range(0, len(feedback_categories)):
-            self._scrape_feedback(seller_observation, feedback_categories[i], feedback_urls[i])
+            self._scrape_feedback(seller_observation, seller, feedback_categories[i], feedback_urls[i])
 
         description = scrapingFunctions.get_seller_about_description(soup_html, seller_name)
 
@@ -394,7 +390,6 @@ class EmpireScrapingSession(BaseScraper):
         seller_observation.dream_market_successful_sales = dream_market_successful_sales
         seller_observation.dream_market_star_rating = dream_market_star_rating
         seller_observation.positive_feedback_received_percent = positive_feedback_received_percent
-        seller_observation.registration_date = registration_date
 
         seller_observation.positive_1m = positive_1m
         seller_observation.positive_6m = positive_6m
@@ -415,20 +410,20 @@ class EmpireScrapingSession(BaseScraper):
         seller_observation.vendor_level = vendor_level
         seller_observation.trust_level = trust_level
 
+        if is_new_seller:
+            seller.registration_date = registration_date
+
         self.db_session.commit()
 
-    def _scrape_feedback(self, seller_observation, category, url):
+    def _scrape_feedback(self, seller_observation, seller, category, url):
 
         scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
                                                        , self.thread_id, self._get_cookie_string(), "N/A")
 
         web_response = self._get_web_response(url)
-
         soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_positive_feedback")
 
         feedback_array = scrapingFunctions.get_feedbacks(soup_html)
-
-        db_feedbacks = []
 
         for feedback in feedback_array:
             existing_feedback = self.db_session.query(Feedback).filter_by(
@@ -437,18 +432,20 @@ class EmpireScrapingSession(BaseScraper):
                             category=category,
                             text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
                             market=self.market_id)\
-                            .join(SellerObservationFeedback)\
-                            .filter(SellerObservationFeedback.feedback_id == Feedback.id)\
-                            .join(SellerObservation)\
-                            .filter(SellerObservationFeedback.seller_observation_id == SellerObservation.id)\
-                            .filter(SellerObservation.name == seller_observation.name)\
+                            .join(Seller, Seller.id == Feedback.seller_id)\
                             .first()
 
-            if not existing_feedback:
+            if existing_feedback:
+                return
+
+            else:
                 db_feedback = Feedback(
                     date_published=feedback["date_published"],
                     category=category,
                     market=self.market_id,
+                    seller_id=seller.id,
+                    session_id=self.session_id,
+                    product_url=feedback["product_url"],
                     feedback_message_text=feedback["feedback_message"],
                     seller_response_message=feedback["seller_response_message"],
                     text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
@@ -457,26 +454,10 @@ class EmpireScrapingSession(BaseScraper):
                     price=feedback["price"]
                 )
                 self.db_session.add(db_feedback)
-                db_feedbacks.append(db_feedback)
-            else:
-                db_feedbacks.append(existing_feedback)
-
-        self.db_session.commit()
-        assert len(db_feedbacks) == len(feedback_array)
-
-        for i in range(0, len(db_feedbacks)):
-            db_feedback = db_feedbacks[i]
-            feedback = feedback_array[i]
-            seller_observation_feedback = SellerObservationFeedback(
-                seller_observation_id=seller_observation.id,
-                feedback_id=db_feedback.id,
-                product_url=feedback["product_url"]
-            )
-            self.db_session.add(seller_observation_feedback)
 
         self.db_session.commit()
 
         next_url_with_feeback = scrapingFunctions.get_next_feedback_page(soup_html)
 
-        if next_url_with_feeback:
-            self._scrape_feedback(seller_observation, category, next_url_with_feeback)
+        if next_url_with_feeback and not DEBUG_MODE:
+            self._scrape_feedback(seller_observation, seller, category, next_url_with_feeback)

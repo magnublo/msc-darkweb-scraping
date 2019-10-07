@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from python3_anticaptcha import AntiCaptchaControl
 
-from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY
+from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE
 from src.models.error import Error
 from src.utils import pretty_print_GET
 
@@ -97,6 +97,31 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print("Thread nr. " + str(self.thread_id) + " initiated scraping_session with ID: " + str(scraping_session.id))
         return scraping_session
 
+    def _log_and_print_error(self):
+        errors = self.db_session.query(Error).order_by(Error.created_date.asc())
+
+        if errors.count() > MAX_NR_OF_ERRORS_STORED_IN_DATABASE:
+            error = errors.first()
+            error.session_id = self.session_id, error.thread_id = self.thread_id, error.text = traceback.format_exc()
+        else:
+            error = Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc())
+            self.db_session.add(error)
+
+        self.db_session.commit()
+        time.sleep(2)
+
+    def _print_exception_triggering_request(self, url):
+        debug_html = None
+        tries = 0
+        while debug_html is None and tries < 10:
+            try:
+                debug_html = self.web_session.get(url, proxies=PROXIES, headers=self.headers).text
+                debug_html = "".join(debug_html.split())
+                print(pretty_print_GET(self.web_session.prepare_request(
+                    requests.Request('GET', url=url, headers=self.headers))))
+            except:
+                tries += 1
+        print(debug_html)
 
     def _wrap_up_session(self):
         self.session.time_finished = time.time()

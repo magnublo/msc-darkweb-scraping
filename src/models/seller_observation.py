@@ -5,8 +5,9 @@ from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Floa
 from definitions import Base
 from src.models import scraping_session
 from src.models import seller_description_text
+from src.models import seller as seller
 
-TABLE_NAME = 'seller'
+TABLE_NAME = 'seller_observation'
 PRIMARY_KEY = 'id'
 TABLE_NAME_AND_PRIMARY_KEY = TABLE_NAME+"."+PRIMARY_KEY
 
@@ -19,7 +20,7 @@ class SellerObservation(Base):
     market = Column(String)
     url = Column(String)
 
-    name = Column(String)
+    seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY))
     description = Column(String, ForeignKey(seller_description_text.TABLE_NAME_AND_PRIMARY_KEY))
     disputes = Column(Integer)
     orders = Column(Integer)
@@ -32,7 +33,6 @@ class SellerObservation(Base):
     dream_market_successful_sales = Column(Integer)
     dream_market_star_rating = Column(Float)
     positive_feedback_received_percent = Column(Float)
-    registration_date = Column(Date)
 
     positive_1m = Column(Integer)
     positive_6m = Column(Integer)

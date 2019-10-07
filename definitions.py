@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 TOR_PORT = 9050
 
@@ -24,6 +24,8 @@ ANTI_CAPTCHA_CREATE_TASK_URL = "http://api.anti-captcha.com/createTask"
 ANTI_CAPTCHA_GET_TASK_URL = "https://api.anti-captcha.com/getTaskResult "
 ANTI_CAPTCHA_WAIT_INTERVAL = 2
 ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL = 6
+MAX_NR_OF_ERRORS_STORED_IN_DATABASE = 20
+
 
 
 #EMPIRE MARKET

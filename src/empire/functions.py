@@ -465,6 +465,10 @@ class EmpireScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_next_feedback_page(soup_html):
         pagination_uls = [ul for ul in soup_html.findAll('ul', attrs={'class': 'pagination'})]
+
+        if len(pagination_uls) == 0:
+            return None
+
         assert len(pagination_uls) == 1
         pagination_ul = pagination_uls[0]
 
