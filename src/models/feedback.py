@@ -19,7 +19,6 @@ class Feedback(Base):
     date_published = Column(DateTime)
     market = Column(String)
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY))
-    listing_title = Column(String)
     product_url = Column(String)
     session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY))
 
