@@ -13,6 +13,8 @@ from src.utils import pretty_print_GET
 
 from src.models.scraping_session import ScrapingSession
 
+import ProtcolError
+
 class LoggedOutException(Exception):
 
     def __init__(self):

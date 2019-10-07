@@ -158,7 +158,7 @@ class EmpireScrapingSession(BaseScraper):
                 self._print_exception_triggering_request(url)
                 raise
 
-            except HTTPError as e:
+            except (HTTPError, BaseException):
                 self._log_and_print_error()
 
 
