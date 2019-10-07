@@ -1,13 +1,12 @@
 import base64
 import hashlib
 import time
-import traceback
 from queue import Empty
 from random import shuffle
 
-import requests
 from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
+from urllib3.exceptions import NewConnectionError, HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, engine, \
@@ -15,7 +14,6 @@ from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_
 from src.base import BaseScraper, LoggedOutException
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
-from src.models.error import Error
 from src.models.feedback import Feedback
 from src.models.listing_category import ListingCategory
 from src.models.listing_observation import ListingObservation
@@ -25,7 +23,8 @@ from src.models.listing_text import ListingText
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
-from src.utils import pretty_print_GET
+
+asd  = NewConnectionError
 
 Base.metadata.create_all(engine)
 
@@ -159,7 +158,7 @@ class EmpireScrapingSession(BaseScraper):
                 self._print_exception_triggering_request(url)
                 raise
 
-            except BaseException as e:
+            except HTTPError as e:
                 self._log_and_print_error()
 
 

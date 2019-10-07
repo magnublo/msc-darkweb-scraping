@@ -102,7 +102,9 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
         if errors.count() > MAX_NR_OF_ERRORS_STORED_IN_DATABASE:
             error = errors.first()
-            error.session_id = self.session_id, error.thread_id = self.thread_id, error.text = traceback.format_exc()
+            error.session_id = self.session_id
+            error.thread_id = self.thread_id
+            error.text = traceback.format_exc()
         else:
             error = Error(session_id=self.session_id, thread_id=self.thread_id, text=traceback.format_exc())
             self.db_session.add(error)
