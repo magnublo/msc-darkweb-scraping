@@ -13,7 +13,7 @@ class Error(Base):
     __tablename__ = TABLE_NAME
 
     id = Column(Integer, primary_key=True)
-    created_date = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_date = Column(DateTime, onupdate=datetime.datetime.now)
     session_id = Column(Integer)
     thread_id = Column(Integer)
     text = Column(Text)

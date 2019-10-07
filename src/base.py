@@ -98,7 +98,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         return scraping_session
 
     def _log_and_print_error(self):
-        errors = self.db_session.query(Error).order_by(Error.created_date.asc())
+        errors = self.db_session.query(Error).order_by(Error.updated_date.asc())
 
         if errors.count() > MAX_NR_OF_ERRORS_STORED_IN_DATABASE:
             error = errors.first()
