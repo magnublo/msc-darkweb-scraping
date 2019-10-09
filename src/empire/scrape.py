@@ -263,6 +263,12 @@ class EmpireScrapingSession(BaseScraper):
                                                             self.queue.qsize(), self.thread_id, cookie, parsing_time)
             self.duplicates_this_session += 1
             return
+        else:
+            listing_observation = ListingObservation(session_id=self.session_id,
+                                                     title=title,
+                                                     seller_id=seller.id)
+            self.db_session.add(listing_observation)
+            self.db_session.flush()
 
         existing_seller_observation = self.db_session.query(SellerObservation) \
             .filter(SellerObservation.session_id == self.session_id) \
@@ -283,7 +289,6 @@ class EmpireScrapingSession(BaseScraper):
 
         soup_html = self._get_page_as_soup_html(web_response, 'saved_empire_html', DEBUG_MODE)
 
-        session_id = self.session_id
         listing_text = scrapingFunctions.get_description(soup_html)
         listing_text_id = hashlib.md5(listing_text.encode('utf-8')).hexdigest()
         categories, website_category_ids = scrapingFunctions.get_categories_and_ids(soup_html)
@@ -322,27 +327,20 @@ class EmpireScrapingSession(BaseScraper):
 
         self.db_session.flush()
 
-        listing_observation = ListingObservation(
-            session_id=session_id,
-            listing_text_id=listing_text_id,
-            title=title,
-            btc=accepts_BTC,
-            ltc=accepts_LTC,
-            xmr=accepts_XMR,
-            nr_sold=nr_sold,
-            nr_sold_since_date=nr_sold_since_date,
-            promoted_listing=is_sticky,
-            url=product_page_url,
-            btc_rate=btc_rate,
-            ltc_rate=ltc_rate,
-            xmr_rate=xmr_rate,
-            seller_id=seller.id,
-            fiat_currency=fiat_currency,
-            price=price,
-            origin_country=origin_country
-        )
-
-        self.db_session.add(listing_observation)
+        listing_observation.listing_text_id = listing_text_id
+        listing_observation.btc = accepts_BTC
+        listing_observation.ltc = accepts_LTC
+        listing_observation.xmr = accepts_XMR
+        listing_observation.nr_sold = nr_sold
+        listing_observation.nr_sold_since_date = nr_sold_since_date
+        listing_observation.promoted_listing = is_sticky
+        listing_observation.url = product_page_url
+        listing_observation.btc_rate = btc_rate
+        listing_observation.ltc_rate = ltc_rate
+        listing_observation.xmr_rate = xmr_rate
+        listing_observation.fiat_currency = fiat_currency
+        listing_observation.price = price
+        listing_observation.origin_country = origin_country
 
         self.db_session.flush()
 
