@@ -2,8 +2,9 @@ import threading
 from multiprocessing import Queue
 from time import sleep
 
-from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE, engine, Session, Base
+from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE, Session
 from src.empire.scrape import EmpireScrapingSession
+from src.utils import get_settings
 
 
 def queue_is_empty(queue):
@@ -16,16 +17,17 @@ class EmpireScrapingManager:
 
     def __init__(self, nr_of_threads=1):
         assert nr_of_threads <= len(EMPIRE_MARKET_CREDENTIALS)
-        Base.metadata.create_all(engine)
         queue = Queue()
         first_run = True
+        db_sesssion = Session()
 
         while True:
-            if first_run or queue_is_empty(queue):
+            settings = get_settings(db_sesssion)
+            refill_queue_when_complete = settings.refill_queue_when_complete
+
+            if first_run or (queue_is_empty(queue) and refill_queue_when_complete):
                 username = EMPIRE_MARKET_CREDENTIALS[0][0]
                 password = EMPIRE_MARKET_CREDENTIALS[0][1]
-
-                db_sesssion = Session()
                 scrapingSession = EmpireScrapingSession(queue, username, password, db_sesssion, nr_of_threads, thread_id=0)
                 session_id = scrapingSession.session_id
 
@@ -49,6 +51,5 @@ class EmpireScrapingManager:
                     t.start()
 
                 first_run = False
-
             else:
                 sleep(300)

@@ -4,8 +4,8 @@ from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Floa
 
 from definitions import Base
 from src.models import scraping_session
+from src.models import seller
 from src.models import seller_description_text
-from src.models import seller as seller
 
 TABLE_NAME = 'seller_observation'
 PRIMARY_KEY = 'id'
@@ -29,9 +29,12 @@ class SellerObservation(Base):
     feedback_percent_positive = Column(Float)
     last_online = Column(Date)
 
-    parenthesis_number = Column(Integer)
     dream_market_successful_sales = Column(Integer)
     dream_market_star_rating = Column(Float)
+    wall_street_market_successful_sales = Column(Integer)
+    wall_street_market_star_rating = Column(Float)
+
+    parenthesis_number = Column(Integer)
     positive_feedback_received_percent = Column(Float)
 
     positive_1m = Column(Integer)

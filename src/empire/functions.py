@@ -276,7 +276,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         feedbacks = []
 
         for href in hrefs:
-            feedbacks.append(href.text)
+            feedbacks.append(int(href.text))
 
         assert len(feedbacks) == 9
 
@@ -329,7 +329,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return star_ratings
 
     @staticmethod
-    def get_feedback_categories_and_urls(soup_html):
+    def get_feedback_categories_and_feedback_urls_and_pgp_url(soup_html):
         tab_divs = [div for div in soup_html.findAll('div', attrs={'class': 'tab'})]
         assert len(tab_divs) == 1
         hrefs = [href for href in tab_divs[0].findAll('a', href=True)]
@@ -342,7 +342,9 @@ class EmpireScrapingFunctions(BaseFunctions):
             feedback_categories.append(href.text)
             feedback_urls.append(href["href"])
 
-        return feedback_categories, feedback_urls
+        pgp_url = hrefs[5]["href"]
+
+        return feedback_categories, feedback_urls, pgp_url
 
     @staticmethod
     def get_feedbacks(soup_html):
@@ -437,6 +439,9 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         dream_market_successful_sales = None
         dream_market_star_rating = None
+        wall_street_market_successful_sales = None
+        wall_street_market_star_rating = None
+
         spans = [span for span in inner_div.findAll('span')]
         if len(spans) > 0:
             for span in spans:
@@ -445,7 +450,15 @@ class EmpireScrapingFunctions(BaseFunctions):
                         parts = span.text.split(" ")
                         dream_market_successful_sales = parts[1]
                         dream_market_star_rating = parts[2][1:-1]
-                        break
+                        continue
+                except KeyError:
+                    pass
+                try:
+                    if span["title"].find("Verified Wall Street Market successful") != -1:
+                        parts = span.text.split(" ")
+                        wall_street_market_successful_sales = parts[1]
+                        wall_street_market_star_rating = parts[2][1:-1]
+                        continue
                 except KeyError:
                     pass
 
@@ -459,7 +472,8 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert len(bold_spans) == 1
         registration_date = dateparser.parse(bold_spans[0].text)
 
-        return dream_market_successful_sales, dream_market_star_rating, positive_feedback_received_percent, registration_date
+        return dream_market_successful_sales, dream_market_star_rating, wall_street_market_successful_sales, \
+               wall_street_market_star_rating, positive_feedback_received_percent, registration_date
 
 
     @staticmethod
@@ -488,6 +502,18 @@ class EmpireScrapingFunctions(BaseFunctions):
                 pass
 
         return None
+
+    @staticmethod
+    def get_pgp_key(soup_html):
+        tab_content_divs = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent_user_feedback'})]
+        assert len(tab_content_divs) == 1
+        tab_content_div = tab_content_divs[0]
+
+        pres = [pre for pre in tab_content_div.findAll('pre')]
+        assert len(pres) == 1
+        pre = pres[0]
+
+        return pre.text
 
 
 

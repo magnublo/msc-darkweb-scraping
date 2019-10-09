@@ -1,3 +1,8 @@
+from sqlalchemy.orm.session import Session as SQLAlchemySession
+
+from src.models.settings import Settings
+
+
 def pretty_print_GET(req):
     """
     At this point it is completely built and ready
@@ -28,3 +33,13 @@ def pretty_print_POST(req):
         '\r\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
         req.body,
     )
+
+def get_settings(db_session : SQLAlchemySession):
+    existing_settings = db_session.query(Settings).first()
+    if existing_settings:
+        return existing_settings
+    else:
+        settings = Settings(refill_queue_when_complete=True)
+        db_session.add(settings)
+        db_session.commit()
+        return settings

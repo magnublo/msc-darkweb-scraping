@@ -13,7 +13,7 @@ from urllib3.exceptions import NewConnectionError, HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, engine, \
-    Base, DBMS_DISCONNECT_RETRY_INTERVALS
+    Base, DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL
 from src.base import BaseScraper, LoggedOutException
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
@@ -23,6 +23,7 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
+from src.models.pgp_key import PGPKey
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
@@ -174,7 +175,7 @@ class EmpireScrapingSession(BaseScraper):
         while True:
 
             try:
-                search_result_url = self.queue.get_nowait()
+                search_result_url = self.queue.get(timeout=1)
             except Empty:
                 print("Job queue is empty. Wrapping up...")
                 self._wrap_up_session()
@@ -220,137 +221,6 @@ class EmpireScrapingSession(BaseScraper):
                         self.db_session.rollback()
                         time.sleep(seconds_until_next_try)
                     
-
-    def _scrape_seller(self, seller_observation, seller, is_new_seller):
-        seller_url = seller_observation.url
-        seller_name = seller.name
-
-        scrapingFunctions.print_crawling_debug_message(seller_url, self.initial_queue_size, self.queue.qsize()
-                                                       ,self.thread_id, self._get_cookie_string(), "N/A")
-        web_response = self._get_web_response(seller_url)
-
-        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_html")
-
-        feedback_categories, feedback_urls = scrapingFunctions.get_feedback_categories_and_urls(soup_html)
-        assert len(feedback_urls) == len(feedback_categories)
-
-        for i in range(0, len(feedback_categories)):
-            self._scrape_feedback(seller_observation, seller, feedback_categories[i], feedback_urls[i])
-
-        description = scrapingFunctions.get_seller_about_description(soup_html, seller_name)
-
-        disputes, orders, spendings, feedback_left,\
-        feedback_percent_positive, last_online = scrapingFunctions.get_buyer_statistics(soup_html)
-
-        positive_1m, positive_6m, positive_12m,\
-        neutral_1m, neutral_6m, neutral_12m,\
-        negative_1m, negative_6m, negative_12m = scrapingFunctions.get_seller_statistics(soup_html)
-
-        stealth_rating, quality_rating, value_price_rating = scrapingFunctions.get_star_ratings(soup_html)
-
-        parenthesis_number, vendor_level, trust_level = scrapingFunctions.get_parenthesis_number_and_vendor_and_trust_level(soup_html)
-
-        dream_market_successful_sales, dream_market_star_rating,\
-        positive_feedback_received_percent, registration_date = scrapingFunctions.get_mid_user_info(soup_html)
-
-
-        existing_seller_description_text = self.db_session.query(SellerDescriptionText).filter_by(
-                            id=hashlib.md5(description.encode('utf-8')).hexdigest()).first()
-
-        if existing_seller_description_text:
-            seller_observation.description = existing_seller_description_text.id
-        else:
-            seller_description_text = SellerDescriptionText(
-                id=hashlib.md5(description.encode('utf-8')).hexdigest(),
-                text=description
-            )
-            self.db_session.add(seller_description_text)
-            self.db_session.flush()
-            seller_observation.description = seller_description_text.id
-
-        seller_observation.disputes = disputes
-        seller_observation.orders = orders
-        seller_observation.spendings = spendings
-        seller_observation.feedback_left = feedback_left
-        seller_observation.feedback_percent_positive = feedback_percent_positive
-        seller_observation.last_online = last_online
-
-        seller_observation.parenthesis_number = parenthesis_number
-        seller_observation.dream_market_successful_sales = dream_market_successful_sales
-        seller_observation.dream_market_star_rating = dream_market_star_rating
-        seller_observation.positive_feedback_received_percent = positive_feedback_received_percent
-
-        seller_observation.positive_1m = positive_1m
-        seller_observation.positive_6m = positive_6m
-        seller_observation.positive_12m = positive_12m
-
-        seller_observation.neutral_1m = neutral_1m
-        seller_observation.neutral_6m = neutral_6m
-        seller_observation.neutral_12m = neutral_12m
-
-        seller_observation.negative_1m = negative_1m
-        seller_observation.negative_6m = negative_6m
-        seller_observation.negative_12m = negative_12m
-
-        seller_observation.stealth_rating = stealth_rating
-        seller_observation.quality_rating = quality_rating
-        seller_observation.value_price_rating = value_price_rating
-
-        seller_observation.vendor_level = vendor_level
-        seller_observation.trust_level = trust_level
-
-        if is_new_seller:
-            seller.registration_date = registration_date
-
-        self.db_session.flush()
-
-    def _scrape_feedback(self, seller_observation, seller, category, url):
-
-        scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
-                                                       , self.thread_id, self._get_cookie_string(), "N/A")
-
-        web_response = self._get_web_response(url)
-        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_positive_feedback")
-
-        feedback_array = scrapingFunctions.get_feedbacks(soup_html)
-
-        for feedback in feedback_array:
-            existing_feedback = self.db_session.query(Feedback).filter_by(
-                            date_published=feedback["date_published"],
-                            buyer=feedback["buyer"],
-                            category=category,
-                            text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
-                            market=self.market_id)\
-                            .join(Seller, Seller.id == Feedback.seller_id)\
-                            .first()
-
-            if existing_feedback:
-                return
-
-            else:
-                db_feedback = Feedback(
-                    date_published=feedback["date_published"],
-                    category=category,
-                    market=self.market_id,
-                    seller_id=seller.id,
-                    session_id=self.session_id,
-                    product_url=feedback["product_url"],
-                    feedback_message_text=feedback["feedback_message"],
-                    seller_response_message=feedback["seller_response_message"],
-                    text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
-                    buyer=feedback["buyer"],
-                    currency=feedback["currency"],
-                    price=feedback["price"]
-                )
-                self.db_session.add(db_feedback)
-
-        self.db_session.flush()
-
-        next_url_with_feeback = scrapingFunctions.get_next_feedback_page(soup_html)
-
-        if next_url_with_feeback and not DEBUG_MODE:
-            self._scrape_feedback(seller_observation, seller, category, next_url_with_feeback)
-
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate, parsing_time):
 
@@ -377,6 +247,9 @@ class EmpireScrapingSession(BaseScraper):
             .first()
 
         if existing_listing_observation:
+            if existing_listing_observation.promoted_listing != is_sticky:
+                existing_listing_observation.promoted_listing = True
+                self.db_session.flush()
             scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size,
                                                             self.queue.qsize(), self.thread_id, cookie, parsing_time)
             self.duplicates_this_session += 1
@@ -390,16 +263,7 @@ class EmpireScrapingSession(BaseScraper):
             .first()
 
         if not existing_seller_observation:
-            seller_observation = SellerObservation(
-                seller_id=seller.id,
-                session_id=self.session_id,
-                url=seller_url,
-                market=self.market_id
-            )
-
-            self.db_session.add(seller_observation)
-            self.db_session.flush()
-            self._scrape_seller(seller_observation, seller, is_new_seller)
+            self._scrape_seller(seller_url, seller, is_new_seller)
 
 
 
@@ -490,3 +354,173 @@ class EmpireScrapingSession(BaseScraper):
                 listing_observation_id=listing_observation.id,
                 category_id=db_category_id
             ))
+
+    def _scrape_seller(self, seller_url, seller, is_new_seller):
+
+        scrapingFunctions.print_crawling_debug_message(seller_url, self.initial_queue_size, self.queue.qsize()
+                                                       ,self.thread_id, self._get_cookie_string(), "N/A")
+
+        web_response = self._get_web_response(seller_url)
+        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_html")
+
+        seller_name = seller.name
+        description = scrapingFunctions.get_seller_about_description(soup_html, seller_name)
+
+        disputes, orders, spendings, feedback_left, \
+        feedback_percent_positive, last_online = scrapingFunctions.get_buyer_statistics(soup_html)
+
+        positive_1m, positive_6m, positive_12m, \
+        neutral_1m, neutral_6m, neutral_12m, \
+        negative_1m, negative_6m, negative_12m = scrapingFunctions.get_seller_statistics(soup_html)
+
+        stealth_rating, quality_rating, value_price_rating = scrapingFunctions.get_star_ratings(soup_html)
+
+        parenthesis_number, vendor_level, trust_level = \
+            scrapingFunctions.get_parenthesis_number_and_vendor_and_trust_level(
+            soup_html)
+
+        dream_market_successful_sales, dream_market_star_rating, wall_street_market_successful_sales,\
+        wall_street_market_star_rating, positive_feedback_received_percent, registration_date\
+            = scrapingFunctions.get_mid_user_info(soup_html)
+
+        existing_seller_description_text = self.db_session.query(SellerDescriptionText).filter_by(
+            id=hashlib.md5(description.encode('utf-8')).hexdigest()).first()
+
+        if existing_seller_description_text:
+            seller_observation_description = existing_seller_description_text.id
+        else:
+            seller_description_text = SellerDescriptionText(
+                id=hashlib.md5(description.encode('utf-8')).hexdigest(),
+                text=description
+            )
+            self.db_session.add(seller_description_text)
+            self.db_session.flush()
+            seller_observation_description = seller_description_text.id
+
+
+        previous_seller_observation = self.db_session.query(SellerObservation).filter_by(seller_id=seller.id)\
+                                                    .order_by(SellerObservation.session_id.desc()).first()
+
+        if previous_seller_observation:
+            new_positive_feedback   = previous_seller_observation.positive_1m   ==  positive_1m
+            new_neutral_feedback    = previous_seller_observation.neutral_1m    ==  neutral_1m
+            new_negative_feedback   = previous_seller_observation.negative_1m   ==  negative_1m
+            new_left_feedback       = previous_seller_observation.feedback_left ==  feedback_left
+            category_contains_new_feedback = [new_positive_feedback, new_neutral_feedback, new_negative_feedback,
+                                                new_left_feedback]
+        else:
+            category_contains_new_feedback = [True, True, True, True]
+
+        feedback_categories, feedback_urls, pgp_url = \
+            scrapingFunctions.get_feedback_categories_and_feedback_urls_and_pgp_url(
+            soup_html)
+
+        assert len(feedback_urls) == len(feedback_categories) == len(category_contains_new_feedback)
+
+        for i in range(0, len(feedback_categories)):
+            if category_contains_new_feedback[i]:
+                self._scrape_feedback(seller, feedback_categories[i], feedback_urls[i])
+
+        self._scrape_pgp_key(seller, is_new_seller, pgp_url)
+
+        seller_observation = SellerObservation(
+            seller_id=seller.id,
+            session_id=self.session_id,
+            description=seller_observation_description,
+            url=seller_url,
+            market=self.market_id,
+            disputes=disputes,
+            orders=orders,
+            spendings=spendings,
+            feedback_left=feedback_left,
+            feedback_percent_positive=feedback_percent_positive,
+            last_online=last_online,
+            parenthesis_number=parenthesis_number,
+            dream_market_successful_sales=dream_market_successful_sales,
+            dream_market_star_rating=dream_market_star_rating,
+            wall_street_market_successful_sales=wall_street_market_successful_sales,
+            wall_street_market_star_rating=wall_street_market_star_rating,
+            positive_feedback_received_percent=positive_feedback_received_percent,
+            positive_1m=positive_1m,
+            positive_6m=positive_6m,
+            positive_12m=positive_12m,
+            neutral_1m=neutral_1m,
+            neutral_6m=neutral_6m,
+            neutral_12m=neutral_12m,
+            negative_1m=negative_1m,
+            negative_6m=negative_6m,
+            negative_12m=negative_12m,
+            stealth_rating=stealth_rating,
+            quality_rating=quality_rating,
+            value_price_rating=value_price_rating,
+            vendor_level=vendor_level,
+            trust_level=trust_level
+        )
+
+        if is_new_seller:
+            seller.registration_date = registration_date
+
+        self.db_session.add(seller_observation)
+        self.db_session.flush()
+
+    def _scrape_feedback(self, seller, category, url):
+
+        scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
+                                                       , self.thread_id, self._get_cookie_string(), "N/A")
+
+        web_response = self._get_web_response(url)
+        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_positive_feedback")
+
+        feedback_array = scrapingFunctions.get_feedbacks(soup_html)
+
+        for feedback in feedback_array:
+            existing_feedback = self.db_session.query(Feedback).filter_by(
+                            date_published=feedback["date_published"],
+                            buyer=feedback["buyer"],
+                            category=category,
+                            text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
+                            market=self.market_id)\
+                            .join(Seller, Seller.id == Feedback.seller_id)\
+                            .first()
+
+            if existing_feedback:
+                return
+
+            else:
+                db_feedback = Feedback(
+                    date_published=feedback["date_published"],
+                    category=category,
+                    market=self.market_id,
+                    seller_id=seller.id,
+                    session_id=self.session_id,
+                    product_url=feedback["product_url"],
+                    feedback_message_text=feedback["feedback_message"],
+                    seller_response_message=feedback["seller_response_message"],
+                    text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
+                    buyer=feedback["buyer"],
+                    currency=feedback["currency"],
+                    price=feedback["price"]
+                )
+                self.db_session.add(db_feedback)
+
+        self.db_session.flush()
+
+        next_url_with_feeback = scrapingFunctions.get_next_feedback_page(soup_html)
+
+        if next_url_with_feeback and not DEBUG_MODE:
+            self._scrape_feedback(seller, category, next_url_with_feeback)
+
+    def _scrape_pgp_key(self, seller, is_new_seller, url):
+
+        most_recent_pgp_key = self.db_session.query(PGPKey).filter_by(seller_id=seller.id).order_by(PGPKey.created_date.desc()).first()
+
+        scrape_pgp_this_session = not is_new_seller and \
+                                  (datetime.utcnow() - most_recent_pgp_key.created_date).total_seconds() \
+                                  > RESCRAPE_PGP_KEY_INTERVAL
+
+        if scrape_pgp_this_session:
+            web_response = self._get_web_response(url)
+            soup_html = self._get_page_as_soup_html(web_response, "saved_empire_pgp_html")
+            pgp_key_content = scrapingFunctions.get_pgp_key(soup_html)
+            self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content))
+            self.db_session.flush()

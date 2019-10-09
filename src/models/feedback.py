@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float, Text
 
-import src.models.seller_observation as seller
+import src.models.seller as seller
 from definitions import Base
 from src.models import scraping_session
 

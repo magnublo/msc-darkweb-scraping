@@ -1,4 +1,4 @@
-from definitions import DEBUG_MODE
+from definitions import DEBUG_MODE, Base, engine
 from src.empire.scrapeManager import EmpireScrapingManager
 
 if DEBUG_MODE:
@@ -6,4 +6,5 @@ if DEBUG_MODE:
 else:
     nr_of_threads = input("Nr. of threads: ")
 
+Base.metadata.create_all(engine)
 scraping_manager = EmpireScrapingManager(nr_of_threads=int(nr_of_threads))

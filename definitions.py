@@ -4,7 +4,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DEBUG_MODE = True
+ONE_WEEK = 3600*24*7
+
+DEBUG_MODE = False
 
 TOR_PORT = 9050
 
@@ -21,15 +23,13 @@ DB_CLIENT_ENCODING = "utf8"
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
 DBMS_DISCONNECT_RETRY_INTERVALS = [5, 20, 100, 300]
 ERROR_FINGER_PRINT_COLUMN_LENGTH = 4
+MAX_NR_OF_ERRORS_STORED_IN_DATABASE = 40
 
 ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
 ANTI_CAPTCHA_CREATE_TASK_URL = "http://api.anti-captcha.com/createTask"
-ANTI_CAPTCHA_GET_TASK_URL = "https://api.anti-captcha.com/getTaskResult "
+ANTI_CAPTCHA_GET_TASK_URL = "https://api.anti-captcha.com/getTaskResult"
 ANTI_CAPTCHA_WAIT_INTERVAL = 2
 ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL = 6
-MAX_NR_OF_ERRORS_STORED_IN_DATABASE = 40
-
-
 
 #EMPIRE MARKET
 EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
@@ -37,7 +37,7 @@ EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
                             ["using_python4", "Password123!"],
                              ["using_python5", "Password123!"],
                              ["using_python6", "Password123!"]]
-
+RESCRAPE_PGP_KEY_INTERVAL = ONE_WEEK
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
 EMPIRE_MARKET_HOME_URL = "http://" + EMPIRE_MARKET_URL + "/home"
 EMPIRE_IMAGE_CAPTCHA_URL_REGEX = r"http:\/\/"+EMPIRE_MARKET_URL.replace(".", "\.")+"\/public\/captchaimg\/[0-9]{10}\.[0-9]{3}\.jpg"
