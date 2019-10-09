@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 
 TOR_PORT = 9050
 
@@ -17,7 +17,10 @@ ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
 DB_ENGINE_URL = 'mysql+mysqlconnector://msc-scraper:Password123!@localhost:3306/scraping'
 DB_CLIENT_ENCODING = "utf8"
+
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
+DBMS_DISCONNECT_RETRY_INTERVALS = [5, 20, 100, 300]
+ERROR_FINGER_PRINT_COLUMN_LENGTH = 4
 
 ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
 ANTI_CAPTCHA_CREATE_TASK_URL = "http://api.anti-captcha.com/createTask"

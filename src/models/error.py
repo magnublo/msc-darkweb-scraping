@@ -18,4 +18,5 @@ class Error(Base):
     thread_id = Column(Integer)
     type = Column(String)
     text = Column(Text)
+    finger_print = Column(String(4))
 

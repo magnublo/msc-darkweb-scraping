@@ -1,4 +1,5 @@
 import abc
+import hashlib
 import time
 import traceback
 from abc import abstractstaticmethod, abstractmethod
@@ -8,7 +9,8 @@ import requests
 from bs4 import BeautifulSoup
 from python3_anticaptcha import AntiCaptchaControl
 
-from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE
+from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE, \
+    ERROR_FINGER_PRINT_COLUMN_LENGTH
 from src.models.error import Error
 from src.utils import pretty_print_GET
 
@@ -100,20 +102,27 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print("Thread nr. " + str(self.thread_id) + " initiated scraping_session with ID: " + str(scraping_session.id))
         return scraping_session
 
-    def _log_and_print_error(self, e):
-        traceback.print_exc()
+    def _log_and_print_error(self, e, updated_date=None, print_error=True):
+        if print_error:
+            traceback.print_exc()
+
         errors = self.db_session.query(Error).order_by(Error.updated_date.asc())
         error_type = type(e).__name__
 
+        finger_print = hashlib.md5((error_type+str(time.time())).encode('utf-8'))\
+                           .hexdigest()[0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
+
         if errors.count() >= MAX_NR_OF_ERRORS_STORED_IN_DATABASE:
             error = errors.first()
-            error.updated_date = datetime.utcnow()
+            error.updated_date = updated_date
             error.session_id = self.session_id
             error.thread_id = self.thread_id
             error.type = error_type
             error.text = traceback.format_exc()
+            error.finger_print = finger_print
         else:
-            error = Error(session_id=self.session_id, thread_id=self.thread_id, type=error_type, text=traceback.format_exc())
+            error = Error(updated_date=updated_date, session_id=self.session_id, thread_id=self.thread_id,
+                          type=error_type, text=traceback.format_exc(), finger_print=finger_print)
             self.db_session.add(error)
 
         self.db_session.commit()
