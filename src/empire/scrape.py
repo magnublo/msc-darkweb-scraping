@@ -419,7 +419,7 @@ class EmpireScrapingSession(BaseScraper):
 
         for i in range(0, len(feedback_categories)):
             if category_contains_new_feedback[i]:
-                self._scrape_feedback(seller, feedback_categories[i], feedback_urls[i])
+                self._scrape_feedback(seller, is_new_seller, feedback_categories[i], feedback_urls[i])
 
         self._scrape_pgp_key(seller, is_new_seller, pgp_url)
 
@@ -463,7 +463,7 @@ class EmpireScrapingSession(BaseScraper):
         self.db_session.add(seller_observation)
         self.db_session.flush()
 
-    def _scrape_feedback(self, seller, category, url):
+    def _scrape_feedback(self, seller, is_new_seller, category, url):
 
         scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
                                                        , self.thread_id, self._get_cookie_string(), "N/A")
@@ -474,49 +474,55 @@ class EmpireScrapingSession(BaseScraper):
         feedback_array = scrapingFunctions.get_feedbacks(soup_html)
 
         for feedback in feedback_array:
-            existing_feedback = self.db_session.query(Feedback).filter_by(
-                            date_published=feedback["date_published"],
-                            buyer=feedback["buyer"],
-                            category=category,
-                            text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
-                            market=self.market_id)\
-                            .join(Seller, Seller.id == Feedback.seller_id)\
-                            .first()
+            if not is_new_seller:
+                existing_feedback = self.db_session.query(Feedback).filter_by(
+                                date_published=feedback["date_published"],
+                                buyer=feedback["buyer"],
+                                category=category,
+                                text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
+                                market=self.market_id)\
+                                .join(Seller, Seller.id == Feedback.seller_id)\
+                                .first()
 
-            if existing_feedback:
-                return
+                if existing_feedback:
+                    self.db_session.flush()
+                    return
 
-            else:
-                db_feedback = Feedback(
-                    date_published=feedback["date_published"],
-                    category=category,
-                    market=self.market_id,
-                    seller_id=seller.id,
-                    session_id=self.session_id,
-                    product_url=feedback["product_url"],
-                    feedback_message_text=feedback["feedback_message"],
-                    seller_response_message=feedback["seller_response_message"],
-                    text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
-                    buyer=feedback["buyer"],
-                    currency=feedback["currency"],
-                    price=feedback["price"]
-                )
-                self.db_session.add(db_feedback)
+            db_feedback = Feedback(
+                date_published=feedback["date_published"],
+                category=category,
+                market=self.market_id,
+                seller_id=seller.id,
+                session_id=self.session_id,
+                product_url=feedback["product_url"],
+                feedback_message_text=feedback["feedback_message"],
+                seller_response_message=feedback["seller_response_message"],
+                text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
+                buyer=feedback["buyer"],
+                currency=feedback["currency"],
+                price=feedback["price"]
+            )
+            self.db_session.add(db_feedback)
 
         self.db_session.flush()
 
         next_url_with_feeback = scrapingFunctions.get_next_feedback_page(soup_html)
 
         if next_url_with_feeback and not DEBUG_MODE:
-            self._scrape_feedback(seller, category, next_url_with_feeback)
+            self._scrape_feedback(seller, is_new_seller, category, next_url_with_feeback)
 
     def _scrape_pgp_key(self, seller, is_new_seller, url):
 
         most_recent_pgp_key = self.db_session.query(PGPKey).filter_by(seller_id=seller.id).order_by(PGPKey.created_date.desc()).first()
 
-        scrape_pgp_this_session = not is_new_seller and \
-                                  (datetime.utcnow() - most_recent_pgp_key.created_date).total_seconds() \
-                                  > RESCRAPE_PGP_KEY_INTERVAL
+        scrape_pgp_this_session = False
+
+        if is_new_seller:
+            scrape_pgp_this_session = True
+        elif most_recent_pgp_key is not None:
+            seconds_since_last_pgp_key_scrape = (datetime.utcnow() - most_recent_pgp_key.created_date).total_seconds()
+            if seconds_since_last_pgp_key_scrape > RESCRAPE_PGP_KEY_INTERVAL:
+                scrape_pgp_this_session = True
 
         if scrape_pgp_this_session:
             web_response = self._get_web_response(url)

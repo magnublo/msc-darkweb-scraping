@@ -11,5 +11,5 @@ class Settings(Base):
     __tablename__ = TABLE_NAME
 
     id = Column(Integer, primary_key=True)
-    refill_queue_when_complete = Boolean()
+    refill_queue_when_complete = Column(Boolean)
 

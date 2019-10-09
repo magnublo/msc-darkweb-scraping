@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 ONE_WEEK = 3600*24*7
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 
 TOR_PORT = 9050
 
