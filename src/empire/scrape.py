@@ -4,11 +4,11 @@ import time
 import traceback
 from datetime import datetime
 from queue import Empty
-from random import shuffle
+from random import shuffle, randint
 
 from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import SQLAlchemyError
 from urllib3.exceptions import NewConnectionError, HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
@@ -209,7 +209,13 @@ class EmpireScrapingSession(BaseScraper):
                             self._log_and_print_error(entry[0], updated_date=entry[1], print_error=False)
                         error_data = []
                         break
-                    except OperationalError as error:
+                    except (SQLAlchemyError, AttributeError) as error:
+                        if type(error) == AttributeError:
+                            error_string = traceback.format_exc()
+                            if error_string.find("AttributeError: 'NoneType' object has no attribute") != -1 \
+                                    and error_string.find("site-packages/sqlalchemy") != -1:
+                                raise error
+
                         error_data.append([error, datetime.utcnow()])
                         nr_of_errors = len(error_data)
                         highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
@@ -220,6 +226,9 @@ class EmpireScrapingSession(BaseScraper):
                             seconds_until_next_try) + " seconds...")
                         self.db_session.rollback()
                         time.sleep(seconds_until_next_try)
+                    except BaseException as e:
+                        self._log_and_print_error(e)
+                        raise e
                     
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate, parsing_time):

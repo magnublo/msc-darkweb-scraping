@@ -2,11 +2,11 @@ import os
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 ONE_WEEK = 3600*24*7
 
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 TOR_PORT = 9050
 
@@ -54,5 +54,5 @@ EMPIRE_HTTP_HEADERS = {
         }
 
 engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
-Session = sessionmaker(bind=engine)
+Session = scoped_session(sessionmaker(bind=engine))
 Base = declarative_base()
