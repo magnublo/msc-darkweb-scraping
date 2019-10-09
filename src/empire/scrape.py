@@ -214,6 +214,7 @@ class EmpireScrapingSession(BaseScraper):
                             error_string = traceback.format_exc()
                             if error_string.find("AttributeError: 'NoneType' object has no attribute") != -1 \
                                     and error_string.find("site-packages/sqlalchemy") != -1:
+                                self._log_and_print_error(error)
                                 raise error
 
                         error_data.append([error, datetime.utcnow()])
