@@ -2,6 +2,7 @@ import base64
 import hashlib
 import time
 import traceback
+from _mysql_connector import MySQLInterfaceError, MySQLError
 from datetime import datetime
 from queue import Empty
 from random import shuffle, randint
@@ -14,6 +15,7 @@ from urllib3.exceptions import NewConnectionError, HTTPError
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, engine, \
     Base, DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL
+from src import utils
 from src.base import BaseScraper, LoggedOutException
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
@@ -70,7 +72,8 @@ class EmpireScrapingSession(BaseScraper):
         time_before_requesting_captcha_solve = time.time()
         print("Thread nr. " + str(self.thread_id) + " sending image to anti-catpcha.com API...")
         captcha_solution_response = ImageToTextTask.ImageToTextTask(
-                                anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY
+                                anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY,
+                                numeric=True
                             ).captcha_handler(captcha_base64=base64_image)
 
         captcha_solution = captcha_solution_response["solution"]["text"]
@@ -209,11 +212,10 @@ class EmpireScrapingSession(BaseScraper):
                             self._log_and_print_error(entry[0], updated_date=entry[1], print_error=False)
                         error_data = []
                         break
-                    except (SQLAlchemyError, AttributeError) as error:
+                    except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
                         if type(error) == AttributeError:
                             error_string = traceback.format_exc()
-                            if error_string.find("AttributeError: 'NoneType' object has no attribute") != -1 \
-                                    and error_string.find("site-packages/sqlalchemy") != -1:
+                            if not utils.error_is_sqlalchemy_error(error_string):
                                 self._log_and_print_error(error)
                                 raise error
 
@@ -221,16 +223,19 @@ class EmpireScrapingSession(BaseScraper):
                         nr_of_errors = len(error_data)
                         highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
                         seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
-                            min(nr_of_errors-1, highest_index)]
+                            min(nr_of_errors-1, highest_index)] + self.thread_id * 2
                         traceback.print_exc()
-                        print("Problem with DBMS connection. Retrying in " + str(
+                        print("Thread "+str(self.thread_id)+" has problem with DBMS connection. Retrying in " + str(
                             seconds_until_next_try) + " seconds...")
-                        self.db_session.rollback()
+                        self._force_rollback()
                         time.sleep(seconds_until_next_try)
-                    except BaseException as e:
+                    except (BaseException) as e:
                         self._log_and_print_error(e)
                         raise e
-                    
+                    except:
+                        error_string = traceback.format_exc()
+                        print("unknown error")
+
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate, parsing_time):
 
@@ -538,3 +543,11 @@ class EmpireScrapingSession(BaseScraper):
             pgp_key_content = scrapingFunctions.get_pgp_key(soup_html)
             self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content))
             self.db_session.flush()
+
+    def _force_rollback(self):
+        while True:
+            try:
+                self.db_session.rollback()
+                return
+            except:
+                pass

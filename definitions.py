@@ -54,5 +54,5 @@ EMPIRE_HTTP_HEADERS = {
         }
 
 engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
-Session = scoped_session(sessionmaker(bind=engine))
+Session = sessionmaker(bind=engine)
 Base = declarative_base()

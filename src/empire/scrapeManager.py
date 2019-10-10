@@ -31,7 +31,7 @@ class EmpireScrapingManager:
                 session_id = scrapingSession.session_id
 
                 if DEBUG_MODE:
-                    for i in range(0, 100):
+                    for i in range(0, 50):
                         queue.put(str(i))
                     sleep(5)
                 else:
@@ -45,6 +45,7 @@ class EmpireScrapingManager:
                 for i in range(1, nr_of_threads):
                     username = EMPIRE_MARKET_CREDENTIALS[i][0]
                     password = EMPIRE_MARKET_CREDENTIALS[i][1]
+                    sleep(1)
                     scrapingSession = EmpireScrapingSession(queue, username, password, db_session, nr_of_threads, thread_id=i, session_id=session_id)
                     t = threading.Thread(target=scrapingSession.scrape)
                     t.start()
