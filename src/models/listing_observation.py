@@ -17,6 +17,7 @@ class ListingObservation(Base):
     __tablename__ = TABLE_NAME
 
     id = Column(PRIMARY_KEY, Integer, primary_key=True)
+    thread_id = Column(Integer)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
 
     session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY))

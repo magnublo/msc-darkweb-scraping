@@ -162,13 +162,13 @@ class EmpireScrapingSession(BaseScraper):
                     self._login_and_set_cookie(response)
                     return self._get_web_response(url)
             except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException) as e:
-                self._log_and_print_error(e)
+                self._log_and_print_error(e, traceback.format_exc())
                 self._wrap_up_session()
                 self._print_exception_triggering_request(url)
                 raise
 
             except (HTTPError, BaseException) as e:
-                self._log_and_print_error(e)
+                self._log_and_print_error(e, traceback.format_exc())
 
 
 
@@ -209,17 +209,17 @@ class EmpireScrapingSession(BaseScraper):
                                              is_sticky, btc_rate, ltc_rate, xmr_rate, parsing_time)
                         self.db_session.commit()
                         for entry in error_data:
-                            self._log_and_print_error(entry[0], updated_date=entry[1], print_error=False)
+                            self._log_and_print_error(entry[0], entry[1], updated_date=entry[2], print_error=False)
                         error_data = []
                         break
                     except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
+                        error_string = traceback.format_exc()
                         if type(error) == AttributeError:
-                            error_string = traceback.format_exc()
                             if not utils.error_is_sqlalchemy_error(error_string):
-                                self._log_and_print_error(error)
+                                self._log_and_print_error(error, error_string)
                                 raise error
 
-                        error_data.append([error, datetime.utcnow()])
+                        error_data.append([error, error_string, datetime.utcnow()])
                         nr_of_errors = len(error_data)
                         highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
                         seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
@@ -230,11 +230,15 @@ class EmpireScrapingSession(BaseScraper):
                         self._force_rollback()
                         time.sleep(seconds_until_next_try)
                     except (BaseException) as e:
-                        self._log_and_print_error(e)
+                        error_string = traceback.format_exc()
+                        utils.print_error_to_file(self.thread_id, error_string)
+                        self._log_and_print_error(e, error_string)
                         raise e
                     except:
                         error_string = traceback.format_exc()
-                        print("unknown error")
+                        utils.print_error_to_file(self.thread_id, error_string)
+                        self._log_and_print_error(None, error_string)
+                        raise
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate, parsing_time):
@@ -271,6 +275,7 @@ class EmpireScrapingSession(BaseScraper):
             return
         else:
             listing_observation = ListingObservation(session_id=self.session_id,
+                                                     thread_id=self.thread_id,
                                                      title=title,
                                                      seller_id=seller.id)
             self.db_session.add(listing_observation)

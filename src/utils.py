@@ -104,3 +104,10 @@ def error_is_sqlalchemy_error(error_string):
     return error_string.find("site-packages/sqlalchemy") != -1 \
             or error_string.find("\'NoneType\' object has no attribute \'have_result_set\'") != -1 \
             or error_string.find("MySQL") != -1
+
+
+def print_error_to_file(thread_id, error_string):
+    file_name = "thread_" + str(thread_id) + "_error"
+    file = open(file_name, "w")
+    file.write(error_string)
+    file.close()
