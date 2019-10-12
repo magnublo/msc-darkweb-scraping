@@ -1,10 +1,10 @@
 import threading
+from asyncio import sleep
 from multiprocessing import Queue
-from time import sleep
 
-from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE, Session
+from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE
 from src.empire.scrape import EmpireScrapingSession
-from src.utils import get_settings
+from src.utils import get_settings, get_db_session
 
 
 def queue_is_empty(queue):
@@ -15,23 +15,25 @@ def queue_is_empty(queue):
 
 class EmpireScrapingManager:
 
-    def __init__(self, db_session, nr_of_threads=1):
+    def __init__(self, engine, nr_of_threads=1):
         assert nr_of_threads <= len(EMPIRE_MARKET_CREDENTIALS)
         queue = Queue()
         first_run = True
 
         while True:
+            db_session = get_db_session(engine)
             settings = get_settings(db_session)
+            db_session.close()
             refill_queue_when_complete = settings.refill_queue_when_complete
 
             if first_run or (queue_is_empty(queue) and refill_queue_when_complete):
                 username = EMPIRE_MARKET_CREDENTIALS[0][0]
                 password = EMPIRE_MARKET_CREDENTIALS[0][1]
-                scrapingSession = EmpireScrapingSession(queue, username, password, db_session, nr_of_threads, thread_id=0)
+                scrapingSession = EmpireScrapingSession(queue, username, password, nr_of_threads, thread_id=0)
                 session_id = scrapingSession.session_id
 
                 if DEBUG_MODE:
-                    for i in range(0, 50):
+                    for i in range(0, 1000):
                         queue.put(str(i))
                     sleep(5)
                 else:
@@ -46,7 +48,7 @@ class EmpireScrapingManager:
                     username = EMPIRE_MARKET_CREDENTIALS[i][0]
                     password = EMPIRE_MARKET_CREDENTIALS[i][1]
                     sleep(1)
-                    scrapingSession = EmpireScrapingSession(queue, username, password, db_session, nr_of_threads, thread_id=i, session_id=session_id)
+                    scrapingSession = EmpireScrapingSession(queue, username, password, nr_of_threads, thread_id=i, session_id=session_id)
                     t = threading.Thread(target=scrapingSession.scrape)
                     t.start()
 

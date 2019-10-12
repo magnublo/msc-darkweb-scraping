@@ -2,10 +2,11 @@ import base64
 import hashlib
 import time
 import traceback
-from _mysql_connector import MySQLInterfaceError, MySQLError
+from _mysql_connector import MySQLError
+from asyncio import sleep
 from datetime import datetime
 from queue import Empty
-from random import shuffle, randint
+from random import shuffle
 
 from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
@@ -13,7 +14,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from urllib3.exceptions import NewConnectionError, HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, engine, \
+    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
     Base, DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL
 from src import utils
 from src.base import BaseScraper, LoggedOutException
@@ -32,8 +33,6 @@ from src.models.seller_observation import SellerObservation
 
 asd  = NewConnectionError
 
-Base.metadata.create_all(engine)
-
 class EmpireScrapingSession(BaseScraper):
 
     @staticmethod
@@ -48,8 +47,8 @@ class EmpireScrapingSession(BaseScraper):
 
         return False
 
-    def __init__(self, queue, username, password, db_session, nr_of_threads, thread_id, session_id=None):
-        super().__init__(queue, username, password, db_session, nr_of_threads, thread_id=thread_id, session_id=session_id)
+    def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
+        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, session_id=session_id)
         self.logged_out_exceptions = 0
 
     def _get_working_dir(self):
@@ -228,7 +227,7 @@ class EmpireScrapingSession(BaseScraper):
                         print("Thread "+str(self.thread_id)+" has problem with DBMS connection. Retrying in " + str(
                             seconds_until_next_try) + " seconds...")
                         self._force_rollback()
-                        time.sleep(seconds_until_next_try)
+                        sleep(seconds_until_next_try)
                     except (BaseException) as e:
                         error_string = traceback.format_exc()
                         utils.print_error_to_file(self.thread_id, error_string)
@@ -555,4 +554,4 @@ class EmpireScrapingSession(BaseScraper):
                 self.db_session.rollback()
                 return
             except:
-                pass
+                sleep(0.5)

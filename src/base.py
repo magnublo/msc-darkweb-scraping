@@ -1,9 +1,8 @@
 import abc
 import hashlib
-import time
-import traceback
 from abc import abstractstaticmethod, abstractmethod
-from datetime import datetime
+from asyncio import sleep
+from time import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,9 +11,9 @@ from python3_anticaptcha import AntiCaptchaControl
 from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH
 from src.models.error import Error
-from src.utils import pretty_print_GET
-
 from src.models.scraping_session import ScrapingSession
+from src.utils import pretty_print_GET, get_db_session, get_engine
+
 
 class LoggedOutException(Exception):
 
@@ -63,24 +62,25 @@ class BaseFunctions(metaclass=abc.ABCMeta):
 
 class BaseScraper(metaclass=abc.ABCMeta):
 
-    def __init__(self, queue, username, password, db_session, nr_of_threads, thread_id, session_id=None):
+    def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
+        engine = get_engine()
+        self.db_session = get_db_session(engine)
         self.username = username
         self.password = password
         self.thread_id = thread_id
         self.nr_of_threads = nr_of_threads
-        self.db_session = db_session
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
         self.headers = self._get_headers()
         self.queue = queue
         self.market_id = self._get_market_ID()
-        self.start_time = time.time()
+        self.start_time = time()
         self.duplicates_this_session = 0
         self.web_session = requests.session()
         self._login_and_set_cookie()
         self.initial_queue_size = self.queue.qsize()
 
         if session_id:
-            self.session = db_session.query(ScrapingSession).filter_by(
+            self.session = self.db_session.query(ScrapingSession).filter_by(
                             id=session_id).first()
             self.session.initial_queue_size = self.initial_queue_size
             self.db_session.commit()
@@ -112,7 +112,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         else:
             error_type = type(e).__name__
 
-        finger_print = hashlib.md5((error_type+str(time.time())).encode('utf-8'))\
+        finger_print = hashlib.md5((error_type+str(time())).encode('utf-8'))\
                            .hexdigest()[0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
 
         if errors.count() >= MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD:
@@ -129,7 +129,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             self.db_session.add(error)
 
         self.db_session.commit()
-        time.sleep(2)
+        sleep(2)
 
     def _print_exception_triggering_request(self, url):
         debug_html = None
@@ -145,7 +145,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print(debug_html)
 
     def _wrap_up_session(self):
-        self.session.time_finished = time.time()
+        self.session.time_finished = time()
         self.session.duplicates_encountered = self.duplicates_this_session
         self.db_session.commit()
         self.db_session.close()
@@ -155,7 +155,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         tries = 0
 
         while True:
-            print(time.time())
+            print(time())
             print("Trying to retrieve page " + url + "...")
             print("Try nr. " + str(tries))
             try:

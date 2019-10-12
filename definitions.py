@@ -53,6 +53,4 @@ EMPIRE_HTTP_HEADERS = {
             "Upgrade-Insecure-Requests": "1"
         }
 
-engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING)
-Session = sessionmaker(bind=engine)
 Base = declarative_base()
