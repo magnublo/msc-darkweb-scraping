@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, Date
+from sqlalchemy import Column, DateTime, Integer, String, Date, UniqueConstraint
 
 from definitions import Base
 
@@ -18,3 +18,4 @@ class Seller(Base):
     registration_date = Column(Date)
     market = Column(String)
 
+    UniqueConstraint(name, market)

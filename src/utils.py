@@ -72,3 +72,9 @@ def get_db_session(engine):
     db_session = Session()
     db_session.rollback()
     return db_session
+
+def get_error_string(scraping_object, error_traceback, local_variables):
+    object_variables = vars(scraping_object)
+    local_variable_strings = [str(key) + ": " + str(local_variables[key]) for key in local_variables.keys()]
+    object_variable_strings = [str(key) + ": " + str(object_variables[key]) for key in object_variables.keys()]
+    return "\n\n\n".join([error_traceback] + local_variable_strings + object_variable_strings)

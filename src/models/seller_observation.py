@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Float, UniqueConstraint
 
 from definitions import Base
 from src.models import scraping_session
@@ -53,3 +53,5 @@ class SellerObservation(Base):
 
     vendor_level = Column(Integer)
     trust_level = Column(Integer)
+
+    UniqueConstraint(session_id, url)

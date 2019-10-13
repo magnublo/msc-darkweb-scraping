@@ -30,6 +30,7 @@ from src.models.pgp_key import PGPKey
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
+from src.utils import get_error_string
 
 asd  = NewConnectionError
 
@@ -175,69 +176,70 @@ class EmpireScrapingSession(BaseScraper):
         time_of_last_response = time.time()
 
         while True:
-
             try:
-                search_result_url = self.queue.get(timeout=1)
-            except Empty:
-                print("Job queue is empty. Wrapping up...")
-                self._wrap_up_session()
-                return
+                try:
+                    search_result_url = self.queue.get(timeout=1)
+                except Empty:
+                    print("Job queue is empty. Wrapping up...")
+                    self._wrap_up_session()
+                    return
 
-            parsing_time = time.time() - time_of_last_response
-            web_response = self._get_web_response(search_result_url)
-            time_of_last_response = time.time()
+                parsing_time = time.time() - time_of_last_response
+                web_response = self._get_web_response(search_result_url)
+                time_of_last_response = time.time()
 
-            soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
-            product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
-            titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
-            btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+                soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
+                product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
+                titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
+                btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
-            assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
+                assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
 
-            for i in range(0, len(product_page_urls)):
-                title = titles[i]
-                seller_name = sellers[i]
-                seller_url = seller_urls[i]
-                product_page_url = product_page_urls[i]
-                is_sticky = urls_is_sticky[i]
+                for i in range(0, len(product_page_urls)):
+                    title = titles[i]
+                    seller_name = sellers[i]
+                    seller_url = seller_urls[i]
+                    product_page_url = product_page_urls[i]
+                    is_sticky = urls_is_sticky[i]
+                    error_data = []
 
-                error_data = []
-                while True:
-                    try:
-                        self._scrape_listing(title, seller_name, seller_url, product_page_url,
-                                             is_sticky, btc_rate, ltc_rate, xmr_rate, parsing_time)
-                        self.db_session.commit()
-                        for entry in error_data:
-                            self._log_and_print_error(entry[0], entry[1], updated_date=entry[2], print_error=False)
-                        error_data = []
-                        break
-                    except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
-                        error_string = traceback.format_exc()
-                        if type(error) == AttributeError:
-                            if not utils.error_is_sqlalchemy_error(error_string):
-                                self._log_and_print_error(error, error_string)
-                                raise error
+                    while True:
+                        try:
+                            self._scrape_listing(title, seller_name, seller_url, product_page_url,
+                                                 is_sticky, btc_rate, ltc_rate, xmr_rate, parsing_time)
+                            self.db_session.commit()
+                            for entry in error_data:
+                                self._log_and_print_error(entry[0], entry[1], updated_date=entry[2], print_error=False)
+                            error_data = []
+                            break
+                        except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
+                            error_string = traceback.format_exc()
+                            if type(error) == AttributeError:
+                                if not utils.error_is_sqlalchemy_error(error_string):
+                                    self._log_and_print_error(error, error_string)
+                                    raise error
 
-                        error_data.append([error, error_string, datetime.utcnow()])
-                        nr_of_errors = len(error_data)
-                        highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
-                        seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
-                            min(nr_of_errors-1, highest_index)] + self.thread_id * 2
-                        traceback.print_exc()
-                        print("Thread "+str(self.thread_id)+" has problem with DBMS connection. Retrying in " + str(
-                            seconds_until_next_try) + " seconds...")
-                        self._force_rollback()
-                        sleep(seconds_until_next_try)
-                    except (BaseException) as e:
-                        error_string = traceback.format_exc()
-                        utils.print_error_to_file(self.thread_id, error_string)
-                        self._log_and_print_error(e, error_string)
-                        raise e
-                    except:
-                        error_string = traceback.format_exc()
-                        utils.print_error_to_file(self.thread_id, error_string)
-                        self._log_and_print_error(None, error_string)
-                        raise
+                            error_data.append([error, error_string, datetime.utcnow()])
+                            nr_of_errors = len(error_data)
+                            highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
+                            seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
+                                min(nr_of_errors-1, highest_index)] + self.thread_id * 2
+                            traceback.print_exc()
+                            print("Thread "+str(self.thread_id)+" has problem with DBMS connection. Retrying in " + str(
+                                seconds_until_next_try) + " seconds...")
+                            self._force_rollback()
+                            sleep(seconds_until_next_try)
+
+            except (BaseException) as e:
+                error_string = get_error_string(self, traceback.format_exc(), locals())
+                utils.print_error_to_file(self.thread_id, error_string)
+                self._log_and_print_error(e, error_string)
+                raise e
+            except:
+                error_string = get_error_string(self, traceback.format_exc(), locals())
+                utils.print_error_to_file(self.thread_id, error_string)
+                self._log_and_print_error(None, error_string)
+                raise
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate, parsing_time):
