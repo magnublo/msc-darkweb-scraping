@@ -1,7 +1,7 @@
 import abc
 import hashlib
 from abc import abstractstaticmethod, abstractmethod
-from asyncio import sleep
+from time import sleep
 from time import time
 
 import requests

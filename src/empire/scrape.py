@@ -3,7 +3,7 @@ import hashlib
 import time
 import traceback
 from _mysql_connector import MySQLError
-from asyncio import sleep
+from time import sleep
 from datetime import datetime
 from queue import Empty
 from random import shuffle
@@ -205,6 +205,7 @@ class EmpireScrapingSession(BaseScraper):
 
                     while True:
                         try:
+                            self.db_session.rollback()
                             self._scrape_listing(title, seller_name, seller_url, product_page_url,
                                                  is_sticky, btc_rate, ltc_rate, xmr_rate, parsing_time)
                             self.db_session.commit()
@@ -227,7 +228,6 @@ class EmpireScrapingSession(BaseScraper):
                             traceback.print_exc()
                             print("Thread "+str(self.thread_id)+" has problem with DBMS connection. Retrying in " + str(
                                 seconds_until_next_try) + " seconds...")
-                            self._force_rollback()
                             sleep(seconds_until_next_try)
 
             except (BaseException) as e:
@@ -549,11 +549,3 @@ class EmpireScrapingSession(BaseScraper):
             pgp_key_content = scrapingFunctions.get_pgp_key(soup_html)
             self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content))
             self.db_session.flush()
-
-    def _force_rollback(self):
-        while True:
-            try:
-                self.db_session.rollback()
-                return
-            except:
-                sleep(0.5)
