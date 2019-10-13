@@ -1,8 +1,6 @@
 import os
 
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session
 
 ONE_WEEK = 3600*24*7
 
@@ -21,7 +19,7 @@ DB_ENGINE_URL = 'mysql+mysqlconnector://msc-scraper:Password123!@localhost:3306/
 DB_CLIENT_ENCODING = "utf8"
 
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
-DBMS_DISCONNECT_RETRY_INTERVALS = [5, 5, 5, 5, 5, 5, 5, 20, 100, 300]
+DBMS_DISCONNECT_RETRY_INTERVALS = [5, 5, 5, 5, 5, 5, 5, 20]
 ERROR_FINGER_PRINT_COLUMN_LENGTH = 4
 MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD = 40
 

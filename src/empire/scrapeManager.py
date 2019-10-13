@@ -4,7 +4,7 @@ from multiprocessing import Queue
 
 from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE
 from src.empire.scrape import EmpireScrapingSession
-from src.utils import get_settings, get_db_session
+from src.utils import get_settings
 
 
 def queue_is_empty(queue):
@@ -20,12 +20,10 @@ class EmpireScrapingManager:
         queue = Queue()
         first_run = True
 
-        while True:
-            db_session = get_db_session(engine)
-            settings = get_settings(db_session)
-            db_session.close()
-            refill_queue_when_complete = settings.refill_queue_when_complete
+        settings = get_settings()
+        refill_queue_when_complete = settings.refill_queue_when_complete
 
+        while True:
             if first_run or (queue_is_empty(queue) and refill_queue_when_complete):
                 username = EMPIRE_MARKET_CREDENTIALS[0][0]
                 password = EMPIRE_MARKET_CREDENTIALS[0][1]
@@ -55,3 +53,5 @@ class EmpireScrapingManager:
                 first_run = False
             else:
                 sleep(300)
+                settings = get_settings()
+                refill_queue_when_complete = settings.refill_queue_when_complete

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey, Integer
+from sqlalchemy import Column, ForeignKey, Integer
 
 import src.models.listing_category as listing_category
 import src.models.listing_observation as listing_observation

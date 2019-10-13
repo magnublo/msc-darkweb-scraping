@@ -15,7 +15,7 @@ from urllib3.exceptions import NewConnectionError, HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
-    Base, DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL
+    DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL
 from src import utils
 from src.base import BaseScraper, LoggedOutException
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions

@@ -1,26 +1,24 @@
 import base64
 import hashlib
-import json
 import time
 import traceback
 
 import requests
+from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
+from src.cryptonia.functions import CryptoniaScrapingFunctions as scrapingFunctions
 
-from definitions import CRYPTONIA_MARKET_URL, CRYPTONIA_MARKET_ID, DEBUG_MODE, CRYPTONIA_BASE_CRAWLING_URL, CRYPTONIA_DIR, \
-    CRYTPONIA_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, ANTI_CAPTCHA_CREATE_TASK_URL, \
-    ANTI_CAPTCHA_WAIT_INTERVAL, ANTI_CAPTCHA_GET_TASK_URL, ANTI_CAPTCHA_INITIAL_WAIT_INTERVAL
+from definitions import DEBUG_MODE, CRYPTONIA_BASE_CRAWLING_URL, CRYPTONIA_DIR, \
+    PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY
 from src.base import Base, engine, db_session, LoggedOutException
 from src.base import BaseScraper
-from src.cryptonia.functions import CryptoniaScrapingFunctions as scrapingFunctions
 from src.models.country import Country
 from src.models.listing_category import ListingCategory
 from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
-from src.utils import pretty_print_GET, pretty_print_POST
-from python3_anticaptcha import ImageToTextTask
+from src.utils import pretty_print_GET
 
 NR_OF_PAGES = 738
 

@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm.session import Session as SQLAlchemySession, sessionmaker
+from sqlalchemy.orm.session import sessionmaker
 
 from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING
 from src.models.settings import Settings
@@ -37,7 +36,9 @@ def pretty_print_POST(req):
         req.body,
     )
 
-def get_settings(db_session : SQLAlchemySession):
+def get_settings():
+    engine = get_engine()
+    db_session = get_db_session(engine)
     existing_settings = db_session.query(Settings).first()
     if existing_settings:
         return existing_settings
@@ -62,7 +63,7 @@ def print_error_to_file(thread_id, error_string):
 
 
 def get_engine():
-    engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING, connect_args={'buffered': True})
+    engine = create_engine(DB_ENGINE_URL, encoding=DB_CLIENT_ENCODING, echo=False, connect_args={'buffered': True})
     return engine
 
 def get_db_session(engine):

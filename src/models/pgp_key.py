@@ -3,7 +3,6 @@ import datetime
 from sqlalchemy import Column, Text, Integer, ForeignKey, DateTime
 
 from definitions import Base
-
 from src.models import seller
 
 TABLE_NAME = 'pgp_key'
