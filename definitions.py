@@ -34,7 +34,9 @@ EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
 EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
                             ["using_python4", "Password123!"],
                              ["using_python5", "Password123!"],
-                             ["using_python6", "Password123!"]]
+                             ["using_python6", "Password123!"],
+                             ["using_python7", "Password123!"]]
+
 RESCRAPE_PGP_KEY_INTERVAL = ONE_WEEK
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
 EMPIRE_MARKET_HOME_URL = "http://" + EMPIRE_MARKET_URL + "/home"
