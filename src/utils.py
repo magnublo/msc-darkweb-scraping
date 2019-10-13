@@ -41,12 +41,16 @@ def get_settings():
     db_session = get_db_session(engine)
     existing_settings = db_session.query(Settings).first()
     if existing_settings:
-        return existing_settings
+        res = existing_settings
     else:
         settings = Settings(refill_queue_when_complete=True)
         db_session.add(settings)
         db_session.commit()
-        return settings
+        res = settings
+
+    db_session.expunge_all()
+    db_session.close()
+    return res
 
 
 def error_is_sqlalchemy_error(error_string):

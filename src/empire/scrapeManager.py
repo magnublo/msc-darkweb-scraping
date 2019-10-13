@@ -1,5 +1,5 @@
 import threading
-from asyncio import sleep
+from time import sleep
 from multiprocessing import Queue
 
 from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE
@@ -15,7 +15,7 @@ def queue_is_empty(queue):
 
 class EmpireScrapingManager:
 
-    def __init__(self, engine, nr_of_threads=1):
+    def __init__(self, nr_of_threads=1):
         assert nr_of_threads <= len(EMPIRE_MARKET_CREDENTIALS)
         queue = Queue()
         first_run = True
