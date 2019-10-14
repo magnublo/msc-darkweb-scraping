@@ -81,10 +81,15 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.initial_queue_size = self.queue.qsize()
 
         if session_id:
-            self.session = self.db_session.query(ScrapingSession).filter_by(
-                            id=session_id).first()
-            self.session.initial_queue_size = self.initial_queue_size
-            self.db_session.commit()
+            tries = 0
+            while tries < 10:
+                try:
+                    self.session = self.db_session.query(ScrapingSession).filter_by(
+                                    id=session_id).first()
+                    self.session.initial_queue_size = self.initial_queue_size
+                    self.db_session.commit()
+                except:
+                    sleep(5)
         else:
             self.session = self._initiate_session()
 
