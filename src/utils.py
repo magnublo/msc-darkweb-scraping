@@ -2,13 +2,19 @@ import inspect
 import time
 from datetime import datetime
 
+import requests
 from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
+from urllib3.exceptions import HTTPError
 
 from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, MYSQL_TEXT_COLUMN_MAX_LENGTH, \
     MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH
 from src.models.settings import Settings
 
+
+class BadGatewayException(HTTPError):
+
+    pass
 
 def pretty_print_GET(req):
     """
@@ -132,3 +138,15 @@ def _shorten_for_text_column(text):
 
 def _shorten_for_medium_text_column(text):
     return shorten_text(MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, text)
+
+
+def is_bad_gateway(response : requests.Response):
+
+    if response.status_code == 502:
+        return True
+
+    for history_response in response.history:
+        if history_response.status_code == 502:
+            return True
+
+    return False

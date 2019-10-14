@@ -31,7 +31,7 @@ from src.models.pgp_key import PGPKey
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
-from src.utils import get_error_string
+from src.utils import get_error_string, BadGatewayException, is_bad_gateway
 
 asd  = NewConnectionError
 
@@ -158,7 +158,10 @@ class EmpireScrapingSession(BaseScraper):
                             tries += 1
                             response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
                         else:
-                            return response
+                            if is_bad_gateway(response):
+                                raise BadGatewayException
+                            else:
+                                return response
 
                     self._login_and_set_cookie(response)
                     return self._get_web_response(url)
