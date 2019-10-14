@@ -159,7 +159,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
         while True:
             print(time())
-            print("Trying to retrieve page " + url + "...")
+            print("Thread nr. " + str(self.thread_id) + ' trying to retrieve page ' + url + "...")
             print("Try nr. " + str(tries))
             try:
                 if post_data:

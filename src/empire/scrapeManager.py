@@ -45,7 +45,7 @@ class EmpireScrapingManager:
                 for i in range(1, nr_of_threads):
                     username = EMPIRE_MARKET_CREDENTIALS[i][0]
                     password = EMPIRE_MARKET_CREDENTIALS[i][1]
-                    sleep(1)
+                    sleep(i*2)
                     scrapingSession = EmpireScrapingSession(queue, username, password, nr_of_threads, thread_id=i, session_id=session_id)
                     t = threading.Thread(target=scrapingSession.scrape)
                     t.start()
