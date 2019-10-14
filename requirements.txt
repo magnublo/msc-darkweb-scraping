@@ -6,3 +6,4 @@ psycopg2==2.8.3
 pysocks==1.7.1
 dateparser==0.7.2
 sqlescapy==1.0.1
+python3-anticaptcha==1.5.4
