@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 ONE_WEEK = 3600*24*7
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 
 TOR_PORT = 9050
 
@@ -15,7 +15,9 @@ PROXIES = {
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
-DB_ENGINE_URL = 'mysql+mysqlconnector://msc-scraper:Password123!@localhost:3306/scraping'
+
+DB_USERNAME = "msc-scraper"
+DB_ENGINE_URL = 'mysql+mysqlconnector://'+DB_USERNAME+':Password123!@localhost:3306/scraping'
 DB_CLIENT_ENCODING = "utf8"
 
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535

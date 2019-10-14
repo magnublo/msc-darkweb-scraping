@@ -81,14 +81,16 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.initial_queue_size = self.queue.qsize()
 
         if session_id:
-            tries = 0
-            while tries < 10:
+            while True:
                 try:
+                    self.db_session.rollback()
                     self.session = self.db_session.query(ScrapingSession).filter_by(
                                     id=session_id).first()
                     self.session.initial_queue_size = self.initial_queue_size
                     self.db_session.commit()
+                    break
                 except:
+                    print("Thread nr. " + str(self.thread_id) + " has problem querying session id in DB. Retrying...")
                     sleep(5)
         else:
             self.session = self._initiate_session()

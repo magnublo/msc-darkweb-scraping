@@ -100,8 +100,21 @@ def get_error_string(scraping_object, error_traceback, sys_exec_info):
     object_variable_strings = [str(key) + ": " + str(object_variables[key]) for key in object_variables.keys()]
     return "\n\n\n".join([time_of_error] + [error_traceback] + local_variable_strings + object_variable_strings)
 
+def kill_all_existing_db_connections_for_user(db_username):
+    stmt = "SELECT id, time FROM information_schema.processlist WHERE user='"+db_username+"' ORDER BY time ASC"
 
-def _shorten_text(max_length, text):
+    engine = get_engine()
+
+    with engine.connect() as con:
+        rs = con.execute(stmt)
+
+        rows = [row for row in rs]
+
+        for row in rows[1:]:
+            kill_statement = "KILL " + str(row[0]) + ";"
+            con.execute(kill_statement)
+
+def shorten_text(max_length, text):
     if len(text.encode("utf8")) <= max_length:
         return text.strip()
 
@@ -114,8 +127,8 @@ def _shorten_text(max_length, text):
 
 
 def _shorten_for_text_column(text):
-    return _shorten_text(MYSQL_TEXT_COLUMN_MAX_LENGTH, text)
+    return shorten_text(MYSQL_TEXT_COLUMN_MAX_LENGTH, text)
 
 
 def _shorten_for_medium_text_column(text):
-    return _shorten_text(MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, text)
+    return shorten_text(MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, text)
