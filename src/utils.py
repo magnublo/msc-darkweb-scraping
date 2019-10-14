@@ -1,7 +1,12 @@
+import inspect
+import time
+from datetime import datetime
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
 
-from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING
+from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, MYSQL_TEXT_COLUMN_MAX_LENGTH, \
+    MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH
 from src.models.settings import Settings
 
 
@@ -50,6 +55,7 @@ def get_settings():
 
     db_session.expunge_all()
     db_session.close()
+    db_session.close()
     return res
 
 
@@ -77,8 +83,39 @@ def get_db_session(engine):
     db_session.rollback()
     return db_session
 
-def get_error_string(scraping_object, error_traceback, local_variables):
+def get_error_string(scraping_object, error_traceback, sys_exec_info):
+    time_of_error = str(datetime.fromtimestamp(time.time()))
+    tb_last = sys_exec_info[2]
+    func_name = str(inspect.getinnerframes(tb_last)[0][3])
+    local_variable_strings = ["["+func_name+"()]" + str(key) + ": " + str(tb_last.tb_frame.f_locals[key]) for key in
+                              tb_last.tb_frame.f_locals.keys()]
+    while tb_last.tb_next:
+        tb_last = tb_last.tb_next
+        func_name = str(inspect.getinnerframes(tb_last)[0][3])
+        local_variable_strings = local_variable_strings + ["["+func_name+"()]" + str(key) + ": " + str(tb_last.tb_frame.f_locals[key])
+                                                           for key in
+                                                           tb_last.tb_frame.f_locals.keys()]
+
     object_variables = vars(scraping_object)
-    local_variable_strings = [str(key) + ": " + str(local_variables[key]) for key in local_variables.keys()]
     object_variable_strings = [str(key) + ": " + str(object_variables[key]) for key in object_variables.keys()]
-    return "\n\n\n".join([error_traceback] + local_variable_strings + object_variable_strings)
+    return "\n\n\n".join([time_of_error] + [error_traceback] + local_variable_strings + object_variable_strings)
+
+
+def _shorten_text(max_length, text):
+    if len(text.encode("utf8")) <= max_length:
+        return text.strip()
+
+    mxlen = max_length
+
+    while (text.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
+        mxlen -= 1
+
+    return text.encode("utf8")[0:mxlen].decode("utf8").strip()
+
+
+def _shorten_for_text_column(text):
+    return _shorten_text(MYSQL_TEXT_COLUMN_MAX_LENGTH, text)
+
+
+def _shorten_for_medium_text_column(text):
+    return _shorten_text(MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, text)

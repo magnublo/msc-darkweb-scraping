@@ -1,5 +1,6 @@
 import base64
 import hashlib
+import sys
 import time
 import traceback
 from _mysql_connector import MySQLError
@@ -231,14 +232,14 @@ class EmpireScrapingSession(BaseScraper):
                             sleep(seconds_until_next_try)
 
             except (BaseException) as e:
-                error_string = get_error_string(self, traceback.format_exc(), locals())
+                error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
                 utils.print_error_to_file(self.thread_id, error_string)
-                self._log_and_print_error(e, error_string)
+                self._log_and_print_error(e, error_string, print_error=False)
                 raise e
             except:
-                error_string = get_error_string(self, traceback.format_exc(), locals())
+                error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
                 utils.print_error_to_file(self.thread_id, error_string)
-                self._log_and_print_error(None, error_string)
+                self._log_and_print_error(None, error_string, print_error=False)
                 raise
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,

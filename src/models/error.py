@@ -1,6 +1,7 @@
 import datetime
 
 from sqlalchemy import Column, Text, DateTime, Integer, String
+from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
 from definitions import Base, ERROR_FINGER_PRINT_COLUMN_LENGTH
 
@@ -17,6 +18,6 @@ class Error(Base):
     session_id = Column(Integer)
     thread_id = Column(Integer)
     type = Column(String)
-    text = Column(Text)
+    text = Column(MEDIUMTEXT)
     finger_print = Column(String(ERROR_FINGER_PRINT_COLUMN_LENGTH))
 

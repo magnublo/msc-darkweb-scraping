@@ -3,20 +3,9 @@ from datetime import datetime
 
 import dateparser as dateparser
 
-from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH, EMPIRE_BASE_CATEGORY_URL
+from definitions import EMPIRE_BASE_CATEGORY_URL
 from src.base import BaseFunctions
-
-
-def _shorten_for_text_column(description):
-    if len(description.encode("utf8")) <= MYSQL_TEXT_COLUMN_MAX_LENGTH:
-        return description.strip()
-
-    mxlen = MYSQL_TEXT_COLUMN_MAX_LENGTH
-
-    while (description.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
-        mxlen -= 1
-
-    return description.encode("utf8")[0:mxlen].decode("utf8").strip()
+from src.utils import _shorten_for_text_column
 
 
 class EmpireScrapingFunctions(BaseFunctions):

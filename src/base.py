@@ -3,6 +3,7 @@ import hashlib
 from abc import abstractstaticmethod, abstractmethod
 from time import sleep
 from time import time
+from sqlescapy import sqlescape
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,7 +13,7 @@ from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF
     ERROR_FINGER_PRINT_COLUMN_LENGTH
 from src.models.error import Error
 from src.models.scraping_session import ScrapingSession
-from src.utils import pretty_print_GET, get_db_session, get_engine
+from src.utils import pretty_print_GET, get_db_session, get_engine, _shorten_for_medium_text_column
 
 
 class LoggedOutException(Exception):
@@ -102,9 +103,11 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print("Thread nr. " + str(self.thread_id) + " initiated scraping_session with ID: " + str(scraping_session.id))
         return scraping_session
 
-    def _log_and_print_error(self, e, traceback_message, updated_date=None, print_error=True):
+    def _log_and_print_error(self, e, error_string, updated_date=None, print_error=True):
         if print_error:
-            print(traceback_message)
+            print(error_string)
+
+        error_string = _shorten_for_medium_text_column(error_string)
 
         errors = self.db_session.query(Error).filter_by(thread_id=self.thread_id).order_by(Error.updated_date.asc())
         if e is None:
@@ -121,11 +124,11 @@ class BaseScraper(metaclass=abc.ABCMeta):
             error.session_id = self.session_id
             error.thread_id = self.thread_id
             error.type = error_type
-            error.text = traceback_message
+            error.text = sqlescape(error_string)
             error.finger_print = finger_print
         else:
             error = Error(updated_date=updated_date, session_id=self.session_id, thread_id=self.thread_id,
-                          type=error_type, text=traceback_message, finger_print=finger_print)
+                          type=error_type, text=error_string, finger_print=finger_print)
             self.db_session.add(error)
 
         self.db_session.commit()
@@ -226,6 +229,3 @@ class BaseScraper(metaclass=abc.ABCMeta):
     @abstractmethod
     def populate_queue(self):
         raise NotImplementedError('')
-
-
-
