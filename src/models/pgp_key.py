@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, Text, Integer, ForeignKey, DateTime
 
-from definitions import Base
+from definitions import Base, MYSQL_CASCADE
 from src.models import seller
 
 TABLE_NAME = 'pgp_key'
