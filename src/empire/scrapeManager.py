@@ -2,7 +2,8 @@ import threading
 from time import sleep
 from multiprocessing import Queue
 
-from definitions import EMPIRE_MARKET_CREDENTIALS, DEBUG_MODE
+from definitions import EMPIRE_MARKET_CREDENTIALS
+from environmentSettings import DEBUG_MODE
 from src.empire.scrape import EmpireScrapingSession
 from src.utils import get_settings
 

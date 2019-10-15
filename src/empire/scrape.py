@@ -14,9 +14,10 @@ from requests.cookies import create_cookie
 from sqlalchemy.exc import SQLAlchemyError
 from urllib3.exceptions import NewConnectionError, HTTPError
 
-from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, DEBUG_MODE, EMPIRE_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
+from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
+    EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
     DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL
+from environmentSettings import DEBUG_MODE, PROXIES
 from src import utils
 from src.base import BaseScraper, LoggedOutException
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
@@ -31,7 +32,7 @@ from src.models.pgp_key import PGPKey
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
-from src.utils import get_error_string
+from src.utils import get_error_string, BadGatewayException, is_bad_gateway
 
 asd  = NewConnectionError
 
@@ -158,7 +159,10 @@ class EmpireScrapingSession(BaseScraper):
                             tries += 1
                             response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
                         else:
-                            return response
+                            if is_bad_gateway(response):
+                                raise BadGatewayException
+                            else:
+                                return response
 
                     self._login_and_set_cookie(response)
                     return self._get_web_response(url)

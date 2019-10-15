@@ -260,3 +260,5 @@ dmypy.json
 
 
 src/thread_[0-9]*_error
+
+environmentSettings.py

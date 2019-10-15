@@ -8,8 +8,9 @@ from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 from src.cryptonia.functions import CryptoniaScrapingFunctions as scrapingFunctions
 
-from definitions import DEBUG_MODE, CRYPTONIA_BASE_CRAWLING_URL, CRYPTONIA_DIR, \
-    PROXIES, ANTI_CAPTCHA_ACCOUNT_KEY
+from definitions import CRYPTONIA_BASE_CRAWLING_URL, CRYPTONIA_DIR, \
+    ANTI_CAPTCHA_ACCOUNT_KEY
+from environmentSettings import DEBUG_MODE, PROXIES
 from src.base import Base, engine, db_session, LoggedOutException
 from src.base import BaseScraper
 from src.models.country import Country

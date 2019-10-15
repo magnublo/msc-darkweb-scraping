@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 ONE_WEEK = 3600*24*7
 
+<<<<<<< HEAD
 DEBUG_MODE = True
 
 TOR_PORT = 9050
@@ -18,10 +19,16 @@ WORKING_DIR = os.getcwd() + "/"
 
 DB_USERNAME = "magnublo"
 DB_ENGINE_URL = 'mysql+mysqlconnector://'+DB_USERNAME+':Password123!@mysql.stud.ntnu.no:3306/magnublo_scraping'
+=======
+ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
+WORKING_DIR = os.getcwd() + "/"
+>>>>>>> 87004f7c9226e68863a5f010d381ca6181899de5
 DB_CLIENT_ENCODING = "utf8"
 
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
 MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH = 16777215
+MYSQL_CASCADE = "CASCADE"
+
 DBMS_DISCONNECT_RETRY_INTERVALS = [5, 5, 5, 5, 5, 5, 5, 100]
 ERROR_FINGER_PRINT_COLUMN_LENGTH = 4
 MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD = 40
