@@ -4,24 +4,14 @@ from sqlalchemy.ext.declarative import declarative_base
 
 ONE_WEEK = 3600*24*7
 
-DEBUG_MODE = True
-
-TOR_PORT = 9050
-
-PROXIES = {
-    'http': "socks5h://localhost:{}".format(TOR_PORT),
-    'https': "socks5h://localhost:{}".format(TOR_PORT)
-}
-
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
-
-DB_USERNAME = "msc-scraper"
-DB_ENGINE_URL = 'mysql+mysqlconnector://'+DB_USERNAME+':Password123!@localhost:3306/scraping'
 DB_CLIENT_ENCODING = "utf8"
 
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
 MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH = 16777215
+MYSQL_CASCADE = "CASCADE"
+
 DBMS_DISCONNECT_RETRY_INTERVALS = [5, 5, 5, 5, 5, 5, 5, 100]
 ERROR_FINGER_PRINT_COLUMN_LENGTH = 4
 MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD = 40

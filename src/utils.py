@@ -7,8 +7,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
 from urllib3.exceptions import HTTPError
 
-from definitions import DB_ENGINE_URL, DB_CLIENT_ENCODING, MYSQL_TEXT_COLUMN_MAX_LENGTH, \
+from definitions import DB_CLIENT_ENCODING, MYSQL_TEXT_COLUMN_MAX_LENGTH, \
     MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH
+from environmentSettings import DB_ENGINE_URL
 from src.models.settings import Settings
 
 

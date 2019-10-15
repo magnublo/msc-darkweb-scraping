@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Float, UniqueConstraint
 
-from definitions import Base
+from definitions import Base, MYSQL_CASCADE
 from src.models import scraping_session
 from src.models import seller
 from src.models import seller_description_text
@@ -16,12 +16,12 @@ class SellerObservation(Base):
     __tablename__ = TABLE_NAME
     id = Column(PRIMARY_KEY, Integer, primary_key=True)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
-    session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY))
+    session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     market = Column(String)
     url = Column(String)
 
-    seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY))
-    description = Column(String, ForeignKey(seller_description_text.TABLE_NAME_AND_PRIMARY_KEY))
+    seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
+    description = Column(String, ForeignKey(seller_description_text.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     disputes = Column(Integer)
     orders = Column(Integer)
     spendings = Column(String)

@@ -3,7 +3,7 @@ import datetime
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float, Text
 
 import src.models.seller as seller
-from definitions import Base
+from definitions import Base, MYSQL_CASCADE
 from src.models import scraping_session
 
 TABLE_NAME = 'feedback'
@@ -18,9 +18,9 @@ class Feedback(Base):
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     date_published = Column(DateTime)
     market = Column(String)
-    seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY))
+    seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     product_url = Column(String)
-    session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY))
+    session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
 
     feedback_message_text = Column(Text)
     seller_response_message = Column(Text)

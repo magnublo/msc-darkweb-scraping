@@ -1,6 +1,7 @@
 import faulthandler
 
-from definitions import DEBUG_MODE, Base, DB_USERNAME
+from definitions import Base
+from environmentSettings import DEBUG_MODE, DB_USERNAME
 from src.empire.scrapeManager import EmpireScrapingManager
 from src.utils import get_engine, kill_all_existing_db_connections_for_user
 

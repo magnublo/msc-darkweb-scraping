@@ -9,8 +9,9 @@ import requests
 from bs4 import BeautifulSoup
 from python3_anticaptcha import AntiCaptchaControl
 
-from definitions import PROXIES, DEBUG_MODE, ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
+from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH
+from environmentSettings import DEBUG_MODE, PROXIES
 from src.models.error import Error
 from src.models.scraping_session import ScrapingSession
 from src.utils import pretty_print_GET, get_db_session, get_engine, _shorten_for_medium_text_column
