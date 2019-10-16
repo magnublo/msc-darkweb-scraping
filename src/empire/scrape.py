@@ -430,10 +430,10 @@ class EmpireScrapingSession(BaseScraper):
             SellerObservation.created_date == date_of_most_recent_seller_observation).first()
 
         if previous_seller_observation:
-            new_positive_feedback = previous_seller_observation.positive_1m == positive_1m
-            new_neutral_feedback = previous_seller_observation.neutral_1m == neutral_1m
-            new_negative_feedback = previous_seller_observation.negative_1m == negative_1m
-            new_left_feedback = previous_seller_observation.feedback_left == feedback_left
+            new_positive_feedback = previous_seller_observation.positive_1m < positive_1m
+            new_neutral_feedback = previous_seller_observation.neutral_1m < neutral_1m
+            new_negative_feedback = previous_seller_observation.negative_1m < negative_1m
+            new_left_feedback = previous_seller_observation.feedback_left < feedback_left
             category_contains_new_feedback = [new_positive_feedback, new_neutral_feedback, new_negative_feedback,
                                               new_left_feedback]
         else:

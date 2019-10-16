@@ -295,7 +295,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         unparsed_date = tds[1].text
         last_online = dateparser.parse(unparsed_date)
 
-        return disputes, orders, spendings, feedback_left, feedback_percent_positive, last_online
+        return disputes, orders, spendings, int(feedback_left), feedback_percent_positive, last_online
 
     @staticmethod
     def get_star_ratings(soup_html):
