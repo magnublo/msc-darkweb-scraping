@@ -2,7 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer
 
 import src.models.listing_category as listing_category
 import src.models.listing_observation as listing_observation
-from definitions import Base, MYSQL_CASCADE
+from definitions import MYSQL_CASCADE, Base
 
 TABLE_NAME = 'listing_observation_category'
 LISTING_OBSERVATION_ID_NAME = 'listing_observation_id'

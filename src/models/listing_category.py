@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, String, DateTime, Integer, UniqueConstraint, CHAR
 
-from definitions import Base, MARKET_NAME_COLUMN_LENGTH
+from definitions import MARKET_NAME_COLUMN_LENGTH, Base
 
 TABLE_NAME = 'listing_category'
 PRIMARY_KEY = 'id'

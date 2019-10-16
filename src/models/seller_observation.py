@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Float, UniqueConstraint, CHAR
 
-from definitions import Base, MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH
+from definitions import MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, Base
 from src.models import scraping_session
 from src.models import seller
 from src.models import seller_description_text

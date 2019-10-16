@@ -19,6 +19,8 @@ from src.models.settings import Settings
 
 DB_ENGINE_URL = DB_ENGINE_BASE_URL + MYSQL_URL_PARAMS_STRING
 
+
+
 def kill_all_existing_db_connections_for_user(db_username):
     stmt = "SELECT id, time FROM information_schema.processlist WHERE user=\'{0}\' ORDER BY time ASC".format(
         db_username)
@@ -216,3 +218,4 @@ def set_settings(db_session, refill_queue_when_complete=False):
         db_session.commit()
         db_session.expunge_all()
         db_session.close()
+

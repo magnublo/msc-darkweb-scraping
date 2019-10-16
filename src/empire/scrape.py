@@ -20,6 +20,7 @@ from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
     DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
 from environmentSettings import DEBUG_MODE, PROXIES
 from src.base import BaseScraper, LoggedOutException
+from src.db_utils import get_column_name
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
 from src.models.feedback import Feedback
@@ -29,6 +30,7 @@ from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
 from src.models.pgp_key import PGPKey
+from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
@@ -112,7 +114,8 @@ class EmpireScrapingSession(BaseScraper):
             self.queue.put(task)
 
         self.initial_queue_size = self.queue.qsize()
-        self.session.initial_queue_size = self.initial_queue_size
+        self.db_session.query(ScrapingSession).filter(ScrapingSession.id == self.session_id).update(
+            {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
         self.db_session.commit()
 
     def _set_cookies(self):
@@ -423,7 +426,8 @@ class EmpireScrapingSession(BaseScraper):
         date_of_most_recent_seller_observation = self.db_session.query(func.max(SellerObservation.created_date)).filter(
             SellerObservation.seller_id == seller.id).scalar()
 
-        previous_seller_observation = self.db_session.query(SellerObservation).filter(SellerObservation.created_date == date_of_most_recent_seller_observation).first()
+        previous_seller_observation = self.db_session.query(SellerObservation).filter(
+            SellerObservation.created_date == date_of_most_recent_seller_observation).first()
 
         if previous_seller_observation:
             new_positive_feedback = previous_seller_observation.positive_1m == positive_1m

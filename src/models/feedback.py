@@ -3,9 +3,9 @@ import datetime
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float, Text, CHAR
 
 import src.models.seller as seller
-from definitions import Base, MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, \
+from definitions import MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, \
     URL_COLUMN_LENGTH, FEEDBACK_BUYER_COLUMN_LENGTH, FEEDBACK_CATEGORY_COLUMN_LENGTH, CURRENCY_COLUMN_LENGTH, \
-    MARKET_NAME_COLUMN_LENGTH
+    MARKET_NAME_COLUMN_LENGTH, Base
 from src.models import scraping_session
 
 TABLE_NAME = 'feedback'

@@ -2,7 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer, CHAR
 
 import src.models.country as country
 import src.models.listing_observation as listing_observation
-from definitions import Base, MYSQL_CASCADE, COUNTRY_NAME_COLUMN_LENGTH
+from definitions import MYSQL_CASCADE, COUNTRY_NAME_COLUMN_LENGTH, Base
 
 TABLE_NAME = 'listing_observation_country'
 LISTING_OBSERVATION_ID_NAME = 'listing_observation_id'

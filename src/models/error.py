@@ -3,7 +3,7 @@ import datetime
 from sqlalchemy import Column, DateTime, Integer, String, ForeignKey, CHAR
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
-from definitions import Base, ERROR_FINGER_PRINT_COLUMN_LENGTH, MYSQL_CASCADE
+from definitions import ERROR_FINGER_PRINT_COLUMN_LENGTH, MYSQL_CASCADE, Base
 from src.models import scraping_session
 
 TABLE_NAME = 'error'

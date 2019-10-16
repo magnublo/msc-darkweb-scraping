@@ -1,6 +1,6 @@
 from sqlalchemy import Column, CHAR
 
-from definitions import Base, COUNTRY_NAME_COLUMN_LENGTH
+from definitions import COUNTRY_NAME_COLUMN_LENGTH, Base
 
 TABLE_NAME = 'country'
 PRIMARY_KEY = 'id'

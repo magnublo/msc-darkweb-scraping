@@ -6,7 +6,7 @@ import src.models.country as country
 import src.models.listing_text as listing_text
 import src.models.scraping_session as scraping_session
 import src.models.seller as seller
-from definitions import Base, MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, CURRENCY_COLUMN_LENGTH
+from definitions import MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, CURRENCY_COLUMN_LENGTH, Base
 
 TABLE_NAME = 'listing_observation'
 PRIMARY_KEY = 'id'

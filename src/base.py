@@ -86,21 +86,16 @@ class BaseScraper(metaclass=abc.ABCMeta):
             while True:
                 try:
                     self.db_session.rollback()
-                    self.session = self.db_session.query(ScrapingSession).filter_by(
-                                    id=session_id).first()
-                    self.session.initial_queue_size = self.initial_queue_size
-                    self.db_session.commit()
-                    self.session_id = self.session.id
-                    self.db_session.expunge(self.session)
+                    scraping_session = self.db_session.query(ScrapingSession).filter_by(
+                        id=session_id).first()
+                    self.session_id = scraping_session.id
+                    self.db_session.expunge(scraping_session)
                     break
                 except:
                     print("Thread nr. " + str(self.thread_id) + " has problem querying session id in DB. Retrying...")
                     sleep(5)
         else:
             self.session_id = self._initiate_session()
-
-
-
 
     def _initiate_session(self):
         scraping_session = ScrapingSession(
@@ -127,7 +122,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         else:
             error_type = type(e).__name__
 
-        finger_print = hashlib.md5((error_type+str(time())).encode("utf-8"))\
+        finger_print = hashlib.md5((error_type + str(time())).encode("utf-8")) \
                            .hexdigest()[0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
 
         if errors.count() >= MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD:
@@ -160,12 +155,15 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print(debug_html)
 
     def _wrap_up_session(self):
-        self.session.time_finished = datetime.fromtimestamp(time())
-        self.session.duplicates_encountered = self.duplicates_this_session
-        self.db_session.merge(self.session)
-        self.db_session.commit()
-        self.db_session.close()
+        scraping_session = self.db_session.query(ScrapingSession).filter_by(
+            ScrapingSession.id == self.session_id).first()
 
+        scraping_session.time_finished = datetime.fromtimestamp(time())
+        scraping_session.duplicates_encountered += self.duplicates_this_session
+        self.db_session.merge(scraping_session)
+        self.db_session.commit()
+        self.db_session.expunge_all()
+        self.db_session.close()
 
     def _get_page_response_and_try_forever(self, url, post_data=None):
         tries = 0
@@ -183,7 +181,6 @@ class BaseScraper(metaclass=abc.ABCMeta):
             except:
                 tries += 1
 
-
     def _get_page_as_soup_html(self, web_response, file, debug=DEBUG_MODE):
         working_dir = self._get_working_dir()
 
@@ -197,7 +194,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
     def _get_cookie_string(self):
         request_as_string = pretty_print_GET(self.web_session.prepare_request(
-            requests.Request('GET', url="http://"+self.headers["Host"], headers=self.headers)))
+            requests.Request('GET', url="http://" + self.headers["Host"], headers=self.headers)))
         lines = request_as_string.split("\n")
         for line in lines:
             if line[0:7].lower() == "cookie:":

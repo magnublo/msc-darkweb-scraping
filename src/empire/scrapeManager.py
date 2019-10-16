@@ -4,8 +4,9 @@ from time import sleep
 
 from definitions import EMPIRE_MARKET_CREDENTIALS
 from environmentSettings import DEBUG_MODE
-from src.db_utils import get_settings
+from src.db_utils import get_settings, get_engine, get_db_session, get_column_name
 from src.empire.scrape import EmpireScrapingSession
+from src.models.scraping_session import ScrapingSession
 
 
 def queue_is_empty(queue):
@@ -31,7 +32,14 @@ class EmpireScrapingManager:
                 session_id = scrapingSession.session_id
 
                 if DEBUG_MODE:
-                    for i in range(0, 1000):
+                    queue_size = 1000
+                    db_session = get_db_session(get_engine())
+                    query = db_session.query(ScrapingSession).filter(ScrapingSession.id == session_id).update(
+                        {get_column_name(ScrapingSession.initial_queue_size): queue_size})
+                    db_session.commit()
+                    db_session.expunge_all()
+                    db_session.close()
+                    for i in range(0, queue_size):
                         queue.put(str(i))
                     sleep(5)
                 else:
