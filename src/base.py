@@ -1,9 +1,9 @@
 import abc
 import hashlib
 from abc import abstractstaticmethod, abstractmethod
+from datetime import datetime
 from time import sleep
 from time import time
-from sqlescapy import sqlescape
 
 import requests
 from bs4 import BeautifulSoup
@@ -12,9 +12,10 @@ from python3_anticaptcha import AntiCaptchaControl
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH
 from environmentSettings import DEBUG_MODE, PROXIES
+from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session
 from src.models.error import Error
 from src.models.scraping_session import ScrapingSession
-from src.utils import pretty_print_GET, get_db_session, get_engine, _shorten_for_medium_text_column
+from src.utils import pretty_print_GET
 
 
 class LoggedOutException(Exception):
@@ -89,33 +90,36 @@ class BaseScraper(metaclass=abc.ABCMeta):
                                     id=session_id).first()
                     self.session.initial_queue_size = self.initial_queue_size
                     self.db_session.commit()
+                    self.session_id = self.session.id
+                    self.db_session.expunge(self.session)
                     break
                 except:
                     print("Thread nr. " + str(self.thread_id) + " has problem querying session id in DB. Retrying...")
                     sleep(5)
         else:
-            self.session = self._initiate_session()
+            self.session_id = self._initiate_session()
 
-        self.session_id = self.session.id
+
 
 
     def _initiate_session(self):
         scraping_session = ScrapingSession(
-            time_started=self.start_time,
             market=self.market_id,
             duplicates_encountered=self.duplicates_this_session,
             nr_of_threads=self.nr_of_threads
         )
         self.db_session.add(scraping_session)
         self.db_session.commit()
+        session_id = scraping_session.id
         print("Thread nr. " + str(self.thread_id) + " initiated scraping_session with ID: " + str(scraping_session.id))
-        return scraping_session
+        self.db_session.expunge(scraping_session)
+        return session_id
 
     def _log_and_print_error(self, e, error_string, updated_date=None, print_error=True):
         if print_error:
             print(error_string)
 
-        error_string = _shorten_for_medium_text_column(error_string)
+        error_string = _shorten_and_sanitize_for_medium_text_column(error_string)
 
         errors = self.db_session.query(Error).filter_by(thread_id=self.thread_id).order_by(Error.updated_date.asc())
         if e is None:
@@ -123,7 +127,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         else:
             error_type = type(e).__name__
 
-        finger_print = hashlib.md5((error_type+str(time())).encode('utf-8'))\
+        finger_print = hashlib.md5((error_type+str(time())).encode("utf-8"))\
                            .hexdigest()[0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
 
         if errors.count() >= MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD:
@@ -132,7 +136,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             error.session_id = self.session_id
             error.thread_id = self.thread_id
             error.type = error_type
-            error.text = sqlescape(error_string)
+            error.text = error_string
             error.finger_print = finger_print
         else:
             error = Error(updated_date=updated_date, session_id=self.session_id, thread_id=self.thread_id,
@@ -156,8 +160,9 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print(debug_html)
 
     def _wrap_up_session(self):
-        self.session.time_finished = time()
+        self.session.time_finished = datetime.fromtimestamp(time())
         self.session.duplicates_encountered = self.duplicates_this_session
+        self.db_session.merge(self.session)
         self.db_session.commit()
         self.db_session.close()
 

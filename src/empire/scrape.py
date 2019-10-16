@@ -4,21 +4,21 @@ import sys
 import time
 import traceback
 from _mysql_connector import MySQLError
-from time import sleep
 from datetime import datetime
 from queue import Empty
 from random import shuffle
+from time import sleep
 
 from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
+from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from urllib3.exceptions import NewConnectionError, HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
-    DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL
+    DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
 from environmentSettings import DEBUG_MODE, PROXIES
-from src import utils
 from src.base import BaseScraper, LoggedOutException
 from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
@@ -32,9 +32,11 @@ from src.models.pgp_key import PGPKey
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
-from src.utils import get_error_string, BadGatewayException, is_bad_gateway
+from src.utils import get_error_string, BadGatewayException, is_bad_gateway, error_is_sqlalchemy_error, \
+    print_error_to_file
 
-asd  = NewConnectionError
+asd = NewConnectionError
+
 
 class EmpireScrapingSession(BaseScraper):
 
@@ -74,13 +76,13 @@ class EmpireScrapingSession(BaseScraper):
         time_before_requesting_captcha_solve = time.time()
         print("Thread nr. " + str(self.thread_id) + " sending image to anti-catpcha.com API...")
         captcha_solution_response = ImageToTextTask.ImageToTextTask(
-                                anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY,
-                                numeric=True
-                            ).captcha_handler(captcha_base64=base64_image)
+            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY,
+            numeric=True
+        ).captcha_handler(captcha_base64=base64_image)
 
         captcha_solution = captcha_solution_response["solution"]["text"]
 
-        print("Captcha solved. Solving took " + str(time.time()-time_before_requesting_captcha_solve) + " seconds.")
+        print("Captcha solved. Solving took " + str(time.time() - time_before_requesting_captcha_solve) + " seconds.")
 
         login_payload = scrapingFunctions.get_login_payload(soup_html, self.username, self.password, captcha_solution)
         response = self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL, post_data=login_payload)
@@ -93,7 +95,8 @@ class EmpireScrapingSession(BaseScraper):
     def populate_queue(self):
         web_response = self._get_page_response_and_try_forever(EMPIRE_MARKET_HOME_URL)
         soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
-        pairs_of_category_base_urls_and_nr_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(soup_html)
+        pairs_of_category_base_urls_and_nr_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(
+            soup_html)
         task_list = []
 
         for i in range(0, len(pairs_of_category_base_urls_and_nr_of_listings)):
@@ -101,7 +104,7 @@ class EmpireScrapingSession(BaseScraper):
             url = pairs_of_category_base_urls_and_nr_of_listings[i][0]
             nr_of_pages = nr_of_listings // 15
             for k in range(0, nr_of_pages):
-                task_list.append(url + str(k*15))
+                task_list.append(url + str(k * 15))
 
         shuffle(task_list)
 
@@ -175,8 +178,6 @@ class EmpireScrapingSession(BaseScraper):
             except (HTTPError, BaseException) as e:
                 self._log_and_print_error(e, traceback.format_exc())
 
-
-
     def scrape(self):
         time_of_last_response = time.time()
 
@@ -221,7 +222,7 @@ class EmpireScrapingSession(BaseScraper):
                         except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
                             error_string = traceback.format_exc()
                             if type(error) == AttributeError:
-                                if not utils.error_is_sqlalchemy_error(error_string):
+                                if not error_is_sqlalchemy_error(error_string):
                                     self._log_and_print_error(error, error_string)
                                     raise error
 
@@ -229,21 +230,24 @@ class EmpireScrapingSession(BaseScraper):
                             nr_of_errors = len(error_data)
                             highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
                             seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
-                                min(nr_of_errors-1, highest_index)] + self.thread_id * 2
+                                                         min(nr_of_errors - 1, highest_index)] + self.thread_id * 2
                             traceback.print_exc()
-                            print("Thread "+str(self.thread_id)+" has problem with DBMS connection. Retrying in " + str(
+                            print("Thread " + str(
+                                self.thread_id) + " has problem with DBMS connection. Retrying in " + str(
                                 seconds_until_next_try) + " seconds...")
                             sleep(seconds_until_next_try)
 
             except (BaseException) as e:
                 error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
-                utils.print_error_to_file(self.thread_id, error_string)
+                print_error_to_file(self.thread_id, error_string)
                 self._log_and_print_error(e, error_string, print_error=False)
+                self._wrap_up_session()
                 raise e
             except:
                 error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
-                utils.print_error_to_file(self.thread_id, error_string)
+                print_error_to_file(self.thread_id, error_string)
                 self._log_and_print_error(None, error_string, print_error=False)
+                self._wrap_up_session()
                 raise
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
@@ -264,11 +268,9 @@ class EmpireScrapingSession(BaseScraper):
             is_new_seller = True
 
         existing_listing_observation = self.db_session.query(ListingObservation) \
-            .filter(ListingObservation.session_id == self.session_id) \
-            .filter(ListingObservation.title == title) \
+            .filter(ListingObservation.session_id == self.session_id, ListingObservation.title == title) \
             .join(Seller) \
-            .filter(ListingObservation.seller_id == Seller.id) \
-            .filter(Seller.name == seller_name) \
+            .filter(ListingObservation.seller_id == Seller.id, Seller.name == seller_name) \
             .first()
 
         if existing_listing_observation:
@@ -290,14 +292,11 @@ class EmpireScrapingSession(BaseScraper):
         existing_seller_observation = self.db_session.query(SellerObservation) \
             .filter(SellerObservation.session_id == self.session_id) \
             .join(Seller) \
-            .filter(Seller.name == seller_name) \
-            .filter(SellerObservation.seller_id == Seller.id) \
+            .filter(SellerObservation.seller_id == Seller.id, Seller.name == seller_name) \
             .first()
 
         if not existing_seller_observation:
             self._scrape_seller(seller_url, seller, is_new_seller)
-
-
 
         scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(),
                                                        self.thread_id, cookie, parsing_time)
@@ -382,7 +381,7 @@ class EmpireScrapingSession(BaseScraper):
     def _scrape_seller(self, seller_url, seller, is_new_seller):
 
         scrapingFunctions.print_crawling_debug_message(seller_url, self.initial_queue_size, self.queue.qsize()
-                                                       ,self.thread_id, self._get_cookie_string(), "N/A")
+                                                       , self.thread_id, self._get_cookie_string(), "N/A")
 
         web_response = self._get_web_response(seller_url)
         soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_html")
@@ -401,10 +400,10 @@ class EmpireScrapingSession(BaseScraper):
 
         parenthesis_number, vendor_level, trust_level = \
             scrapingFunctions.get_parenthesis_number_and_vendor_and_trust_level(
-            soup_html)
+                soup_html)
 
-        dream_market_successful_sales, dream_market_star_rating, wall_street_market_successful_sales,\
-        wall_street_market_star_rating, positive_feedback_received_percent, registration_date\
+        dream_market_successful_sales, dream_market_star_rating, wall_street_market_successful_sales, \
+        wall_street_market_star_rating, positive_feedback_received_percent, registration_date \
             = scrapingFunctions.get_mid_user_info(soup_html)
 
         existing_seller_description_text = self.db_session.query(SellerDescriptionText).filter_by(
@@ -421,23 +420,24 @@ class EmpireScrapingSession(BaseScraper):
             self.db_session.flush()
             seller_observation_description = seller_description_text.id
 
+        date_of_most_recent_seller_observation = self.db_session.query(func.max(SellerObservation.created_date)).filter(
+            SellerObservation.seller_id == seller.id).scalar()
 
-        previous_seller_observation = self.db_session.query(SellerObservation).filter_by(seller_id=seller.id)\
-                                                    .order_by(SellerObservation.session_id.desc()).first()
+        previous_seller_observation = self.db_session.query(SellerObservation).filter(SellerObservation.created_date == date_of_most_recent_seller_observation).first()
 
         if previous_seller_observation:
-            new_positive_feedback   = previous_seller_observation.positive_1m   ==  positive_1m
-            new_neutral_feedback    = previous_seller_observation.neutral_1m    ==  neutral_1m
-            new_negative_feedback   = previous_seller_observation.negative_1m   ==  negative_1m
-            new_left_feedback       = previous_seller_observation.feedback_left ==  feedback_left
+            new_positive_feedback = previous_seller_observation.positive_1m == positive_1m
+            new_neutral_feedback = previous_seller_observation.neutral_1m == neutral_1m
+            new_negative_feedback = previous_seller_observation.negative_1m == negative_1m
+            new_left_feedback = previous_seller_observation.feedback_left == feedback_left
             category_contains_new_feedback = [new_positive_feedback, new_neutral_feedback, new_negative_feedback,
-                                                new_left_feedback]
+                                              new_left_feedback]
         else:
             category_contains_new_feedback = [True, True, True, True]
 
         feedback_categories, feedback_urls, pgp_url = \
             scrapingFunctions.get_feedback_categories_and_feedback_urls_and_pgp_url(
-            soup_html)
+                soup_html)
 
         assert len(feedback_urls) == len(feedback_categories) == len(category_contains_new_feedback)
 
@@ -452,7 +452,6 @@ class EmpireScrapingSession(BaseScraper):
             session_id=self.session_id,
             description=seller_observation_description,
             url=seller_url,
-            market=self.market_id,
             disputes=disputes,
             orders=orders,
             spendings=spendings,
@@ -500,13 +499,14 @@ class EmpireScrapingSession(BaseScraper):
         for feedback in feedback_array:
             if not is_new_seller:
                 existing_feedback = self.db_session.query(Feedback).filter_by(
-                                date_published=feedback["date_published"],
-                                buyer=feedback["buyer"],
-                                category=category,
-                                text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
-                                market=self.market_id)\
-                                .join(Seller, Seller.id == Feedback.seller_id)\
-                                .first()
+                    date_published=feedback["date_published"],
+                    buyer=feedback["buyer"],
+                    category=category,
+                    text_hash=hashlib.md5((feedback["feedback_message"] + feedback["seller_response_message"]).encode(
+                        'utf-8')).hexdigest()[:FEEDBACK_TEXT_HASH_COLUMN_LENGTH],
+                    market=self.market_id) \
+                    .join(Seller, Seller.id == Feedback.seller_id) \
+                    .first()
 
                 if existing_feedback:
                     self.db_session.flush()
@@ -521,7 +521,9 @@ class EmpireScrapingSession(BaseScraper):
                 product_url=feedback["product_url"],
                 feedback_message_text=feedback["feedback_message"],
                 seller_response_message=feedback["seller_response_message"],
-                text_hash=hashlib.md5((feedback["feedback_message"]+feedback["seller_response_message"]).encode('utf-8')).hexdigest()[:8],
+                text_hash=hashlib.md5(
+                    (feedback["feedback_message"] + feedback["seller_response_message"]).encode('utf-8')).hexdigest()[
+                          :FEEDBACK_TEXT_HASH_COLUMN_LENGTH],
                 buyer=feedback["buyer"],
                 currency=feedback["currency"],
                 price=feedback["price"]
@@ -537,7 +539,8 @@ class EmpireScrapingSession(BaseScraper):
 
     def _scrape_pgp_key(self, seller, is_new_seller, url):
 
-        most_recent_pgp_key = self.db_session.query(PGPKey).filter_by(seller_id=seller.id).order_by(PGPKey.created_date.desc()).first()
+        most_recent_pgp_key = self.db_session.query(PGPKey).filter_by(seller_id=seller.id).order_by(
+            PGPKey.created_date.desc()).first()
 
         scrape_pgp_this_session = False
 

@@ -5,7 +5,7 @@ import dateparser as dateparser
 
 from definitions import EMPIRE_BASE_CATEGORY_URL
 from src.base import BaseFunctions
-from src.utils import _shorten_for_text_column
+from src.db_utils import _shorten_and_sanitize_for_text_column
 
 
 class EmpireScrapingFunctions(BaseFunctions):
@@ -30,7 +30,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent'})]
         assert len(descriptions) == 1
         description = descriptions[0].text
-        return _shorten_for_text_column(description)
+        return _shorten_and_sanitize_for_text_column(description)
 
 
     @staticmethod
@@ -252,7 +252,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         description = tab_content_divs[0].text
         index_of_seller_name = description.find(seller_name)
         description_after_standard_heading = description[index_of_seller_name+len(seller_name)+3:]
-        return _shorten_for_text_column(description_after_standard_heading)
+        return _shorten_and_sanitize_for_text_column(description_after_standard_heading)
 
     @staticmethod
     def get_seller_statistics(soup_html):
@@ -350,13 +350,13 @@ class EmpireScrapingFunctions(BaseFunctions):
             feedback = {}
             messages = [p for p in tr.findAll('p', attrs={'class': 'setp1 bold1 feedback_msg'})]
             assert len(messages) <= 2
-            feedback["feedback_message"] = _shorten_for_text_column(messages[0].text)
+            feedback["feedback_message"] = _shorten_and_sanitize_for_text_column(messages[0].text)
             if len(messages) == 2:
                 seller_response = messages[1].text.strip()
                 seller_response_header_text = "Seller Response: "
 
                 assert (seller_response[0:len(seller_response_header_text)] == seller_response_header_text)
-                feedback["seller_response_message"] = _shorten_for_text_column(seller_response[len(seller_response_header_text):])
+                feedback["seller_response_message"] = _shorten_and_sanitize_for_text_column(seller_response[len(seller_response_header_text):])
             else:
                 feedback["seller_response_message"] = ""
 

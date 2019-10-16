@@ -1,12 +1,12 @@
 import datetime
 
-from sqlalchemy import Column, String, Integer, Date, ForeignKey, Boolean, DateTime, Float, Text
+from sqlalchemy import Column, String, Integer, Date, ForeignKey, Boolean, DateTime, Float, CHAR
 
 import src.models.country as country
 import src.models.listing_text as listing_text
 import src.models.scraping_session as scraping_session
 import src.models.seller as seller
-from definitions import Base, MYSQL_CASCADE
+from definitions import Base, MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, CURRENCY_COLUMN_LENGTH
 
 TABLE_NAME = 'listing_observation'
 PRIMARY_KEY = 'id'
@@ -18,13 +18,13 @@ class ListingObservation(Base):
 
     id = Column(PRIMARY_KEY, Integer, primary_key=True)
     thread_id = Column(Integer)
-    created_date = Column(DateTime, default=datetime.datetime.utcnow)
+    created_date = Column(CREATED_DATE_COLUMN_NAME, DateTime, default=datetime.datetime.utcnow)
 
     session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
-    listing_text_id = Column(String, ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
+    listing_text_id = Column(CHAR(32), ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY))
 
-    title = Column(Text)
-    url = Column(String)
+    title = Column(String)
+    url = Column(String(URL_COLUMN_LENGTH))
 
     btc = Column(Boolean)
     ltc = Column(Boolean)
@@ -35,8 +35,8 @@ class ListingObservation(Base):
     promoted_listing = Column(Boolean)
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     price = Column(Float)
-    fiat_currency = Column(String)
-    origin_country = Column(String, ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
+    fiat_currency = Column(CHAR(CURRENCY_COLUMN_LENGTH))
+    origin_country = Column(String, ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY))
     # destination_country is represented in junction table
 
     # Vendor specific attributes. These attributes may have null values.

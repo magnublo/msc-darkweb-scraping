@@ -2,19 +2,38 @@ import os
 
 from sqlalchemy.ext.declarative import declarative_base
 
+from environmentSettings import MYSQL_ECHO_DEBUG
+
 ONE_WEEK = 3600*24*7
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
-DB_CLIENT_ENCODING = "utf8"
 
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
 MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH = 16777215
 MYSQL_CASCADE = "CASCADE"
+MYSQL_URL_PARAMS = {"charset": "utf8"}
+MYSQL_URL_PARAMS_STRING = "?".join([''] + [(key + "=" + MYSQL_URL_PARAMS[key]) for key in MYSQL_URL_PARAMS.keys()])
+MYSQL_CONNECT_ARGS = {'buffered': True,
+                        'collation': 'utf8mb4_general_ci',
+                      'charset': "utf8mb4"}
+SQLALCHEMY_CREATE_ENGINE_KWARGS = {'encoding': 'utf-8',
+                                   'echo': MYSQL_ECHO_DEBUG,
+                                   'connect_args': MYSQL_CONNECT_ARGS}
 
 DBMS_DISCONNECT_RETRY_INTERVALS = [5, 5, 5, 5, 5, 5, 5, 100]
 ERROR_FINGER_PRINT_COLUMN_LENGTH = 4
+FEEDBACK_TEXT_HASH_COLUMN_LENGTH = 8
+FEEDBACK_BUYER_COLUMN_LENGTH = 5
+URL_COLUMN_LENGTH = 80
+SELLER_NAME_COLUMN_LENGTH = 32
+COUNTRY_NAME_COLUMN_LENGTH = 56 # The United Kingdom of Great Britain and Northern Ireland
+MARKET_NAME_COLUMN_LENGTH = 32
+FEEDBACK_CATEGORY_COLUMN_LENGTH = 20
+CURRENCY_COLUMN_LENGTH = 3
+
 MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD = 40
+CREATED_DATE_COLUMN_NAME = "created_date"
 
 ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
 ANTI_CAPTCHA_CREATE_TASK_URL = "http://api.anti-captcha.com/createTask"

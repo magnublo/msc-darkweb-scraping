@@ -1,11 +1,11 @@
 import threading
-from time import sleep
 from multiprocessing import Queue
+from time import sleep
 
 from definitions import EMPIRE_MARKET_CREDENTIALS
 from environmentSettings import DEBUG_MODE
+from src.db_utils import get_settings
 from src.empire.scrape import EmpireScrapingSession
-from src.utils import get_settings
 
 
 def queue_is_empty(queue):
@@ -16,12 +16,11 @@ def queue_is_empty(queue):
 
 class EmpireScrapingManager:
 
-    def __init__(self, nr_of_threads=1):
+    def __init__(self, settings, nr_of_threads=1):
         assert nr_of_threads <= len(EMPIRE_MARKET_CREDENTIALS)
         queue = Queue()
         first_run = True
 
-        settings = get_settings()
         refill_queue_when_complete = settings.refill_queue_when_complete
 
         while True:

@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, String, Text, DateTime
+from sqlalchemy import Column, Text, DateTime, CHAR
 
 from definitions import Base
 
@@ -12,7 +12,7 @@ class SellerDescriptionText(Base):
 
     __tablename__ = TABLE_NAME
 
-    id = Column(String, primary_key=True)
+    id = Column(CHAR(32), primary_key=True)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     text = Column(Text)
 

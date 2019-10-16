@@ -1,6 +1,6 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, CHAR
 
-from definitions import Base
+from definitions import Base, COUNTRY_NAME_COLUMN_LENGTH
 
 TABLE_NAME = 'country'
 PRIMARY_KEY = 'id'
@@ -10,4 +10,4 @@ class Country(Base):
 
     __tablename__ = TABLE_NAME
 
-    id = Column(PRIMARY_KEY, String, primary_key=True)
+    id = Column(PRIMARY_KEY, CHAR(COUNTRY_NAME_COLUMN_LENGTH), primary_key=True)

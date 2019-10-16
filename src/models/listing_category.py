@@ -1,8 +1,8 @@
 import datetime
 
-from sqlalchemy import Column, String, DateTime, Integer, UniqueConstraint
+from sqlalchemy import Column, String, DateTime, Integer, UniqueConstraint, CHAR
 
-from definitions import Base
+from definitions import Base, MARKET_NAME_COLUMN_LENGTH
 
 TABLE_NAME = 'listing_category'
 PRIMARY_KEY = 'id'
@@ -21,4 +21,4 @@ class ListingCategory(Base):
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     website_id = Column(WEBSITE_CATEGORY_ID_COLUMN_NAME, Integer) #the id on this category as denoted by the host website
     name = Column(MARKET_NAME_COLUMN_NAME, String) #the printed name of the category on the host website
-    market = Column(MARKET_ID_COLUMN_NAME, String) #the unique id of the host website/market, as specified in this script
+    market = Column(MARKET_ID_COLUMN_NAME, CHAR(MARKET_NAME_COLUMN_LENGTH)) #the unique id of the host website/market, as specified in this script

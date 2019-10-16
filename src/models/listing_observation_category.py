@@ -16,5 +16,5 @@ class ListingObservationCategory(Base):
                                     ForeignKey(listing_observation.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE),
                                     primary_key=True)
 
-    category_id = Column(CATEGORY_ID_NAME, Integer, ForeignKey(listing_category.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE),
+    category_id = Column(CATEGORY_ID_NAME, Integer, ForeignKey(listing_category.TABLE_NAME_AND_PRIMARY_KEY),
                          primary_key=True)

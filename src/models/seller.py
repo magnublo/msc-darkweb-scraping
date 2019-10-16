@@ -1,8 +1,8 @@
 import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, Date, UniqueConstraint
+from sqlalchemy import Column, DateTime, Integer, Date, UniqueConstraint, CHAR
 
-from definitions import Base
+from definitions import Base, SELLER_NAME_COLUMN_LENGTH, MARKET_NAME_COLUMN_LENGTH
 
 TABLE_NAME = 'seller'
 PRIMARY_KEY = 'id'
@@ -14,8 +14,8 @@ class Seller(Base):
 
     id = Column(Integer, primary_key=True)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
-    name = Column(String)
+    name = Column(CHAR(SELLER_NAME_COLUMN_LENGTH))
     registration_date = Column(Date)
-    market = Column(String)
+    market = Column(CHAR(MARKET_NAME_COLUMN_LENGTH))
 
     UniqueConstraint(name, market)
