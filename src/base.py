@@ -155,7 +155,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print(debug_html)
 
     def _wrap_up_session(self):
-        scraping_session = self.db_session.query(ScrapingSession).filter_by(
+        scraping_session = self.db_session.query(ScrapingSession).filter(
             ScrapingSession.id == self.session_id).first()
 
         scraping_session.time_finished = datetime.fromtimestamp(time())
