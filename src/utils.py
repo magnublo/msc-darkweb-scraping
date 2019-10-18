@@ -10,6 +10,9 @@ class BadGatewayException(HTTPError):
     pass
 
 
+class InternalServerErrorException(HTTPError):
+    pass
+
 def pretty_print_GET(req):
     """
     At this point it is completely built and ready
@@ -86,4 +89,12 @@ def is_bad_gateway(response: requests.Response):
     return False
 
 
+def is_internal_server_error(response : requests.Response):
+    if response.status_code == 500:
+        return True
 
+    for history_response in response.history:
+        if history_response.status_code == 500:
+            return True
+
+    return False

@@ -35,7 +35,7 @@ from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
 from src.utils import get_error_string, BadGatewayException, is_bad_gateway, error_is_sqlalchemy_error, \
-    print_error_to_file
+    print_error_to_file, is_internal_server_error
 
 asd = NewConnectionError
 
@@ -165,7 +165,9 @@ class EmpireScrapingSession(BaseScraper):
                             tries += 1
                             response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
                         else:
-                            if is_bad_gateway(response):
+                            if is_internal_server_error(response):
+                                raise InternalServerErrorException
+                            elif is_bad_gateway(response):
                                 raise BadGatewayException
                             else:
                                 return response
