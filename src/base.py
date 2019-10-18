@@ -190,7 +190,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             saved_html.close()
             return soup_html
         else:
-            return BeautifulSoup(web_response.text)
+            return BeautifulSoup(web_response.text, features="lxml")
 
     def _get_cookie_string(self):
         request_as_string = pretty_print_GET(self.web_session.prepare_request(
