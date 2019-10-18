@@ -201,6 +201,10 @@ class EmpireScrapingSession(BaseScraper):
 
                 soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
+
+                if len(product_page_urls) == 0:
+                    continue
+
                 titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
