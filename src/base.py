@@ -186,7 +186,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
         if debug:
             saved_html = open(working_dir + file, "r")
-            soup_html = BeautifulSoup(saved_html)
+            soup_html = BeautifulSoup(saved_html, features="lxml")
             saved_html.close()
             return soup_html
         else:
