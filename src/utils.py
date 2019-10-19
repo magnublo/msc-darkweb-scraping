@@ -52,8 +52,10 @@ def error_is_sqlalchemy_error(error_string):
            or error_string.find("MySQL") != -1
 
 
-def print_error_to_file(thread_id, error_string):
-    file_name = "thread_" + str(thread_id) + "_error"
+def print_error_to_file(thread_id, error_string, file_postfix=None):
+    file_name = f"thread_{thread_id}_error"
+    if file_postfix:
+        file_name = f"{file_name}_{file_postfix}"
     file = open(file_name, "w")
     file.write(error_string)
     file.close()

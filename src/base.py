@@ -1,5 +1,7 @@
 import abc
 import hashlib
+import sys
+import traceback
 from abc import abstractstaticmethod, abstractmethod
 from datetime import datetime
 from time import sleep
@@ -8,6 +10,7 @@ from time import time
 import requests
 from bs4 import BeautifulSoup
 from python3_anticaptcha import AntiCaptchaControl
+from sqlalchemy.exc import ProgrammingError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH
@@ -15,7 +18,7 @@ from environmentSettings import DEBUG_MODE, PROXIES
 from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session
 from src.models.error import Error
 from src.models.scraping_session import ScrapingSession
-from src.utils import pretty_print_GET
+from src.utils import pretty_print_GET, get_error_string, print_error_to_file
 
 
 class LoggedOutException(Exception):
@@ -137,8 +140,11 @@ class BaseScraper(metaclass=abc.ABCMeta):
             error = Error(updated_date=updated_date, session_id=self.session_id, thread_id=self.thread_id,
                           type=error_type, text=error_string, finger_print=finger_print)
             self.db_session.add(error)
-
-        self.db_session.commit()
+        try:
+            self.db_session.commit()
+        except ProgrammingError:
+            meta_error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
+            print_error_to_file(self.thread_id, meta_error_string, "meta")
         sleep(2)
 
     def _print_exception_triggering_request(self, url):

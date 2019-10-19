@@ -203,7 +203,10 @@ class EmpireScrapingSession(BaseScraper):
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
 
                 if len(product_page_urls) == 0:
-                    continue
+                    if soup_html.text.find("There is currently nothing to show.") == -1:
+                        raise AssertionError  # raise error if no logical reason why search result is empty
+                    else:
+                        continue
 
                 titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
                 btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)

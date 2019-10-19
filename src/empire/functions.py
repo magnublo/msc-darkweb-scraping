@@ -55,10 +55,6 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         assert len(product_page_urls) <= 15
 
-        if len(product_page_urls) == 0:
-            if soup_html.text.find("There is currently nothing to show.") == -1:
-                raise AssertionError
-
         assert len(urls_is_sticky) == len(product_page_urls)
 
         return product_page_urls, urls_is_sticky
