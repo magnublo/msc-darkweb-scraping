@@ -18,4 +18,4 @@ class ScrapingSession(Base):
     nr_of_threads = Column(Integer)
     initial_queue_size = Column(Integer)
     time_started = Column(DateTime, default=datetime.datetime.utcnow)
-    time_finished = Column(DateTime, default=datetime.datetime.utcnow)
+    time_finished = Column(DateTime)
