@@ -35,9 +35,7 @@ from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
 from src.utils import get_error_string, BadGatewayException, is_bad_gateway, error_is_sqlalchemy_error, \
-    print_error_to_file, is_internal_server_error
-
-asd = NewConnectionError
+    print_error_to_file, is_internal_server_error, InternalServerErrorException
 
 
 class EmpireScrapingSession(BaseScraper):
