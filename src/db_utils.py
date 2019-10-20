@@ -1,5 +1,6 @@
 import datetime
 from enum import Enum
+from typing import List
 
 import demoji
 from sqlalchemy import func, or_, create_engine
@@ -18,7 +19,6 @@ from src.models.seller_observation import SellerObservation
 from src.models.settings import Settings
 
 DB_ENGINE_URL = DB_ENGINE_BASE_URL + MYSQL_URL_PARAMS_STRING
-
 
 
 def kill_all_existing_db_connections_for_user(db_username):
@@ -125,6 +125,31 @@ def _get_scraping_sessions_with_no_children(db_session: Session):
     return db_session.query(ScrapingSession).filter(ScrapingSession.id.in_(ids_scraping_sessions_with_no_children))
 
 
+def _get_prompt_str(broken_sellers: List[Seller], broken_listings : List[ListingObservation]) -> str:
+    if len(broken_sellers) > 0:
+        seller_ids_str = "Broken seller ids: \n\n" + "\n".join([str(seller.id) for seller in broken_sellers])
+    else:
+        seller_ids_str = ""
+
+    if len(broken_listings) > 0:
+        listing_ids_str = "Broken listing ids: \n\n" + "\n".join([str(listing.id) for listing in broken_listings])
+    else:
+        listing_ids_str = ""
+
+
+    prompt_str = f"""{len(broken_sellers)} broken sellers and {len(broken_listings)} broken listings to be deleted.
+    
+{seller_ids_str}
+
+{listing_ids_str}
+
+Proceed? (Y/N)
+    
+"""
+
+    return prompt_str
+
+
 def fix_integrity_of_database(db_session: Session):
     # remove incomplete sellers
     # remove incomplete listing_observations
@@ -135,10 +160,10 @@ def fix_integrity_of_database(db_session: Session):
     broken_listings = _get_broken_listings(db_session)
 
     if len(broken_sellers.all() + broken_listings.all()) > 0:
-        ans = input(
-            f"{len(broken_sellers.all())} broken sellers and {len(broken_listings.all())} broken listings to be "
-            f"deleted. Proceed? "
-            f"(Y/N)")
+        prompt_str = _get_prompt_str(broken_sellers.all(), broken_listings.all())
+
+
+        ans = input(prompt_str)
         if ans == "Y":
             broken_sellers.delete()
             broken_listings.delete()
@@ -148,13 +173,13 @@ def fix_integrity_of_database(db_session: Session):
             db_session.close()
             exit()
 
-    scraping_sessions_with_no_children = _get_scraping_sessions_with_no_children(db_session)
+        scraping_sessions_with_no_children = _get_scraping_sessions_with_no_children(db_session)
 
-    scraping_sessions_with_no_children.delete(synchronize_session=False)
+        scraping_sessions_with_no_children.delete(synchronize_session=False)
 
-    _fix_time_columns_on_broken_scraping_session_rows(db_session)
+        _fix_time_columns_on_broken_scraping_session_rows(db_session)
 
-    db_session.commit()
+        db_session.commit()
 
 
 def shorten_and_sanitize_text(max_length, text):
@@ -218,4 +243,3 @@ def set_settings(db_session, refill_queue_when_complete=False):
         db_session.commit()
         db_session.expunge_all()
         db_session.close()
-
