@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, Integer, DateTime, CHAR
+from sqlalchemy import Column, Integer, DateTime, CHAR, Boolean
 
 from definitions import MARKET_NAME_COLUMN_LENGTH, Base
 
@@ -19,3 +19,4 @@ class ScrapingSession(Base):
     initial_queue_size = Column(Integer)
     time_started = Column(DateTime, default=datetime.datetime.utcnow)
     time_finished = Column(DateTime)
+    exited_gracefully = Column(Boolean, default=False)
