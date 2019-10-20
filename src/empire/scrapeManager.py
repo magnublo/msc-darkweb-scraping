@@ -34,7 +34,7 @@ class EmpireScrapingManager:
                 if DEBUG_MODE:
                     queue_size = 1000
                     db_session = get_db_session(get_engine())
-                    query = db_session.query(ScrapingSession).filter(ScrapingSession.id == session_id).update(
+                    db_session.query(ScrapingSession).filter(ScrapingSession.id == session_id).update(
                         {get_column_name(ScrapingSession.initial_queue_size): queue_size})
                     db_session.commit()
                     db_session.expunge_all()

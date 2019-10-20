@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, ForeignKey, CHAR
+from sqlalchemy import Column, DateTime, Integer, String, ForeignKey, CHAR, Boolean
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
 from definitions import ERROR_FINGER_PRINT_COLUMN_LENGTH, MYSQL_CASCADE, Base
@@ -21,4 +21,5 @@ class Error(Base):
     type = Column(String)
     text = Column(MEDIUMTEXT)
     finger_print = Column(CHAR(ERROR_FINGER_PRINT_COLUMN_LENGTH))
+    exited_gracefully = Column(Boolean, default=False)
 

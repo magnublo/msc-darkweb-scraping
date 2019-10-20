@@ -168,6 +168,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
         scraping_session.time_finished = datetime.fromtimestamp(time())
         scraping_session.duplicates_encountered += self.duplicates_this_session
+        scraping_session.exited_gracefully = True
         self.db_session.merge(scraping_session)
         self.db_session.commit()
         self.db_session.expunge_all()
