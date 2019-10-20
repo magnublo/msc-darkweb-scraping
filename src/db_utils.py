@@ -182,16 +182,28 @@ def fix_integrity_of_database(db_session: Session):
         db_session.commit()
 
 
+def sanitize_error(error_text, vars):
+
+    #This sanitation is necessary because of a bug in either SQLAlchemy or MySQL. If a compiled statement is sent as string
+    #parameter in a row insertion, field names are not escaped properly inside the string field.
+
+    for var in vars:
+        error_text = error_text.replace(var, var + "&&&")
+
+    return error_text
+
 def shorten_and_sanitize_text(max_length, text):
+    text = demoji.replace(bytes(text, "utf-8").decode('utf-8', 'ignore').strip())
+
     if len(text.encode("utf8")) <= max_length:
-        return demoji.replace(bytes(text, "utf-8").decode('utf-8', 'ignore').strip())
+        return text
 
     mxlen = max_length
 
     while (text.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
         mxlen -= 1
 
-    return demoji.replace(text.encode("utf8")[0:mxlen].decode("utf8", 'ignore').strip())
+    return text
 
 
 def _shorten_and_sanitize_for_text_column(text):
@@ -243,3 +255,4 @@ def set_settings(db_session, refill_queue_when_complete=False):
         db_session.commit()
         db_session.expunge_all()
         db_session.close()
+

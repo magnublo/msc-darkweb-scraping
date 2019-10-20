@@ -15,7 +15,7 @@ from sqlalchemy.exc import ProgrammingError
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH
 from environmentSettings import DEBUG_MODE, PROXIES
-from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session
+from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error
 from src.models.error import Error
 from src.models.scraping_session import ScrapingSession
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file
@@ -115,20 +115,23 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.db_session.expunge(scraping_session)
         return session_id
 
-    def _log_and_print_error(self, e, error_string, updated_date=None, print_error=True):
+    def _log_and_print_error(self, error_object, error_string, updated_date=None, print_error=True):
+
         if print_error:
             print(error_string)
 
-        error_string = _shorten_and_sanitize_for_medium_text_column(error_string)
-
         errors = self.db_session.query(Error).filter_by(thread_id=self.thread_id).order_by(Error.updated_date.asc())
-        if e is None:
+
+        if error_object is None:
             error_type = None
         else:
-            error_type = type(e).__name__
+            error_type = type(error_object).__name__
 
         finger_print = hashlib.md5((error_type + str(time())).encode("utf-8")) \
                            .hexdigest()[0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
+
+        error_string = sanitize_error(error_string, locals().keys())
+        error_string = _shorten_and_sanitize_for_medium_text_column(error_string)
 
         if errors.count() >= MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD:
             error = errors.first()

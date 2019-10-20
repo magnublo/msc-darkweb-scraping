@@ -1,6 +1,7 @@
 from datetime import datetime
 import inspect
 import time
+from typing import Callable
 
 import requests
 from urllib3.exceptions import HTTPError
