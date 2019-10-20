@@ -32,7 +32,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         description = descriptions[0].text
         return _shorten_and_sanitize_for_text_column(description)
 
-
     @staticmethod
     def get_product_page_urls(soup_html):
         centre_columns = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
@@ -80,9 +79,9 @@ class EmpireScrapingFunctions(BaseFunctions):
         text = padps[3].text
         pattern = "Purchase price: "
         pattern_index = text.find(pattern)
-        text = text[pattern_index+len(pattern):]
+        text = text[pattern_index + len(pattern):]
         currency, price = text.split(" ")
-        price = price.replace(",","")
+        price = price.replace(",", "")
         return currency, price
 
     @staticmethod
@@ -139,7 +138,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         trust_level = None
 
         for i in range(0, 20):
-            className = "user_info_trust level-"+str(i)
+            className = "user_info_trust level-" + str(i)
             spans = spans + [span for span in user_info_mid_head.findAll('span', attrs={'class': className})]
             if len(spans) > 0:
                 for span in spans:
@@ -242,7 +241,6 @@ class EmpireScrapingFunctions(BaseFunctions):
             input_value = input['value']
             payload[input['name']] = input_value
 
-
         return payload
 
     @staticmethod
@@ -251,7 +249,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert len(tab_content_divs) == 1
         description = tab_content_divs[0].text
         index_of_seller_name = description.find(seller_name)
-        description_after_standard_heading = description[index_of_seller_name+len(seller_name)+3:]
+        description_after_standard_heading = description[index_of_seller_name + len(seller_name) + 3:]
         return _shorten_and_sanitize_for_text_column(description_after_standard_heading)
 
     @staticmethod
@@ -269,7 +267,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert len(feedbacks) == 9
 
         return feedbacks
-
 
     @staticmethod
     def get_buyer_statistics(soup_html):
@@ -336,7 +333,8 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_feedbacks(soup_html):
-        autoshop_tables = [div for div in soup_html.findAll('table', attrs={'class': 'user_feedbackTbl autoshop_table'})]
+        autoshop_tables = [div for div in
+                           soup_html.findAll('table', attrs={'class': 'user_feedbackTbl autoshop_table'})]
         assert len(autoshop_tables) <= 1
         if len(autoshop_tables) == 0:
             return []
@@ -356,7 +354,8 @@ class EmpireScrapingFunctions(BaseFunctions):
                 seller_response_header_text = "Seller Response: "
 
                 assert (seller_response[0:len(seller_response_header_text)] == seller_response_header_text)
-                feedback["seller_response_message"] = _shorten_and_sanitize_for_text_column(seller_response[len(seller_response_header_text):])
+                feedback["seller_response_message"] = _shorten_and_sanitize_for_text_column(
+                    seller_response[len(seller_response_header_text):])
             else:
                 feedback["seller_response_message"] = ""
 
@@ -373,7 +372,7 @@ class EmpireScrapingFunctions(BaseFunctions):
             feedback["currency"] = parts[-2]
             feedback["price"] = parts[-1].replace(",", "")
 
-            #<td style="text-align: right;">
+            # <td style="text-align: right;">
             right_columns = [td for td in tr.findAll('td', attrs={'style': 'text-align: right;'})]
             assert len(right_columns) == 1
             right_column = right_columns[0]
@@ -390,30 +389,6 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         return feedbacks
 
-    @staticmethod
-    def print_duplicate_debug_message(existing_listing_observation, initial_queue_size, queue_size, thread_id, cookie,
-                                      parsing_time):
-        print(datetime.fromtimestamp(time.time()))
-        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
-        print("Database already contains listing with this seller and title for this session.")
-        print("Listing title: " + existing_listing_observation.title)
-        print("Duplicate listing, skipping...")
-        print("Thread nr. " + str(thread_id))
-        print("Web session " + cookie)
-        print("Crawling page nr " + str(initial_queue_size - queue_size) + " this session. ")
-        print("Pages left, approximate: " + str(queue_size) + ".")
-        print("\n")
-
-    @staticmethod
-    def print_crawling_debug_message(product_page_url, initial_queue_size, queue_size, thread_id, cookie, parsing_time):
-        print(datetime.fromtimestamp(time.time()))
-        print("Last web response was parsed in " + str(parsing_time) + " seconds.")
-        print("Trying to fetch URL: " + product_page_url)
-        print("Thread nr. " + str(thread_id))
-        print("Web session " + cookie)
-        print("Crawling page nr " + str(initial_queue_size - queue_size) + " this session. ")
-        print("Pages left, estimate: " + str(queue_size) + ".")
-        print("\n")
 
     @staticmethod
     def get_mid_user_info(soup_html):
@@ -463,7 +438,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         return dream_market_successful_sales, dream_market_star_rating, wall_street_market_successful_sales, \
                wall_street_market_star_rating, positive_feedback_received_percent, registration_date
 
-
     @staticmethod
     def get_next_feedback_page(soup_html):
         pagination_uls = [ul for ul in soup_html.findAll('ul', attrs={'class': 'pagination'})]
@@ -502,8 +476,3 @@ class EmpireScrapingFunctions(BaseFunctions):
         pre = pres[0]
 
         return pre.text
-
-
-
-
-

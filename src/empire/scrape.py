@@ -13,7 +13,7 @@ from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
-from urllib3.exceptions import NewConnectionError, HTTPError
+from urllib3.exceptions import HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
@@ -91,6 +91,8 @@ class EmpireScrapingSession(BaseScraper):
             print("INCORRECTLY SOLVED CAPTCHA, TRYING AGAIN...")
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
             self._login_and_set_cookie(response)
+        else:
+            self.cookie = self._get_cookie_string()
 
     def populate_queue(self):
         web_response = self._get_page_response_and_try_forever(EMPIRE_MARKET_HOME_URL)
@@ -136,6 +138,8 @@ class EmpireScrapingSession(BaseScraper):
             cookie
         )
 
+        self.cookie = self._get_cookie_string()
+
     def _get_market_URL(self):
         return EMPIRE_MARKET_URL
 
@@ -152,6 +156,7 @@ class EmpireScrapingSession(BaseScraper):
         while True:
             try:
                 if debug:
+                    self.time_last_received_response = time.time()
                     return None
                 else:
                     response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
@@ -168,6 +173,7 @@ class EmpireScrapingSession(BaseScraper):
                             elif is_bad_gateway(response):
                                 raise BadGatewayException
                             else:
+                                self.time_last_received_response = time.time()
                                 return response
 
                     self._login_and_set_cookie(response)
@@ -263,7 +269,6 @@ class EmpireScrapingSession(BaseScraper):
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate, parsing_time):
 
-        cookie = self._get_cookie_string()
 
         existing_seller = self.db_session.query(Seller) \
             .filter_by(name=seller_name).first()
@@ -287,8 +292,7 @@ class EmpireScrapingSession(BaseScraper):
             if existing_listing_observation.promoted_listing != is_sticky:
                 existing_listing_observation.promoted_listing = True
                 self.db_session.flush()
-            scrapingFunctions.print_duplicate_debug_message(existing_listing_observation, self.initial_queue_size,
-                                                            self.queue.qsize(), self.thread_id, cookie, parsing_time)
+            self.print_crawling_debug_message(existing_listing_observation=existing_listing_observation)
             self.duplicates_this_session += 1
             return
         else:
@@ -308,8 +312,7 @@ class EmpireScrapingSession(BaseScraper):
         if not existing_seller_observation:
             self._scrape_seller(seller_url, seller, is_new_seller)
 
-        scrapingFunctions.print_crawling_debug_message(product_page_url, self.initial_queue_size, self.queue.qsize(),
-                                                       self.thread_id, cookie, parsing_time)
+        self.print_crawling_debug_message(url=product_page_url)
 
         web_response = self._get_web_response(product_page_url)
 
@@ -390,8 +393,7 @@ class EmpireScrapingSession(BaseScraper):
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
 
-        scrapingFunctions.print_crawling_debug_message(seller_url, self.initial_queue_size, self.queue.qsize()
-                                                       , self.thread_id, self._get_cookie_string(), "N/A")
+        self.print_crawling_debug_message(url=seller_url)
 
         web_response = self._get_web_response(seller_url)
         soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_html")
@@ -499,8 +501,7 @@ class EmpireScrapingSession(BaseScraper):
 
     def _scrape_feedback(self, seller, is_new_seller, category, url):
 
-        scrapingFunctions.print_crawling_debug_message(url, self.initial_queue_size, self.queue.qsize()
-                                                       , self.thread_id, self._get_cookie_string(), "N/A")
+        self.print_crawling_debug_message(url=url)
 
         web_response = self._get_web_response(url)
         soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_positive_feedback")

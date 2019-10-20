@@ -82,8 +82,10 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.start_time = time()
         self.duplicates_this_session = 0
         self.web_session = requests.session()
+        self.cookie = ""
         self._login_and_set_cookie()
         self.initial_queue_size = self.queue.qsize()
+        self.time_last_received_response = 0
 
         if session_id:
             while True:
@@ -205,6 +207,28 @@ class BaseScraper(metaclass=abc.ABCMeta):
         for line in lines:
             if line[0:7].lower() == "cookie:":
                 return line.strip().lower()
+
+
+
+    def print_crawling_debug_message(self, url=None, existing_listing_observation=None):
+        assert (url or existing_listing_observation)
+        queue_size = self.queue.qsize()
+        parsing_time = time() - self.time_last_received_response
+        print(datetime.fromtimestamp(time()))
+        print(f"Last web response was parsed in {parsing_time} seconds.")
+        if existing_listing_observation:
+            print("Database already contains listing with this seller and title for this session.")
+            print(f"Listing title: {existing_listing_observation.title}")
+            print("Duplicate listing, skipping...")
+
+        else:
+            print("Trying to fetch URL: " + url)
+        print(f"Thread nr. {self.thread_id}")
+        print(f"Web session {self.cookie}")
+        print(f"Crawling page nr. {self.initial_queue_size - queue_size} this session.")
+        print(f"Pages left, approximate: {queue_size}.")
+        print("\n")
+
 
     @abstractmethod
     def _get_web_response(self, url, debug=DEBUG_MODE):
