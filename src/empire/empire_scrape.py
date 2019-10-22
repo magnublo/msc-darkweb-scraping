@@ -5,23 +5,26 @@ import time
 import traceback
 from _mysql_connector import MySQLError
 from datetime import datetime
+from math import ceil
 from queue import Empty
 from random import shuffle
 from time import sleep
+from typing import Union
 
+import cfscrape
+import requests
 from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
-from urllib3.exceptions import HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
-    RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
-from environmentSettings import DEBUG_MODE, PROXIES
-from src.base import BaseScraper, LoggedOutException
+    RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE
+from environmentSettings import DEBUG_MODE
+from src.base import BaseScraper
 from src.db_utils import get_column_name
-from src.empire.functions import EmpireScrapingFunctions as scrapingFunctions
+from src.empire.empire_functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
 from src.models.feedback import Feedback
 from src.models.listing_category import ListingCategory
@@ -34,43 +37,40 @@ from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
-from src.utils import get_error_string, BadGatewayException, is_bad_gateway, error_is_sqlalchemy_error, \
-    print_error_to_file, is_internal_server_error, InternalServerErrorException
+from src.utils import get_error_string, error_is_sqlalchemy_error, \
+    print_error_to_file, get_page_as_soup_html
 
 
 class EmpireScrapingSession(BaseScraper):
 
-    @staticmethod
-    def _is_logged_out(response):
-        for history_response in response.history:
-            if history_response.is_redirect:
-                if history_response.raw.headers._container['location'][1] == EMPIRE_MARKET_LOGIN_URL:
-                    return True
-
-        if response.text.find("Welcome to Empire Market! Please login to access the marketplace.") != -1:
-            return True
-
-        return False
-
     def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
         super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, session_id=session_id)
-        self.logged_out_exceptions = 0
 
-    def _get_working_dir(self):
+    def _get_web_session(self) -> Union[requests.Session, cfscrape.Session]:
+        return requests.Session()
+
+    def _get_working_dir(self) -> str:
         return EMPIRE_DIR
 
-    def _login_and_set_cookie(self, response=None, debug=DEBUG_MODE):
+    def _get_login_url(self) -> str:
+        return EMPIRE_MARKET_LOGIN_URL
+
+    def _get_login_phrase(self) -> str:
+        return EMPIRE_MARKET_LOGIN_PHRASE
+
+    def _login_and_set_cookie(self, web_response=None, debug=DEBUG_MODE):
         if debug:
             self._set_cookies()
             return
 
-        if not response:
-            response = self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL)
+        if not web_response:
+            web_response = self._get_logged_out_web_response(EMPIRE_MARKET_LOGIN_URL)
 
-        soup_html = self._get_page_as_soup_html(response, "saved_empire_login_html")
+        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_login_html")
+
         image_url = scrapingFunctions.get_captcha_image_url(soup_html)
 
-        image_response = self._get_page_response_and_try_forever(image_url).content
+        image_response = self._get_logged_out_web_response(image_url).content
         base64_image = base64.b64encode(image_response).decode("utf-8")
 
         time_before_requesting_captcha_solve = time.time()
@@ -85,38 +85,14 @@ class EmpireScrapingSession(BaseScraper):
         print("Captcha solved. Solving took " + str(time.time() - time_before_requesting_captcha_solve) + " seconds.")
 
         login_payload = scrapingFunctions.get_login_payload(soup_html, self.username, self.password, captcha_solution)
-        response = self._get_page_response_and_try_forever(EMPIRE_MARKET_LOGIN_URL, post_data=login_payload)
+        web_response = self._get_logged_out_web_response(EMPIRE_MARKET_LOGIN_URL, post_data=login_payload)
 
-        if self._is_logged_out(response):
+        if self._is_logged_out(web_response, self.login_url, self.login_phrase):
             print("INCORRECTLY SOLVED CAPTCHA, TRYING AGAIN...")
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
-            self._login_and_set_cookie(response)
+            self._login_and_set_cookie(web_response)
         else:
             self.cookie = self._get_cookie_string()
-
-    def populate_queue(self):
-        web_response = self._get_page_response_and_try_forever(EMPIRE_MARKET_HOME_URL)
-        soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
-        pairs_of_category_base_urls_and_nr_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(
-            soup_html)
-        task_list = []
-
-        for i in range(0, len(pairs_of_category_base_urls_and_nr_of_listings)):
-            nr_of_listings = int(pairs_of_category_base_urls_and_nr_of_listings[i][1])
-            url = pairs_of_category_base_urls_and_nr_of_listings[i][0]
-            nr_of_pages = nr_of_listings // 15
-            for k in range(0, nr_of_pages):
-                task_list.append(url + str(k * 15))
-
-        shuffle(task_list)
-
-        for task in task_list:
-            self.queue.put(task)
-
-        self.initial_queue_size = self.queue.qsize()
-        self.db_session.query(ScrapingSession).filter(ScrapingSession.id == self.session_id).update(
-            {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
-        self.db_session.commit()
 
     def _set_cookies(self):
 
@@ -140,55 +116,43 @@ class EmpireScrapingSession(BaseScraper):
 
         self.cookie = self._get_cookie_string()
 
-    def _get_market_URL(self):
+    def _get_market_URL(self) -> str:
         return EMPIRE_MARKET_URL
 
-    def _get_market_ID(self):
+    def _get_market_ID(self) -> str:
         return EMPIRE_MARKET_ID
 
-    def _get_headers(self):
+    def _get_headers(self) -> dict:
         headers = EMPIRE_HTTP_HEADERS
         headers["Host"] = self._get_market_URL()
         headers["Referer"] = "http://" + self._get_market_URL() + "/login"
         return headers
 
-    def _get_web_response(self, url, debug=DEBUG_MODE):
-        while True:
-            try:
-                if debug:
-                    self.time_last_received_response = time.time()
-                    return None
-                else:
-                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+    def populate_queue(self):
+        web_response = self._get_logged_in_web_response(EMPIRE_MARKET_HOME_URL)
+        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_search_result_html")
+        pairs_of_category_base_urls_and_nr_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(
+            soup_html)
+        task_list = []
 
-                    tries = 0
+        for i in range(0, len(pairs_of_category_base_urls_and_nr_of_listings)):
+            nr_of_listings = int(pairs_of_category_base_urls_and_nr_of_listings[i][1])
+            url = pairs_of_category_base_urls_and_nr_of_listings[i][0]
+            nr_of_pages = ceil(nr_of_listings / 15)
+            for k in range(0, nr_of_pages):
+                task_list.append(url + str(k * 15))
 
-                    while tries < 5:
-                        if self._is_logged_out(response):
-                            tries += 1
-                            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
-                        else:
-                            if is_internal_server_error(response):
-                                raise InternalServerErrorException
-                            elif is_bad_gateway(response):
-                                raise BadGatewayException
-                            else:
-                                self.time_last_received_response = time.time()
-                                return response
+        shuffle(task_list)
 
-                    self._login_and_set_cookie(response)
-                    return self._get_web_response(url)
-            except (KeyboardInterrupt, SystemExit, AttributeError, LoggedOutException) as e:
-                self._log_and_print_error(e, traceback.format_exc())
-                self._wrap_up_session()
-                self._print_exception_triggering_request(url)
-                raise
+        for task in task_list:
+            self.queue.put(task)
 
-            except (HTTPError, BaseException) as e:
-                self._log_and_print_error(e, traceback.format_exc())
+        self.initial_queue_size = self.queue.qsize()
+        self.db_session.query(ScrapingSession).filter(ScrapingSession.id == self.session_id).update(
+            {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
+        self.db_session.commit()
 
     def scrape(self):
-
         while True:
             try:
                 try:
@@ -198,9 +162,10 @@ class EmpireScrapingSession(BaseScraper):
                     self._wrap_up_session()
                     return
 
-                web_response = self._get_web_response(search_result_url)
+                web_response = self._get_logged_in_web_response(search_result_url)
 
-                soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
+                soup_html = get_page_as_soup_html(self.working_dir, web_response,
+                                                  file_name="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
 
                 if len(product_page_urls) == 0:
@@ -306,9 +271,9 @@ class EmpireScrapingSession(BaseScraper):
 
         self.print_crawling_debug_message(url=product_page_url)
 
-        web_response = self._get_web_response(product_page_url)
+        web_response = self._get_logged_in_web_response(product_page_url)
 
-        soup_html = self._get_page_as_soup_html(web_response, 'saved_empire_html', DEBUG_MODE)
+        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_html")
 
         listing_text = scrapingFunctions.get_description(soup_html)
         listing_text_id = hashlib.md5(listing_text.encode('utf-8')).hexdigest()
@@ -390,8 +355,8 @@ class EmpireScrapingSession(BaseScraper):
 
         self.print_crawling_debug_message(url=seller_url)
 
-        web_response = self._get_web_response(seller_url)
-        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_html")
+        web_response = self._get_logged_in_web_response(seller_url)
+        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_user_html")
 
         seller_name = seller.name
         description = scrapingFunctions.get_seller_about_description(soup_html, seller_name)
@@ -498,8 +463,9 @@ class EmpireScrapingSession(BaseScraper):
 
         self.print_crawling_debug_message(url=url)
 
-        web_response = self._get_web_response(url)
-        soup_html = self._get_page_as_soup_html(web_response, "saved_empire_user_positive_feedback")
+        web_response = self._get_logged_in_web_response(url)
+
+        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_user_positive_feedback")
 
         feedback_array = scrapingFunctions.get_feedbacks(soup_html)
 
@@ -559,8 +525,8 @@ class EmpireScrapingSession(BaseScraper):
                 scrape_pgp_this_session = True
 
         if scrape_pgp_this_session:
-            web_response = self._get_web_response(url)
-            soup_html = self._get_page_as_soup_html(web_response, "saved_empire_pgp_html")
+            web_response = self._get_logged_in_web_response(url)
+            soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_pgp_html")
             pgp_key_content = scrapingFunctions.get_pgp_key(soup_html)
             self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content))
             self.db_session.flush()

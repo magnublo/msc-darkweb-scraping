@@ -1,30 +1,31 @@
 import abc
 import hashlib
 import sys
+import threading
 import traceback
 from abc import abstractstaticmethod, abstractmethod
-from datetime import datetime
+from datetime import datetime, timedelta
+from multiprocessing import Queue
 from time import sleep
 from time import time
+from typing import List, Union
 
+import cfscrape
 import requests
-from bs4 import BeautifulSoup
 from python3_anticaptcha import AntiCaptchaControl
 from sqlalchemy.exc import ProgrammingError
+from urllib3.exceptions import HTTPError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, PYTHON_SIDE_ENCODING
 from environmentSettings import DEBUG_MODE, PROXIES
-from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error
+from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
+    get_column_name, get_settings
 from src.models.error import Error
 from src.models.scraping_session import ScrapingSession
-from src.utils import pretty_print_GET, get_error_string, print_error_to_file
-
-
-class LoggedOutException(Exception):
-
-    def __init__(self):
-        super().__init__("Cookie appears to have been invalidated by remote website.")
+from src.models.settings import Settings
+from src.utils import pretty_print_GET, get_error_string, print_error_to_file, is_internal_server_error, \
+    InternalServerErrorException, is_bad_gateway, BadGatewayException, queue_is_empty
 
 
 class BaseFunctions(metaclass=abc.ABCMeta):
@@ -66,6 +67,10 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
     def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
         engine = get_engine()
+        self.login_url = self._get_login_url()
+        self.login_phrase = self._get_login_phrase()
+        self.working_dir = self._get_working_dir()
+        self.logged_out_exceptions = 0
         self.db_session = get_db_session(engine)
         self.username = username
         self.password = password
@@ -77,7 +82,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.market_id = self._get_market_ID()
         self.start_time = time()
         self.duplicates_this_session = 0
-        self.web_session = requests.session()
+        self.web_session = self._get_web_session()
         self.cookie = ""
         self._login_and_set_cookie()
         self.initial_queue_size = self.queue.qsize()
@@ -98,7 +103,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         else:
             self.session_id = self._initiate_session()
 
-    def _initiate_session(self):
+    def _initiate_session(self) -> int:
         scraping_session = ScrapingSession(
             market=self.market_id,
             duplicates_encountered=self.duplicates_this_session,
@@ -111,7 +116,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.db_session.expunge(scraping_session)
         return session_id
 
-    def _log_and_print_error(self, error_object, error_string, updated_date=None, print_error=True):
+    def _log_and_print_error(self, error_object, error_string, updated_date=None, print_error=True) -> None:
 
         if print_error:
             print(error_string)
@@ -148,20 +153,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             print_error_to_file(self.thread_id, meta_error_string, "meta")
         sleep(2)
 
-    def _print_exception_triggering_request(self, url):
-        debug_html = None
-        tries = 0
-        while debug_html is None and tries < 10:
-            try:
-                debug_html = self.web_session.get(url, proxies=PROXIES, headers=self.headers).text
-                debug_html = "".join(debug_html.split())
-                print(pretty_print_GET(self.web_session.prepare_request(
-                    requests.Request('GET', url=url, headers=self.headers))))
-            except:
-                tries += 1
-        print(debug_html)
-
-    def _wrap_up_session(self):
+    def _wrap_up_session(self) -> None:
         scraping_session = self.db_session.query(ScrapingSession).filter(
             ScrapingSession.id == self.session_id).first()
 
@@ -180,7 +172,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.db_session.expunge_all()
         self.db_session.close()
 
-    def _get_page_response_and_try_forever(self, url, post_data=None):
+    def _get_logged_out_web_response(self, url, post_data=None) -> requests.Response:
         tries = 0
 
         while True:
@@ -196,18 +188,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
             except:
                 tries += 1
 
-    def _get_page_as_soup_html(self, web_response, file, debug=DEBUG_MODE):
-        working_dir = self._get_working_dir()
-
-        if debug:
-            saved_html = open(working_dir + file, "r")
-            soup_html = BeautifulSoup(saved_html, features="lxml")
-            saved_html.close()
-            return soup_html
-        else:
-            return BeautifulSoup(web_response.text, features="lxml")
-
-    def _get_cookie_string(self):
+    def _get_cookie_string(self) -> str:
         request_as_string = pretty_print_GET(self.web_session.prepare_request(
             requests.Request('GET', url="http://" + self.headers["Host"], headers=self.headers)))
         lines = request_as_string.split("\n")
@@ -215,14 +196,14 @@ class BaseScraper(metaclass=abc.ABCMeta):
             if line[0:7].lower() == "cookie:":
                 return line.strip().lower()
 
-    def _get_wait_interval(self, error_data):
-        nr_of_errors = max(len(error_data)-1, 0)
+    def _get_wait_interval(self, error_data) -> int:
+        nr_of_errors = max(len(error_data) - 1, 0)
         highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
         seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
                                      min(nr_of_errors - 1, highest_index)] + self.thread_id * 2
         return seconds_until_next_try
 
-    def print_crawling_debug_message(self, url=None, existing_listing_observation=None):
+    def print_crawling_debug_message(self, url=None, existing_listing_observation=None) -> None:
         assert (url or existing_listing_observation)
         queue_size = self.queue.qsize()
         parsing_time = time() - self.time_last_received_response
@@ -241,43 +222,201 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print(f"Pages left, approximate: {queue_size}.")
         print("\n")
 
+    def _get_logged_in_web_response(self, url, debug=DEBUG_MODE) -> requests.Response:
+        while True:
+            try:
+                if debug:
+                    self.time_last_received_response = time()
+                    return None
+                else:
+                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+
+                    tries = 0
+
+                    while tries < 5:
+                        if self._is_logged_out(response, self.login_url, self.login_phrase):
+                            tries += 1
+                            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+                        else:
+                            if is_internal_server_error(response):
+                                raise InternalServerErrorException(response.text)
+                            elif is_bad_gateway(response):
+                                raise BadGatewayException(response.text)
+                            else:
+                                self.time_last_received_response = time()
+                                return response
+
+                    self._login_and_set_cookie(response)
+                    return self._get_logged_in_web_response(url)
+            except (KeyboardInterrupt, SystemExit, AttributeError) as e:
+                self._log_and_print_error(e, traceback.format_exc())
+                self._wrap_up_session()
+                raise e
+
+            except (HTTPError, BaseException) as e:
+                self._log_and_print_error(e, traceback.format_exc())
+
+    @staticmethod
+    def _is_logged_out(response, login_url, login_page_phrase) -> bool:
+        for history_response in response.history:
+            if history_response.is_redirect:
+                if history_response.raw.headers._container['location'][1] == login_url:
+                    return True
+
+        if response.text.find(login_page_phrase) != -1:
+            return True
+
+        return False
 
     @abstractmethod
-    def _get_web_response(self, url, debug=DEBUG_MODE):
+    def scrape(self) -> None:
         raise NotImplementedError('')
 
     @abstractmethod
-    def scrape(self):
+    def _login_and_set_cookie(self, response=None) -> None:
         raise NotImplementedError('')
 
     @abstractmethod
-    def _login_and_set_cookie(self):
+    def _get_market_URL(self) -> str:
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_market_URL(self):
+    def _get_market_ID(self) -> str:
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_market_ID(self):
+    def _get_working_dir(self) -> str:
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_working_dir(self):
-        raise NotImplementedError('')
-
-    @abstractmethod
-    def _get_headers(self):
+    def _get_headers(self) -> dict:
         pass
 
-    @abstractstaticmethod
-    def _is_logged_out(response):
+    @abstractmethod
+    def _set_cookies(self) -> None:
         raise NotImplementedError('')
 
     @abstractmethod
-    def _set_cookies(self):
+    def _get_login_url(self) -> str:
         raise NotImplementedError('')
 
     @abstractmethod
-    def populate_queue(self):
+    def _get_login_phrase(self) -> str:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def populate_queue(self) -> None:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_web_session(self) -> Union[requests.Session, cfscrape.Session]:
+        raise NotImplementedError('')
+
+
+class BaseScrapingManager(metaclass=abc.ABCMeta):
+
+    def __init__(self, settings: Settings, nr_of_threads: int):
+        self.market_credentials = self._get_market_credentials()
+        self.market_name = self._get_market_name()
+        assert nr_of_threads <= len(self.market_credentials)
+        self.queue = Queue()
+        self.first_run = True
+        self.refill_queue_when_complete = settings.refill_queue_when_complete
+        self.nr_of_threads = nr_of_threads
+
+    def run(self, start_immediately: bool) -> None:
+        if self.nr_of_threads <= 0:
+            return
+        if start_immediately:
+            self._start_new_session(self.queue, self.nr_of_threads)
+        while True:
+            self._wait_until_midnight_utc()
+            self._update_settings()
+            if self._should_start_new_session():
+                self._start_new_session(self.queue, self.nr_of_threads)
+
+    def _start_new_session(self, queue: Queue, nr_of_threads) -> None:
+        username = self.market_credentials[0][0]
+        password = self.market_credentials[0][1]
+        scraping_session = self._get_scraping_session(queue, username, password, nr_of_threads, thread_id=0)
+        session_id = scraping_session.session_id
+
+        if DEBUG_MODE:
+            queue_size = 1000
+            db_session = get_db_session(get_engine())
+            db_session.query(ScrapingSession).filter(ScrapingSession.id == session_id).update(
+                {get_column_name(ScrapingSession.initial_queue_size): queue_size})
+            db_session.commit()
+            db_session.expunge_all()
+            db_session.close()
+            for i in range(0, queue_size):
+                self.queue.put(str(i))
+            sleep(5)
+        else:
+            scraping_session.populate_queue()
+            print("Sleeping 5 seconds to avoid race conditions...")
+            sleep(5)
+
+        t = threading.Thread(target=scraping_session.scrape)
+        t.start()
+
+        for i in range(1, self.nr_of_threads):
+            username = self.market_credentials[i][0]
+            password = self.market_credentials[i][1]
+            sleep(i * 2)
+            scraping_session = self._get_scraping_session(queue, username, password, nr_of_threads, thread_id=i,
+                                                          session_id=session_id)
+            t = threading.Thread(target=scraping_session.scrape)
+            t.start()
+
+        self.first_run = False
+
+    def _should_start_new_session(self) -> bool:
+        if self.first_run:
+            return True
+
+        if queue_is_empty(self.queue) and self.refill_queue_when_complete:
+            return True
+
+        return False
+
+    def _update_settings(self) -> None:
+        settings = get_settings(market_name=self.market_name)
+        self.refill_queue_when_complete = settings.refill_queue_when_complete
+
+    @staticmethod
+    def _wait_until_midnight_utc() -> None:
+
+        utc_current_datetime = datetime.fromtimestamp(datetime.utcnow().timestamp())
+
+        utc_next_day_datetime = utc_current_datetime + timedelta(days=1)
+
+        utc_next_day_date = utc_next_day_datetime.date()
+
+        utc_next_midnight_datetime = datetime(year=utc_next_day_date.year, month=utc_next_day_date.month,
+                                              day=utc_next_day_date.day)
+
+        while True:
+            seconds_until_midnight = (utc_next_midnight_datetime - datetime.utcnow()).total_seconds()
+            if seconds_until_midnight > 0:
+                print(f"Waiting until {str(utc_next_midnight_datetime)[:19]} before starting new scraping session.")
+                hours = int(seconds_until_midnight // 3600)
+                minutes = int((seconds_until_midnight - hours * 3600) // 60)
+                seconds = int(seconds_until_midnight - hours * 3600 - minutes * 60)
+                print(f"{hours} hours, {minutes} minutes and {seconds} seconds left.\n")
+                sleep(min(float(30), seconds_until_midnight))
+            else:
+                return
+
+    @abstractmethod
+    def _get_market_credentials(self) -> List[List[str]]:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_scraping_session(self, queue, username, password, nr_of_threads, thread_id,
+                              session_id=None) -> BaseScraper:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_market_name(self) -> str:
         raise NotImplementedError('')

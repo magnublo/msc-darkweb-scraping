@@ -6,12 +6,12 @@ import traceback
 import requests
 from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
-from src.cryptonia.functions import CryptoniaScrapingFunctions as scrapingFunctions
+from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions
 
 from definitions import CRYPTONIA_BASE_CRAWLING_URL, CRYPTONIA_DIR, \
     ANTI_CAPTCHA_ACCOUNT_KEY
 from environmentSettings import DEBUG_MODE, PROXIES
-from src.base import Base, engine, db_session, LoggedOutException
+from src.base import Base, engine, db_session
 from src.base import BaseScraper
 from src.models.country import Country
 from src.models.listing_category import ListingCategory
@@ -19,7 +19,7 @@ from src.models.listing_observation import ListingObservation
 from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
-from src.utils import pretty_print_GET
+from src.utils import pretty_print_GET, LoggedOutException
 
 NR_OF_PAGES = 738
 
@@ -51,7 +51,7 @@ class CryptoniaScrapingSession(BaseScraper):
             if debug:
                 response = None
             else:
-                response = self._get_page_response_and_try_forever(CRYPTONIA_MARKET_LOGIN_URL)
+                response = self._get_logged_out_web_response(CRYPTONIA_MARKET_LOGIN_URL)
 
         soup_html = self._get_page_as_soup_html(response, "saved_cryptonia_login_html")
         image_url = scrapingFunctions.get_captcha_image_url(soup_html)
@@ -59,7 +59,7 @@ class CryptoniaScrapingSession(BaseScraper):
         if debug:
             base64_image = None
         else:
-            image_response = self._get_page_response_and_try_forever(image_url).content
+            image_response = self._get_logged_out_web_response(image_url).content
             base64_image = base64.b64encode(image_response).decode("utf-8")
 
         time_before_requesting_captcha_solve = time.time()
@@ -127,7 +127,7 @@ class CryptoniaScrapingSession(BaseScraper):
                     return response
 
             self._login_and_set_cookie(response)
-            return self._get_web_response(url)
+            return self._get_logged_in_web_response(url)
 
     def scrape(self):
 
@@ -141,7 +141,7 @@ class CryptoniaScrapingSession(BaseScraper):
                 search_result_url = CRYPTONIA_BASE_CRAWLING_URL + str((pagenr - 1) * 15)
 
                 parsing_time = time.time() - time_of_last_response
-                web_response = self._get_web_response(search_result_url)
+                web_response = self._get_logged_in_web_response(search_result_url)
                 time_of_last_response = time.time()
 
                 soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
@@ -169,7 +169,7 @@ class CryptoniaScrapingSession(BaseScraper):
 
                     scrapingFunctions.print_crawling_debug_message(product_page_url, pagenr, k, self.duplicates_this_session, parsing_time)
 
-                    web_response = self._get_web_response(product_page_url)
+                    web_response = self._get_logged_in_web_response(product_page_url)
 
                     soup_html = self._get_page_as_soup_html(web_response, 'saved_empire_html', DEBUG_MODE)
 

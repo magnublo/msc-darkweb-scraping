@@ -1,18 +1,37 @@
-from datetime import datetime
 import inspect
-import time
-from typing import Callable
+from datetime import datetime
+from time import time, sleep
 
 import requests
+from bs4 import BeautifulSoup
 from urllib3.exceptions import HTTPError
+
+from environmentSettings import DEBUG_MODE
+
+
+class LoggedOutException(Exception):
+
+    DEFAULT_TEXT = "Cookie appears to have been invalidated by remote website."
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
 
 
 class BadGatewayException(HTTPError):
-    pass
+
+    DEFAULT_TEXT = "Received response code 502."
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
 
 
 class InternalServerErrorException(HTTPError):
-    pass
+
+    DEFAULT_TEXT = "Received response code 500."
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
+
 
 def pretty_print_GET(req):
     """
@@ -63,7 +82,7 @@ def print_error_to_file(thread_id, error_string, file_postfix=None):
 
 
 def get_error_string(scraping_object, error_traceback, sys_exec_info):
-    time_of_error = str(datetime.fromtimestamp(time.time()))
+    time_of_error = str(datetime.fromtimestamp(time()))
     tb_last = sys_exec_info[2]
     func_name = str(inspect.getinnerframes(tb_last)[0][3])
     local_variable_strings = ["[" + func_name + "()]" + str(key) + ": " + str(tb_last.tb_frame.f_locals[key]) for key in
@@ -101,3 +120,19 @@ def is_internal_server_error(response : requests.Response):
             return True
 
     return False
+
+
+def queue_is_empty(queue):
+    is_empty = queue.empty()
+    sleep(100)  # Must be sure that queue is indeed empty.
+    return queue.empty() and is_empty
+
+
+def get_page_as_soup_html(working_dir, web_response, file_name, use_offline_file=DEBUG_MODE) -> BeautifulSoup:
+    if use_offline_file:
+        file_name = open(working_dir + file_name, "r")
+        soup_html = BeautifulSoup(file_name, features="lxml")
+        file_name.close()
+        return soup_html
+    else:
+        return BeautifulSoup(web_response.text, features="lxml")

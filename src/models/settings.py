@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, Boolean
+from sqlalchemy import Column, Integer, Boolean, CHAR
 
-from definitions import Base
+from definitions import Base, MARKET_NAME_COLUMN_LENGTH
 
 TABLE_NAME = 'settings'
 PRIMARY_KEY = 'id'
@@ -11,5 +11,6 @@ class Settings(Base):
     __tablename__ = TABLE_NAME
 
     id = Column(Integer, primary_key=True)
-    refill_queue_when_complete = Column(Boolean)
+    market = Column(CHAR(MARKET_NAME_COLUMN_LENGTH), nullable=False)
+    refill_queue_when_complete = Column(Boolean, nullable=False)
 

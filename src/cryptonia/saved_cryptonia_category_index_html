@@ -1,0 +1,3246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Products</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-22 11:30&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/usingpython3>usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+.thumbhdr { width: 64px; }
+.spacer { width: 10px; }
+.product { padding: 5px; vertical-align: top; font-size: 90%; }
+.vendor { padding: 5px; vertical-align: top; width: 160px; font-size: 90%; }
+.price { padding: 5px; width: 180px; text-align: center; font-size: 90%; }
+.gridrow { height:48px; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<div>
+<h2><span class="icono-caretRightSquare"></span>&nbsp;Products</h2>
+<p class=notice style="background: firebrick; color: white">
+PHISHING SCAM WARNING: WE HAVE RECEIVED MANY REPORTS OF PHISHING SCAMS TARGETING OUR USERS.
+PLEASE VISIT OUR SUBDREAD AT dreadditevelidot dot onion/d/cryptonia FOR A LIST OF VERIFIED MIRRORS
+AND VERIFY THAT YOU USED A LEGIT MIRROR.
+</p>
+<p class=notice>
+WARNING: Always read the vendor <b>Terms and Conditions</b> before ordering
+to make sure you understand them before ordering. NEVER mark an order as <b>RECEIVED</b> until
+you are satisfied that the vendor has met his/her terms. <b>If you feel that the vendor has
+failed to meet their T&C you must dispute the order before the auto-finalize date</b>.
+</p>
+<style>
+#prod_21487873 { position: fixed; width: 100%; display: none; }
+#prod_21487873:target { display: inline-block; }
+#prod_499971 { position: fixed; width: 100%; display: none; }
+#prod_499971:target { display: inline-block; }
+#prod_19652353 { position: fixed; width: 100%; display: none; }
+#prod_19652353:target { display: inline-block; }
+#prod_698401 { position: fixed; width: 100%; display: none; }
+#prod_698401:target { display: inline-block; }
+#prod_220173 { position: fixed; width: 100%; display: none; }
+#prod_220173:target { display: inline-block; }
+#prod_1757593 { position: fixed; width: 100%; display: none; }
+#prod_1757593:target { display: inline-block; }
+#prod_13335063 { position: fixed; width: 100%; display: none; }
+#prod_13335063:target { display: inline-block; }
+#prod_2039273 { position: fixed; width: 100%; display: none; }
+#prod_2039273:target { display: inline-block; }
+#prod_9176123 { position: fixed; width: 100%; display: none; }
+#prod_9176123:target { display: inline-block; }
+#prod_6626203 { position: fixed; width: 100%; display: none; }
+#prod_6626203:target { display: inline-block; }
+#prod_981653 { position: fixed; width: 100%; display: none; }
+#prod_981653:target { display: inline-block; }
+#prod_1556763 { position: fixed; width: 100%; display: none; }
+#prod_1556763:target { display: inline-block; }
+#prod_14022753 { position: fixed; width: 100%; display: none; }
+#prod_14022753:target { display: inline-block; }
+#prod_500441 { position: fixed; width: 100%; display: none; }
+#prod_500441:target { display: inline-block; }
+#prod_2320973 { position: fixed; width: 100%; display: none; }
+#prod_2320973:target { display: inline-block; }
+#prod_21969923 { position: fixed; width: 100%; display: none; }
+#prod_21969923:target { display: inline-block; }
+#prod_659091 { position: fixed; width: 100%; display: none; }
+#prod_659091:target { display: inline-block; }
+#prod_19680823 { position: fixed; width: 100%; display: none; }
+#prod_19680823:target { display: inline-block; }
+#prod_2361403 { position: fixed; width: 100%; display: none; }
+#prod_2361403:target { display: inline-block; }
+#prod_1515973 { position: fixed; width: 100%; display: none; }
+#prod_1515973:target { display: inline-block; }
+#prod_259603 { position: fixed; width: 100%; display: none; }
+#prod_259603:target { display: inline-block; }
+#prod_18773173 { position: fixed; width: 100%; display: none; }
+#prod_18773173:target { display: inline-block; }
+#prod_13903473 { position: fixed; width: 100%; display: none; }
+#prod_13903473:target { display: inline-block; }
+#prod_14662963 { position: fixed; width: 100%; display: none; }
+#prod_14662963:target { display: inline-block; }
+#prod_1514063 { position: fixed; width: 100%; display: none; }
+#prod_1514063:target { display: inline-block; }
+</style>
+<div style="display: inline-block; color:white; vertical-align: top; width: 175px">
+<div class=sidebar><span style="display: inline-block; font-weight: bold; height: 15px; padding:5px;">Search</span>
+<div class=sidebar_inner>
+<form action=/products method=get>
+<input type=hidden name=adv value=1>
+<div class=content_div>
+<input type=text style="width: 100%;" name=q placeholder="Search terms" value="" maxlength=1024>
+</div>
+<div class=content_div>
+<input type=text style="width: 100%;" name=vendor placeholder="Vendor name" value="" maxlength=32>
+</div>
+<div class=content_div>
+<select style="width:100%" name=payment_method>
+<option value=0>--Payment Method--</option>
+<option value=1>Bitcoin (BTC)</option>
+<option value=2>Bitcoin (BTC) Multisig</option>
+<option value=3>Monero (XMR)</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width: 100%" name=category>
+<option value=0>--Category--</option>
+<option value=2>Weed</option>
+<option value=3>Hashish</option>
+<option value=4>Edibles</option>
+<option value=5>Concentrate</option>
+<option value=6>Synthetics</option>
+<option value=8>Cocaine</option>
+<option value=9>Crack</option>
+<option value=10>Amphetamine</option>
+<option value=11>Methamphetamine</option>
+<option value=12>A-PVP</option>
+<option value=13>Cathinones</option>
+<option value=14>Snuff</option>
+<option value=15>MDPV</option>
+<option value=16>Nicotine</option>
+<option value=17>2-FMA 4-FA</option>
+<option value=18>Phenidades</option>
+<option value=20>Heroin</option>
+<option value=21>Oxycodone</option>
+<option value=23>Buprenorphine</option>
+<option value=24>Tramadol</option>
+<option value=25>Codeine</option>
+<option value=26>Morphine</option>
+<option value=27>Opium</option>
+<option value=28>Metadon</option>
+<option value=30>MDMA</option>
+<option value=31>Ecstacy</option>
+<option value=32>MDA MDAI</option>
+<option value=33>Methylone</option>
+<option value=35>LSD</option>
+<option value=36>DMT AMT</option>
+<option value=37>Mushrooms</option>
+<option value=38>25x-NBOMe</option>
+<option value=39>Mescaline</option>
+<option value=40>Ayahuasca</option>
+<option value=41>2C-x</option>
+<option value=42>5-MeO-DiPT</option>
+<option value=43>5-MeO-MiPT</option>
+<option value=44>LSA LSZ</option>
+<option value=45>AL-LAD</option>
+<option value=46>Ibogaine</option>
+<option value=47>DOx</option>
+<option value=49>Benzos</option>
+<option value=50>ED Sex Meds</option>
+<option value=51>Sleep Aids</option>
+<option value=52>ADHD</option>
+<option value=53>Pain Medication</option>
+<option value=54>Sedatives</option>
+<option value=55>Muscle Relaxers</option>
+<option value=56>MAOIs</option>
+<option value=57>Nootropics</option>
+<option value=58>Other Pharma</option>
+<option value=60>Ketamine</option>
+<option value=61>Salvia</option>
+<option value=62>MXE MXP</option>
+<option value=64>Alcohol</option>
+<option value=65>GHB GBL</option>
+<option value=67>Paraphernalia</option>
+<option value=68>Body Building</option>
+<option value=69>Drug Production</option>
+<option value=70>Digital Items</option>
+<option value=71>Seeds and Clones</option>
+<option value=72>Other Narcotics</option>
+<option value=74>Credit Cards</option>
+<option value=75>Fullz</option>
+<option value=76>Accounts</option>
+<option value=77>Other Fraud Related</option>
+<option value=78>Fake IDs</option>
+<option value=100>Other Items</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=ships_from>
+<option value=0>--Ships From--</option>
+<option value=1>Afghanistan (AF)</option>
+<option value=3>Albania (AL)</option>
+<option value=4>Algeria (DZ)</option>
+<option value=5>American Samoa (AS)</option>
+<option value=6>Andorra (AD)</option>
+<option value=7>Angola (AO)</option>
+<option value=8>Anguilla (AI)</option>
+<option value=9>Antarctica (AQ)</option>
+<option value=10>Antigua and Barbuda (AG)</option>
+<option value=11>Argentina (AR)</option>
+<option value=12>Armenia (AM)</option>
+<option value=13>Aruba (AW)</option>
+<option value=14>Australia (AU)</option>
+<option value=15>Austria (AT)</option>
+<option value=16>Azerbaijan (AZ)</option>
+<option value=2>Åland Islands (AX)</option>
+<option value=17>Bahamas (BS)</option>
+<option value=18>Bahrain (BH)</option>
+<option value=19>Bangladesh (BD)</option>
+<option value=20>Barbados (BB)</option>
+<option value=21>Belarus (BY)</option>
+<option value=22>Belgium (BE)</option>
+<option value=23>Belize (BZ)</option>
+<option value=24>Benin (BJ)</option>
+<option value=25>Bermuda (BM)</option>
+<option value=26>Bhutan (BT)</option>
+<option value=27>Bolivia, Plurinational State of (BO)</option>
+<option value=28>Bonaire, Sint Eustatius and Saba (BQ)</option>
+<option value=29>Bosnia and Herzegovina (BA)</option>
+<option value=30>Botswana (BW)</option>
+<option value=31>Bouvet Island (BV)</option>
+<option value=32>Brazil (BR)</option>
+<option value=33>British Indian Ocean Territory (IO)</option>
+<option value=34>Brunei Darussalam (BN)</option>
+<option value=35>Bulgaria (BG)</option>
+<option value=36>Burkina Faso (BF)</option>
+<option value=37>Burundi (BI)</option>
+<option value=38>Cambodia (KH)</option>
+<option value=39>Cameroon (CM)</option>
+<option value=40>Canada (CA)</option>
+<option value=41>Cape Verde (CV)</option>
+<option value=42>Cayman Islands (KY)</option>
+<option value=55>Côte d'Ivoire (CI)</option>
+<option value=43>Central African Republic (CF)</option>
+<option value=44>Chad (TD)</option>
+<option value=45>Chile (CL)</option>
+<option value=46>China (CN)</option>
+<option value=47>Christmas Island (CX)</option>
+<option value=48>Cocos (Keeling) Islands (CC)</option>
+<option value=49>Colombia (CO)</option>
+<option value=50>Comoros (KM)</option>
+<option value=51>Congo (CG)</option>
+<option value=52>Congo, the Democratic Republic of the (CD)</option>
+<option value=53>Cook Islands (CK)</option>
+<option value=54>Costa Rica (CR)</option>
+<option value=56>Croatia (HR)</option>
+<option value=57>Cuba (CU)</option>
+<option value=58>Curaçao (CW)</option>
+<option value=59>Cyprus (CY)</option>
+<option value=60>Czech Republic (CZ)</option>
+<option value=61>Denmark (DK)</option>
+<option value=62>Djibouti (DJ)</option>
+<option value=63>Dominica (DM)</option>
+<option value=64>Dominican Republic (DO)</option>
+<option value=65>Ecuador (EC)</option>
+<option value=66>Egypt (EG)</option>
+<option value=67>El Salvador (SV)</option>
+<option value=68>Equatorial Guinea (GQ)</option>
+<option value=69>Eritrea (ER)</option>
+<option value=70>Estonia (EE)</option>
+<option value=71>Ethiopia (ET)</option>
+<option value=251>European Union (EU)</option>
+<option value=72>Falkland Islands (Malvinas) (FK)</option>
+<option value=73>Faroe Islands (FO)</option>
+<option value=74>Fiji (FJ)</option>
+<option value=75>Finland (FI)</option>
+<option value=76>France (FR)</option>
+<option value=77>French Guiana (GF)</option>
+<option value=78>French Polynesia (PF)</option>
+<option value=79>French Southern Territories (TF)</option>
+<option value=80>Gabon (GA)</option>
+<option value=81>Gambia (GM)</option>
+<option value=82>Georgia (GE)</option>
+<option value=83>Germany (DE)</option>
+<option value=84>Ghana (GH)</option>
+<option value=85>Gibraltar (GI)</option>
+<option value=86>Greece (GR)</option>
+<option value=87>Greenland (GL)</option>
+<option value=88>Grenada (GD)</option>
+<option value=89>Guadeloupe (GP)</option>
+<option value=90>Guam (GU)</option>
+<option value=91>Guatemala (GT)</option>
+<option value=92>Guernsey (GG)</option>
+<option value=93>Guinea (GN)</option>
+<option value=94>Guinea-Bissau (GW)</option>
+<option value=95>Guyana (GY)</option>
+<option value=96>Haiti (HT)</option>
+<option value=97>Heard Island and McDonald Islands (HM)</option>
+<option value=98>Holy See (Vatican City State) (VA)</option>
+<option value=99>Honduras (HN)</option>
+<option value=100>Hong Kong (HK)</option>
+<option value=101>Hungary (HU)</option>
+<option value=102>Iceland (IS)</option>
+<option value=103>India (IN)</option>
+<option value=104>Indonesia (ID)</option>
+<option value=105>Iran, Islamic Republic of (IR)</option>
+<option value=106>Iraq (IQ)</option>
+<option value=107>Ireland (IE)</option>
+<option value=108>Isle of Man (IM)</option>
+<option value=109>Israel (IL)</option>
+<option value=110>Italy (IT)</option>
+<option value=111>Jamaica (JM)</option>
+<option value=112>Japan (JP)</option>
+<option value=113>Jersey (JE)</option>
+<option value=114>Jordan (JO)</option>
+<option value=115>Kazakhstan (KZ)</option>
+<option value=116>Kenya (KE)</option>
+<option value=117>Kiribati (KI)</option>
+<option value=118>Korea, Democratic People's Republic of (KP)</option>
+<option value=119>Korea, Republic of (KR)</option>
+<option value=120>Kuwait (KW)</option>
+<option value=121>Kyrgyzstan (KG)</option>
+<option value=122>Lao People's Democratic Republic (LA)</option>
+<option value=123>Latvia (LV)</option>
+<option value=124>Lebanon (LB)</option>
+<option value=125>Lesotho (LS)</option>
+<option value=126>Liberia (LR)</option>
+<option value=127>Libya (LY)</option>
+<option value=128>Liechtenstein (LI)</option>
+<option value=129>Lithuania (LT)</option>
+<option value=130>Luxembourg (LU)</option>
+<option value=131>Macao (MO)</option>
+<option value=132>Macedonia, the Former Yugoslav Republic of (MK)</option>
+<option value=133>Madagascar (MG)</option>
+<option value=134>Malawi (MW)</option>
+<option value=135>Malaysia (MY)</option>
+<option value=136>Maldives (MV)</option>
+<option value=137>Mali (ML)</option>
+<option value=138>Malta (MT)</option>
+<option value=139>Marshall Islands (MH)</option>
+<option value=140>Martinique (MQ)</option>
+<option value=141>Mauritania (MR)</option>
+<option value=142>Mauritius (MU)</option>
+<option value=143>Mayotte (YT)</option>
+<option value=144>Mexico (MX)</option>
+<option value=145>Micronesia, Federated States of (FM)</option>
+<option value=146>Moldova, Republic of (MD)</option>
+<option value=147>Monaco (MC)</option>
+<option value=148>Mongolia (MN)</option>
+<option value=149>Montenegro (ME)</option>
+<option value=150>Montserrat (MS)</option>
+<option value=151>Morocco (MA)</option>
+<option value=152>Mozambique (MZ)</option>
+<option value=153>Myanmar (MM)</option>
+<option value=154>Namibia (NA)</option>
+<option value=155>Nauru (NR)</option>
+<option value=156>Nepal (NP)</option>
+<option value=157>Netherlands (NL)</option>
+<option value=158>New Caledonia (NC)</option>
+<option value=159>New Zealand (NZ)</option>
+<option value=160>Nicaragua (NI)</option>
+<option value=161>Niger (NE)</option>
+<option value=162>Nigeria (NG)</option>
+<option value=163>Niue (NU)</option>
+<option value=164>Norfolk Island (NF)</option>
+<option value=165>Northern Mariana Islands (MP)</option>
+<option value=166>Norway (NO)</option>
+<option value=167>Oman (OM)</option>
+<option value=168>Pakistan (PK)</option>
+<option value=169>Palau (PW)</option>
+<option value=170>Palestine, State of (PS)</option>
+<option value=171>Panama (PA)</option>
+<option value=172>Papua New Guinea (PG)</option>
+<option value=173>Paraguay (PY)</option>
+<option value=174>Peru (PE)</option>
+<option value=175>Philippines (PH)</option>
+<option value=176>Pitcairn (PN)</option>
+<option value=177>Poland (PL)</option>
+<option value=178>Portugal (PT)</option>
+<option value=179>Puerto Rico (PR)</option>
+<option value=180>Qatar (QA)</option>
+<option value=181>Réunion (RE)</option>
+<option value=182>Romania (RO)</option>
+<option value=183>Russian Federation (RU)</option>
+<option value=184>Rwanda (RW)</option>
+<option value=185>Saint Barthélemy (BL)</option>
+<option value=186>Saint Helena, Ascension and Tristan da Cunha (SH)</option>
+<option value=187>Saint Kitts and Nevis (KN)</option>
+<option value=188>Saint Lucia (LC)</option>
+<option value=189>Saint Martin (French part) (MF)</option>
+<option value=190>Saint Pierre and Miquelon (PM)</option>
+<option value=191>Saint Vincent and the Grenadines (VC)</option>
+<option value=192>Samoa (WS)</option>
+<option value=193>San Marino (SM)</option>
+<option value=194>Sao Tome and Principe (ST)</option>
+<option value=195>Saudi Arabia (SA)</option>
+<option value=196>Senegal (SN)</option>
+<option value=197>Serbia (RS)</option>
+<option value=198>Seychelles (SC)</option>
+<option value=199>Sierra Leone (SL)</option>
+<option value=200>Singapore (SG)</option>
+<option value=201>Sint Maarten (Dutch part) (SX)</option>
+<option value=202>Slovakia (SK)</option>
+<option value=203>Slovenia (SI)</option>
+<option value=204>Solomon Islands (SB)</option>
+<option value=205>Somalia (SO)</option>
+<option value=206>South Africa (ZA)</option>
+<option value=207>South Georgia and the South Sandwich Islands (GS)</option>
+<option value=208>South Sudan (SS)</option>
+<option value=209>Spain (ES)</option>
+<option value=210>Sri Lanka (LK)</option>
+<option value=211>Sudan (SD)</option>
+<option value=212>Suriname (SR)</option>
+<option value=213>Svalbard and Jan Mayen (SJ)</option>
+<option value=214>Swaziland (SZ)</option>
+<option value=215>Sweden (SE)</option>
+<option value=216>Switzerland (CH)</option>
+<option value=217>Syrian Arab Republic (SY)</option>
+<option value=218>Taiwan, Province of China (TW)</option>
+<option value=219>Tajikistan (TJ)</option>
+<option value=220>Tanzania, United Republic of (TZ)</option>
+<option value=221>Thailand (TH)</option>
+<option value=222>Timor-Leste (TL)</option>
+<option value=223>Togo (TG)</option>
+<option value=224>Tokelau (TK)</option>
+<option value=225>Tonga (TO)</option>
+<option value=226>Trinidad and Tobago (TT)</option>
+<option value=227>Tunisia (TN)</option>
+<option value=228>Turkey (TR)</option>
+<option value=229>Turkmenistan (TM)</option>
+<option value=230>Turks and Caicos Islands (TC)</option>
+<option value=231>Tuvalu (TV)</option>
+<option value=232>Uganda (UG)</option>
+<option value=233>Ukraine (UA)</option>
+<option value=234>United Arab Emirates (AE)</option>
+<option value=235>United Kingdom (GB)</option>
+<option value=236>United States (US)</option>
+<option value=237>United States Minor Outlying Islands (UM)</option>
+<option value=238>Uruguay (UY)</option>
+<option value=239>Uzbekistan (UZ)</option>
+<option value=240>Vanuatu (VU)</option>
+<option value=241>Venezuela, Bolivarian Republic of (VE)</option>
+<option value=242>Viet Nam (VN)</option>
+<option value=243>Virgin Islands, British (VG)</option>
+<option value=244>Virgin Islands, U.S. (VI)</option>
+<option value=245>Wallis and Futuna (WF)</option>
+<option value=246>Western Sahara (EH)</option>
+<option value=250>Worldwide (WW)</option>
+<option value=247>Yemen (YE)</option>
+<option value=248>Zambia (ZM)</option>
+<option value=249>Zimbabwe (ZW)</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=ships_to>
+<option value=0>--Ships To--</option>
+<option value=1>Afghanistan (AF)</option>
+<option value=3>Albania (AL)</option>
+<option value=4>Algeria (DZ)</option>
+<option value=5>American Samoa (AS)</option>
+<option value=6>Andorra (AD)</option>
+<option value=7>Angola (AO)</option>
+<option value=8>Anguilla (AI)</option>
+<option value=9>Antarctica (AQ)</option>
+<option value=10>Antigua and Barbuda (AG)</option>
+<option value=11>Argentina (AR)</option>
+<option value=12>Armenia (AM)</option>
+<option value=13>Aruba (AW)</option>
+<option value=14>Australia (AU)</option>
+<option value=15>Austria (AT)</option>
+<option value=16>Azerbaijan (AZ)</option>
+<option value=2>Åland Islands (AX)</option>
+<option value=17>Bahamas (BS)</option>
+<option value=18>Bahrain (BH)</option>
+<option value=19>Bangladesh (BD)</option>
+<option value=20>Barbados (BB)</option>
+<option value=21>Belarus (BY)</option>
+<option value=22>Belgium (BE)</option>
+<option value=23>Belize (BZ)</option>
+<option value=24>Benin (BJ)</option>
+<option value=25>Bermuda (BM)</option>
+<option value=26>Bhutan (BT)</option>
+<option value=27>Bolivia, Plurinational State of (BO)</option>
+<option value=28>Bonaire, Sint Eustatius and Saba (BQ)</option>
+<option value=29>Bosnia and Herzegovina (BA)</option>
+<option value=30>Botswana (BW)</option>
+<option value=31>Bouvet Island (BV)</option>
+<option value=32>Brazil (BR)</option>
+<option value=33>British Indian Ocean Territory (IO)</option>
+<option value=34>Brunei Darussalam (BN)</option>
+<option value=35>Bulgaria (BG)</option>
+<option value=36>Burkina Faso (BF)</option>
+<option value=37>Burundi (BI)</option>
+<option value=38>Cambodia (KH)</option>
+<option value=39>Cameroon (CM)</option>
+<option value=40>Canada (CA)</option>
+<option value=41>Cape Verde (CV)</option>
+<option value=42>Cayman Islands (KY)</option>
+<option value=55>Côte d'Ivoire (CI)</option>
+<option value=43>Central African Republic (CF)</option>
+<option value=44>Chad (TD)</option>
+<option value=45>Chile (CL)</option>
+<option value=46>China (CN)</option>
+<option value=47>Christmas Island (CX)</option>
+<option value=48>Cocos (Keeling) Islands (CC)</option>
+<option value=49>Colombia (CO)</option>
+<option value=50>Comoros (KM)</option>
+<option value=51>Congo (CG)</option>
+<option value=52>Congo, the Democratic Republic of the (CD)</option>
+<option value=53>Cook Islands (CK)</option>
+<option value=54>Costa Rica (CR)</option>
+<option value=56>Croatia (HR)</option>
+<option value=57>Cuba (CU)</option>
+<option value=58>Curaçao (CW)</option>
+<option value=59>Cyprus (CY)</option>
+<option value=60>Czech Republic (CZ)</option>
+<option value=61>Denmark (DK)</option>
+<option value=62>Djibouti (DJ)</option>
+<option value=63>Dominica (DM)</option>
+<option value=64>Dominican Republic (DO)</option>
+<option value=65>Ecuador (EC)</option>
+<option value=66>Egypt (EG)</option>
+<option value=67>El Salvador (SV)</option>
+<option value=68>Equatorial Guinea (GQ)</option>
+<option value=69>Eritrea (ER)</option>
+<option value=70>Estonia (EE)</option>
+<option value=71>Ethiopia (ET)</option>
+<option value=251>European Union (EU)</option>
+<option value=72>Falkland Islands (Malvinas) (FK)</option>
+<option value=73>Faroe Islands (FO)</option>
+<option value=74>Fiji (FJ)</option>
+<option value=75>Finland (FI)</option>
+<option value=76>France (FR)</option>
+<option value=77>French Guiana (GF)</option>
+<option value=78>French Polynesia (PF)</option>
+<option value=79>French Southern Territories (TF)</option>
+<option value=80>Gabon (GA)</option>
+<option value=81>Gambia (GM)</option>
+<option value=82>Georgia (GE)</option>
+<option value=83>Germany (DE)</option>
+<option value=84>Ghana (GH)</option>
+<option value=85>Gibraltar (GI)</option>
+<option value=86>Greece (GR)</option>
+<option value=87>Greenland (GL)</option>
+<option value=88>Grenada (GD)</option>
+<option value=89>Guadeloupe (GP)</option>
+<option value=90>Guam (GU)</option>
+<option value=91>Guatemala (GT)</option>
+<option value=92>Guernsey (GG)</option>
+<option value=93>Guinea (GN)</option>
+<option value=94>Guinea-Bissau (GW)</option>
+<option value=95>Guyana (GY)</option>
+<option value=96>Haiti (HT)</option>
+<option value=97>Heard Island and McDonald Islands (HM)</option>
+<option value=98>Holy See (Vatican City State) (VA)</option>
+<option value=99>Honduras (HN)</option>
+<option value=100>Hong Kong (HK)</option>
+<option value=101>Hungary (HU)</option>
+<option value=102>Iceland (IS)</option>
+<option value=103>India (IN)</option>
+<option value=104>Indonesia (ID)</option>
+<option value=105>Iran, Islamic Republic of (IR)</option>
+<option value=106>Iraq (IQ)</option>
+<option value=107>Ireland (IE)</option>
+<option value=108>Isle of Man (IM)</option>
+<option value=109>Israel (IL)</option>
+<option value=110>Italy (IT)</option>
+<option value=111>Jamaica (JM)</option>
+<option value=112>Japan (JP)</option>
+<option value=113>Jersey (JE)</option>
+<option value=114>Jordan (JO)</option>
+<option value=115>Kazakhstan (KZ)</option>
+<option value=116>Kenya (KE)</option>
+<option value=117>Kiribati (KI)</option>
+<option value=118>Korea, Democratic People's Republic of (KP)</option>
+<option value=119>Korea, Republic of (KR)</option>
+<option value=120>Kuwait (KW)</option>
+<option value=121>Kyrgyzstan (KG)</option>
+<option value=122>Lao People's Democratic Republic (LA)</option>
+<option value=123>Latvia (LV)</option>
+<option value=124>Lebanon (LB)</option>
+<option value=125>Lesotho (LS)</option>
+<option value=126>Liberia (LR)</option>
+<option value=127>Libya (LY)</option>
+<option value=128>Liechtenstein (LI)</option>
+<option value=129>Lithuania (LT)</option>
+<option value=130>Luxembourg (LU)</option>
+<option value=131>Macao (MO)</option>
+<option value=132>Macedonia, the Former Yugoslav Republic of (MK)</option>
+<option value=133>Madagascar (MG)</option>
+<option value=134>Malawi (MW)</option>
+<option value=135>Malaysia (MY)</option>
+<option value=136>Maldives (MV)</option>
+<option value=137>Mali (ML)</option>
+<option value=138>Malta (MT)</option>
+<option value=139>Marshall Islands (MH)</option>
+<option value=140>Martinique (MQ)</option>
+<option value=141>Mauritania (MR)</option>
+<option value=142>Mauritius (MU)</option>
+<option value=143>Mayotte (YT)</option>
+<option value=144>Mexico (MX)</option>
+<option value=145>Micronesia, Federated States of (FM)</option>
+<option value=146>Moldova, Republic of (MD)</option>
+<option value=147>Monaco (MC)</option>
+<option value=148>Mongolia (MN)</option>
+<option value=149>Montenegro (ME)</option>
+<option value=150>Montserrat (MS)</option>
+<option value=151>Morocco (MA)</option>
+<option value=152>Mozambique (MZ)</option>
+<option value=153>Myanmar (MM)</option>
+<option value=154>Namibia (NA)</option>
+<option value=155>Nauru (NR)</option>
+<option value=156>Nepal (NP)</option>
+<option value=157>Netherlands (NL)</option>
+<option value=158>New Caledonia (NC)</option>
+<option value=159>New Zealand (NZ)</option>
+<option value=160>Nicaragua (NI)</option>
+<option value=161>Niger (NE)</option>
+<option value=162>Nigeria (NG)</option>
+<option value=163>Niue (NU)</option>
+<option value=164>Norfolk Island (NF)</option>
+<option value=165>Northern Mariana Islands (MP)</option>
+<option value=166>Norway (NO)</option>
+<option value=167>Oman (OM)</option>
+<option value=168>Pakistan (PK)</option>
+<option value=169>Palau (PW)</option>
+<option value=170>Palestine, State of (PS)</option>
+<option value=171>Panama (PA)</option>
+<option value=172>Papua New Guinea (PG)</option>
+<option value=173>Paraguay (PY)</option>
+<option value=174>Peru (PE)</option>
+<option value=175>Philippines (PH)</option>
+<option value=176>Pitcairn (PN)</option>
+<option value=177>Poland (PL)</option>
+<option value=178>Portugal (PT)</option>
+<option value=179>Puerto Rico (PR)</option>
+<option value=180>Qatar (QA)</option>
+<option value=181>Réunion (RE)</option>
+<option value=182>Romania (RO)</option>
+<option value=183>Russian Federation (RU)</option>
+<option value=184>Rwanda (RW)</option>
+<option value=185>Saint Barthélemy (BL)</option>
+<option value=186>Saint Helena, Ascension and Tristan da Cunha (SH)</option>
+<option value=187>Saint Kitts and Nevis (KN)</option>
+<option value=188>Saint Lucia (LC)</option>
+<option value=189>Saint Martin (French part) (MF)</option>
+<option value=190>Saint Pierre and Miquelon (PM)</option>
+<option value=191>Saint Vincent and the Grenadines (VC)</option>
+<option value=192>Samoa (WS)</option>
+<option value=193>San Marino (SM)</option>
+<option value=194>Sao Tome and Principe (ST)</option>
+<option value=195>Saudi Arabia (SA)</option>
+<option value=196>Senegal (SN)</option>
+<option value=197>Serbia (RS)</option>
+<option value=198>Seychelles (SC)</option>
+<option value=199>Sierra Leone (SL)</option>
+<option value=200>Singapore (SG)</option>
+<option value=201>Sint Maarten (Dutch part) (SX)</option>
+<option value=202>Slovakia (SK)</option>
+<option value=203>Slovenia (SI)</option>
+<option value=204>Solomon Islands (SB)</option>
+<option value=205>Somalia (SO)</option>
+<option value=206>South Africa (ZA)</option>
+<option value=207>South Georgia and the South Sandwich Islands (GS)</option>
+<option value=208>South Sudan (SS)</option>
+<option value=209>Spain (ES)</option>
+<option value=210>Sri Lanka (LK)</option>
+<option value=211>Sudan (SD)</option>
+<option value=212>Suriname (SR)</option>
+<option value=213>Svalbard and Jan Mayen (SJ)</option>
+<option value=214>Swaziland (SZ)</option>
+<option value=215>Sweden (SE)</option>
+<option value=216>Switzerland (CH)</option>
+<option value=217>Syrian Arab Republic (SY)</option>
+<option value=218>Taiwan, Province of China (TW)</option>
+<option value=219>Tajikistan (TJ)</option>
+<option value=220>Tanzania, United Republic of (TZ)</option>
+<option value=221>Thailand (TH)</option>
+<option value=222>Timor-Leste (TL)</option>
+<option value=223>Togo (TG)</option>
+<option value=224>Tokelau (TK)</option>
+<option value=225>Tonga (TO)</option>
+<option value=226>Trinidad and Tobago (TT)</option>
+<option value=227>Tunisia (TN)</option>
+<option value=228>Turkey (TR)</option>
+<option value=229>Turkmenistan (TM)</option>
+<option value=230>Turks and Caicos Islands (TC)</option>
+<option value=231>Tuvalu (TV)</option>
+<option value=232>Uganda (UG)</option>
+<option value=233>Ukraine (UA)</option>
+<option value=234>United Arab Emirates (AE)</option>
+<option value=235>United Kingdom (GB)</option>
+<option value=236>United States (US)</option>
+<option value=237>United States Minor Outlying Islands (UM)</option>
+<option value=238>Uruguay (UY)</option>
+<option value=239>Uzbekistan (UZ)</option>
+<option value=240>Vanuatu (VU)</option>
+<option value=241>Venezuela, Bolivarian Republic of (VE)</option>
+<option value=242>Viet Nam (VN)</option>
+<option value=243>Virgin Islands, British (VG)</option>
+<option value=244>Virgin Islands, U.S. (VI)</option>
+<option value=245>Wallis and Futuna (WF)</option>
+<option value=246>Western Sahara (EH)</option>
+<option value=250>Worldwide (WW)</option>
+<option value=247>Yemen (YE)</option>
+<option value=248>Zambia (ZM)</option>
+<option value=249>Zimbabwe (ZW)</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=sort_order>
+<option value=0>--Sort by--</option>
+<option value=1>Price</option>
+<option value=2>Ratings</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=sort_dir>
+<option value=1>Highest First</option>
+<option value=0 selected>Lowest First</option>
+</select>
+</div>
+<div style="text-align: center" class=content_div>
+<input class=invisible_input type=submit name=submit value="SEARCH">
+<input type=submit style="width:72px" name=submit value="SAVE">
+<input type=submit name=submit class=btngood style="width: 72px" value="SEARCH">
+</div>
+</form>
+</div>
+</div>
+<div class=sidebar><span style="display: inline-block; font-weight: bold; height: 15px; padding:5px;">Categories</span>
+<div class=sidebar_inner>
+<div style="columns: 165px" class=content_div>
+<span class=lgtext>Cannabis</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Weed>Weed&nbsp;<span>(2867)</span></a></li>
+<li><a href=/products/all/Hashish>Hashish&nbsp;<span>(589)</span></a></li>
+<li><a href=/products/all/Edibles>Edibles&nbsp;<span>(195)</span></a></li>
+<li><a href=/products/all/Concentrate>Concentrate&nbsp;<span>(1028)</span></a></li>
+<li><a href=/products/all/Synthetics>Synthetics&nbsp;<span>(78)</span></a></li>
+<li><a href=/products/all/Seeds+and+Clones>Seeds and Clones&nbsp;<span>(50)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Stimulants</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Cocaine>Cocaine&nbsp;<span>(1072)</span></a></li>
+<li><a href=/products/all/Crack>Crack&nbsp;<span>(63)</span></a></li>
+<li><a href=/products/all/Amphetamine>Amphetamine&nbsp;<span>(526)</span></a></li>
+<li><a href=/products/all/Methamphetamine>Methamphetamine&nbsp;<span>(271)</span></a></li>
+<li><a href=/products/all/A%2DPVP>A-PVP&nbsp;<span>(25)</span></a></li>
+<li><a href=/products/all/Cathinones>Cathinones&nbsp;<span>(36)</span></a></li>
+<li><a href=/products/all/Snuff>Snuff&nbsp;<span>(3)</span></a></li>
+<li><a href=/products/all/MDPV>MDPV&nbsp;<span>(4)</span></a></li>
+<li><a href=/products/all/Nicotine>Nicotine&nbsp;<span>(79)</span></a></li>
+<li><a href=/products/all/2%2DFMA+4%2DFA>2-FMA 4-FA&nbsp;<span>(6)</span></a></li>
+<li><a href=/products/all/Phenidades>Phenidades&nbsp;<span>(3)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Narcotics</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Heroin>Heroin&nbsp;<span>(399)</span></a></li>
+<li><a href=/products/all/Oxycodone>Oxycodone&nbsp;<span>(246)</span></a></li>
+<li><a href=/products/all/Buprenorphine>Buprenorphine&nbsp;<span>(37)</span></a></li>
+<li><a href=/products/all/Tramadol>Tramadol&nbsp;<span>(69)</span></a></li>
+<li><a href=/products/all/Codeine>Codeine&nbsp;<span>(100)</span></a></li>
+<li><a href=/products/all/Morphine>Morphine&nbsp;<span>(42)</span></a></li>
+<li><a href=/products/all/Opium>Opium&nbsp;<span>(51)</span></a></li>
+<li><a href=/products/all/Metadon>Metadon&nbsp;<span>(26)</span></a></li>
+<li><a href=/products/all/Other+Narcotics>Other Narcotics&nbsp;<span>(67)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Empathogens</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/MDMA>MDMA&nbsp;<span>(675)</span></a></li>
+<li><a href=/products/all/Ecstacy>Ecstacy&nbsp;<span>(646)</span></a></li>
+<li><a href=/products/all/MDA+MDAI>MDA MDAI&nbsp;<span>(17)</span></a></li>
+<li><a href=/products/all/Methylone>Methylone&nbsp;<span>(10)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Psychedelics</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/LSD>LSD&nbsp;<span>(509)</span></a></li>
+<li><a href=/products/all/DMT+AMT>DMT AMT&nbsp;<span>(165)</span></a></li>
+<li><a href=/products/all/Mushrooms>Mushrooms&nbsp;<span>(151)</span></a></li>
+<li><a href=/products/all/25x%2DNBOMe>25x-NBOMe&nbsp;<span>(15)</span></a></li>
+<li><a href=/products/all/Mescaline>Mescaline&nbsp;<span>(26)</span></a></li>
+<li><a href=/products/all/Ayahuasca>Ayahuasca&nbsp;<span>(14)</span></a></li>
+<li><a href=/products/all/2C%2Dx>2C-x&nbsp;<span>(118)</span></a></li>
+<li><a href=/products/all/5%2DMeO%2DDiPT>5-MeO-DiPT&nbsp;<span>(3)</span></a></li>
+<li><a href=/products/all/5%2DMeO%2DMiPT>5-MeO-MiPT&nbsp;<span>(9)</span></a></li>
+<li><a href=/products/all/LSA+LSZ>LSA LSZ&nbsp;<span>(3)</span></a></li>
+<li><a href=/products/all/AL%2DLAD>AL-LAD&nbsp;<span>(2)</span></a></li>
+<li><a href=/products/all/Ibogaine>Ibogaine&nbsp;<span>(9)</span></a></li>
+<li><a href=/products/all/DOx>DOx&nbsp;<span>(3)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Pharma</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Benzos>Benzos&nbsp;<span>(801)</span></a></li>
+<li><a href=/products/all/ED+Sex+Meds>ED Sex Meds&nbsp;<span>(222)</span></a></li>
+<li><a href=/products/all/Sleep+Aids>Sleep Aids&nbsp;<span>(91)</span></a></li>
+<li><a href=/products/all/ADHD>ADHD&nbsp;<span>(113)</span></a></li>
+<li><a href=/products/all/Pain+Medication>Pain Medication&nbsp;<span>(227)</span></a></li>
+<li><a href=/products/all/Sedatives>Sedatives&nbsp;<span>(39)</span></a></li>
+<li><a href=/products/all/Muscle+Relaxers>Muscle Relaxers&nbsp;<span>(17)</span></a></li>
+<li><a href=/products/all/MAOIs>MAOIs&nbsp;<span>(2)</span></a></li>
+<li><a href=/products/all/Nootropics>Nootropics&nbsp;<span>(76)</span></a></li>
+<li><a href=/products/all/Other+Pharma>Other Pharma&nbsp;<span>(281)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Dissociatives</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Ketamine>Ketamine&nbsp;<span>(453)</span></a></li>
+<li><a href=/products/all/Salvia>Salvia&nbsp;<span>(15)</span></a></li>
+<li><a href=/products/all/MXE+MXP>MXE MXP&nbsp;<span>(16)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Depressants</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Alcohol>Alcohol&nbsp;<span>(4)</span></a></li>
+<li><a href=/products/all/GHB+GBL>GHB GBL&nbsp;<span>(115)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Other</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Paraphernalia>Paraphernalia&nbsp;<span>(34)</span></a></li>
+<li><a href=/products/all/Body+Building>Body Building&nbsp;<span>(727)</span></a></li>
+<li><a href=/products/all/Drug+Production>Drug Production&nbsp;<span>(30)</span></a></li>
+<li><a href=/products/all/Digital+Items>Digital Items&nbsp;<span>(1741)</span></a></li>
+<li><a href=/products/all/Other+Items>Other Items&nbsp;<span>(633)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Fraud</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Credit+Cards>Credit Cards&nbsp;<span>(478)</span></a></li>
+<li><a href=/products/all/Fullz>Fullz&nbsp;<span>(147)</span></a></li>
+<li><a href=/products/all/Accounts>Accounts&nbsp;<span>(700)</span></a></li>
+<li><a href=/products/all/Other+Fraud+Related>Other Fraud Related&nbsp;<span>(1510)</span></a></li>
+<li><a href=/products/all/Fake+IDs>Fake IDs&nbsp;<span>(243)</span></a></li>
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div class=mainbox style="float: right; display: inline-block; align: right; width: 725px;">
+<div class=content_div>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr thumbhdr">&nbsp;</td>
+<td class="gridhdr spacer">&nbsp;</td>
+<td class="gridhdr product">PRODUCT</td>
+<td class="gridhdr price">PRICE</td>
+<td class="gridhdr vendor">VENDOR</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/21487873>
+<img class=thumb_img src=/image/21488323>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/21487873>Hardcore OG - Indoor</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 110.40 USD/Ounce!</span>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 4  For</span>
+<span style="font-size: 1.1em" class=listprice>131.25 USD/Ounce</span>
+<span class=listprice_alt>0.01590487 BTC/Ounce</span>
+<div><span class=pricetag>Bulk from 110.40 USD/Ounce</span></div>
+<a title="Click here to place an order" href=#prod_21487873 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/Vendy_McVendface>Vendy_McVendface</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(151)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.41%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2018-10-18</span>
+</div>
+<div class=verified>LEVEL 2</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 2050 deals, 4.95/5</span>
+<span class=verified>Wallstreet: 14 deals, 4.7/5</span>
+<span class=verified>CGMC: 625 deals, 4.97/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/499971>
+<img class=thumb_img src=/image/551351>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/499971>10 x LSD 155mcg Teacher's Gaze Free Shipping</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>58.00 USD/10tab</span>
+<span class=listprice_alt>0.00702844 BTC/10tab</span>
+<a title="Click here to place an order" href=#prod_499971 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/tripdepot>tripdepot</a>
+<span style="font-weight: bold">(455)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.46%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-12</span>
+</div>
+<div class=verified>LEVEL 1</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/19652353>
+<img class=thumb_img src=/image/18583253>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/19652353>50 grams High Quality Cocaine [90%]</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>NL &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>2224.50 USD/Each</span>
+<span class=listprice_alt>0.26956515 BTC/Each</span>
+<a title="Click here to place an order" href=#prod_19652353 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/tomandjerry>tomandjerry</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(419)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.80%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-06-13</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Empire: 1383 deals, 99.44/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/698401>
+<img class=thumb_img src=/image/7809543>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/698401>92% THC Crumble</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 20.63 USD/gram!</span>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>25.00 USD/gram</span>
+<span class=listprice_alt>0.00302950 BTC/gram</span>
+<div><span class=pricetag>Bulk from 20.63 USD/gram</span></div>
+<a title="Click here to place an order" href=#prod_698401 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/StrainPirateCA>StrainPirateCA</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(402)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">97.07%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-23</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 500 deals, 4.95/5</span>
+<span class=verified>Wallstreet: 166 deals, 4.88/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/220173>
+<img class=thumb_img src=/image/220211>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/220173>Best Price DankVapes</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 13.25 USD/1gram!</span>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>40.00 USD/1gram</span>
+<span class=listprice_alt>0.00484720 BTC/1gram</span>
+<div><span class=pricetag>Bulk from 13.25 USD/1gram</span></div>
+<a title="Click here to place an order" href=#prod_220173 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/CartKing>CartKing</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(474)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.50%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-20</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Wallstreet: 873 deals, 4.86/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/1757593>
+<img class=thumb_img src=/image/17660813>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/1757593>Distillate - 1000 grams (raw)</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 7500.00 USD/KG!</span>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>8500.00 USD/KG</span>
+<span class=listprice_alt>1.03003000 BTC/KG</span>
+<div><span class=pricetag>Bulk from 7500.00 USD/KG</span></div>
+<a title="Click here to place an order" href=#prod_1757593 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/bestcoastbud>bestcoastbud</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(436)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.72%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-15</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 3350 deals, 4.97/5</span>
+<span class=verified>Nucleus: 13 deals, 5.00/5</span>
+<span class=verified>Hansa: 3549/2/2</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/13335063>
+<img class=thumb_img src=/image/13333203>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/13335063>BATMAN XTC-PILLS X1</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; GB, IE, EU</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>6.46 USD/Each</span>
+<span class=listprice_alt>0.00078355 BTC/Each</span>
+<a title="Click here to place an order" href=#prod_13335063 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/VanillaSurf>VanillaSurf</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(681)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.63%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-21</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Wallstreet: 1550 deals, 4.88/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/2039273>
+<img class=thumb_img src=/image/2039223>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/2039273>Pure Speed POWDER 14g NOT PASTE Free UK NDD</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>GB &rarr; EU</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>71.12 USD/Piece</span>
+<span class=listprice_alt>0.00861905 BTC/Piece</span>
+<a title="Click here to place an order" href=#prod_2039273 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/NextGeneration>NextGeneration</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(373)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.52%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-13</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 66,500 deals, 4.93/5</span>
+<span class=verified>Black Bank: 76/0/0</span>
+<span class=verified>Nucleus: 831 deals, 4.91/5</span>
+<span class=verified>Alphabay: 8876/39/24</span>
+<span class=verified>Abraxas: 100~200 deals, 4.97/5</span>
+<span class=verified>Agora: 1000 deals, 5.00/5</span>
+<span class=verified>Middle Earth: 438 deals, 9.83/10</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/9176123>
+<img class=thumb_img src=/image/9176143>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/9176123>TIP JAR :)</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span style="font-weight: bold">Digital Listing (Manual Fulfillment)</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>1.00 USD/Each</span>
+<span class=listprice_alt>0.00012118 BTC/Each</span>
+<a title="Click here to place an order" href=#prod_9176123 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/CaliCannabisClub>CaliCannabisClub</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(1050)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-06-06</span>
+</div>
+<div class=verified>LEVEL 2</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Empire: 174 deals, 100/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/6626203>
+<img class=thumb_img src=/image/656661>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/6626203>110mg THC Capsules</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 3.10 USD/unit!</span>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>15.00 USD/unit</span>
+<span class=listprice_alt>0.00181770 BTC/unit</span>
+<div><span class=pricetag>Bulk from 3.10 USD/unit</span></div>
+<a title="Click here to place an order" href=#prod_6626203 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/StrainPirateCA>StrainPirateCA</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(402)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">97.07%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-23</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 500 deals, 4.95/5</span>
+<span class=verified>Wallstreet: 166 deals, 4.88/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/981653>
+<img class=thumb_img src=/image/981863>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/981653>&#9733DCUK&#9733 28G INDIAN ROCK S(+)-KETAMINE &#9733PROMO</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>GB &rarr; GB</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>510.81 USD/Gram</span>
+<span class=listprice_alt>0.06190045 BTC/Gram</span>
+<a title="Click here to place an order" href=#prod_981653 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/DCdutchconnectionUK>DCdutchconnectionUK</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(1372)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.73%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-30</span>
+</div>
+<div class=verified>LEVEL 2</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 14,000 deals, 4.98/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/1556763>
+<img class=thumb_img src=/image/1520473>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/1556763>100X 1G TERP SAUCE CART</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>1900.00 USD/ORDER</span>
+<span class=listprice_alt>0.23024200 BTC/ORDER</span>
+<a title="Click here to place an order" href=#prod_1556763 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/drgreenthumb4201>drgreenthumb4201</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(659)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.68%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-13</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 6400 deals, 4.98/5</span>
+<span class=verified>CGMC: 5000+ deals, 4.96/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/14022753>
+<img class=thumb_img src=/image/14023053>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/14022753>Best Price SUPREME Brass Knuckles</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 13.50 USD/1gram!</span>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>40.00 USD/1gram</span>
+<span class=listprice_alt>0.00484720 BTC/1gram</span>
+<div><span class=pricetag>Bulk from 13.50 USD/1gram</span></div>
+<a title="Click here to place an order" href=#prod_14022753 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/CartKing>CartKing</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(474)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.50%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-20</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Wallstreet: 873 deals, 4.86/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/500441>
+<img class=thumb_img src=/image/551861>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/500441>10 x LSD 105mcg Voidrealm Free Shipping</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>38.00 USD/10tab</span>
+<span class=listprice_alt>0.00460484 BTC/10tab</span>
+<a title="Click here to place an order" href=#prod_500441 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/tripdepot>tripdepot</a>
+<span style="font-weight: bold">(455)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.46%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-12</span>
+</div>
+<div class=verified>LEVEL 1</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/2320973>
+<img class=thumb_img src=/image/2321123>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/2320973>7G WEDDING CAKE (HYBRID)</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>90.00 USD/ORDER</span>
+<span class=listprice_alt>0.01090620 BTC/ORDER</span>
+<a title="Click here to place an order" href=#prod_2320973 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/drgreenthumb4201>drgreenthumb4201</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(659)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.68%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-13</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 6400 deals, 4.98/5</span>
+<span class=verified>CGMC: 5000+ deals, 4.96/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/21969923>
+<img class=thumb_img src=/image/21970133>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/21969923>(1 Ounce) Indoor Critical Plus *Frosty*</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>175.00 USD/Unit</span>
+<span class=listprice_alt>0.02120650 BTC/Unit</span>
+<a title="Click here to place an order" href=#prod_21969923 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/CaliCannabisClub>CaliCannabisClub</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(1050)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-06-06</span>
+</div>
+<div class=verified>LEVEL 2</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Empire: 174 deals, 100/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/659091>
+<img class=thumb_img src=/image/659111>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/659091>Shatter Indica/sativa Nug run</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 21.00 USD/gram!</span>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>25.00 USD/gram</span>
+<span class=listprice_alt>0.00302950 BTC/gram</span>
+<div><span class=pricetag>Bulk from 21.00 USD/gram</span></div>
+<a title="Click here to place an order" href=#prod_659091 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/StrainPirateCA>StrainPirateCA</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(402)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">97.07%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-23</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 500 deals, 4.95/5</span>
+<span class=verified>Wallstreet: 166 deals, 4.88/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/19680823>
+<img class=thumb_img src=/image/19680913>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/19680823>Gaia Botanics CBD Chapstick</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>10.00 USD/unit</span>
+<span class=listprice_alt>0.00121180 BTC/unit</span>
+<a title="Click here to place an order" href=#prod_19680823 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/StrainPirateCA>StrainPirateCA</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(402)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">97.07%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-23</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 500 deals, 4.95/5</span>
+<span class=verified>Wallstreet: 166 deals, 4.88/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/2361403>
+<img class=thumb_img src=/image/21849273>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/2361403>FULL POUND of Small Buds, CHEAP! See Price! 4 strains available</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>1150.00 USD/454gram</span>
+<span class=listprice_alt>0.13935700 BTC/454gram</span>
+<a title="Click here to place an order" href=#prod_2361403 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/WilliamShatner>WilliamShatner</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(470)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.71%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-26</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Empire: 39 deals, 100/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/1515973>
+<img class=thumb_img src=/image/1514633>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/1515973>10X DISTILLATE CARTRIDGE (INDICA)</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>160.00 USD/ORDER</span>
+<span class=listprice_alt>0.01938880 BTC/ORDER</span>
+<a title="Click here to place an order" href=#prod_1515973 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/drgreenthumb4201>drgreenthumb4201</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(659)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.68%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-13</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 6400 deals, 4.98/5</span>
+<span class=verified>CGMC: 5000+ deals, 4.96/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/259603>
+<img class=thumb_img src=/image/259681>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/259603>Nitrazepam 5mg 28 tab UK grade BOX</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>32.33 USD/Each</span>
+<span class=listprice_alt>0.00391775 BTC/Each</span>
+<a title="Click here to place an order" href=#prod_259603 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/terrysukstock>terrysukstock</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(1443)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">96.77%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-15</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 34000 deals, 4.82/5</span>
+<span class=verified>Wallstreet: 354 deals, 4.7/5</span>
+<span class=verified>Alphabay: 9888/44/57</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/18773173>
+<img class=thumb_img src=/image/18773463>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/18773173>Moby Dick* Weed * 5g</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>DE &rarr; AT, BE, FR, FI, DE, DK, LU, PL, SE, NO</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>72.33 USD/5g</span>
+<span class=listprice_alt>0.00876525 BTC/5g</span>
+<a title="Click here to place an order" href=#prod_18773173 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/GreenSupreme>GreenSupreme</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(612)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-22</span>
+</div>
+<div class=verified>LEVEL 2</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 3700+ deals, 4.96/5</span>
+<span class=verified>Wallstreet: 910 deals, 4.93/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/13903473>
+<img class=thumb_img src=/image/13903383>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/13903473>Chronic * Weed * 10g</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>DE &rarr; AT, BE, FR, FI, DE, DK, LU, PL, SE, NO</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>122.40 USD/10g</span>
+<span class=listprice_alt>0.01483350 BTC/10g</span>
+<a title="Click here to place an order" href=#prod_13903473 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/GreenSupreme>GreenSupreme</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(612)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-22</span>
+</div>
+<div class=verified>LEVEL 2</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 3700+ deals, 4.96/5</span>
+<span class=verified>Wallstreet: 910 deals, 4.93/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/14662963>
+<img class=thumb_img src=/image/257861>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/14662963>Codeine Phosphate 60mg 28 tab UK grade BOX</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 25.86 USD/Each!</span>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>31.03 USD/Each</span>
+<span class=listprice_alt>0.00376104 BTC/Each</span>
+<div><span class=pricetag>Bulk from 25.86 USD/Each</span></div>
+<a title="Click here to place an order" href=#prod_14662963 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/terrysukstock>terrysukstock</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(1443)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">96.77%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-15</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 34000 deals, 4.82/5</span>
+<span class=verified>Wallstreet: 354 deals, 4.7/5</span>
+<span class=verified>Alphabay: 9888/44/57</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/1514063>
+<img class=thumb_img src=/image/1488983>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/1514063>20X DISTILLATE CARTRIDGE (SATIVA)</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>US &rarr; US</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>320.00 USD/order</span>
+<span class=listprice_alt>0.03877760 BTC/order</span>
+<a title="Click here to place an order" href=#prod_1514063 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/drgreenthumb4201>drgreenthumb4201</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(659)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">98.68%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-13</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 6400 deals, 4.98/5</span>
+<span class=verified>CGMC: 5000+ deals, 4.96/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan=5>
+<span>&lt;&lt;</span>
+<span>1 of 780</span>
+<a href="/products/all/all/2">&gt;&gt;</a>
+</td>
+</tr>
+</table>
+</div>
+
+</div>
+<div id=prod_21487873>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Hardcore OG - Indoor</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/Vendy_McVendface>Vendy_McVendface</a></span>
+<span class=lgtext style="font-weight: bold">(151)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.41%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/21488113 target=_blank><img class=picture src=/image/21488323></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>&lsquo;A&rsquo; Grade Indoor</p>
+
+<p>More terrific indoor bud at a budget price.</p>
+
+<p>QPs and HPs are available for purchase for a limited time only!</p>
+
+<p>Yes you can mix and match from same priced strains.
+Minimum 4oz per strain and max 2 strains when ordering less than 48oz</p>
+
+<p>Strains (from greatest stock to least stock):</p>
+
+<p>OG Kush
+Blue Dream
+Wedding Cake
+Cheese
+Hog&rsquo;s Breath
+Hardcore OG</p>
+
+<p>From Leafly:</p>
+
+<p>An indica-dominant cross between Big Bud and DJ Short Blueberry, Hardcore OG is a California strain bred with the stalwart cannabis veteran in mind. Its dense, pungent buds produce thick coats of resin that can be extracted for potent (and we mean potent) concentrates. The weight of this sedating indica sinks throughout the body, submerging stress, pain, and other ailments under its crushing THC content.</p>
+
+<p>https://www.leafly.com/strains/hardcore-og</p></div></div>
+<div class=product_data><span class=listprice>Price: 4 Ounce @ 131.25 USD/Ounce!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 110.40 USD/Ounce!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/21487873>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/21487873 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=21487883>4oz to 7oz (10.00 USD) </option>
+<option value=21487893>8oz to 32oz (20.00 USD) </option>
+<option value=21487903>33oz+ (30.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_499971>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">10 x LSD 155mcg Teacher's Gaze Free Shipping</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/tripdepot>tripdepot</a></span>
+<span class=lgtext style="font-weight: bold">(455)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.46%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/553821 target=_blank><img class=picture src=/image/551351></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>LSD 155mcg Teacher&rsquo;s Gaze (self-laid, 99%+ pure Aztec crystal)</p>
+
+<p>Overview
+We proudly present self-laid blotters laid with 99%+ pure Aztec crystal.
+Dosage is 155mcg (+/- 2%) of pure LSD. The Teacher&rsquo;s Gaze blotter art is self-made and unique, designed exclusively for our shop. Tabs are perforated, 8x8 mm, thick and tasteless.</p>
+
+<p>Dosage
+&frac12; hit - light - medium trip, enough for beginners or inexperienced users to get a basic feeling on what LSD is. You will experience an enhancement of colours and sounds and a general shift of consciousness.
+1-1.5 hits - medium - strong trip, suitable for most of the experienced users. Visuals can be strong on this dose and you might have some problems with communicating with others if you are sensitive.
+2-3 hits - strong - a very strong trip, if you don&rsquo;t have a tolerance, better stay in a safe place and prepare to sink deeply into your mind
+4 hits + - well, if you take such a dose, I suppose that you really know what you are doing :) enjoy the white light.</p>
+
+<p>Shipping
+Product is sealed and professionally shipped (be sure to check through your junk mail thoroughly, because you might accidentally put it in trash).</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 10tab @ 58.00 USD/10tab!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/499971>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/499971 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=499981>USPS First Class Mail Free Shipping (0.00 USD) </option>
+<option value=1395843>USPS Priority 2-3 Day + Tracking (8.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_19652353>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">50 grams High Quality Cocaine [90%]</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/tomandjerry>tomandjerry</a></span>
+<span class=lgtext style="font-weight: bold">(419)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.80%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/19652543 target=_blank><img class=picture src=/image/18583253></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>We offer High Quality Cocaine [90%] with FREE SHIPPING !</p>
+
+<p>All orders that come in before 14:00 Dutch local time; are shipped the very same day !</p>
+
+<p>For more info, do not hesitate to contact us here directly, or by email: tom-and-jerry@tutanota.com</p>
+
+<p>Feel free to go through our shop to see our other products as well:</p>
+
+<ul>
+<li>Excellent Quality Crack Cocaine [89%]</li>
+<li>Pure Afghan Heroin #3 [100%]</li>
+<li>Strong Turkish Heroin #3 [70%]</li>
+<li>250 ug LSD - Bicycle Go</li>
+<li>High Quality MDMA [84%]</li>
+</ul>
+</div></div>
+<div class=product_data><span class=listprice>Price: 1 Each @ 2224.50 USD/Each!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/19652353>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/19652353 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=19652363>Priority (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_698401>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">92% THC Crumble</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/StrainPirateCA>StrainPirateCA</a></span>
+<span class=lgtext style="font-weight: bold">(402)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">97.07%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/7809693 target=_blank><img class=picture src=/image/7809543></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>High Potency Crumble Concentrate</p>
+
+<p>Purest Quality, Lab Tested</p>
+
+<p>Hits Smooth and tastes Great</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 gram @ 25.00 USD/gram!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 20.63 USD/gram!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/698401>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/698401 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=707011>Additional Items (0.00 USD) </option>
+<option value=6622963>Priority Shipping (12.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_220173>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Best Price DankVapes</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/CartKing>CartKing</a></span>
+<span class=lgtext style="font-weight: bold">(474)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.50%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/220201 target=_blank><img class=picture src=/image/220211></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p><strong>NO PG/VG/HONEY CUT/ TOCOPHERYL ACETATE</strong> PURE DISTILLATE</p>
+
+<p>FORMER TRUSTED VENDOR FROM WALLSTMARKET!</p>
+
+<p>Dankvapes Dank-Vape oil is a 100% solvent-free cannabis concentrate, unmatched in its potency, purity, and flavor. Dank-Vape is a translucent oil, anywhere from 75%-98% THC, and is activated by our specially-developed process to make it effective in oral and trans-dermal applications.</p>
+
+<p>FLAVORS:
+GDP
+Sour Diesel
+Sour Apple
+Strawnana
+LemonBerry
+GrapeApe</p>
+
+<p>SPECIFIC FLAVORS ARE NOT GUARANTEED, only suggestions but I will try and give you what you want.</p>
+
+<p>Wickr now available for customers with mulitple purchases!</p>
+
+<p>Us-Us domestic only. Sorry boys and girls out side of the USA USA USA!!</p>
+
+<p>Richard Higher
+123 High St. Apt #420
+Town, WA 12345-1234</p>
+
+<p>(PLEASE try to include the 4 extension digits to your zipcode!)</p>
+
+<p>SHIPPING INFO
+Place your order before 11AM EST by:
+Sunday/Monday - receive by Wednesday/Thursday
+Tuesday - receive by Thursday/Friday
+Wednesday - receive by Friday/Sat
+Thursday - receive by Saturday/Monday
+Friday/Saturday - receive by Monday/Tuesday</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 1gram @ 40.00 USD/1gram!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 13.25 USD/1gram!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/220173>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/220173 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=221413>Priority 2-3 day (201g-400g) (25.00 USD) </option>
+<option value=221583>Priority 2-3 day (401g-1000g) (55.00 USD) </option>
+<option value=9766433>Priortiy 2-3 day (1g-25g) (9.00 USD) </option>
+<option value=9766483>Priority 2-3 (26g-200g) (15.50 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_1757593>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Distillate - 1000 grams (raw)</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/bestcoastbud>bestcoastbud</a></span>
+<span class=lgtext style="font-weight: bold">(436)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.72%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/17660943 target=_blank><img class=picture src=/image/17660813></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Come one, come all! Enjoy our world famous (well, US famous, sorry international buyers) distillate! Some of the cleanest distillate on the darknet and for sure the best value.</p>
+
+<p>All of our distillate is produced in house using the latest and greatest equipment and processes available. We spot test to make sure our distillate is free of pesticides/herbicides/mold/mildew and even the dreaded myclobutanil.</p>
+
+<p>Don&rsquo;t be fooled by cheap imitations and always spring for the best!</p>
+
+<p>By default, Liters will come in 10ml syringes.  We can also put them in jars by default.  We only offer them in 1g syringes if you pay an upcharge of 1$ per syringe because of the time commitment involved.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 KG @ 8500.00 USD/KG!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 7500.00 USD/KG!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/1757593>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/1757593 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=1757603>Free Shipping (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_13335063>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">BATMAN XTC-PILLS X1</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/VanillaSurf>VanillaSurf</a></span>
+<span class=lgtext style="font-weight: bold">(681)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.63%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/13335093 target=_blank><img class=picture src=/image/13333203></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><pre><code>       ** BATMAN XTC PILLS**
+</code></pre>
+
+<p>SELECT CHOICE PILLS - IDEAL FOR PUBS AND CLUBS - NON GURNERS</p>
+
+<p>A SELECT TYPE OF PILL WE FEEL OUR CUSTOMERS WILL ENJOY 100%.</p>
+
+<p>TAKE IT EASY START OFF WITH HALF THEN ANOTHER HALF 45 MINS LATER.</p>
+
+<p>EXCELLENT E&rsquo;S - GREAT FEELING OF RELAXATION AND CONFIDENCE GIVES YOU THE ABILLITY TO CHAT AWAY WITH ANYONE IN YOUR COMPANY.</p>
+
+<p>REAL GET UP AND GO - MINIMAL COUCH LOCK IF DOSED CORRECTLY.</p>
+
+<p>MANUFACTURED USING PREMIUM / GLASS-CLEAN MDMA CERTIFIABLE ON INSPECTION. EXCELLENT PRESS - 0 DUST / DEBRIS. U</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Each @ 6.46 USD/Each!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/13335063>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/13335063 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=13335073>1st Class RM + Adv. Stealth (2.52 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_2039273>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Pure Speed POWDER 14g NOT PASTE Free UK NDD</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/NextGeneration>NextGeneration</a></span>
+<span class=lgtext style="font-weight: bold">(373)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.52%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/2039303 target=_blank><img class=picture src=/image/2039223></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Pure Speed POWDER</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Piece @ 71.12 USD/Piece!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/2039273>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/2039273 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=2039283>FREE UK NDD (0.00 USD) </option>
+<option value=2039293>EU STANDARD AIRMAIL (5.17 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_9176123>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">TIP JAR :)</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/CaliCannabisClub>CaliCannabisClub</a></span>
+<span class=lgtext style="font-weight: bold">(1050)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/9176243 target=_blank><img class=picture src=/image/9176143></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>TIP TO SHOW APPRECIATION :)</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Each @ 1.00 USD/Each!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/9176123>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/9176123 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=9176133>DIGITAL DELIVERY (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_6626203>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">110mg THC Capsules</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/StrainPirateCA>StrainPirateCA</a></span>
+<span class=lgtext style="font-weight: bold">(402)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">97.07%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/6628093 target=_blank><img class=picture src=/image/656661></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>THC Edible Caps
+High Quality indoor flower extracted into Coconut oil for easy THC uptake
+110 Mg Per Cap
+Serving Size 1 Capsule
+Highly potent
+Vegan based dye free Capsule
+<strong>CAUTION FOR PATIENTS WITH HIGH TOLERANCE</strong></p></div></div>
+<div class=product_data><span class=listprice>Price: 1 unit @ 15.00 USD/unit!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 3.10 USD/unit!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/6626203>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/6626203 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=6626223>Additional Item (0.00 USD) </option>
+<option value=6626233>Priority Shipping (12.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_981653>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">&#9733DCUK&#9733 28G INDIAN ROCK S(+)-KETAMINE &#9733PROMO</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/DCdutchconnectionUK>DCdutchconnectionUK</a></span>
+<span class=lgtext style="font-weight: bold">(1372)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.73%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/981723 target=_blank><img class=picture src=/image/981863></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>We are excited to present the highest quality Indian S-isomer Ketamine.</p>
+
+<p>Your order will arrive in large white crystals lab tested at 99.9% purity. With this kind of purity it is our duty to provide a warning this is not your average Ketamine and should be treated as such.</p>
+
+<p>Take small amount first time if you don&rsquo;t want to enter the &lsquo;'K-Hole&rsquo;&lsquo; and have no experience with Ketamine.</p>
+
+<p>Recommended dose: 30-75 mg
+K-Hole dosage: 100-250 mg</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Gram @ 510.81 USD/Gram!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/981653>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/981653 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=981663>Ultimate Decoy Stealth (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_1556763>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">100X 1G TERP SAUCE CART</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/drgreenthumb4201>drgreenthumb4201</a></span>
+<span class=lgtext style="font-weight: bold">(659)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.68%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/1556783 target=_blank><img class=picture src=/image/1520473></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>TERP SAUCE CARTRIDGES</p>
+
+<p>GORILLA GLUE #4</p>
+
+<p>CANNABIS TERPENES  / DISTILLATE ONLY!</p>
+
+<p>1 GRAM</p>
+
+<p>88% THC</p>
+
+<p>510 thread CCELL TYPE</p>
+
+<p>BUBBLE DOESNT MOVE!</p>
+
+<p>As a new store we have alot to prove and alot to provide also.
+We stand behind our product and ensure the highest grade quality</p>
+
+<p>A) Communication
+Communication is key! any questions please feel free to ask</p>
+
+<p>B) Address Format:
+Please include your full address with each order. I only ship
+to United States (no territories). EXAMPLE
+JOHN DOE
+420 elm st
+beverly hills ca, 90420</p>
+
+<p>C) Bulk
+If you are interested in wholesale orders please message us</p>
+
+<p>and we can create a custom listing .</p>
+
+<p>SHIPPING&mdash;&mdash;&mdash;&mdash;&mdash;-</p>
+
+<p>A) &ldquo;Marked as shipped&rdquo;
+When your order is marked it means the shipping label has been</p>
+
+<p>created. We will ship within 24 hours of the order being</p>
+
+<p>marked.</p>
+
+<p>B) Expected Delivery Time
+Currently we offer one shipping option, USPS priority mail. We</p>
+
+<p>ship form the west coast, times will vary according to where</p>
+
+<p>you are located, 2-4 days typically, but can take up to 7</p>
+
+<p>days. of course the sooner the better</p>
+
+<p>C) Tracking Requests
+If you have not received your order in 5 business days from</p>
+
+<p>the time we &ldquo;marked as shipped&rdquo;, you may request tracking, all</p>
+
+<p>other requests prior to 5 business days will be ignored.</p>
+
+<p>D) Combined
+We are offering combined order shipping.</p>
+
+<p>E) Weekend
+Currently we are shipping every day during the business week.</p>
+
+<p>Orders placed on the weekend, or Friday after 5 will be</p>
+
+<p>processed (marked as shipped that day) and dropped Monday</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 ORDER @ 1900.00 USD/ORDER!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/1556763>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/1556763 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=1566703>2-3 DAY SHIPPING (9.00 USD) </option>
+<option value=1566733>COMBINED SHIPPING ONLY (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_14022753>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Best Price SUPREME Brass Knuckles</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/CartKing>CartKing</a></span>
+<span class=lgtext style="font-weight: bold">(474)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.50%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/14022983 target=_blank><img class=picture src=/image/14023053></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p><strong>NO PG/VG/HONEY CUT/ TOCOPHERYL ACETATE</strong> PURE DISTILLATE</p>
+
+<p><strong><em>THESE ARE THE RED SUPREME CASING</em></strong></p>
+
+<p>FORMER TRUSTED VENDOR FROM WALLSTMARKET!</p>
+
+<p>Established in Los Angeles, Brass Knuckles™ is the industry leader in Super Premium CO2 extracted cannabis oil products. Renowned for our fire grams and oil cartridges that are known for flavor and potency, we absolutely deliver when it comes to providing you with top shelf product and ending prohibition. Real Purity. Real Integrity. No Nonsense. No Bullshit. Whether it’s concentrates, cartridges, or batteries, one thing is absolutely clear: Brass Knuckles ain’t fucking around.</p>
+
+<p>STRAINS: Random</p>
+
+<p>IN NO WAY ARE THESE STRAINS GUARANTEED</p>
+
+<p>ADDRESS: John Smith 123 High St. Apt 420 Townsville, CA 12345-1234 PLEASE TRY TO INCLUDE THE LAST 4 digits which can easily be found on the USPS site</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 1gram @ 40.00 USD/1gram!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 13.50 USD/1gram!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/14022753>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/14022753 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=14023033>Priority 1g-40g (15.50 USD) </option>
+<option value=14023063>Priority 41g-60g (22.00 USD) </option>
+<option value=14023123>Priority 61g-165g (50.00 USD) </option>
+<option value=14023153>Priority 166g-325 (65.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_500441>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">10 x LSD 105mcg Voidrealm Free Shipping</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/tripdepot>tripdepot</a></span>
+<span class=lgtext style="font-weight: bold">(455)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.46%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/1529213 target=_blank><img class=picture src=/image/551861></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>LSD 105mcg Voidrealm (self-laid, 99%+ pure Aztec crystal)</p>
+
+<p>Overview
+We kindly present you the Voidrealm - blotter art made by our artist and laid with 105mcg of 99%+ pure Aztec LSD crystal.
+The original 105mcg dosage is back.
+Blotter tabs are 8x8mm large, thick and tasteless.</p>
+
+<p>Dosage
+0.5 - 1 hit - light - medium trip, enough for beginners or inexperienced users to get a basic feeling on what LSD is. You will experience an enhancement of colours and sounds and a general shift of consciousness.
+2 hits - medium - strong trip, suitable for most of the experienced users. Visuals can be strong on this dose and you might have some problems with communicating with others if you are sensitive.
+3-4 hits - strong - a very strong trip, if you don&rsquo;t have a tolerance, better stay in a safe place and prepare to sink deeply into your mind
+5 hits + - well, if you take such a dose, I suppose that you really know what you are doing :) enjoy the white light.</p>
+
+<p>Shipping
+Product is sealed and professionally shipped (be sure to check through your junk mail thoroughly, because you might accidentally put it in trash).</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 10tab @ 38.00 USD/10tab!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/500441>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/500441 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=500451>USPS First Class Mail Free Shipping (0.00 USD) </option>
+<option value=1395893>USPS Priority 2-3 Day + Tracking (8.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_2320973>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">7G WEDDING CAKE (HYBRID)</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/drgreenthumb4201>drgreenthumb4201</a></span>
+<span class=lgtext style="font-weight: bold">(659)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.68%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/2321053 target=_blank><img class=picture src=/image/2321123></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>WEDDING CAKE is an INDICA dominant strain. This is our TOP SHELF FLOWER</p>
+
+<p>WEDDING CAKE (HYBRID)</p>
+
+<p>23% THC</p>
+
+<p>65% INDICA / 45% SATIVA</p>
+
+<p>AAA +++ QUALITY BUDS</p>
+
+<p>GIRL SCOUT COOKIE X CHERRY PIE</p>
+
+<p>As a new store we have alot to prove and alot to provide also. We stand behind our product and ensure the highest grade quality</p>
+
+<p>A) Communication Communication is key! any questions please feel free to ask</p>
+
+<p>B) Address Format: Please include your full address with each order. I only ship to United States (no territories).</p>
+
+<p> EXAMPLE</p>
+
+<p> JOHN DOE</p>
+
+<p> 420 elm st</p>
+
+<p>beverly hills ca, 90420 -0000</p>
+
+<p>C) Bulk If you are interested in wholesale orders please message us and we can create a custom listing</p>
+
+<p>SHIPPING—————-</p>
+
+<p> A) “Marked as shipped” When your order is marked it means the shipping label has been created. We will ship within 24 hours of the order being marked.</p>
+
+<p>B) Expected Delivery Time Currently we offer one shipping option, USPS priority mail. We ship form the west coast, times will vary according to where you are located, 2-4 days typically, but can take up to 7 days. of course the sooner the better</p>
+
+<p>C) Tracking Requests If you have not received your order in 5 business days from the time we “marked as shipped”, you may request tracking, all other requests prior to 5 business days will be ignored.</p>
+
+<p>D) Combined We are offering combined order shipping.</p>
+
+<p>E) Weekend Currently we are shipping every day during the business week. Orders placed on the weekend, or Friday after 5 will be processed (marked as shipped that day) and dropped Monday</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 ORDER @ 90.00 USD/ORDER!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/2320973>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/2320973 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=2321033>2- DAY SHIPPING (9.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_21969923>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">(1 Ounce) Indoor Critical Plus *Frosty*</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/CaliCannabisClub>CaliCannabisClub</a></span>
+<span class=lgtext style="font-weight: bold">(1050)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/21970073 target=_blank><img class=picture src=/image/21970133></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Originally bred in Spain, Critical Plus is an evenly balanced hybrid of Big Bud and Skunk. It has a deeply pungent aroma inherited from its Skunk lineage, as well as a mellowness from its Indica Big Bud parent. Generally uplifting effects along with a 15 to 20% THC content make this a solid all-purpose strain.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Unit @ 175.00 USD/Unit!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/21969923>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/21969923 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=21969933>USPS (7.50 USD) </option>
+<option value=21969943>Combine Orders (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_659091>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Shatter Indica/sativa Nug run</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/StrainPirateCA>StrainPirateCA</a></span>
+<span class=lgtext style="font-weight: bold">(402)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">97.07%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/659121 target=_blank><img class=picture src=/image/659111></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Shatter
+-Nug Run
+Strains Available: GDP, GSC, strawnana, Jack, Banana kush
+Highly stable
+High potency
+PGR and Pesticide free</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 gram @ 25.00 USD/gram!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 21.00 USD/gram!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/659091>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/659091 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=706591>Additional Item (0.00 USD) </option>
+<option value=6831893>Priority Shippin (12.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_19680823>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Gaia Botanics CBD Chapstick</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/StrainPirateCA>StrainPirateCA</a></span>
+<span class=lgtext style="font-weight: bold">(402)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">97.07%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/19681253 target=_blank><img class=picture src=/image/19680913></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Gaia Botanics Chapstick with 20mg CBD
+Hemp Derived CBD Oil
+Flavors based on availability</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 unit @ 10.00 USD/unit!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/19680823>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/19680823 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=19680833>Additional Item (0.00 USD) </option>
+<option value=19680843>Priority Shipping (12.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_2361403>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">FULL POUND of Small Buds, CHEAP! See Price! 4 strains available</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/WilliamShatner>WilliamShatner</a></span>
+<span class=lgtext style="font-weight: bold">(470)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.71%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/21849233 target=_blank><img class=picture src=/image/21849273></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>454 grams.</p>
+
+<p>Here are the Smalls! Popcorn buds that are just as good potency wise as our higher end stuff. There may be some shake and some stems hense the super low price and they still have the potent smell. You are getting what you pay for here but it’s a great value and thay are perfect for pre rolls or whatever you’d use Small buds for.</p>
+
+<p>4 strains available. We can do 1 or 2 strains per order but not more than 2 please. Let me know which strains you want next to your name and address when you order.</p>
+
+<p>thanks!</p>
+
+<p>Forbidden Fruit</p>
+
+<p>Forbidden Fruit is an indica dominant hybrid strain created through a cross of the insanely delicious Cherry Pie X Tangie strains. It&rsquo;s name may say it&rsquo;s forbidden, but you&rsquo;ll be tempted to have more and more after one tasty morsel of this delicious bud. The Forbidden Fruit flavor is incredibly smooth and fresh, with a fruity sweet lemony taste that&rsquo;s accented by sweet berries and pine.</p>
+
+<p>Wedding Cake</p>
+
+<p>Wedding Cake, also known as Pink Cookies, is the familial genetic cross of Girl Scout Cookies and Cherry Pie. This delectable treat is rich with tangy sweet earth and pepper, taking notes and dimension from its OG and Durban Poison parentage. Enjoy this double dose of dense dankness with care, as certain farms have noted extremely high THC content.</p>
+
+<p>Red Dragon</p>
+
+<p>Living up to its name, Red Dragon is an exotic Asian flower that crosses Himalayan Kush with Utopian Haze. The sativa genes are dominant in this hybrid, which has a sativa/indica ratio of between 60:40 and 70:30.  The high the strain produces is euphoric and happy yet sleepy and powerfully hungry. The smell is spicy yet sweet and woody, while the flavor is similar.</p>
+
+<p>Godfather OG</p>
+
+<p>Godfather OG is referred to as the Don of all Kush strains. Not only is it a popular cannabis strain, but it has quite a reputation for its sedative properties. Being an indica dominant hybrid strain, it has a 60:40 indica sativa ration with an amazing 22-25% THC content.  Godf father OG delivers piney and earthy flavors with pungent undertones and is incredibly potent at the same time.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 454gram @ 1150.00 USD/454gram!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/2361403>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/2361403 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=2361413>FREE! See Profile for a more detailed ship description (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_1515973>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">10X DISTILLATE CARTRIDGE (INDICA)</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/drgreenthumb4201>drgreenthumb4201</a></span>
+<span class=lgtext style="font-weight: bold">(659)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.68%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/1517133 target=_blank><img class=picture src=/image/1514633></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>We have worked hard to provide you with a CLEAN, SMOOTH and POTENT distillate</p>
+
+<p>CHERRY PIE ( INDICA )</p>
+
+<p>0.5 ML</p>
+
+<p>93% THC</p>
+
+<p>NO PG or VG ONLY TERPENES ADDED!!</p>
+
+<p>510 thread</p>
+
+<p>Metal cartridge fits most batteries (cartridges may vary due to high volume)</p>
+
+<p>OUR BUBBLE DOESNT MOVE!</p>
+
+<p>As a new store we have alot to prove and alot to provide also.
+We stand behind our product and ensure the highest grade quality</p>
+
+<p>A) Communication
+Communication is key! any questions please feel free to ask</p>
+
+<p>B) Address Format:
+Please include your full address with each order. I only ship
+to United States (no territories).
+EXAMPLE</p>
+
+<p>JOHN DOE</p>
+
+<p>420 elm st</p>
+
+<p>beverly hills ca, 90420</p>
+
+<p>C) Bulk
+If you are interested in wholesale orders please message us</p>
+
+<p>and we can create a custom listing .</p>
+
+<p>SHIPPING&mdash;&mdash;&mdash;&mdash;&mdash;-</p>
+
+<p>A) &ldquo;Marked as shipped&rdquo;
+When your order is marked it means the shipping label has been</p>
+
+<p>created. We will ship within 24 hours of the order being</p>
+
+<p>marked.</p>
+
+<p>B) Expected Delivery Time
+Currently we offer one shipping option, USPS priority mail. We</p>
+
+<p>ship form the west coast, times will vary according to where</p>
+
+<p>you are located, 2-4 days typically, but can take up to 7</p>
+
+<p>days. of course the sooner the better</p>
+
+<p>C) Tracking Requests
+If you have not received your order in 5 business days from</p>
+
+<p>the time we &ldquo;marked as shipped&rdquo;, you may request tracking, all</p>
+
+<p>other requests prior to 5 business days will be ignored.</p>
+
+<p>D) Combined
+We are offering combined order shipping.</p>
+
+<p>E) Weekend
+Currently we are shipping every day during the business week.</p>
+
+<p>Orders placed on the weekend, or Friday after 5 will be</p>
+
+<p>processed (marked as shipped that day) and dropped Monday</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 ORDER @ 160.00 USD/ORDER!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/1515973>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/1515973 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=1566003>2-3 DAY SHIPPING (9.00 USD) </option>
+<option value=1566013>COMBINED SHIPPING ONLY (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_259603>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Nitrazepam 5mg 28 tab UK grade BOX</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/terrysukstock>terrysukstock</a></span>
+<span class=lgtext style="font-weight: bold">(1443)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">96.77%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/259661 target=_blank><img class=picture src=/image/259681></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><hr />
+
+<h2>| Nitrazepam 5mg|</h2>
+
+<p>Nitrazepam is a product manufactured by the UK pharma company</p>
+
+<p>Expiry Date: Minimum 1 year,
+Active Substance: Nitrazepam 5mg</p>
+
+<p>Nitrazepam is used to treat short-term sleeping problems (insomnia), namely difficulty falling asleep, frequent awakening, early awakening, or a combination of each.</p>
+
+<p>Nitrazepam is sometimes tried to treat epilepsy when other medications fail. It has been found to be more effective than clonazepam in the treatment of West syndrome, which is an age-dependent epilepsy, affecting the very young. In uncontrolled studies, nitrazepam has shown effectiveness in infantile spasms and is sometimes considered when other anti-seizure drugs have failed. However, drowsiness, hypotonia, and most significantly tolerance to anti-seizure effects typically develop with long term treatment. generally limiting nitrazepam to acute seizure management.</p>
+
+<p>In case if we would run out of stock for advertised brand, we will ship any other generic UK brand
+(eg. Actavis, Teva, Ranbaxy etc ) with same quality as advertised medicine.</p>
+
+<hr />
+
+<h2>| WHAT WILL YOU GET |</h2>
+
+<p>One factory sealed Nitrazepam 5mg of 20 tab</p>
+
+<hr />
+
+<h2>| DELIVERY CONDITIONS |</h2>
+
+<ol>
+<li>This product will be shipped from UK,</li>
+<li>Once your order is marked &ldquo; shipped &rdquo;, we will send it same day or maximum in 24 hours.</li>
+<li>All of our parcels have tracking numbers, which is means you will be able to track it once it wont come in time.</li>
+<li>Delivery times:
+United Kingdom from Next Working Day up to 3 Working Days
+European Union from 3 Working Days up to 9 Working Days
+Any other country from 3 Working Days up to 14 Working days ( eg. Australia )</li>
+<li>Do not ask for tracking number, before this time - if your parcel wont show up on time, before you open dispute please message us for tracking - we will provide it.</li>
+</ol>
+
+
+<hr />
+
+<h2>| LOOKING FOR BULK ORDER? |</h2>
+
+<p>Are you reseller? or you might be interested in bigger quantity for yourself,
+Message us thorugh private message and request pricing for your order,
+We are able to provide best prices for bulk deals thanks to our pharma-industry
+connection.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Each @ 32.33 USD/Each!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/259603>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/259603 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=259613>UK Non Registred Letter (3.87 USD) </option>
+<option value=259623>UK Tracked and Signed (6.46 USD) </option>
+<option value=259633>INTERNATIONAL Tracked and Signed (15.51 USD) </option>
+<option value=259643>PAID shipping costs with another listing (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_18773173>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Moby Dick* Weed * 5g</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/GreenSupreme>GreenSupreme</a></span>
+<span class=lgtext style="font-weight: bold">(612)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/18861643 target=_blank><img class=picture src=/image/18773463></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><pre><code>        Die Moby Dick ist ideal zur Therapie bei Anorexie und Nebenwirkungen bei Chemotherapie.
+</code></pre>
+
+<p>Sie isteine der stärksten Pflanzen, mit einer typischen, psychoaktiven Sativa-Wirkung. Sie wird mit einem THC-Gehalt von bis zu 21 % und THCV-Vorkommen angebaut.</p>
+
+<p>Bei THCV handelt es sich um eine Substanz, die in äquatorialen Sativas als Reaktion auf die UV-Strahlung im Sonnenlicht enthalten ist.</p>
+
+<p>Das THCV verstärkt die Wirkung von THC, so dass der Effekt schon nach 2 – 3 Zügen stark zu spüren ist.</p>
+
+<p>Die Wirkung ist zerebral und intensiv psychoaktiv, lange anhaltend mit einem langen Abgang, leicht körperlich und markant.</p>
+
+<p>Sie ist stark appetitanregend und ruft extreme Mundtrockenheit hervor.</p>
+
+<p>Die Pflanze weist ein Aroma nach Holz und Kiefer mit Weihrauch-Noten auf.</p>
+
+<p>https://www.leafly.com/sativa/moby-dick</p>
+
+<p>Anbau:
+Indoor, professioneller hydropodischer Anbau</p>
+
+<p>Hinweis:
+Bisher haben wir externe Labore bemüht, das dauerte lange und war auch nicht gerade günstig. Nun beproben wir selbst jede einzelne Packung einer jeden Lieferung mindestens an 4 Stellen und testen diese standardmäßig auf über 40 bekannte Streckmittel, z. B. Milchzucker (&ldquo;Edelweiss&rdquo;), Ascorbinsäure, Brix, Mehl, Haushaltszucker, Zellstoffpulver, Speisestärke, Fruchtzucker, div. Tablettenfüllstoffe, uvm.; außerdem auf Bleiverbindungen. Ferner wird ein entsprechender Abbrandtest gemacht, der im besten Fall reine Asche, im schlechtesten Fall eine ölig-schmierige Substanz zurückläßt. Nur absolut &ldquo;saubere&rdquo; Ware kommt in den Verkauf!</p>
+
+<p>Beachten:
+Mit dem Kauf erklärst du dich mit den unter unserem Profil (GreenSupreme) veröffentlichten Bedingungen einverstanden!</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 5g @ 72.33 USD/5g!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/18773173>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/18773173 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=18773183>(DE) DOMESTIC only (KEIN Tracking), 1-5 Tage (3.33 USD) </option>
+<option value=18773193>(DE) PRIO-Brief (MIT Tracking), 1-3 Tage (5.56 USD) </option>
+<option value=18773203>(DE) Einschreiben-Einwurf (MIT Tracking), 1-5 Tage (7.78 USD) </option>
+<option value=18773213>(DE+EU) Zusatzartikel / additional item (0.00 USD) </option>
+<option value=18773223>(EU) Reg. Mail / Recommand&#233 (Track&#38Sign!), 3-10 days (8.34 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_13903473>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Chronic * Weed * 10g</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/GreenSupreme>GreenSupreme</a></span>
+<span class=lgtext style="font-weight: bold">(612)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/13904013 target=_blank><img class=picture src=/image/13903383></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Chronic stimuliert Deine Geschmacksknospen</p>
+
+<p>Chronic ist eine sehr komplexe Cannabissorte, die eine große Vielfalt bietet, was den Geschmack, die Aromen und den Rausch betrifft. In geschmacklicher Hinsicht bietet Chronic köstliche Nektar-, Orangen-, Pfeffer- und Zitronennoten und stimuliert so Deine Geschmacksknospen. Diese herrliche Mischung wird durch das Duftprofil der Sorte ergänzt, das saure Noten, Süße und Würze bereithält.</p>
+
+<p>Dank ihrer Indica-Herkunft, ist der Rausch, der von Chronic produziert wird, sehr vielschichtig und überwiegend körperorientiert. Der körperliche Rausch ist durch Gelassenheit geprägt, kann aber für Schläfrigkeit und Heißhunger oder einen Couchlock sorgen. Der mentale Rausch ist von Gefühlen der Begeisterung sowie von nachdenklichen und meditativen Zuständen gekennzeichnet.</p>
+
+<p>https://www.leafly.com/hybrid/chronic</p>
+
+<p>Anbau:
+Indoor, professioneller hydropodischer Anbau</p>
+
+<p>Hinweis:
+Bisher haben wir externe Labore bemüht, das dauerte lange und war auch nicht gerade günstig. Nun beproben wir selbst jede einzelne Packung einer jeden Lieferung mindestens an 4 Stellen und testen diese standardmäßig auf über 40 bekannte Streckmittel, z. B. Milchzucker (&ldquo;Edelweiss&rdquo;), Ascorbinsäure, Brix, Mehl, Haushaltszucker, Zellstoffpulver, Speisestärke, Fruchtzucker, div. Tablettenfüllstoffe, uvm.; außerdem auf Bleiverbindungen. Ferner wird ein entsprechender Abbrandtest gemacht, der im besten Fall reine Asche, im schlechtesten Fall eine ölig-schmierige Substanz zurückläßt. Nur absolut &ldquo;saubere&rdquo; Ware kommt in den Verkauf!</p>
+
+<p>Beachten:
+Mit dem Kauf erklärst du dich mit den unter unserem Profil (GreenSupreme) veröffentlichten Bedingungen einverstanden!</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 10g @ 122.40 USD/10g!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/13903473>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/13903473 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=13903483>(DE) DOMESTIC only (KEIN Tracking), 1-5 Tage (3.33 USD) </option>
+<option value=13903493>(DE) PRIO-Brief (MIT Tracking), 1-3 Tage (5.56 USD) </option>
+<option value=13903503>(DE) Einschreiben-Einwurf (MIT Tracking), 1-5 Tage (7.78 USD) </option>
+<option value=13903513>(DE+EU) Zusatzartikel / additional item (0.00 USD) </option>
+<option value=13903523>(EU) Reg. Mail / Recommand&#233 (Track&#38Sign!), 3-10 days (8.34 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_14662963>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Codeine Phosphate 60mg 28 tab UK grade BOX</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/terrysukstock>terrysukstock</a></span>
+<span class=lgtext style="font-weight: bold">(1443)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">96.77%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/14663233 target=_blank><img class=picture src=/image/257861></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><hr />
+
+<h2>| Codeine Phosphate 30mg 28 tab |</h2>
+
+<p>Codeine Phosphate 60mg, 28 tab is a product manufactured by the UK pharma company.</p>
+
+<p>Expiry Date: Minimum 1 year,
+Active Substance: Codeine Phosphate 60mg</p>
+
+<p>Codeine phosphate solution is a narcotic analgesic. It works in certain areas of the brain and nervous system to decrease pain.</p>
+
+<p>You&rsquo;re buying whole package originally packed exactly that what you see on picture, with instruction as well.</p>
+
+<p>In case if we would run out of stock for advertised brand, we will ship any other generic UK brand (eg. Actavis, Teva, Bristol ) with same quality as advertised medicine.</p>
+
+<hr />
+
+<h2>| WHAT WILL YOU GET |</h2>
+
+<p>One factory sealed box of 28 tab with Codeine Phosphate 60mg UK pharma</p>
+
+<hr />
+
+<h2>| DELIVERY CONDITIONS |</h2>
+
+<ol>
+<li>This product will be shipped from UK,</li>
+<li>Once your order is marked &ldquo; shipped &rdquo;, we will send it same day or maximum within 24 hours.</li>
+<li>Parcels marked as non-reg will be shipped by 1st class mail WITHOUT tracking number and signature.
+Tracked parcels will require signature upon delivery.</li>
+<li>Delivery times:
+United Kingdom from Next Working Day up to 3 Working Days
+European Union from 3 Working Days up to 9 Working Days
+Any other country from 3 Working Days up to 21 Working days ( eg. Australia )</li>
+<li>Do not ask for tracking number, before this time - if your parcel wont show up on time, before you open dispute please message us for tracking - we will provide it.</li>
+</ol>
+
+
+<hr />
+
+<h2>| LOOKING FOR BULK ORDER? |</h2>
+
+<p>Are you reseller? or you might be interested in bigger quantity for yourself,
+Message us thorugh private message and request pricing for your order,
+We are able to provide best prices for bulk deals thanks to our pharma-industry
+connection.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Each @ 31.03 USD/Each!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 25.86 USD/Each!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/14662963>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/14662963 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=14662973>UK Non Registred Letter (3.87 USD) </option>
+<option value=14662983>UK Tracked and Signed (6.46 USD) </option>
+<option value=14662993>INTERNATIONAL Tracked and Signed (15.51 USD) </option>
+<option value=14663003>PAID shipping costs with another listing (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_1514063>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">20X DISTILLATE CARTRIDGE (SATIVA)</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/drgreenthumb4201>drgreenthumb4201</a></span>
+<span class=lgtext style="font-weight: bold">(659)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.68%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/1514463 target=_blank><img class=picture src=/image/1488983></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>We have worked hard to provide you with a CLEAN, SMOOTH and POTENT distillate</p>
+
+<p>-LEMON HAZE (SATIVA)</p>
+
+<p>-0.5ML</p>
+
+<p>-93% THC</p>
+
+<p>-NO PG or VG ONLY TERPENES ADDED!!</p>
+
+<p>-510 thread</p>
+
+<p>-Metal cartridge fits most batteries (cartridges may vary due to high volume)</p>
+
+<p>!OUR BUBBLE DOESNT MOVE!</p>
+
+<p>As a new store we have alot to prove and alot to provide also.
+We stand behind our product and ensure the highest grade quality</p>
+
+<p>A) Communication
+Communication is key! any questions please feel free to ask</p>
+
+<p>B) Address Format:
+Please include your full address with each order. I only ship
+to United States (no territories).
+EXAMPLE</p>
+
+<p>JOHN DOE</p>
+
+<p>420 elm st</p>
+
+<p>beverly hills ca, 90420</p>
+
+<p>C) Bulk
+If you are interested in wholesale orders please message us</p>
+
+<p>and we can create a custom listing .</p>
+
+<p>SHIPPING&mdash;&mdash;&mdash;&mdash;&mdash;-</p>
+
+<p>A) &ldquo;Marked as shipped&rdquo;
+When your order is marked it means the shipping label has been</p>
+
+<p>created. We will ship within 24 hours of the order being</p>
+
+<p>marked.</p>
+
+<p>B) Expected Delivery Time
+Currently we offer one shipping option, USPS priority mail. We</p>
+
+<p>ship form the west coast, times will vary according to where</p>
+
+<p>you are located, 2-4 days typically, but can take up to 7</p>
+
+<p>days. of course the sooner the better</p>
+
+<p>C) Tracking Requests
+If you have not received your order in 5 business days from</p>
+
+<p>the time we &ldquo;marked as shipped&rdquo;, you may request tracking, all</p>
+
+<p>other requests prior to 5 business days will be ignored.</p>
+
+<p>D) Combined
+We are offering combined order shipping.</p>
+
+<p>E) Weekend
+Currently we are shipping every day during the business week.</p>
+
+<p>Orders placed on the weekend, or Friday after 5 will be</p>
+
+<p>processed (marked as shipped that day) and dropped Monday</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 order @ 320.00 USD/order!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/1514063>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/1514063 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=1565913>2-3 DAY SHIPPING (9.00 USD) </option>
+<option value=1565923>COMBINED SHIPPING ONLY (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 7415.64 EUR = 8252.18 USD = 6381.21 GBP = 144.93005675 XMR = 12026.45 AUD = 10796.80 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

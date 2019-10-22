@@ -236,7 +236,7 @@ def get_db_session(engine):
     return db_session
 
 
-def get_settings(db_session=None):
+def get_settings(market_name : str, db_session=None) -> Settings:
     if db_session:
         existing_settings = db_session.query(Settings).first()
     else:
@@ -252,10 +252,10 @@ def get_settings(db_session=None):
         raise IntegrityError
 
 
-def set_settings(db_session, refill_queue_when_complete=False):
+def set_settings(db_session : Session, market_name : str, refill_queue_when_complete : bool = False) -> None:
     existing_settings = db_session.query(Settings).first()
     if not existing_settings:
-        settings = Settings(refill_queue_when_complete=refill_queue_when_complete)
+        settings = Settings(refill_queue_when_complete=refill_queue_when_complete, market=market_name)
         db_session.add(settings)
         db_session.commit()
         db_session.expunge_all()

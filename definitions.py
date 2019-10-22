@@ -74,4 +74,14 @@ EMPIRE_HTTP_HEADERS = {
             "Upgrade-Insecure-Requests": "1"
         }
 
+EMPIRE_MARKET_LOGIN_PHRASE = "Welcome to Empire Market! Please login to access the marketplace."
+
+
+#CRYPTONIA MARKET
+CRYPTONIA_MARKET_ID = "CRYPTONIA_MARKET"
+CRYPTONIA_MARKET_BASE_URL = "http://bntee6mf5w2okbpxdxheq7bk36yfmwithltxubliyvum6wlrrxzn72id.onion"
+CRYPTONIA_MARKET_CATEGORY_INDEX = f"{CRYPTONIA_MARKET_BASE_URL}/products"
+CRYPTONIA_MARKET_CREDENTIALS = [["usingPython3", "Password123!"]]
+CRYPTONIA_DIR = ROOT_DIR + "src/cryptonia/"
+
 Base = declarative_base()
