@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH, MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, \
-    SQLALCHEMY_CREATE_ENGINE_KWARGS, MYSQL_URL_PARAMS_STRING
+    SQLALCHEMY_CREATE_ENGINE_KWARGS, MYSQL_URL_PARAMS_STRING, PYTHON_SIDE_ENCODING
 from environmentSettings import DB_ENGINE_BASE_URL
 from src.models.feedback import Feedback
 from src.models.listing_observation import ListingObservation
@@ -193,15 +193,20 @@ def sanitize_error(error_text, vars):
     return error_text
 
 def shorten_and_sanitize_text(max_length, text):
-    text = demoji.replace(bytes(text, "utf-8").decode('utf-8', 'ignore').strip())
+    text = demoji.replace(bytes(text, PYTHON_SIDE_ENCODING).decode(PYTHON_SIDE_ENCODING, 'ignore').strip())
+    encoded_text = text.encode(PYTHON_SIDE_ENCODING)
 
-    if len(text.encode("utf8")) <= max_length:
+    if len(encoded_text) <= max_length:
         return text
 
     mxlen = max_length
 
-    while (text.encode("utf8")[mxlen - 1] & 0xc0 == 0xc0):
+    while (encoded_text[mxlen - 1] & 0xc0 == 0xc0):
         mxlen -= 1
+
+    text = encoded_text[:mxlen].decode(PYTHON_SIDE_ENCODING)
+
+    assert(len(text.encode(PYTHON_SIDE_ENCODING)) <= max_length)
 
     return text
 

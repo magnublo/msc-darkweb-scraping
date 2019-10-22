@@ -9,15 +9,17 @@ ONE_WEEK = 3600*24*7
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
 
-MYSQL_TEXT_COLUMN_MAX_LENGTH = 65435
-MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH = 16770215
+MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
+MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH = 16777215
 MYSQL_CASCADE = "CASCADE"
 MYSQL_URL_PARAMS = {"charset": "utf8"}
 MYSQL_URL_PARAMS_STRING = "?".join([''] + [(key + "=" + MYSQL_URL_PARAMS[key]) for key in MYSQL_URL_PARAMS.keys()])
 MYSQL_CONNECT_ARGS = {'buffered': True,
                         'collation': 'utf8mb4_general_ci',
                       'charset': "utf8mb4"}
-SQLALCHEMY_CREATE_ENGINE_KWARGS = {'encoding': 'utf-8',
+
+PYTHON_SIDE_ENCODING = "utf-8"
+SQLALCHEMY_CREATE_ENGINE_KWARGS = {'encoding': PYTHON_SIDE_ENCODING,
                                    'echo': MYSQL_ECHO_DEBUG,
                                    'connect_args': MYSQL_CONNECT_ARGS}
 

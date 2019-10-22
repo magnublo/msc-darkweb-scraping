@@ -13,7 +13,7 @@ from python3_anticaptcha import AntiCaptchaControl
 from sqlalchemy.exc import ProgrammingError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
-    ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS
+    ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, PYTHON_SIDE_ENCODING
 from environmentSettings import DEBUG_MODE, PROXIES
 from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error
 from src.models.error import Error
@@ -127,7 +127,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         else:
             error_type = type(error_object).__name__
 
-        finger_print = hashlib.md5((error_type + str(time())).encode("utf-8")) \
+        finger_print = hashlib.md5((error_type + str(time())).encode(PYTHON_SIDE_ENCODING)) \
                            .hexdigest()[0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
 
         error_string = sanitize_error(error_string, locals().keys())
