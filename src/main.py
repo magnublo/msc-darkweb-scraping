@@ -29,3 +29,4 @@ db_session.close()
 
 Base.metadata.create_all(engine)
 scraping_manager = EmpireScrapingManager(settings=settings, nr_of_threads=int(nr_of_threads))
+scraping_manager.run()
