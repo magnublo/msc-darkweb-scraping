@@ -8,4 +8,5 @@ dateparser==0.7.2
 python3-anticaptcha==1.5.4
 demoji==0.1.5
 lxml==4.4.1
+cfscrape==2.0.8
 mysql-connector-python==8.0.18

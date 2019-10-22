@@ -46,11 +46,13 @@ class CryptoniaMarketScraper(BaseScraper):
             {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
         self.db_session.commit()
 
-    def scrape(self) -> None:
+    def scrape(self):
         while not self.queue.empty():
-            category_list : List[str]
-            search_result_url: str
-            category_list, search_result_url = self.queue.get(timeout=1)
+            search_result_url = self.queue.get(timeout=1)
+            self._generic_error_catch_wrapper(search_result_url, func=self._scrape_items_in_search_result)
+
+        print("Job queue is empty. Wrapping up...")
+        self._wrap_up_session()
 
 
 

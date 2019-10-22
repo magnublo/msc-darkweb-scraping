@@ -4,13 +4,15 @@ import threading
 import demoji
 
 from definitions import Base, EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID
-from environmentSettings import DEBUG_MODE, DB_USERNAME
+from environmentSettings import DEBUG_MODE, DB_USERNAME, log
 from src.cryptonia.cryptonia_scrape_manager import CryptoniaScrapingManager
 from src.db_utils import kill_all_existing_db_connections_for_user, get_engine, get_db_session, set_settings, \
     fix_integrity_of_database, get_settings
 from src.empire.empire_scrape_manager import EmpireScrapingManager
 
 faulthandler.enable()
+
+log.info("info message")
 
 if DEBUG_MODE:
     cryptonia_nr_of_threads = 0

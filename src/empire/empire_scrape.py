@@ -12,7 +12,7 @@ from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 from sqlalchemy import func
 
-from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
+from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
     RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
     EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE
@@ -44,7 +44,7 @@ class EmpireScrapingSession(BaseScraper):
         return requests.Session()
 
     def _get_working_dir(self) -> str:
-        return EMPIRE_DIR
+        return EMPIRE_SRC_DIR
 
     def _get_login_url(self) -> str:
         return EMPIRE_MARKET_LOGIN_URL

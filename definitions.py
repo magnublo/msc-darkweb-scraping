@@ -29,13 +29,44 @@ FEEDBACK_TEXT_HASH_COLUMN_LENGTH = 8
 FEEDBACK_BUYER_COLUMN_LENGTH = 5
 URL_COLUMN_LENGTH = 80
 SELLER_NAME_COLUMN_LENGTH = 32
-COUNTRY_NAME_COLUMN_LENGTH = 56 # The United Kingdom of Great Britain and Northern Ireland
+COUNTRY_NAME_COLUMN_LENGTH = 56 # "The United Kingdom of Great Britain and Northern Ireland"
 MARKET_NAME_COLUMN_LENGTH = 32
 FEEDBACK_CATEGORY_COLUMN_LENGTH = 20
 CURRENCY_COLUMN_LENGTH = 3
 
 MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD = 40
 CREATED_DATE_COLUMN_NAME = "created_date"
+
+LOGGER_VARIABLE_NAME = "__logger"
+
+BASE_LOGGER_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": 1,
+    "root": {
+        "level": "DEBUG",
+        "handlers": [
+            "console"
+        ]
+    },
+    "loggers": {
+
+    },
+    "formatters": {
+        "precise": {
+            "format": "%(asctime)s %(name)-15s %(levelname)-8s %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "precise",
+            "level": "DEBUG",
+            "stream": "ext://sys.stdout"
+        }
+    }
+}
+
+BEAUTIFUL_SOUP_HTML_PARSER = "lxml"
 
 ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
 ANTI_CAPTCHA_CREATE_TASK_URL = "http://api.anti-captcha.com/createTask"
@@ -61,10 +92,9 @@ EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
 RESCRAPE_PGP_KEY_INTERVAL = ONE_WEEK
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
 EMPIRE_MARKET_HOME_URL = "http://" + EMPIRE_MARKET_URL + "/home"
-EMPIRE_IMAGE_CAPTCHA_URL_REGEX = r"http:\/\/"+EMPIRE_MARKET_URL.replace(".", "\.")+"\/public\/captchaimg\/[0-9]{10}\.[0-9]{3}\.jpg"
 EMPIRE_BASE_CATEGORY_URL = "http://" + EMPIRE_MARKET_URL + "/category/"
 EMPIRE_MARKET_ID = "EMPIRE_MARKET"
-EMPIRE_DIR = ROOT_DIR + "src/empire/"
+EMPIRE_SRC_DIR = ROOT_DIR + "src/empire/"
 EMPIRE_HTTP_HEADERS = {
             "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -86,3 +116,4 @@ CRYPTONIA_MARKET_CREDENTIALS = [["usingPython3", "Password123!"]]
 CRYPTONIA_DIR = ROOT_DIR + "src/cryptonia/"
 
 Base = declarative_base()
+

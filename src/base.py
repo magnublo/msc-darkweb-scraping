@@ -1,5 +1,6 @@
 import abc
 import hashlib
+import logging
 import sys
 import threading
 import traceback
@@ -17,7 +18,7 @@ from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from urllib3.exceptions import HTTPError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
-    ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, PYTHON_SIDE_ENCODING
+    ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, PYTHON_SIDE_ENCODING, LOGGER_VARIABLE_NAME
 from environmentSettings import DEBUG_MODE, PROXIES
 from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
     get_column_name, get_settings
@@ -29,7 +30,30 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, i
     GenericException
 
 
-class BaseFunctions(metaclass=abc.ABCMeta):
+class MetaBase(abc.ABCMeta):
+    def __init__(cls, *args):
+
+        from logging.config import dictConfig
+
+        super().__init__(*args)
+        # Explicit name mangling
+        logger_attribute_name = '_' + cls.__name__ + LOGGER_VARIABLE_NAME
+
+        # Logger name derived accounting for inheritance for the bonus marks
+        logger_name = '.'.join([c.__name__ for c in cls.mro()[-2::-1]])
+
+        dictConfig(LOGGER_CONFIG)
+
+        setattr(cls, logger_attribute_name, logging.getLogger(logger_name))
+
+
+class BaseClassWithLogger(metaclass=MetaBase):
+
+    def __init__(self):
+        self.logger: logging.Logger = getattr(self, LOGGER_VARIABLE_NAME)
+
+
+class BaseFunctions(BaseClassWithLogger):
 
     @abstractstaticmethod
     def accepts_currencies(soup_html):
@@ -64,10 +88,11 @@ class BaseFunctions(metaclass=abc.ABCMeta):
         raise NotImplementedError('')
 
 
-class BaseScraper(metaclass=abc.ABCMeta):
+class BaseScraper(BaseClassWithLogger):
 
     def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int,
                  session_id: int = None):
+        super().__init__()
         engine = get_engine()
         self.login_url = self._get_login_url()
         self.login_phrase = self._get_login_phrase()
@@ -360,9 +385,10 @@ class BaseScraper(metaclass=abc.ABCMeta):
         raise NotImplementedError('')
 
 
-class BaseScrapingManager(metaclass=abc.ABCMeta):
+class BaseScrapingManager(BaseClassWithLogger):
 
     def __init__(self, settings: Settings, nr_of_threads: int):
+        super().__init__()
         self.market_credentials = self._get_market_credentials()
         self.market_name = self._get_market_name()
         assert nr_of_threads <= len(self.market_credentials)

@@ -6,11 +6,11 @@ import requests
 from bs4 import BeautifulSoup
 from urllib3.exceptions import HTTPError
 
-from environmentSettings import DEBUG_MODE
+from definitions import BASE_LOGGER_CONFIG, BEAUTIFUL_SOUP_HTML_PARSER
+from environmentSettings import DEBUG_MODE, LOCAL_ENVIRONMENT_HANDLERS
 
 
 class LoggedOutException(Exception):
-
     DEFAULT_TEXT = "Cookie appears to have been invalidated by remote website."
 
     def __init__(self, text=DEFAULT_TEXT):
@@ -18,7 +18,6 @@ class LoggedOutException(Exception):
 
 
 class BadGatewayException(HTTPError):
-
     DEFAULT_TEXT = "Received response code 502."
 
     def __init__(self, text=DEFAULT_TEXT):
@@ -26,7 +25,6 @@ class BadGatewayException(HTTPError):
 
 
 class InternalServerErrorException(HTTPError):
-
     DEFAULT_TEXT = "Received response code 500."
 
     def __init__(self, text=DEFAULT_TEXT):
@@ -34,22 +32,13 @@ class InternalServerErrorException(HTTPError):
 
 
 class GenericException(BaseException):
-
-    DEFAULT_TEXT = "Generic exception"
+    DEFAULT_TEXT = "Generic exception."
 
     def __init__(self, text=DEFAULT_TEXT):
         super().__init__(text)
 
 
-def pretty_print_GET(req):
-    """
-    At this point it is completely built and ready
-    to be fired; it is "prepared".
-
-    However pay attention at the formatting used in
-    this function because it is programmed to be pretty
-    printed and may differ from the actual request.
-    """
+def pretty_print_GET(req) -> str:
     return '{}\n{}\r\n{}\r\n\r'.format(
         '-----------START-----------',
         req.method + ' ' + req.url,
@@ -57,15 +46,7 @@ def pretty_print_GET(req):
     )
 
 
-def pretty_print_POST(req):
-    """
-    At this point it is completely built and ready
-    to be fired; it is "prepared".
-
-    However pay attention at the formatting used in
-    this function because it is programmed to be pretty
-    printed and may differ from the actual request.
-    """
+def pretty_print_POST(req) -> str:
     return '{}\n{}\r\n{}\r\n\r\n{}'.format(
         '-----------START-----------',
         req.method + ' ' + req.url,
@@ -74,13 +55,13 @@ def pretty_print_POST(req):
     )
 
 
-def error_is_sqlalchemy_error(error_string):
+def error_is_sqlalchemy_error(error_string) -> bool:
     return error_string.find("site-packages/sqlalchemy") != -1 \
            or error_string.find("\'NoneType\' object has no attribute \'have_result_set\'") != -1 \
            or error_string.find("MySQL") != -1
 
 
-def print_error_to_file(thread_id, error_string, file_postfix=None):
+def print_error_to_file(thread_id, error_string, file_postfix=None) -> None:
     file_name = f"thread_{thread_id}_error"
     if file_postfix:
         file_name = f"{file_name}_{file_postfix}"
@@ -89,7 +70,7 @@ def print_error_to_file(thread_id, error_string, file_postfix=None):
     file.close()
 
 
-def get_error_string(scraping_object, error_traceback, sys_exec_info):
+def get_error_string(scraping_object, error_traceback, sys_exec_info) -> str:
     time_of_error = str(datetime.fromtimestamp(time()))
     tb_last = sys_exec_info[2]
     func_name = str(inspect.getinnerframes(tb_last)[0][3])
@@ -108,7 +89,7 @@ def get_error_string(scraping_object, error_traceback, sys_exec_info):
     return "\n\n\n".join([time_of_error] + [error_traceback] + local_variable_strings + object_variable_strings)
 
 
-def is_bad_gateway(response: requests.Response):
+def is_bad_gateway(response: requests.Response) -> bool:
     if response.status_code == 502:
         return True
 
@@ -119,7 +100,7 @@ def is_bad_gateway(response: requests.Response):
     return False
 
 
-def is_internal_server_error(response : requests.Response):
+def is_internal_server_error(response: requests.Response) -> bool:
     if response.status_code == 500:
         return True
 
@@ -130,7 +111,7 @@ def is_internal_server_error(response : requests.Response):
     return False
 
 
-def queue_is_empty(queue):
+def queue_is_empty(queue) -> bool:
     is_empty = queue.empty()
     sleep(100)  # Must be sure that queue is indeed empty.
     return queue.empty() and is_empty
@@ -139,8 +120,16 @@ def queue_is_empty(queue):
 def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline_file=DEBUG_MODE) -> BeautifulSoup:
     if use_offline_file:
         file_name = open(working_dir + file_name, "r")
-        soup_html = BeautifulSoup(file_name, features="lxml")
+        soup_html = BeautifulSoup(file_name, features=BEAUTIFUL_SOUP_HTML_PARSER)
         file_name.close()
         return soup_html
     else:
-        return BeautifulSoup(web_response.text, features="lxml")
+        return BeautifulSoup(web_response.text, features=BEAUTIFUL_SOUP_HTML_PARSER)
+
+
+def get_logger_config() -> dict:
+    logger_config = dict(BASE_LOGGER_CONFIG)
+    logger_config["root"]["handlers"] = [logger_config["root"]["handlers"]] + [key for key in
+                                                                               LOCAL_ENVIRONMENT_HANDLERS]
+    logger_config["handlers"].update(LOCAL_ENVIRONMENT_HANDLERS)
+    return logger_config
