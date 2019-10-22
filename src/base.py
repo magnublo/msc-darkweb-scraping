@@ -13,7 +13,7 @@ from python3_anticaptcha import AntiCaptchaControl
 from sqlalchemy.exc import ProgrammingError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
-    ERROR_FINGER_PRINT_COLUMN_LENGTH
+    ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS
 from environmentSettings import DEBUG_MODE, PROXIES
 from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error
 from src.models.error import Error
@@ -219,7 +219,12 @@ class BaseScraper(metaclass=abc.ABCMeta):
             if line[0:7].lower() == "cookie:":
                 return line.strip().lower()
 
-
+    def _get_wait_interval(self, error_data):
+        nr_of_errors = max(len(error_data)-1, 0)
+        highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
+        seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
+                                     min(nr_of_errors - 1, highest_index)] + self.thread_id * 2
+        return seconds_until_next_try
 
     def print_crawling_debug_message(self, url=None, existing_listing_observation=None):
         assert (url or existing_listing_observation)

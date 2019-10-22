@@ -188,7 +188,7 @@ def sanitize_error(error_text, vars):
     #parameter in a row insertion, field names are not escaped properly inside the string field.
 
     for var in vars:
-        error_text = error_text.replace(var, var + "&&&")
+        error_text = error_text.replace(var, var + "&&")
 
     return error_text
 

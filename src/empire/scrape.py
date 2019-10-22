@@ -17,7 +17,7 @@ from urllib3.exceptions import HTTPError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
-    DBMS_DISCONNECT_RETRY_INTERVALS, RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
+    RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
 from environmentSettings import DEBUG_MODE, PROXIES
 from src.base import BaseScraper, LoggedOutException
 from src.db_utils import get_column_name
@@ -188,7 +188,6 @@ class EmpireScrapingSession(BaseScraper):
                 self._log_and_print_error(e, traceback.format_exc())
 
     def scrape(self):
-        time_of_last_response = time.time()
 
         while True:
             try:
@@ -199,9 +198,7 @@ class EmpireScrapingSession(BaseScraper):
                     self._wrap_up_session()
                     return
 
-                parsing_time = time.time() - time_of_last_response
                 web_response = self._get_web_response(search_result_url)
-                time_of_last_response = time.time()
 
                 soup_html = self._get_page_as_soup_html(web_response, file="saved_empire_search_result_html")
                 product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
@@ -229,7 +226,7 @@ class EmpireScrapingSession(BaseScraper):
                         try:
                             self.db_session.rollback()
                             self._scrape_listing(title, seller_name, seller_url, product_page_url,
-                                                 is_sticky, btc_rate, ltc_rate, xmr_rate, parsing_time)
+                                                 is_sticky, btc_rate, ltc_rate, xmr_rate)
                             self.db_session.commit()
                             for entry in error_data:
                                 self._log_and_print_error(entry[0], entry[1], updated_date=entry[2], print_error=False)
@@ -241,19 +238,15 @@ class EmpireScrapingSession(BaseScraper):
                                 if not error_is_sqlalchemy_error(error_string):
                                     self._log_and_print_error(error, error_string)
                                     raise error
-
                             error_data.append([error, error_string, datetime.utcnow()])
-                            nr_of_errors = len(error_data)
-                            highest_index = len(DBMS_DISCONNECT_RETRY_INTERVALS) - 1
-                            seconds_until_next_try = DBMS_DISCONNECT_RETRY_INTERVALS[
-                                                         min(nr_of_errors - 1, highest_index)] + self.thread_id * 2
+                            seconds_until_next_try = self._get_wait_interval(error_data)
                             traceback.print_exc()
-                            print("Thread " + str(
-                                self.thread_id) + " has problem with DBMS connection. Retrying in " + str(
-                                seconds_until_next_try) + " seconds...")
+                            print(
+                                f"Thread {self.thread_id} has problem with DBMS connection. Retrying in "
+                                f"{seconds_until_next_try} seconds...")
                             sleep(seconds_until_next_try)
 
-            except (BaseException) as e:
+            except BaseException as e:
                 error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
                 print_error_to_file(self.thread_id, error_string)
                 self._log_and_print_error(e, error_string, print_error=False)
@@ -267,8 +260,7 @@ class EmpireScrapingSession(BaseScraper):
                 raise
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
-                        btc_rate, ltc_rate, xmr_rate, parsing_time):
-
+                        btc_rate, ltc_rate, xmr_rate):
 
         existing_seller = self.db_session.query(Seller) \
             .filter_by(name=seller_name).first()
