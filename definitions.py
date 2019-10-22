@@ -75,6 +75,7 @@ EMPIRE_HTTP_HEADERS = {
         }
 
 EMPIRE_MARKET_LOGIN_PHRASE = "Welcome to Empire Market! Please login to access the marketplace."
+EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE = "There is currently nothing to show."
 
 
 #CRYPTONIA MARKET

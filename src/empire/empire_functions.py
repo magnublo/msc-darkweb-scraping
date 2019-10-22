@@ -1,9 +1,5 @@
-import time
-from datetime import datetime
-from typing import List, Tuple
-
 import dateparser as dateparser
-
+from typing import List, Tuple
 from definitions import EMPIRE_BASE_CATEGORY_URL
 from src.base import BaseFunctions
 from src.db_utils import _shorten_and_sanitize_for_text_column
@@ -233,7 +229,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return category_urls_and_nr_of_listings
 
     @staticmethod
-    def get_login_payload(soup_html, username, password, captcha_solution):
+    def get_login_payload(soup_html, username, password, captcha_solution) -> dict:
 
         payload = {}
 

@@ -33,6 +33,14 @@ class InternalServerErrorException(HTTPError):
         super().__init__(text)
 
 
+class GenericException(BaseException):
+
+    DEFAULT_TEXT = "Generic exception"
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
+
+
 def pretty_print_GET(req):
     """
     At this point it is completely built and ready
@@ -128,7 +136,7 @@ def queue_is_empty(queue):
     return queue.empty() and is_empty
 
 
-def get_page_as_soup_html(working_dir, web_response, file_name, use_offline_file=DEBUG_MODE) -> BeautifulSoup:
+def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline_file=DEBUG_MODE) -> BeautifulSoup:
     if use_offline_file:
         file_name = open(working_dir + file_name, "r")
         soup_html = BeautifulSoup(file_name, features="lxml")

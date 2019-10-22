@@ -1,14 +1,9 @@
 import base64
 import hashlib
-import sys
 import time
-import traceback
-from _mysql_connector import MySQLError
 from datetime import datetime
 from math import ceil
-from queue import Empty
 from random import shuffle
-from time import sleep
 from typing import Union
 
 import cfscrape
@@ -16,11 +11,11 @@ import requests
 from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 from sqlalchemy import func
-from sqlalchemy.exc import SQLAlchemyError
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
-    RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE
+    RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
+    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE
 from environmentSettings import DEBUG_MODE
 from src.base import BaseScraper
 from src.db_utils import get_column_name
@@ -37,8 +32,7 @@ from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
-from src.utils import get_error_string, error_is_sqlalchemy_error, \
-    print_error_to_file, get_page_as_soup_html
+from src.utils import get_page_as_soup_html
 
 
 class EmpireScrapingSession(BaseScraper):
@@ -153,76 +147,13 @@ class EmpireScrapingSession(BaseScraper):
         self.db_session.commit()
 
     def scrape(self):
-        while True:
-            try:
-                try:
-                    search_result_url = self.queue.get(timeout=1)
-                except Empty:
-                    print("Job queue is empty. Wrapping up...")
-                    self._wrap_up_session()
-                    return
+        while not self.queue.empty():
+            search_result_url = self.queue.get(timeout=1)
+            self._generic_error_catch_wrapper(search_result_url, func=self._scrape_items_in_search_result)
 
-                web_response = self._get_logged_in_web_response(search_result_url)
+        print("Job queue is empty. Wrapping up...")
+        self._wrap_up_session()
 
-                soup_html = get_page_as_soup_html(self.working_dir, web_response,
-                                                  file_name="saved_empire_search_result_html")
-                product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
-
-                if len(product_page_urls) == 0:
-                    if soup_html.text.find("There is currently nothing to show.") == -1:
-                        raise AssertionError  # raise error if no logical reason why search result is empty
-                    else:
-                        continue
-
-                titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
-                btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
-
-                assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
-
-                for i in range(0, len(product_page_urls)):
-                    title = titles[i]
-                    seller_name = sellers[i]
-                    seller_url = seller_urls[i]
-                    product_page_url = product_page_urls[i]
-                    is_sticky = urls_is_sticky[i]
-                    error_data = []
-
-                    while True:
-                        try:
-                            self.db_session.rollback()
-                            self._scrape_listing(title, seller_name, seller_url, product_page_url,
-                                                 is_sticky, btc_rate, ltc_rate, xmr_rate)
-                            self.db_session.commit()
-                            for entry in error_data:
-                                self._log_and_print_error(entry[0], entry[1], updated_date=entry[2], print_error=False)
-                            error_data = []
-                            break
-                        except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
-                            error_string = traceback.format_exc()
-                            if type(error) == AttributeError:
-                                if not error_is_sqlalchemy_error(error_string):
-                                    self._log_and_print_error(error, error_string)
-                                    raise error
-                            error_data.append([error, error_string, datetime.utcnow()])
-                            seconds_until_next_try = self._get_wait_interval(error_data)
-                            traceback.print_exc()
-                            print(
-                                f"Thread {self.thread_id} has problem with DBMS connection. Retrying in "
-                                f"{seconds_until_next_try} seconds...")
-                            sleep(seconds_until_next_try)
-
-            except BaseException as e:
-                error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
-                print_error_to_file(self.thread_id, error_string)
-                self._log_and_print_error(e, error_string, print_error=False)
-                self._wrap_up_session()
-                raise e
-            except:
-                error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
-                print_error_to_file(self.thread_id, error_string)
-                self._log_and_print_error(None, error_string, print_error=False)
-                self._wrap_up_session()
-                raise
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate):
@@ -465,7 +396,8 @@ class EmpireScrapingSession(BaseScraper):
 
         web_response = self._get_logged_in_web_response(url)
 
-        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_user_positive_feedback")
+        soup_html = get_page_as_soup_html(self.working_dir, web_response,
+                                          file_name="saved_empire_user_positive_feedback")
 
         feedback_array = scrapingFunctions.get_feedbacks(soup_html)
 
@@ -530,3 +462,28 @@ class EmpireScrapingSession(BaseScraper):
             pgp_key_content = scrapingFunctions.get_pgp_key(soup_html)
             self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content))
             self.db_session.flush()
+
+    def _scrape_items_in_search_result(self, search_result_url: str):
+        web_response = self._get_logged_in_web_response(search_result_url)
+
+        soup_html = get_page_as_soup_html(self.working_dir, web_response,
+                                          file_name="saved_empire_search_result_html")
+        product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
+
+        if len(product_page_urls) == 0:
+            if soup_html.text.find(EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE) == -1:
+                raise AssertionError  # raise error if no logical reason why search result is empty
+            else:
+                return
+
+        titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
+        btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+
+        assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
+
+        for title, seller_name, seller_url, product_page_url, is_sticky in zip(titles, sellers, seller_urls,
+                                                                               product_page_urls,
+                                                                               urls_is_sticky):
+            self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
+                                         is_sticky, btc_rate, ltc_rate, xmr_rate, func=self._scrape_listing)
+

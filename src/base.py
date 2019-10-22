@@ -3,17 +3,17 @@ import hashlib
 import sys
 import threading
 import traceback
+from _mysql_connector import MySQLError
 from abc import abstractstaticmethod, abstractmethod
 from datetime import datetime, timedelta
 from multiprocessing import Queue
 from time import sleep
 from time import time
-from typing import List, Union
+from typing import List, Callable
 
-import cfscrape
 import requests
 from python3_anticaptcha import AntiCaptchaControl
-from sqlalchemy.exc import ProgrammingError
+from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from urllib3.exceptions import HTTPError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
@@ -25,7 +25,8 @@ from src.models.error import Error
 from src.models.scraping_session import ScrapingSession
 from src.models.settings import Settings
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, is_internal_server_error, \
-    InternalServerErrorException, is_bad_gateway, BadGatewayException, queue_is_empty
+    InternalServerErrorException, is_bad_gateway, BadGatewayException, queue_is_empty, error_is_sqlalchemy_error, \
+    GenericException
 
 
 class BaseFunctions(metaclass=abc.ABCMeta):
@@ -65,7 +66,8 @@ class BaseFunctions(metaclass=abc.ABCMeta):
 
 class BaseScraper(metaclass=abc.ABCMeta):
 
-    def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
+    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int,
+                 session_id: int = None):
         engine = get_engine()
         self.login_url = self._get_login_url()
         self.login_phrase = self._get_login_phrase()
@@ -172,7 +174,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         self.db_session.expunge_all()
         self.db_session.close()
 
-    def _get_logged_out_web_response(self, url, post_data=None) -> requests.Response:
+    def _get_logged_out_web_response(self, url: str, post_data: dict = None) -> requests.Response:
         tries = 0
 
         while True:
@@ -222,7 +224,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         print(f"Pages left, approximate: {queue_size}.")
         print("\n")
 
-    def _get_logged_in_web_response(self, url, debug=DEBUG_MODE) -> requests.Response:
+    def _get_logged_in_web_response(self, url: str, debug: bool = DEBUG_MODE) -> requests.Response:
         while True:
             try:
                 if debug:
@@ -255,6 +257,51 @@ class BaseScraper(metaclass=abc.ABCMeta):
 
             except (HTTPError, BaseException) as e:
                 self._log_and_print_error(e, traceback.format_exc())
+
+    def _process_generic_error(self, e: BaseException) -> None:
+        error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
+        print_error_to_file(self.thread_id, error_string)
+        self._log_and_print_error(e, error_string, print_error=False)
+        self._wrap_up_session()
+        raise e
+
+    def _db_error_catch_wrapper(self, *args, func, error_data=None):
+        if not error_data:
+            error_data = []
+
+        if not error_data:
+            error_data = []
+
+        try:
+            self.db_session.rollback()
+            func(*args)
+            self.db_session.commit()
+            for entry in error_data:
+                self._log_and_print_error(entry[0], entry[1], updated_date=entry[2], print_error=False)
+            error_data = []
+        except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
+            error_string = traceback.format_exc()
+            if type(error) == AttributeError:
+                if not error_is_sqlalchemy_error(error_string):
+                    self._log_and_print_error(error, error_string)
+                    raise error
+            error_data.append([error, error_string, datetime.utcnow()])
+            seconds_until_next_try = self._get_wait_interval(error_data)
+            traceback.print_exc()
+            print(
+                f"Thread {self.thread_id} has problem with DBMS connection. Retrying in "
+                f"{seconds_until_next_try} seconds...")
+            sleep(seconds_until_next_try)
+            func(*args, func=func, error_data=error_data)
+
+    def _generic_error_catch_wrapper(self, *args, func: Callable):
+        try:
+            func(*args)
+        except BaseException as e:
+            self._process_generic_error(e)
+        except:
+            e = GenericException()
+            self._process_generic_error(e)
 
     @staticmethod
     def _is_logged_out(response, login_url, login_page_phrase) -> bool:
@@ -309,7 +356,7 @@ class BaseScraper(metaclass=abc.ABCMeta):
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_web_session(self) -> Union[requests.Session, cfscrape.Session]:
+    def _get_web_session(self) -> requests.Session:
         raise NotImplementedError('')
 
 

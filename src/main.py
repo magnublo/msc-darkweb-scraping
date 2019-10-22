@@ -13,10 +13,10 @@ from src.empire.empire_scrape_manager import EmpireScrapingManager
 faulthandler.enable()
 
 if DEBUG_MODE:
-    cryptonia_nr_of_threads = 1
+    cryptonia_nr_of_threads = 0
     cryptonia_start_immediately = True
 
-    empire_nr_of_threads = 0
+    empire_nr_of_threads = 1
     empire_start_immediately = True
 else:
     empire_nr_of_threads = int(input(f"[{EMPIRE_MARKET_ID}] Nr. of threads: "))

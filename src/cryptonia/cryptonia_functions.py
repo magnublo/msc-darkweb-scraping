@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Tuple
 
 from bs4 import BeautifulSoup
 
@@ -31,7 +31,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         pass
 
     @staticmethod
-    def get_list_of_cateogory_list_and_url(soup_html: BeautifulSoup) -> List[Union[List[str], str]]:
+    def get_category_lists_and_urls(soup_html: BeautifulSoup) -> Tuple[List[List], List[str]]:
         sidebar_inners = [div for div in soup_html.findAll('div', attrs={'class': 'sidebar_inner'})]
         assert len(sidebar_inners) == 2
         sidebar_inner = sidebar_inners[1]
@@ -39,7 +39,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         category_name_spans = [span for span in sidebar_inner.findAll('span', attrs={'class', 'lgtext'})]
         assert len(chksubcats_divs) == len(category_name_spans) == 10
 
-        list_of_category_list_category_url_and_nr_of_listings = []
+        category_lists = []
+        urls = []
 
         for chksubcats_div, category_name_span in zip(chksubcats_divs, category_name_spans):
             main_category_name = category_name_span.text.strip()
@@ -50,8 +51,21 @@ class CryptoniaScrapingFunctions(BaseFunctions):
                 subcategory_name = subcategory_href_inner_text_parts[0].strip()
                 categories = [main_category_name, subcategory_name]
                 subcategory_base_url = subcategory_href["href"]
-                list_of_category_list_category_url_and_nr_of_listings.append(
-                    [categories, subcategory_base_url])
+                category_lists.append(categories)
+                urls.append(subcategory_base_url)
 
-        return list_of_category_list_category_url_and_nr_of_listings
+        assert len(category_lists) == len(urls)
+        return category_lists, urls
+
+    @staticmethod
+    def get_nr_of_result_pages_in_category(soup_html) -> int:
+        tds = [td for td in soup_html.findAll('td', attrs={'class', 'gridftr'})]
+        assert len(tds) == 1
+        td: BeautifulSoup = tds[0]
+        spans = [span for span in td.findAll('span')]
+        assert len(spans) == 2
+        span: BeautifulSoup = spans[1]
+        parts_of_span = span.text.split(" ")
+        assert len(parts_of_span) == 3
+        return int(parts_of_span[2])
 

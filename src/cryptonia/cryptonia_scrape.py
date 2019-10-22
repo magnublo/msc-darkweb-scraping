@@ -1,33 +1,40 @@
-from typing import Union
+from random import shuffle
+from typing import Union, List, Tuple
 
 import requests
 
-from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX
+from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX, CRYPTONIA_MARKET_BASE_URL
 from src.base import BaseScraper
 from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions
 import cfscrape
+
+from src.db_utils import get_column_name
+from src.models.scraping_session import ScrapingSession
+from src.utils import get_page_as_soup_html
+
 
 class CryptoniaMarketScraper(BaseScraper):
 
     def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
         super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, session_id=session_id)
 
-    def _get_web_session(self) -> Union[requests.Session, cfscrape.Session]:
+    def _get_web_session(self) -> requests.Session:
         return cfscrape.Session()
 
     def populate_queue(self) -> None:
         web_response = self._get_logged_in_web_response(CRYPTONIA_MARKET_CATEGORY_INDEX)
-        soup_html = self._get_page_as_soup_html(web_response, file="saved_cryptonia_category_index_html")
-        list_of_category_list_and_url = \
-            scrapingFunctions.get_list_of_cateogory_list_and_url(soup_html)
+        soup_html = get_page_as_soup_html(self.working_dir, web_response)
+        category_lists, category_base_urls = \
+            scrapingFunctions.get_category_lists_and_urls(soup_html)
         task_list = []
 
-        for i in range(0, len(list_of_category_list_and_url)):
-            web_response = self._get_logged_in_web_response()
-            url = list_of_category_list_and_url[i][0]
-            nr_of_pages = nr_of_listings // 15
-            for k in range(0, nr_of_pages):
-                task_list.append(url + str(k * 15))
+        for category_list, category_base_url in zip(category_lists, category_base_urls):
+            web_response = self._get_logged_in_web_response(f"{CRYPTONIA_MARKET_BASE_URL}/{category_base_url}")
+            soup_html = get_page_as_soup_html(self.working_dir, web_response)
+            nr_of_pages = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
+            task_list.append([category_list, category_base_url])
+            for k in range(1, nr_of_pages):
+                task_list.append([category_list, f"{category_base_url}/{k+1}"])
 
         shuffle(task_list)
 
@@ -40,7 +47,12 @@ class CryptoniaMarketScraper(BaseScraper):
         self.db_session.commit()
 
     def scrape(self) -> None:
-        pass
+        while not self.queue.empty():
+            category_list : List[str]
+            search_result_url: str
+            category_list, search_result_url = self.queue.get(timeout=1)
+
+
 
     def _login_and_set_cookie(self, response=None) -> None:
         pass
