@@ -27,22 +27,30 @@ class ListingObservation(Base):
     url = Column(String(URL_COLUMN_LENGTH))
 
     btc = Column(Boolean)
-    ltc = Column(Boolean)
     xmr = Column(Boolean)
-    nr_sold = Column(Integer)
-    nr_sold_since_date = Column(Date)
 
-    promoted_listing = Column(Boolean)
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     price = Column(Float)
     fiat_currency = Column(CHAR(CURRENCY_COLUMN_LENGTH))
     origin_country = Column(String, ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY))
     # destination_country is represented in junction table
 
-    # Vendor specific attributes. These attributes may have null values.
     btc_rate = Column(Float)
-    ltc_rate = Column(Float)
     xmr_rate = Column(Float)
-
     payment_type = Column(String(32))
+
+    # empire
+    promoted_listing = Column(Boolean)
+    ltc = Column(Boolean)
+    ltc_rate = Column(Float)
+    nr_sold = Column(Integer)
+    nr_sold_since_date = Column(Date)
+
+    # cryptonia
+    # in stock int
+    # listing type varchar
+    # unit type varchar
+    # bulk discounts in junction table
+    # btc_multisig
+
 

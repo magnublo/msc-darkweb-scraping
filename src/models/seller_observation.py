@@ -26,15 +26,22 @@ class SellerObservation(Base):
     spendings = Column(String)
     feedback_left = Column(Integer)
     feedback_percent_positive = Column(Float)
-    last_online = Column(Date)
+    last_online = Column(Date) #Within the last 3 days # Within the last 24 hours
 
     dream_market_successful_sales = Column(Integer)
     dream_market_star_rating = Column(Float)
     wall_street_market_successful_sales = Column(Integer)
-    wall_street_market_star_rating = Column(Float)
+    wall_street_market_star_rating = Column(Float) #Wallstreet: 214 deals, 4.45/5
 
     parenthesis_number = Column(Integer)
     positive_feedback_received_percent = Column(Float)
+
+    # empire market columns
+    stealth_rating = Column(Integer)
+    quality_rating = Column(Integer)
+    value_price_rating = Column(Integer)
+    vendor_level = Column(Integer)
+    trust_level = Column(Integer)
 
     positive_1m = Column(Integer)
     positive_6m = Column(Integer)
@@ -46,11 +53,24 @@ class SellerObservation(Base):
     negative_6m = Column(Integer)
     negative_12m = Column(Integer)
 
-    stealth_rating = Column(Integer)
-    quality_rating = Column(Integer)
-    value_price_rating = Column(Integer)
+    # cryptonia columns
+    # Nucleus: 670 deals, 4.97/5
+    # Alphabay: 346 / 3 / 1
+    # CGMC: 2000+ deals, 4.95/5
+    # Hansa: 716/2/2
+    # Black Bank: 25/0/0
+    # Agora: 500 deals, 4.99/5
+    # Black Market Reloaded: 54/4/1
+    # Abraxas: 50 deals, 5.0/5
+    # Middle Earth: 36 deals, 9.97/10
+    # verified boolean
+    # level int
+    # disputes won
+    # disputes lost
+    # amount on escrow, btc
+    # amount on escrow, usd
+    # FE enabled
+    #  XMPP/Jabber ID: enjoymyaccounts@jabber.cat
 
-    vendor_level = Column(Integer)
-    trust_level = Column(Integer)
 
     UniqueConstraint(session_id, url)

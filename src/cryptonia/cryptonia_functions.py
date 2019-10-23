@@ -58,7 +58,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_cryptocurrency_rates(soup_html: BeautifulSoup) -> Tuple[int, int]:
-
+        pass
 
     def _format_logger_message(self, message: str) -> str:
         return message

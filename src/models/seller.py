@@ -15,7 +15,7 @@ class Seller(Base):
     id = Column(Integer, primary_key=True)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     name = Column(CHAR(SELLER_NAME_COLUMN_LENGTH))
-    registration_date = Column(Date)
+    registration_date = Column(DateTime)
     market = Column(CHAR(MARKET_NAME_COLUMN_LENGTH))
 
     UniqueConstraint(name, market)
