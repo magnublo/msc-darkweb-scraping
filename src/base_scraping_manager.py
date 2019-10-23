@@ -86,6 +86,9 @@ class BaseScrapingManager(BaseClassWithLogger):
         settings = get_settings(market_name=self.market_name)
         self.refill_queue_when_complete = settings.refill_queue_when_complete
 
+    def _format_logger_message(self, message: str) -> str:
+        raise NotImplementedError('')
+
     @staticmethod
     def _wait_until_midnight_utc() -> None:
 

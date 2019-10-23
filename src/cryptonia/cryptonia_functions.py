@@ -1,34 +1,67 @@
-from typing import List, Union, Tuple
+import abc
+import re
+from typing import List, Tuple
 
 from bs4 import BeautifulSoup
 
 from src.base_functions import BaseFunctions
 
-
 class CryptoniaScrapingFunctions(BaseFunctions):
-    def accepts_currencies(soup_html):
+
+    @staticmethod
+    def accepts_currencies(soup_html) -> Tuple[bool, bool, bool]:
         pass
 
-    def get_title(soup_html):
+    @staticmethod
+    def get_title(soup_html) -> str:
         pass
 
-    def get_description(soup_html):
+    @staticmethod
+    def get_description(soup_html) -> str:
         pass
 
-    def get_product_page_urls(soup_html):
+    @staticmethod
+    def get_product_page_urls(soup_html) -> List[str]:
+        product_page_urls = []
+
+        tables = [table for table in soup_html.findAll('table', attrs={'style': 'width: 100%'})]
+        assert len(tables) == 1
+        table = tables[0]
+
+        trs = [tr for tr in table.findAll('tr')]
+        assert len(trs) <= 27
+
+        for tr in trs[1:-1]:
+            thumb_td, spacer_td, product_td, price_td, vendor_td = [td for td in tr.findAll('td')]
+            hrefs = [href for href in product_td.findAll('a', href=True)]
+            assert len(hrefs) == 1
+            href = hrefs[0]
+            product_page_urls.append(href["href"])
+
+        assert len(product_page_urls) == len(trs) - 2
+
+        return product_page_urls
+
+
+
+    @staticmethod
+    def get_nr_sold_since_date(soup_html) -> int:
         pass
 
-    def get_nr_sold_since_date(soup_html):
+    @staticmethod
+    def get_fiat_currency_and_price(soup_html) -> Tuple[str, int]:
         pass
 
-    def get_fiat_currency_and_price(soup_html):
+    @staticmethod
+    def get_origin_country_and_destinations(soup_html) -> Tuple[str, List[str]]:
         pass
 
-    def get_origin_country_and_destinations(soup_html):
+    @staticmethod
+    def get_cryptocurrency_rates(soup_html) -> Tuple[int, int, int]:
         pass
 
-    def get_cryptocurrency_rates(soup_html):
-        pass
+    def _format_logger_message(self, message: str) -> str:
+        return message
 
     @staticmethod
     def get_category_lists_and_urls(soup_html: BeautifulSoup) -> Tuple[List[List], List[str]]:

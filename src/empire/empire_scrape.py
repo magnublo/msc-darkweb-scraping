@@ -146,14 +146,6 @@ class EmpireScrapingSession(BaseScraper):
             {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
         self.db_session.commit()
 
-    def scrape(self):
-        while not self.queue.empty():
-            search_result_url = self.queue.get(timeout=1)
-            self._generic_error_catch_wrapper(search_result_url, func=self._scrape_items_in_search_result)
-
-        print("Job queue is empty. Wrapping up...")
-        self._wrap_up_session()
-
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate):
@@ -463,7 +455,7 @@ class EmpireScrapingSession(BaseScraper):
             self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content))
             self.db_session.flush()
 
-    def _scrape_items_in_search_result(self, search_result_url: str):
+    def _scrape_queue_item(self, search_result_url: str):
         web_response = self._get_logged_in_web_response(search_result_url)
 
         soup_html = get_page_as_soup_html(self.working_dir, web_response,

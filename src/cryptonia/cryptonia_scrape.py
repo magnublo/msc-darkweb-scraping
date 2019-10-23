@@ -1,9 +1,11 @@
 from random import shuffle
+from typing import List
 
 import cfscrape
 import requests
 
-from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX, CRYPTONIA_MARKET_BASE_URL
+from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX, CRYPTONIA_MARKET_BASE_URL, \
+    CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE
 from src.base_scraper import BaseScraper
 from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions
 from src.db_utils import get_column_name
@@ -32,7 +34,7 @@ class CryptoniaMarketScraper(BaseScraper):
             nr_of_pages = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
             task_list.append([category_list, category_base_url])
             for k in range(1, nr_of_pages):
-                task_list.append([category_list, f"{category_base_url}/{k+1}"])
+                task_list.append((category_list, f"{category_base_url}/{k+1}"))
 
         shuffle(task_list)
 
@@ -44,16 +46,29 @@ class CryptoniaMarketScraper(BaseScraper):
             {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
         self.db_session.commit()
 
-    def scrape(self):
-        self.logger.critical("some statement here")
-        while not self.queue.empty():
-            search_result_url = self.queue.get(timeout=1)
-            #self._generic_error_catch_wrapper(search_result_url, func=self._scrape_items_in_search_result)
+    def _scrape_queue_item(self, category_list: List[str], search_result_url: str) -> None:
+        web_response = self._get_logged_in_web_response(search_result_url)
 
-        print("Job queue is empty. Wrapping up...")
-        self._wrap_up_session()
+        soup_html = get_page_as_soup_html(self.working_dir, web_response,
+                                          file_name="saved_empire_search_result_html")
+        product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
 
+        if len(product_page_urls) == 0:
+            if soup_html.text.find(CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE) == -1:
+                raise AssertionError  # raise error if no logical reason why search result is empty
+            else:
+                return
 
+        titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
+        btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+
+        assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
+
+        for title, seller_name, seller_url, product_page_url, is_sticky in zip(titles, sellers, seller_urls,
+                                                                               product_page_urls,
+                                                                               urls_is_sticky):
+            self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
+                                         is_sticky, btc_rate, ltc_rate, xmr_rate, func=self._scrape_listing)
 
     def _login_and_set_cookie(self, response=None) -> None:
         pass

@@ -126,3 +126,7 @@ def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline
         return soup_html
     else:
         return BeautifulSoup(web_response.text, features=BEAUTIFUL_SOUP_HTML_PARSER)
+
+
+def get_logger_name(cls: object):
+    return cls.__name__

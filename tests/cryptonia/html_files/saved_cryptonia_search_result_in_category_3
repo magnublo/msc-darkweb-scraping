@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Products</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-23 16:19&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/usingpython3>usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+.thumbhdr { width: 64px; }
+.spacer { width: 10px; }
+.product { padding: 5px; vertical-align: top; font-size: 90%; }
+.vendor { padding: 5px; vertical-align: top; width: 160px; font-size: 90%; }
+.price { padding: 5px; width: 180px; text-align: center; font-size: 90%; }
+.gridrow { height:48px; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<div>
+<h2><span class="icono-caretRightSquare"></span>&nbsp;Sleep Aids Products</h2>
+<p class=notice style="background: firebrick; color: white">
+PHISHING SCAM WARNING: WE HAVE RECEIVED MANY REPORTS OF PHISHING SCAMS TARGETING OUR USERS.
+PLEASE VISIT OUR SUBDREAD AT dreadditevelidot dot onion/d/cryptonia FOR A LIST OF VERIFIED MIRRORS
+AND VERIFY THAT YOU USED A LEGIT MIRROR.
+</p>
+<p class=notice>
+WARNING: Always read the vendor <b>Terms and Conditions</b> before ordering
+to make sure you understand them before ordering. NEVER mark an order as <b>RECEIVED</b> until
+you are satisfied that the vendor has met his/her terms. <b>If you feel that the vendor has
+failed to meet their T&C you must dispute the order before the auto-finalize date</b>.
+</p>
+<style>
+#prod_3864493 { position: fixed; width: 100%; display: none; }
+#prod_3864493:target { display: inline-block; }
+#prod_20873053 { position: fixed; width: 100%; display: none; }
+#prod_20873053:target { display: inline-block; }
+#prod_22403473 { position: fixed; width: 100%; display: none; }
+#prod_22403473:target { display: inline-block; }
+#prod_18964853 { position: fixed; width: 100%; display: none; }
+#prod_18964853:target { display: inline-block; }
+#prod_2892233 { position: fixed; width: 100%; display: none; }
+#prod_2892233:target { display: inline-block; }
+#prod_8562243 { position: fixed; width: 100%; display: none; }
+#prod_8562243:target { display: inline-block; }
+#prod_8559853 { position: fixed; width: 100%; display: none; }
+#prod_8559853:target { display: inline-block; }
+#prod_10295743 { position: fixed; width: 100%; display: none; }
+#prod_10295743:target { display: inline-block; }
+#prod_10175733 { position: fixed; width: 100%; display: none; }
+#prod_10175733:target { display: inline-block; }
+#prod_8103273 { position: fixed; width: 100%; display: none; }
+#prod_8103273:target { display: inline-block; }
+#prod_7636923 { position: fixed; width: 100%; display: none; }
+#prod_7636923:target { display: inline-block; }
+#prod_2039723 { position: fixed; width: 100%; display: none; }
+#prod_2039723:target { display: inline-block; }
+#prod_21036993 { position: fixed; width: 100%; display: none; }
+#prod_21036993:target { display: inline-block; }
+#prod_19388563 { position: fixed; width: 100%; display: none; }
+#prod_19388563:target { display: inline-block; }
+#prod_9099563 { position: fixed; width: 100%; display: none; }
+#prod_9099563:target { display: inline-block; }
+</style>
+<div style="display: inline-block; color:white; vertical-align: top; width: 175px">
+<div class=sidebar><span style="display: inline-block; font-weight: bold; height: 15px; padding:5px;">Search</span>
+<div class=sidebar_inner>
+<form action=/products method=get>
+<input type=hidden name=adv value=1>
+<div class=content_div>
+<input type=text style="width: 100%;" name=q placeholder="Search terms" value="" maxlength=1024>
+</div>
+<div class=content_div>
+<input type=text style="width: 100%;" name=vendor placeholder="Vendor name" value="" maxlength=32>
+</div>
+<div class=content_div>
+<select style="width:100%" name=payment_method>
+<option value=0>--Payment Method--</option>
+<option value=1>Bitcoin (BTC)</option>
+<option value=2>Bitcoin (BTC) Multisig</option>
+<option value=3>Monero (XMR)</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width: 100%" name=category>
+<option value=0>--Category--</option>
+<option value=2>Weed</option>
+<option value=3>Hashish</option>
+<option value=4>Edibles</option>
+<option value=5>Concentrate</option>
+<option value=6>Synthetics</option>
+<option value=8>Cocaine</option>
+<option value=9>Crack</option>
+<option value=10>Amphetamine</option>
+<option value=11>Methamphetamine</option>
+<option value=12>A-PVP</option>
+<option value=13>Cathinones</option>
+<option value=14>Snuff</option>
+<option value=15>MDPV</option>
+<option value=16>Nicotine</option>
+<option value=17>2-FMA 4-FA</option>
+<option value=18>Phenidades</option>
+<option value=20>Heroin</option>
+<option value=21>Oxycodone</option>
+<option value=23>Buprenorphine</option>
+<option value=24>Tramadol</option>
+<option value=25>Codeine</option>
+<option value=26>Morphine</option>
+<option value=27>Opium</option>
+<option value=28>Metadon</option>
+<option value=30>MDMA</option>
+<option value=31>Ecstacy</option>
+<option value=32>MDA MDAI</option>
+<option value=33>Methylone</option>
+<option value=35>LSD</option>
+<option value=36>DMT AMT</option>
+<option value=37>Mushrooms</option>
+<option value=38>25x-NBOMe</option>
+<option value=39>Mescaline</option>
+<option value=40>Ayahuasca</option>
+<option value=41>2C-x</option>
+<option value=42>5-MeO-DiPT</option>
+<option value=43>5-MeO-MiPT</option>
+<option value=44>LSA LSZ</option>
+<option value=45>AL-LAD</option>
+<option value=46>Ibogaine</option>
+<option value=47>DOx</option>
+<option value=49>Benzos</option>
+<option value=50>ED Sex Meds</option>
+<option value=51>Sleep Aids</option>
+<option value=52>ADHD</option>
+<option value=53>Pain Medication</option>
+<option value=54>Sedatives</option>
+<option value=55>Muscle Relaxers</option>
+<option value=56>MAOIs</option>
+<option value=57>Nootropics</option>
+<option value=58>Other Pharma</option>
+<option value=60>Ketamine</option>
+<option value=61>Salvia</option>
+<option value=62>MXE MXP</option>
+<option value=64>Alcohol</option>
+<option value=65>GHB GBL</option>
+<option value=67>Paraphernalia</option>
+<option value=68>Body Building</option>
+<option value=69>Drug Production</option>
+<option value=70>Digital Items</option>
+<option value=71>Seeds and Clones</option>
+<option value=72>Other Narcotics</option>
+<option value=74>Credit Cards</option>
+<option value=75>Fullz</option>
+<option value=76>Accounts</option>
+<option value=77>Other Fraud Related</option>
+<option value=78>Fake IDs</option>
+<option value=100>Other Items</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=ships_from>
+<option value=0>--Ships From--</option>
+<option value=1>Afghanistan (AF)</option>
+<option value=3>Albania (AL)</option>
+<option value=4>Algeria (DZ)</option>
+<option value=5>American Samoa (AS)</option>
+<option value=6>Andorra (AD)</option>
+<option value=7>Angola (AO)</option>
+<option value=8>Anguilla (AI)</option>
+<option value=9>Antarctica (AQ)</option>
+<option value=10>Antigua and Barbuda (AG)</option>
+<option value=11>Argentina (AR)</option>
+<option value=12>Armenia (AM)</option>
+<option value=13>Aruba (AW)</option>
+<option value=14>Australia (AU)</option>
+<option value=15>Austria (AT)</option>
+<option value=16>Azerbaijan (AZ)</option>
+<option value=2>Åland Islands (AX)</option>
+<option value=17>Bahamas (BS)</option>
+<option value=18>Bahrain (BH)</option>
+<option value=19>Bangladesh (BD)</option>
+<option value=20>Barbados (BB)</option>
+<option value=21>Belarus (BY)</option>
+<option value=22>Belgium (BE)</option>
+<option value=23>Belize (BZ)</option>
+<option value=24>Benin (BJ)</option>
+<option value=25>Bermuda (BM)</option>
+<option value=26>Bhutan (BT)</option>
+<option value=27>Bolivia, Plurinational State of (BO)</option>
+<option value=28>Bonaire, Sint Eustatius and Saba (BQ)</option>
+<option value=29>Bosnia and Herzegovina (BA)</option>
+<option value=30>Botswana (BW)</option>
+<option value=31>Bouvet Island (BV)</option>
+<option value=32>Brazil (BR)</option>
+<option value=33>British Indian Ocean Territory (IO)</option>
+<option value=34>Brunei Darussalam (BN)</option>
+<option value=35>Bulgaria (BG)</option>
+<option value=36>Burkina Faso (BF)</option>
+<option value=37>Burundi (BI)</option>
+<option value=38>Cambodia (KH)</option>
+<option value=39>Cameroon (CM)</option>
+<option value=40>Canada (CA)</option>
+<option value=41>Cape Verde (CV)</option>
+<option value=42>Cayman Islands (KY)</option>
+<option value=55>Côte d'Ivoire (CI)</option>
+<option value=43>Central African Republic (CF)</option>
+<option value=44>Chad (TD)</option>
+<option value=45>Chile (CL)</option>
+<option value=46>China (CN)</option>
+<option value=47>Christmas Island (CX)</option>
+<option value=48>Cocos (Keeling) Islands (CC)</option>
+<option value=49>Colombia (CO)</option>
+<option value=50>Comoros (KM)</option>
+<option value=51>Congo (CG)</option>
+<option value=52>Congo, the Democratic Republic of the (CD)</option>
+<option value=53>Cook Islands (CK)</option>
+<option value=54>Costa Rica (CR)</option>
+<option value=56>Croatia (HR)</option>
+<option value=57>Cuba (CU)</option>
+<option value=58>Curaçao (CW)</option>
+<option value=59>Cyprus (CY)</option>
+<option value=60>Czech Republic (CZ)</option>
+<option value=61>Denmark (DK)</option>
+<option value=62>Djibouti (DJ)</option>
+<option value=63>Dominica (DM)</option>
+<option value=64>Dominican Republic (DO)</option>
+<option value=65>Ecuador (EC)</option>
+<option value=66>Egypt (EG)</option>
+<option value=67>El Salvador (SV)</option>
+<option value=68>Equatorial Guinea (GQ)</option>
+<option value=69>Eritrea (ER)</option>
+<option value=70>Estonia (EE)</option>
+<option value=71>Ethiopia (ET)</option>
+<option value=251>European Union (EU)</option>
+<option value=72>Falkland Islands (Malvinas) (FK)</option>
+<option value=73>Faroe Islands (FO)</option>
+<option value=74>Fiji (FJ)</option>
+<option value=75>Finland (FI)</option>
+<option value=76>France (FR)</option>
+<option value=77>French Guiana (GF)</option>
+<option value=78>French Polynesia (PF)</option>
+<option value=79>French Southern Territories (TF)</option>
+<option value=80>Gabon (GA)</option>
+<option value=81>Gambia (GM)</option>
+<option value=82>Georgia (GE)</option>
+<option value=83>Germany (DE)</option>
+<option value=84>Ghana (GH)</option>
+<option value=85>Gibraltar (GI)</option>
+<option value=86>Greece (GR)</option>
+<option value=87>Greenland (GL)</option>
+<option value=88>Grenada (GD)</option>
+<option value=89>Guadeloupe (GP)</option>
+<option value=90>Guam (GU)</option>
+<option value=91>Guatemala (GT)</option>
+<option value=92>Guernsey (GG)</option>
+<option value=93>Guinea (GN)</option>
+<option value=94>Guinea-Bissau (GW)</option>
+<option value=95>Guyana (GY)</option>
+<option value=96>Haiti (HT)</option>
+<option value=97>Heard Island and McDonald Islands (HM)</option>
+<option value=98>Holy See (Vatican City State) (VA)</option>
+<option value=99>Honduras (HN)</option>
+<option value=100>Hong Kong (HK)</option>
+<option value=101>Hungary (HU)</option>
+<option value=102>Iceland (IS)</option>
+<option value=103>India (IN)</option>
+<option value=104>Indonesia (ID)</option>
+<option value=105>Iran, Islamic Republic of (IR)</option>
+<option value=106>Iraq (IQ)</option>
+<option value=107>Ireland (IE)</option>
+<option value=108>Isle of Man (IM)</option>
+<option value=109>Israel (IL)</option>
+<option value=110>Italy (IT)</option>
+<option value=111>Jamaica (JM)</option>
+<option value=112>Japan (JP)</option>
+<option value=113>Jersey (JE)</option>
+<option value=114>Jordan (JO)</option>
+<option value=115>Kazakhstan (KZ)</option>
+<option value=116>Kenya (KE)</option>
+<option value=117>Kiribati (KI)</option>
+<option value=118>Korea, Democratic People's Republic of (KP)</option>
+<option value=119>Korea, Republic of (KR)</option>
+<option value=120>Kuwait (KW)</option>
+<option value=121>Kyrgyzstan (KG)</option>
+<option value=122>Lao People's Democratic Republic (LA)</option>
+<option value=123>Latvia (LV)</option>
+<option value=124>Lebanon (LB)</option>
+<option value=125>Lesotho (LS)</option>
+<option value=126>Liberia (LR)</option>
+<option value=127>Libya (LY)</option>
+<option value=128>Liechtenstein (LI)</option>
+<option value=129>Lithuania (LT)</option>
+<option value=130>Luxembourg (LU)</option>
+<option value=131>Macao (MO)</option>
+<option value=132>Macedonia, the Former Yugoslav Republic of (MK)</option>
+<option value=133>Madagascar (MG)</option>
+<option value=134>Malawi (MW)</option>
+<option value=135>Malaysia (MY)</option>
+<option value=136>Maldives (MV)</option>
+<option value=137>Mali (ML)</option>
+<option value=138>Malta (MT)</option>
+<option value=139>Marshall Islands (MH)</option>
+<option value=140>Martinique (MQ)</option>
+<option value=141>Mauritania (MR)</option>
+<option value=142>Mauritius (MU)</option>
+<option value=143>Mayotte (YT)</option>
+<option value=144>Mexico (MX)</option>
+<option value=145>Micronesia, Federated States of (FM)</option>
+<option value=146>Moldova, Republic of (MD)</option>
+<option value=147>Monaco (MC)</option>
+<option value=148>Mongolia (MN)</option>
+<option value=149>Montenegro (ME)</option>
+<option value=150>Montserrat (MS)</option>
+<option value=151>Morocco (MA)</option>
+<option value=152>Mozambique (MZ)</option>
+<option value=153>Myanmar (MM)</option>
+<option value=154>Namibia (NA)</option>
+<option value=155>Nauru (NR)</option>
+<option value=156>Nepal (NP)</option>
+<option value=157>Netherlands (NL)</option>
+<option value=158>New Caledonia (NC)</option>
+<option value=159>New Zealand (NZ)</option>
+<option value=160>Nicaragua (NI)</option>
+<option value=161>Niger (NE)</option>
+<option value=162>Nigeria (NG)</option>
+<option value=163>Niue (NU)</option>
+<option value=164>Norfolk Island (NF)</option>
+<option value=165>Northern Mariana Islands (MP)</option>
+<option value=166>Norway (NO)</option>
+<option value=167>Oman (OM)</option>
+<option value=168>Pakistan (PK)</option>
+<option value=169>Palau (PW)</option>
+<option value=170>Palestine, State of (PS)</option>
+<option value=171>Panama (PA)</option>
+<option value=172>Papua New Guinea (PG)</option>
+<option value=173>Paraguay (PY)</option>
+<option value=174>Peru (PE)</option>
+<option value=175>Philippines (PH)</option>
+<option value=176>Pitcairn (PN)</option>
+<option value=177>Poland (PL)</option>
+<option value=178>Portugal (PT)</option>
+<option value=179>Puerto Rico (PR)</option>
+<option value=180>Qatar (QA)</option>
+<option value=181>Réunion (RE)</option>
+<option value=182>Romania (RO)</option>
+<option value=183>Russian Federation (RU)</option>
+<option value=184>Rwanda (RW)</option>
+<option value=185>Saint Barthélemy (BL)</option>
+<option value=186>Saint Helena, Ascension and Tristan da Cunha (SH)</option>
+<option value=187>Saint Kitts and Nevis (KN)</option>
+<option value=188>Saint Lucia (LC)</option>
+<option value=189>Saint Martin (French part) (MF)</option>
+<option value=190>Saint Pierre and Miquelon (PM)</option>
+<option value=191>Saint Vincent and the Grenadines (VC)</option>
+<option value=192>Samoa (WS)</option>
+<option value=193>San Marino (SM)</option>
+<option value=194>Sao Tome and Principe (ST)</option>
+<option value=195>Saudi Arabia (SA)</option>
+<option value=196>Senegal (SN)</option>
+<option value=197>Serbia (RS)</option>
+<option value=198>Seychelles (SC)</option>
+<option value=199>Sierra Leone (SL)</option>
+<option value=200>Singapore (SG)</option>
+<option value=201>Sint Maarten (Dutch part) (SX)</option>
+<option value=202>Slovakia (SK)</option>
+<option value=203>Slovenia (SI)</option>
+<option value=204>Solomon Islands (SB)</option>
+<option value=205>Somalia (SO)</option>
+<option value=206>South Africa (ZA)</option>
+<option value=207>South Georgia and the South Sandwich Islands (GS)</option>
+<option value=208>South Sudan (SS)</option>
+<option value=209>Spain (ES)</option>
+<option value=210>Sri Lanka (LK)</option>
+<option value=211>Sudan (SD)</option>
+<option value=212>Suriname (SR)</option>
+<option value=213>Svalbard and Jan Mayen (SJ)</option>
+<option value=214>Swaziland (SZ)</option>
+<option value=215>Sweden (SE)</option>
+<option value=216>Switzerland (CH)</option>
+<option value=217>Syrian Arab Republic (SY)</option>
+<option value=218>Taiwan, Province of China (TW)</option>
+<option value=219>Tajikistan (TJ)</option>
+<option value=220>Tanzania, United Republic of (TZ)</option>
+<option value=221>Thailand (TH)</option>
+<option value=222>Timor-Leste (TL)</option>
+<option value=223>Togo (TG)</option>
+<option value=224>Tokelau (TK)</option>
+<option value=225>Tonga (TO)</option>
+<option value=226>Trinidad and Tobago (TT)</option>
+<option value=227>Tunisia (TN)</option>
+<option value=228>Turkey (TR)</option>
+<option value=229>Turkmenistan (TM)</option>
+<option value=230>Turks and Caicos Islands (TC)</option>
+<option value=231>Tuvalu (TV)</option>
+<option value=232>Uganda (UG)</option>
+<option value=233>Ukraine (UA)</option>
+<option value=234>United Arab Emirates (AE)</option>
+<option value=235>United Kingdom (GB)</option>
+<option value=236>United States (US)</option>
+<option value=237>United States Minor Outlying Islands (UM)</option>
+<option value=238>Uruguay (UY)</option>
+<option value=239>Uzbekistan (UZ)</option>
+<option value=240>Vanuatu (VU)</option>
+<option value=241>Venezuela, Bolivarian Republic of (VE)</option>
+<option value=242>Viet Nam (VN)</option>
+<option value=243>Virgin Islands, British (VG)</option>
+<option value=244>Virgin Islands, U.S. (VI)</option>
+<option value=245>Wallis and Futuna (WF)</option>
+<option value=246>Western Sahara (EH)</option>
+<option value=250>Worldwide (WW)</option>
+<option value=247>Yemen (YE)</option>
+<option value=248>Zambia (ZM)</option>
+<option value=249>Zimbabwe (ZW)</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=ships_to>
+<option value=0>--Ships To--</option>
+<option value=1>Afghanistan (AF)</option>
+<option value=3>Albania (AL)</option>
+<option value=4>Algeria (DZ)</option>
+<option value=5>American Samoa (AS)</option>
+<option value=6>Andorra (AD)</option>
+<option value=7>Angola (AO)</option>
+<option value=8>Anguilla (AI)</option>
+<option value=9>Antarctica (AQ)</option>
+<option value=10>Antigua and Barbuda (AG)</option>
+<option value=11>Argentina (AR)</option>
+<option value=12>Armenia (AM)</option>
+<option value=13>Aruba (AW)</option>
+<option value=14>Australia (AU)</option>
+<option value=15>Austria (AT)</option>
+<option value=16>Azerbaijan (AZ)</option>
+<option value=2>Åland Islands (AX)</option>
+<option value=17>Bahamas (BS)</option>
+<option value=18>Bahrain (BH)</option>
+<option value=19>Bangladesh (BD)</option>
+<option value=20>Barbados (BB)</option>
+<option value=21>Belarus (BY)</option>
+<option value=22>Belgium (BE)</option>
+<option value=23>Belize (BZ)</option>
+<option value=24>Benin (BJ)</option>
+<option value=25>Bermuda (BM)</option>
+<option value=26>Bhutan (BT)</option>
+<option value=27>Bolivia, Plurinational State of (BO)</option>
+<option value=28>Bonaire, Sint Eustatius and Saba (BQ)</option>
+<option value=29>Bosnia and Herzegovina (BA)</option>
+<option value=30>Botswana (BW)</option>
+<option value=31>Bouvet Island (BV)</option>
+<option value=32>Brazil (BR)</option>
+<option value=33>British Indian Ocean Territory (IO)</option>
+<option value=34>Brunei Darussalam (BN)</option>
+<option value=35>Bulgaria (BG)</option>
+<option value=36>Burkina Faso (BF)</option>
+<option value=37>Burundi (BI)</option>
+<option value=38>Cambodia (KH)</option>
+<option value=39>Cameroon (CM)</option>
+<option value=40>Canada (CA)</option>
+<option value=41>Cape Verde (CV)</option>
+<option value=42>Cayman Islands (KY)</option>
+<option value=55>Côte d'Ivoire (CI)</option>
+<option value=43>Central African Republic (CF)</option>
+<option value=44>Chad (TD)</option>
+<option value=45>Chile (CL)</option>
+<option value=46>China (CN)</option>
+<option value=47>Christmas Island (CX)</option>
+<option value=48>Cocos (Keeling) Islands (CC)</option>
+<option value=49>Colombia (CO)</option>
+<option value=50>Comoros (KM)</option>
+<option value=51>Congo (CG)</option>
+<option value=52>Congo, the Democratic Republic of the (CD)</option>
+<option value=53>Cook Islands (CK)</option>
+<option value=54>Costa Rica (CR)</option>
+<option value=56>Croatia (HR)</option>
+<option value=57>Cuba (CU)</option>
+<option value=58>Curaçao (CW)</option>
+<option value=59>Cyprus (CY)</option>
+<option value=60>Czech Republic (CZ)</option>
+<option value=61>Denmark (DK)</option>
+<option value=62>Djibouti (DJ)</option>
+<option value=63>Dominica (DM)</option>
+<option value=64>Dominican Republic (DO)</option>
+<option value=65>Ecuador (EC)</option>
+<option value=66>Egypt (EG)</option>
+<option value=67>El Salvador (SV)</option>
+<option value=68>Equatorial Guinea (GQ)</option>
+<option value=69>Eritrea (ER)</option>
+<option value=70>Estonia (EE)</option>
+<option value=71>Ethiopia (ET)</option>
+<option value=251>European Union (EU)</option>
+<option value=72>Falkland Islands (Malvinas) (FK)</option>
+<option value=73>Faroe Islands (FO)</option>
+<option value=74>Fiji (FJ)</option>
+<option value=75>Finland (FI)</option>
+<option value=76>France (FR)</option>
+<option value=77>French Guiana (GF)</option>
+<option value=78>French Polynesia (PF)</option>
+<option value=79>French Southern Territories (TF)</option>
+<option value=80>Gabon (GA)</option>
+<option value=81>Gambia (GM)</option>
+<option value=82>Georgia (GE)</option>
+<option value=83>Germany (DE)</option>
+<option value=84>Ghana (GH)</option>
+<option value=85>Gibraltar (GI)</option>
+<option value=86>Greece (GR)</option>
+<option value=87>Greenland (GL)</option>
+<option value=88>Grenada (GD)</option>
+<option value=89>Guadeloupe (GP)</option>
+<option value=90>Guam (GU)</option>
+<option value=91>Guatemala (GT)</option>
+<option value=92>Guernsey (GG)</option>
+<option value=93>Guinea (GN)</option>
+<option value=94>Guinea-Bissau (GW)</option>
+<option value=95>Guyana (GY)</option>
+<option value=96>Haiti (HT)</option>
+<option value=97>Heard Island and McDonald Islands (HM)</option>
+<option value=98>Holy See (Vatican City State) (VA)</option>
+<option value=99>Honduras (HN)</option>
+<option value=100>Hong Kong (HK)</option>
+<option value=101>Hungary (HU)</option>
+<option value=102>Iceland (IS)</option>
+<option value=103>India (IN)</option>
+<option value=104>Indonesia (ID)</option>
+<option value=105>Iran, Islamic Republic of (IR)</option>
+<option value=106>Iraq (IQ)</option>
+<option value=107>Ireland (IE)</option>
+<option value=108>Isle of Man (IM)</option>
+<option value=109>Israel (IL)</option>
+<option value=110>Italy (IT)</option>
+<option value=111>Jamaica (JM)</option>
+<option value=112>Japan (JP)</option>
+<option value=113>Jersey (JE)</option>
+<option value=114>Jordan (JO)</option>
+<option value=115>Kazakhstan (KZ)</option>
+<option value=116>Kenya (KE)</option>
+<option value=117>Kiribati (KI)</option>
+<option value=118>Korea, Democratic People's Republic of (KP)</option>
+<option value=119>Korea, Republic of (KR)</option>
+<option value=120>Kuwait (KW)</option>
+<option value=121>Kyrgyzstan (KG)</option>
+<option value=122>Lao People's Democratic Republic (LA)</option>
+<option value=123>Latvia (LV)</option>
+<option value=124>Lebanon (LB)</option>
+<option value=125>Lesotho (LS)</option>
+<option value=126>Liberia (LR)</option>
+<option value=127>Libya (LY)</option>
+<option value=128>Liechtenstein (LI)</option>
+<option value=129>Lithuania (LT)</option>
+<option value=130>Luxembourg (LU)</option>
+<option value=131>Macao (MO)</option>
+<option value=132>Macedonia, the Former Yugoslav Republic of (MK)</option>
+<option value=133>Madagascar (MG)</option>
+<option value=134>Malawi (MW)</option>
+<option value=135>Malaysia (MY)</option>
+<option value=136>Maldives (MV)</option>
+<option value=137>Mali (ML)</option>
+<option value=138>Malta (MT)</option>
+<option value=139>Marshall Islands (MH)</option>
+<option value=140>Martinique (MQ)</option>
+<option value=141>Mauritania (MR)</option>
+<option value=142>Mauritius (MU)</option>
+<option value=143>Mayotte (YT)</option>
+<option value=144>Mexico (MX)</option>
+<option value=145>Micronesia, Federated States of (FM)</option>
+<option value=146>Moldova, Republic of (MD)</option>
+<option value=147>Monaco (MC)</option>
+<option value=148>Mongolia (MN)</option>
+<option value=149>Montenegro (ME)</option>
+<option value=150>Montserrat (MS)</option>
+<option value=151>Morocco (MA)</option>
+<option value=152>Mozambique (MZ)</option>
+<option value=153>Myanmar (MM)</option>
+<option value=154>Namibia (NA)</option>
+<option value=155>Nauru (NR)</option>
+<option value=156>Nepal (NP)</option>
+<option value=157>Netherlands (NL)</option>
+<option value=158>New Caledonia (NC)</option>
+<option value=159>New Zealand (NZ)</option>
+<option value=160>Nicaragua (NI)</option>
+<option value=161>Niger (NE)</option>
+<option value=162>Nigeria (NG)</option>
+<option value=163>Niue (NU)</option>
+<option value=164>Norfolk Island (NF)</option>
+<option value=165>Northern Mariana Islands (MP)</option>
+<option value=166>Norway (NO)</option>
+<option value=167>Oman (OM)</option>
+<option value=168>Pakistan (PK)</option>
+<option value=169>Palau (PW)</option>
+<option value=170>Palestine, State of (PS)</option>
+<option value=171>Panama (PA)</option>
+<option value=172>Papua New Guinea (PG)</option>
+<option value=173>Paraguay (PY)</option>
+<option value=174>Peru (PE)</option>
+<option value=175>Philippines (PH)</option>
+<option value=176>Pitcairn (PN)</option>
+<option value=177>Poland (PL)</option>
+<option value=178>Portugal (PT)</option>
+<option value=179>Puerto Rico (PR)</option>
+<option value=180>Qatar (QA)</option>
+<option value=181>Réunion (RE)</option>
+<option value=182>Romania (RO)</option>
+<option value=183>Russian Federation (RU)</option>
+<option value=184>Rwanda (RW)</option>
+<option value=185>Saint Barthélemy (BL)</option>
+<option value=186>Saint Helena, Ascension and Tristan da Cunha (SH)</option>
+<option value=187>Saint Kitts and Nevis (KN)</option>
+<option value=188>Saint Lucia (LC)</option>
+<option value=189>Saint Martin (French part) (MF)</option>
+<option value=190>Saint Pierre and Miquelon (PM)</option>
+<option value=191>Saint Vincent and the Grenadines (VC)</option>
+<option value=192>Samoa (WS)</option>
+<option value=193>San Marino (SM)</option>
+<option value=194>Sao Tome and Principe (ST)</option>
+<option value=195>Saudi Arabia (SA)</option>
+<option value=196>Senegal (SN)</option>
+<option value=197>Serbia (RS)</option>
+<option value=198>Seychelles (SC)</option>
+<option value=199>Sierra Leone (SL)</option>
+<option value=200>Singapore (SG)</option>
+<option value=201>Sint Maarten (Dutch part) (SX)</option>
+<option value=202>Slovakia (SK)</option>
+<option value=203>Slovenia (SI)</option>
+<option value=204>Solomon Islands (SB)</option>
+<option value=205>Somalia (SO)</option>
+<option value=206>South Africa (ZA)</option>
+<option value=207>South Georgia and the South Sandwich Islands (GS)</option>
+<option value=208>South Sudan (SS)</option>
+<option value=209>Spain (ES)</option>
+<option value=210>Sri Lanka (LK)</option>
+<option value=211>Sudan (SD)</option>
+<option value=212>Suriname (SR)</option>
+<option value=213>Svalbard and Jan Mayen (SJ)</option>
+<option value=214>Swaziland (SZ)</option>
+<option value=215>Sweden (SE)</option>
+<option value=216>Switzerland (CH)</option>
+<option value=217>Syrian Arab Republic (SY)</option>
+<option value=218>Taiwan, Province of China (TW)</option>
+<option value=219>Tajikistan (TJ)</option>
+<option value=220>Tanzania, United Republic of (TZ)</option>
+<option value=221>Thailand (TH)</option>
+<option value=222>Timor-Leste (TL)</option>
+<option value=223>Togo (TG)</option>
+<option value=224>Tokelau (TK)</option>
+<option value=225>Tonga (TO)</option>
+<option value=226>Trinidad and Tobago (TT)</option>
+<option value=227>Tunisia (TN)</option>
+<option value=228>Turkey (TR)</option>
+<option value=229>Turkmenistan (TM)</option>
+<option value=230>Turks and Caicos Islands (TC)</option>
+<option value=231>Tuvalu (TV)</option>
+<option value=232>Uganda (UG)</option>
+<option value=233>Ukraine (UA)</option>
+<option value=234>United Arab Emirates (AE)</option>
+<option value=235>United Kingdom (GB)</option>
+<option value=236>United States (US)</option>
+<option value=237>United States Minor Outlying Islands (UM)</option>
+<option value=238>Uruguay (UY)</option>
+<option value=239>Uzbekistan (UZ)</option>
+<option value=240>Vanuatu (VU)</option>
+<option value=241>Venezuela, Bolivarian Republic of (VE)</option>
+<option value=242>Viet Nam (VN)</option>
+<option value=243>Virgin Islands, British (VG)</option>
+<option value=244>Virgin Islands, U.S. (VI)</option>
+<option value=245>Wallis and Futuna (WF)</option>
+<option value=246>Western Sahara (EH)</option>
+<option value=250>Worldwide (WW)</option>
+<option value=247>Yemen (YE)</option>
+<option value=248>Zambia (ZM)</option>
+<option value=249>Zimbabwe (ZW)</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=sort_order>
+<option value=0>--Sort by--</option>
+<option value=1>Price</option>
+<option value=2>Ratings</option>
+</select>
+</div>
+<div class=content_div>
+<select style="width:100%" name=sort_dir>
+<option value=1>Highest First</option>
+<option value=0 selected>Lowest First</option>
+</select>
+</div>
+<div style="text-align: center" class=content_div>
+<input class=invisible_input type=submit name=submit value="SEARCH">
+<input type=submit style="width:72px" name=submit value="SAVE">
+<input type=submit name=submit class=btngood style="width: 72px" value="SEARCH">
+</div>
+</form>
+</div>
+</div>
+<div class=sidebar><span style="display: inline-block; font-weight: bold; height: 15px; padding:5px;">Categories</span>
+<div class=sidebar_inner>
+<div style="columns: 165px" class=content_div>
+<span class=lgtext>Cannabis</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Weed>Weed&nbsp;<span>(2842)</span></a></li>
+<li><a href=/products/all/Hashish>Hashish&nbsp;<span>(581)</span></a></li>
+<li><a href=/products/all/Edibles>Edibles&nbsp;<span>(194)</span></a></li>
+<li><a href=/products/all/Concentrate>Concentrate&nbsp;<span>(1027)</span></a></li>
+<li><a href=/products/all/Synthetics>Synthetics&nbsp;<span>(78)</span></a></li>
+<li><a href=/products/all/Seeds+and+Clones>Seeds and Clones&nbsp;<span>(50)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Stimulants</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Cocaine>Cocaine&nbsp;<span>(1070)</span></a></li>
+<li><a href=/products/all/Crack>Crack&nbsp;<span>(77)</span></a></li>
+<li><a href=/products/all/Amphetamine>Amphetamine&nbsp;<span>(547)</span></a></li>
+<li><a href=/products/all/Methamphetamine>Methamphetamine&nbsp;<span>(273)</span></a></li>
+<li><a href=/products/all/A%2DPVP>A-PVP&nbsp;<span>(26)</span></a></li>
+<li><a href=/products/all/Cathinones>Cathinones&nbsp;<span>(36)</span></a></li>
+<li><a href=/products/all/Snuff>Snuff&nbsp;<span>(3)</span></a></li>
+<li><a href=/products/all/MDPV>MDPV&nbsp;<span>(4)</span></a></li>
+<li><a href=/products/all/Nicotine>Nicotine&nbsp;<span>(83)</span></a></li>
+<li><a href=/products/all/2%2DFMA+4%2DFA>2-FMA 4-FA&nbsp;<span>(5)</span></a></li>
+<li><a href=/products/all/Phenidades>Phenidades&nbsp;<span>(3)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Narcotics</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Heroin>Heroin&nbsp;<span>(411)</span></a></li>
+<li><a href=/products/all/Oxycodone>Oxycodone&nbsp;<span>(247)</span></a></li>
+<li><a href=/products/all/Buprenorphine>Buprenorphine&nbsp;<span>(36)</span></a></li>
+<li><a href=/products/all/Tramadol>Tramadol&nbsp;<span>(68)</span></a></li>
+<li><a href=/products/all/Codeine>Codeine&nbsp;<span>(101)</span></a></li>
+<li><a href=/products/all/Morphine>Morphine&nbsp;<span>(42)</span></a></li>
+<li><a href=/products/all/Opium>Opium&nbsp;<span>(52)</span></a></li>
+<li><a href=/products/all/Metadon>Metadon&nbsp;<span>(26)</span></a></li>
+<li><a href=/products/all/Other+Narcotics>Other Narcotics&nbsp;<span>(72)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Empathogens</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/MDMA>MDMA&nbsp;<span>(700)</span></a></li>
+<li><a href=/products/all/Ecstacy>Ecstacy&nbsp;<span>(660)</span></a></li>
+<li><a href=/products/all/MDA+MDAI>MDA MDAI&nbsp;<span>(17)</span></a></li>
+<li><a href=/products/all/Methylone>Methylone&nbsp;<span>(10)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Psychedelics</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/LSD>LSD&nbsp;<span>(520)</span></a></li>
+<li><a href=/products/all/DMT+AMT>DMT AMT&nbsp;<span>(187)</span></a></li>
+<li><a href=/products/all/Mushrooms>Mushrooms&nbsp;<span>(151)</span></a></li>
+<li><a href=/products/all/25x%2DNBOMe>25x-NBOMe&nbsp;<span>(15)</span></a></li>
+<li><a href=/products/all/Mescaline>Mescaline&nbsp;<span>(26)</span></a></li>
+<li><a href=/products/all/Ayahuasca>Ayahuasca&nbsp;<span>(14)</span></a></li>
+<li><a href=/products/all/2C%2Dx>2C-x&nbsp;<span>(118)</span></a></li>
+<li><a href=/products/all/5%2DMeO%2DDiPT>5-MeO-DiPT&nbsp;<span>(3)</span></a></li>
+<li><a href=/products/all/5%2DMeO%2DMiPT>5-MeO-MiPT&nbsp;<span>(9)</span></a></li>
+<li><a href=/products/all/LSA+LSZ>LSA LSZ&nbsp;<span>(3)</span></a></li>
+<li><a href=/products/all/AL%2DLAD>AL-LAD&nbsp;<span>(2)</span></a></li>
+<li><a href=/products/all/Ibogaine>Ibogaine&nbsp;<span>(9)</span></a></li>
+<li><a href=/products/all/DOx>DOx&nbsp;<span>(3)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Pharma</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Benzos>Benzos&nbsp;<span>(797)</span></a></li>
+<li><a href=/products/all/ED+Sex+Meds>ED Sex Meds&nbsp;<span>(228)</span></a></li>
+<li><a href=/products/all/Sleep+Aids>Sleep Aids&nbsp;<span>(91)</span></a></li>
+<li><a href=/products/all/ADHD>ADHD&nbsp;<span>(111)</span></a></li>
+<li><a href=/products/all/Pain+Medication>Pain Medication&nbsp;<span>(223)</span></a></li>
+<li><a href=/products/all/Sedatives>Sedatives&nbsp;<span>(39)</span></a></li>
+<li><a href=/products/all/Muscle+Relaxers>Muscle Relaxers&nbsp;<span>(17)</span></a></li>
+<li><a href=/products/all/MAOIs>MAOIs&nbsp;<span>(2)</span></a></li>
+<li><a href=/products/all/Nootropics>Nootropics&nbsp;<span>(76)</span></a></li>
+<li><a href=/products/all/Other+Pharma>Other Pharma&nbsp;<span>(284)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Dissociatives</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Ketamine>Ketamine&nbsp;<span>(465)</span></a></li>
+<li><a href=/products/all/Salvia>Salvia&nbsp;<span>(18)</span></a></li>
+<li><a href=/products/all/MXE+MXP>MXE MXP&nbsp;<span>(16)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Depressants</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Alcohol>Alcohol&nbsp;<span>(3)</span></a></li>
+<li><a href=/products/all/GHB+GBL>GHB GBL&nbsp;<span>(114)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Other</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Paraphernalia>Paraphernalia&nbsp;<span>(34)</span></a></li>
+<li><a href=/products/all/Body+Building>Body Building&nbsp;<span>(727)</span></a></li>
+<li><a href=/products/all/Drug+Production>Drug Production&nbsp;<span>(31)</span></a></li>
+<li><a href=/products/all/Digital+Items>Digital Items&nbsp;<span>(1759)</span></a></li>
+<li><a href=/products/all/Other+Items>Other Items&nbsp;<span>(650)</span></a></li>
+</ul>
+</div>
+<span class=lgtext>Fraud</span>
+<div class=chksubcats>
+
+<ul style="padding-left: 20px;">
+<li><a href=/products/all/Credit+Cards>Credit Cards&nbsp;<span>(481)</span></a></li>
+<li><a href=/products/all/Fullz>Fullz&nbsp;<span>(138)</span></a></li>
+<li><a href=/products/all/Accounts>Accounts&nbsp;<span>(684)</span></a></li>
+<li><a href=/products/all/Other+Fraud+Related>Other Fraud Related&nbsp;<span>(1539)</span></a></li>
+<li><a href=/products/all/Fake+IDs>Fake IDs&nbsp;<span>(279)</span></a></li>
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div class=mainbox style="float: right; display: inline-block; align: right; width: 725px;">
+<div class=content_div>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr thumbhdr">&nbsp;</td>
+<td class="gridhdr spacer">&nbsp;</td>
+<td class="gridhdr product">PRODUCT</td>
+<td class="gridhdr price">PRICE</td>
+<td class="gridhdr vendor">VENDOR</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/3864493>
+<img class=thumb_img src=/image/3864683>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/3864493>Stilnox Zolpidem 10mgx20 Sanofi</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>EU &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>37.69 USD/Box</span>
+<span class=listprice_alt>0.00510646 BTC/Box</span>
+<a title="Click here to place an order" href=#prod_3864493 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/pharmamed>pharmamed</a>
+<span style="font-weight: bold">(8)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: black; font-weight: bold";">80.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-06-03</span>
+</div>
+<div class=verified>LEVEL 1</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/20873053>
+<img class=thumb_img src=/image/20873173>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/20873053>Adderall IR  Adderall  XR Adderall - Brand 30mg</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>US &rarr; GB, US, WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 100  For</span>
+<span style="font-size: 1.1em" class=listprice>1500.00 USD/Pill</span>
+<span class=listprice_alt>0.20319000 BTC/Pill</span>
+<a title="Click here to place an order" href=#prod_20873053 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/instantboy007>instantboy007</a>
+<span style="font-weight: bold">(0)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: black; font-weight: bold";">0.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-09-26</span>
+</div>
+<div class=verified>LEVEL 1</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/22403473>
+<img class=thumb_img src=/image/98211>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/22403473>Seroquel Quetiapine 200mg x 200</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>WW &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>51.02 USD/Unit</span>
+<span class=listprice_alt>0.00691116 BTC/Unit</span>
+<a title="Click here to place an order" href=#prod_22403473 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/Angelina>Angelina</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(72)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: black; font-weight: bold";">82.05%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-02-07</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 4150 deals, 4.8/5</span>
+<span class=verified>Black Bank: 40/1/2</span>
+<span class=verified>Nucleus: 4 deals, 5/5</span>
+<span class=verified>Alphabay: 5873/57/90</span>
+<span class=verified>Abraxas: 100~200 deals, 4.83/5</span>
+<span class=verified>Black Market Reloaded: 175/5/1</span>
+<span class=verified>Agora: 3000 deals, 4.89/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/18964853>
+<img class=thumb_img src=/image/18964933>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/18964853>Eszopiclone 3mg x 10 Free UK Shipping!</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; GB, EU</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>19.32 USD/1strip</span>
+<span class=listprice_alt>0.00261720 BTC/1strip</span>
+<a title="Click here to place an order" href=#prod_18964853 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/FASTmedsUK>FASTmedsUK</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(120)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-04</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 602 deals, 4.9/5</span>
+<span class=verified>Empire: 719 deals, 99.81/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/2892233>
+<img class=thumb_img src=/image/2892373>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/2892233>Zopiclone/Imovane 50 x 7.5mg tablets</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>38.80 USD/50pill</span>
+<span class=listprice_alt>0.00525665 BTC/50pill</span>
+<a title="Click here to place an order" href=#prod_2892233 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/expresspharma>expresspharma</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(346)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.66%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-06-01</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Empire: 48 deals, 100/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/8562243>
+<img class=thumb_img src=/image/8562513>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/8562243>Roche Diazepam 10mg x 10</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>16.10 USD/Each</span>
+<span class=listprice_alt>0.00218100 BTC/Each</span>
+<a title="Click here to place an order" href=#prod_8562243 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/cerberus>cerberus</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(11)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: red; font-weight: bold";">50.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-24</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 12000 deals, 4.87/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/8559853>
+<img class=thumb_img src=/image/8560133>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/8559853>Hemopharm Diazepam 10mg x 10</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>12.88 USD/Each</span>
+<span class=listprice_alt>0.00174480 BTC/Each</span>
+<a title="Click here to place an order" href=#prod_8559853 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/cerberus>cerberus</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(11)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: red; font-weight: bold";">50.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-04-24</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 12000 deals, 4.87/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/10295743>
+<img class=thumb_img src=/image/10295963>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/10295743>ESZOPICLONE (Lunesta) -SLEEP NOW- Zunestar 3 mg</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>WW &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>69.90 USD/100pill</span>
+<span class=listprice_alt>0.00946865 BTC/100pill</span>
+<a title="Click here to place an order" href=#prod_10295743 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/TheBodyShop>TheBodyShop</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(32)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-07-18</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 35 deals, 5.00/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/10175733>
+<img class=thumb_img src=/image/10175953>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/10175733>Zopiclone 10mg x 98 tablets NEW!!</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>99.78 USD/98tab</span>
+<span class=listprice_alt>0.01351710 BTC/98tab</span>
+<a title="Click here to place an order" href=#prod_10175733 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/expresspharma>expresspharma</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(346)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.66%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-06-01</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Empire: 48 deals, 100/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/8103273>
+<img class=thumb_img src=/image/8103403>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/8103273>STILNOX CR 12.5MG X 14 TABLETS ZOLPIDEM TARTRATE (PHARMACEUTICAL</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"></div>
+<div><span>AU &rarr; AU</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>82.12 USD/unit</span>
+<span class=listprice_alt>0.01112520 BTC/unit</span>
+<a title="Click here to place an order" href=#prod_8103273 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/omnialabs>omnialabs</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(87)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-07-28</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 3200 deals, 4.97/5</span>
+<span class=verified>Empire: 281 deals, 100/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/7636923>
+<img class=thumb_img src=/image/7637043>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/7636923>1 BOX OF 28 TABLETS ZOPICLONE 7.5MG TEVA BRAND UK PHARMACY STOCK</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; GB</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>25.76 USD/BOX</span>
+<span class=listprice_alt>0.00348960 BTC/BOX</span>
+<a title="Click here to place an order" href=#prod_7636923 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/starmix>starmix</a>
+<span style="font-weight: bold">(112)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-07-24</span>
+</div>
+<div class=verified>LEVEL 1</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/2039723>
+<img class=thumb_img src=/image/2039623>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/2039723>Kern Pharma Diazepam 10mg 60tabs 2boxes</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>GB &rarr; EU</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+</div>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>48.94 USD/piece</span>
+<span class=listprice_alt>0.00663024 BTC/piece</span>
+<a title="Click here to place an order" href=#prod_2039723 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/NextGeneration>NextGeneration</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(402)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">99.55%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-13</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 66,500 deals, 4.93/5</span>
+<span class=verified>Black Bank: 76/0/0</span>
+<span class=verified>Nucleus: 831 deals, 4.91/5</span>
+<span class=verified>Alphabay: 8876/39/24</span>
+<span class=verified>Abraxas: 100~200 deals, 4.97/5</span>
+<span class=verified>Agora: 1000 deals, 5.00/5</span>
+<span class=verified>Middle Earth: 438 deals, 9.83/10</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/21036993>
+<img class=thumb_img src=/image/21036513>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/21036993>Zolpidem 10mg 28 tab Pharma *UK* Boxed</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This is a finalize-early listing and is not protected by escrow!" class="verified tagbad">FE Required</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 45.08 USD/Box!</span>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>51.52 USD/Box</span>
+<span class=listprice_alt>0.00697920 BTC/Box</span>
+<div><span class=pricetag>Bulk from 45.08 USD/Box</span></div>
+<a title="Click here to place an order" href=#prod_21036993 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/bluemagic>bluemagic</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(83)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">95.12%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-03-30</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 152 deals, 4.9/5</span>
+<span class=verified>Wallstreet: 148 deals, 4.85/5</span>
+<span class=verified>Empire: 1672 deals, 97.83/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridalt">
+<a href=/product/19388563>
+<img class=thumb_img src=/image/19393453>
+</a>
+</td>
+<td class="spacer gridalt">&nbsp;</td>
+<td class="product gridalt">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/19388563>Zunestar 3 mg (Lunesta, Eszopiclone 3mg), 50 pills</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></div>
+<div><span>SG &rarr; WW</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+<span title="Bulk pricing available!" class=verified>BULK DISCOUNTS</span>
+</div>
+<span class=smtext style="font-weight: bold">Bulk prices start at 33.00 USD/50pill!</span>
+</td>
+<td class="price gridalt">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>34.00 USD/50pill</span>
+<span class=listprice_alt>0.00460564 BTC/50pill</span>
+<div><span class=pricetag>Bulk from 33.00 USD/50pill</span></div>
+<a title="Click here to place an order" href=#prod_19388563 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridalt">
+<div class=content_div>
+<div>
+<a href=/user/DoctorDrug>DoctorDrug</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(2)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-07-27</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 741 deals, 4.95/5</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="thumb gridrow">
+<a href=/product/9099563>
+<img class=thumb_img src=/image/2033683>
+</a>
+</td>
+<td class="spacer gridrow">&nbsp;</td>
+<td class="product gridrow">
+<div style="margin-bottom: 5px; width: 270px; overflow: hidden"><a class=growlink href=/product/9099563>Zopiclone 7.5mg x 30 Free UK Shipping</a></div>
+<div><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></div>
+<div><span>GB &rarr; EU, GB</span></div>
+<div style="margin-top: 5px">
+<span title="This listing is protected by escrow." class=verified>ESCROW</span>
+</div>
+</td>
+<td class="price gridrow">
+<span class=listprice>Buy 1  For</span>
+<span style="font-size: 1.1em" class=listprice>38.64 USD/3strip</span>
+<span class=listprice_alt>0.00523440 BTC/3strip</span>
+<a title="Click here to place an order" href=#prod_9099563 class="prod_buynow">ORDER NOW</a>
+</td>
+<td class="vendor gridrow">
+<div class=content_div>
+<div>
+<a href=/user/FASTmedsUK>FASTmedsUK</a>
+<span>&nbsp;<div title="This vendor has been verified from another market. Mouse over the VERIFIED tag to see where and their ratings on that market." class=checkmark></div>&nbsp;</span>
+<span style="font-weight: bold">(120)</span>
+</div>
+<div style="">
+<span class=smtext>Positive Feedback: <span style="color: green; font-weight: bold";">100.00%</span></span>
+</div>
+<div style="margin-bottom: 5px">
+<span class=smtext>Member since: 2019-05-04</span>
+</div>
+<div class=verified>LEVEL 1</div>
+<div class=verified>VERIFIED
+<div class=verifiedtext><span class=verified>Dream: 602 deals, 4.9/5</span>
+<span class=verified>Empire: 719 deals, 99.81/100%</span></div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan=5>
+<a href="/products/all/Sleep Aids/3">&lt;&lt;</a>
+<span>4 of 4</span>
+<span>&gt;&gt;</span>
+</td>
+</tr>
+</table>
+</div>
+
+</div>
+<div id=prod_3864493>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Stilnox Zolpidem 10mgx20 Sanofi</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/pharmamed>pharmamed</a></span>
+<span class=lgtext style="font-weight: bold">(8)&nbsp;<span title="Positive Feedback Percentage" style="color: black;">80.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/3864643 target=_blank><img class=picture src=/image/3864683></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Stilnox Zolpidem 10mgx20 from Sanofi</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Box @ 37.69 USD/Box!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/3864493>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/3864493 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=3864523>Europe (11.08 USD) </option>
+<option value=3864543>Worlwide (16.63 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_20873053>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Adderall IR  Adderall  XR Adderall - Brand 30mg</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/instantboy007>instantboy007</a></span>
+<span class=lgtext style="font-weight: bold">(0)&nbsp;<span title="Positive Feedback Percentage" style="color: black;">0.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/20873123 target=_blank><img class=picture src=/image/20873173></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Adderall Adderall Adderall - Brand 30mg
+Adderall is the brand name of a prescription medication used to treat attention deficit hyperactivity disorder (ADHD) in children and adults. Adderall is a combination of two stimulant drugs, amphetamine and dextroamphetamine. … Doctors also prescribe Adderall to treat narcolepsy 30 mg Pill Imprint: ADDERALL XR 30mg Color: Orange &amp; White
+contact WckrID@freshcoolkid</p></div></div>
+<div class=product_data><span class=listprice>Price: 100 Pills @ 1500.00 USD/Pill!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/20873053>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/20873053 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=20873153>UPS (90.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_22403473>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Seroquel Quetiapine 200mg x 200</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/Angelina>Angelina</a></span>
+<span class=lgtext style="font-weight: bold">(72)&nbsp;<span title="Positive Feedback Percentage" style="color: black;">82.05%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/22403543 target=_blank><img class=picture src=/image/98211></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><h1>🐙🐙 Welcome to Angelina&rsquo;s Store! 🐙🐙</h1>
+
+<p>📆 In business for 10 years <br/>
+📩 99.5 percent delivery success rate worldwide <br/>
+📦 Ship 6 days a week <br/>
+🤑 We sell at wholesale prices <br/>
+🌎 We ship from 3 continents 🌍 <br/>
+🔃 If it doesn&rsquo;t arrive, we likely re-ship FREE - Check &ldquo;"Refund Policy&rdquo;&ldquo; Tab <br/>
+🌲🌲We sell over 500 pharma products, check our profile!🌲🌲</p>
+
+<h3>📦📦📦 WHAT YOU ARE ORDERING 📦📦📦</h3>
+
+<p>Seroquel Quetiapine 200mg x 200 <br/>
+Dose: 200mg <br/>
+Quantity: 200 <br/>
+Ships from: India or Singapore <br/>
+Shipping Methods: RegMail (not tracked, no reships, 14-21 day delivery), EMS (tracked, reship if stuck, 7-12 day delivery), SingPost (tracked, reshippable, estimate 9-14 days)</p>
+
+<h3>📝 Description 📝</h3>
+
+<p>Seroquel (quetiapine) is an antipsychotic medicine. It works by changing the actions of chemicals in the brain. This medication is also used as a sleep aid. Seroquel is used to treat bipolar disorder (manic depression) in adults and children who are at least 10 years old. Seroquel is also used together with antidepressant medications to treat major depressive disorder in adults</p>
+
+<blockquote><p>Product appearance may differ from descriptive photo on listing. Shipped concealed. Shipped inside original manufacturer&rsquo;s packaging.</p></blockquote>
+
+<p>✅ Our <strong><em>India/Singapore</em></strong> Warehouse is great for: USA, United Kingdom, Australia, France, Switzerland, Sweden, Russia, China, Hong Kong, Japan, South Korea, Taiwan, Myanmar, Laos, Thailand, Indonesia, Philippines, Malaysia, Singapore, Israel, South Africa.</p>
+
+<p>❌ No-Go List: Do NOT use the <strong><em>India/Singapore</em></strong> Warehouses for Canada, Europe (unless mentioned above), South America, Africa (except S. Africa) unless you accept full risk of loss. Please finalize immediately if you are shipping to one of these areas. ✅ Instead, we recommend checking out our EU Warehouse listings which are excellent for European countries and Canada.</p>
+
+<p>🚚 Please note that ship times are estimates and not guarantees.  Check our profile for other warehouses and shipping options!</p>
+
+<p>seroquel, quetiapine, antipsychotic, sleep, depression, bipolar</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Unit @ 51.02 USD/Unit!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/22403473>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/22403473 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=22403483>RegMail (6.88 USD) </option>
+<option value=22403493>EMS (19.88 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_18964853>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Eszopiclone 3mg x 10 Free UK Shipping!</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/FASTmedsUK>FASTmedsUK</a></span>
+<span class=lgtext style="font-weight: bold">(120)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/18965113 target=_blank><img class=picture src=/image/18964933></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Eszopiclone 3mg x 10 Free UK Shipping</p>
+
+<p>New… Eszopiclone 3mg!</p>
+
+<p>Eszopiclone is a newer sleeping tablet based on the original drug Zopiclone. Eszopiclone is generally accepted to be an improved formula, more potent and have less side effects.</p>
+
+<p>Eszopiclone 3mg x 10 with Free UK Shipping!</p>
+
+<p>Introductory price for a limited time only!</p>
+
+<p>Eszopiclone is not licensed in the UK as it was deemed too similar to Zopiclone to be given new patent status. Therefore not financially viable.</p>
+
+<p>Eszopiclone is similar medication to Benzodiazepines, however the chemical structure is slightly different therefore the medicine is categorized as a Z-Drug along with Zolpidem.</p>
+
+<p>This medication is primarily used for sleep, or to be more specific, its been shown to be superior to Zopiclone to help with getting to sleep or initiating sleep.</p>
+
+<p>The manufacturer of this brand of Eszopiclone produces the product in blister strips of 10 tablets.</p>
+
+<p>All our products are sent UK to UK for FREE</p>
+
+<p>UK to EU for a small postage charge.</p>
+
+<p>UK customers do not risk buying products from overseas as packages are increasing being seized by customs and can lead to arrest and a search of your property.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 1strip @ 19.32 USD/1strip!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/18964853>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/18964853 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=18964863>FREE UK FIRST CLASS SHIPPING (0.00 USD) </option>
+<option value=18964873>EU SHIPPING (5.15 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_2892233>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Zopiclone/Imovane 50 x 7.5mg tablets</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/expresspharma>expresspharma</a></span>
+<span class=lgtext style="font-weight: bold">(346)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.66%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/2892553 target=_blank><img class=picture src=/image/2892373></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>You are purchasing 50 tablets of zopiclone 7.5 mg in blister packs
+You will receive exactly the tabs in the picture
+Our products are shipped in registered mail with tracking number and are carefully packaged.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 50pill @ 38.80 USD/50pill!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/2892233>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/2892233 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=2892273>uk tracked (5.54 USD) </option>
+<option value=2892283>europe tracked (8.86 USD) </option>
+<option value=2892293>international priority tracked (44.34 USD) </option>
+<option value=2892303>international tracked (13.30 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_8562243>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Roche Diazepam 10mg x 10</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/cerberus>cerberus</a></span>
+<span class=lgtext style="font-weight: bold">(11)&nbsp;<span title="Positive Feedback Percentage" style="color: red;">50.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/8562373 target=_blank><img class=picture src=/image/8562513></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Roche Diazepam 10mg x 10</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Each @ 16.10 USD/Each!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/8562243>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/8562243 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=8562293>UK First Class Standard (2.57 USD) </option>
+<option value=8562353>EU &#38 INT Airmail standard (6.44 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_8559853>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Hemopharm Diazepam 10mg x 10</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/cerberus>cerberus</a></span>
+<span class=lgtext style="font-weight: bold">(11)&nbsp;<span title="Positive Feedback Percentage" style="color: red;">50.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/8559913 target=_blank><img class=picture src=/image/8560133></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Hemopharm Diazepam 10mg x 10</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Each @ 12.88 USD/Each!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/8559853>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/8559853 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=8560433>UK First Class Standard (2.57 USD) </option>
+<option value=8560463>EU &#38 INT Airmail Standard (6.44 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_10295743>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">ESZOPICLONE (Lunesta) -SLEEP NOW- Zunestar 3 mg</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/TheBodyShop>TheBodyShop</a></span>
+<span class=lgtext style="font-weight: bold">(32)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/10296023 target=_blank><img class=picture src=/image/10295963></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Why is this medication prescribed?</p>
+
+<p>Eszopiclone is used to treat insomnia (difficulty falling asleep or staying asleep). Eszopiclone is in a class of medications called hypnotics. It works by slowing activity in the brain to allow sleep.
+How should this medicine be used?</p>
+
+<p>Eszopiclone comes as a tablet to take by mouth. It is usually taken once a day at bedtime or after unsuccessfully trying to fall asleep. Do not take eszopiclone with or shortly after a heavy, high-fat meal. Eszopiclone may not work well if it is taken with high fat foods. Follow the directions on your prescription label carefully, and ask your doctor or pharmacist to explain any part you do not understand. Take eszopiclone exactly as directed. Do not take more or less of it or take it more often than prescribed by your doctor.</p>
+
+<p>You will probably become very sleepy soon after you take eszopiclone and will remain sleepy for some time after you take the medication. You should only take eszopiclone immediately before you go to bed or after you have gone to bed and have been unable to fall asleep. Only take eszopiclone if you will be able to stay in bed for at least 7 to 8 hours after taking the medication. If you do not go to bed right after you take eszopiclone or if you get up too soon after taking eszopiclone, you may experience dizziness, lightheadedness, hallucinations (seeing things or hearing voices that do not exist), and problems with coordination and memory.</p>
+
+<p>Your doctor may change your dose of eszopiclone during your treatment. Your doctor may increase your dose to help you sleep better or decrease your dose if you are too drowsy during the daytime.</p>
+
+<p>You should be sleeping well within 7 to 10 days after you start taking eszopiclone. Call your doctor if your sleep problems do not improve during this time, if they get worse at any time during your treatment, or if you notice any changes in your thoughts or behavior.</p>
+
+<p>Do not stop taking eszopiclone without talking to your doctor. Your doctor will probably decrease your dose gradually. If you suddenly stop taking eszopiclone you may experience withdrawal symptoms such as anxiety, unusual dreams, stomach and muscle cramps,nausea, vomiting, sweating, shakiness, and rarely, seizures.</p>
+
+<p>After you stop taking eszopiclone, you may have more difficulty falling asleep and staying asleep than you did before you took the medication. These sleep problems are normal and usually get better without treatment after one or two nights.</p>
+
+<p>Your doctor or pharmacist will give you the manufacturer&rsquo;s patient information sheet (Medication Guide) when you begin treatment with eszopiclone and each time you refill your prescription. Read the information carefully and ask your doctor or pharmacist if you have any questions. You can also visit the Food and Drug Administration (FDA) website (http://www.fda.gov/Drugs/DrugSafety/ucm085729.htm) or the manufacturer&rsquo;s website to obtain the Medication Guide.
+Other uses for this medicine</p>
+
+<p>This medication may be prescribed for other uses; ask your doctor or pharmacist for more information.
+What special precautions should I follow?
+Before taking eszopiclone,</p>
+
+<pre><code>tell your doctor and pharmacist if you are allergic to eszopiclone, any other medications, or any of the ingredients in eszopiclone. Ask your pharmacist or check the Medication Guide for a list of the ingredients.
+tell your doctor and pharmacist what prescription and nonprescription medications, vitamins, nutritional supplements, and herbal products you are taking or plan to take. Be sure to mention any of the following: antidepressants; certain antifungals such as itraconazole (Onmel, Sporanox) and ketoconazole (Nizoral); antihistamines; clarithromycin (Biaxin); certain HIV protease inhibitors such as nelfinavir (Viracept) and ritonavir (Norvir); medications for anxiety, mental illness, or seizures; nefazodone; olanzapine (Zyprexa); rifampin (Rifadin, Rimactane); sedatives; other sleeping pills; tranquilizers; and troleandomycin (TAO) (not available in the US). Your doctor may need to change the doses of your medications or monitor you carefully for side effects.
+tell your doctor if you drink or have ever drunk large amounts of alcohol and if you use or have ever used street drugs or have overused prescription medications. Also tell your doctor if you have ever thought about killing yourself or tried to do so and if you have or have ever had depression, mental illness, lung disease or breathing problems, or liver disease.
+tell your doctor if you are pregnant, plan to become pregnant, or are breastfeeding. If you become pregnant while taking eszopiclone, call your doctor.
+talk to your doctor about the risks and benefits of taking eszopiclone if you are 65 years of age or older. Older adults should not usually take eszopiclone because it is not as safe or effective as other medications that can be used to treat the same condition.
+if you are having surgery, including dental surgery, tell the doctor or dentist that you are taking eszopiclone.
+you should know that eszopiclone may make you drowsy during the daytime, may decrease your mental alertness, and may increase the risk that you could fall. Take extra care to be sure you do not fall, especially if you get out of bed in the middle of the night. Do not drive a car or operate machinery until you know how this medication affects you.
+do not drink alcohol while you are taking eszopiclone. Alcohol can make the side effects from eszopiclone worse.
+you should know that some people who took medications for sleep got out of bed and drove their cars, prepared and ate food, had sex, made phone calls, or were involved in other activities while partially asleep.After they woke up, these people were usually unable to remember what they had done. Call your doctor right away if you find out that you have been driving or doing anything else unusual while you were sleeping.
+you should know that your mental health may change in unexpected ways while you are taking this medication. These changes may be caused by eszopiclone or they may be caused by physical or mental illnesses that you already have or that you develop during your treatment. Tell your doctor right away if you experience any of the following symptoms: aggressiveness, strange or unusually outgoing behavior, hallucinations (seeing things or hearing voices that do not exist), feeling as if you are outside of your body, memory problems, new or worsening depression, thinking about killing yourself, confusion, and any other changes in your usual thoughts or behavior. Be sure that your family knows which symptoms may be serious so that they can call the doctor if you are unable to seek treatment on your own.
+</code></pre>
+
+<p>What special dietary instructions should I follow?</p>
+
+<p>Talk to your doctor about drinking grapefruit juice while taking this medication.
+What should I do if I forget a dose?</p>
+
+<p>Eszopiclone should only be taken at bedtime. If you did not take eszopiclone before you went to bed and you are unable to fall asleep, you may take eszopiclone if you will be able to stay in bed for at least 7 to 8 hours afterward.
+What side effects can this medication cause?
+Eszopiclone may cause side effects. Tell your doctor if any of these symptoms are severe or do not go away:</p>
+
+<pre><code>headache
+pain
+daytime drowsiness
+lightheadedness
+dizziness
+loss of coordination
+nausea
+vomiting
+heartburn
+unpleasant taste
+dry mouth
+unusual dreams
+decreased sexual desire
+painful menstrual periods
+breast enlargement in males
+</code></pre>
+
+<p>What should I know about storage and disposal of this medication?</p>
+
+<p>Keep this medication in the container it came in, tightly closed, and out of reach of children. Store it at room temperature and away from excess heat and moisture (not in the bathroom).</p>
+
+<p>It is important to keep all medication out of sight and reach of children as many containers (such as weekly pill minders and those for eye drops, creams, patches, and inhalers) are not child-resistant and young children can open them easily. To protect young children from poisoning, always lock safety caps and immediately place the medication in a safe location – one that is up and away and out of their sight and reach. http://www.upandaway.org</p>
+
+<p>Unneeded medications should be disposed of in special ways to ensure that pets, children, and other people cannot consume them. However, you should not flush this medication down the toilet. Instead, the best way to dispose of your medication is through a medicine take-back program. Talk to your pharmacist or contact your local garbage/recycling department to learn about take-back programs in your community. See the FDA&rsquo;s Safe Disposal of Medicines website (http://goo.gl/c4Rm4p) for more information if you do not have access to a take-back program.
+In case of emergency/overdose</p>
+
+<p>In case of overdose, call the poison control helpline at 1-800-222-1222. Information is also available online at https://www.poisonhelp.org/help. If the victim has collapsed, had a seizure, has trouble breathing, or can&rsquo;t be awakened, immediately call emergency services at 911.
+Symptoms of overdose may include the following:</p>
+
+<pre><code>drowsiness
+coma (loss of consciousness for a period of time)
+</code></pre>
+
+<p>What other information should I know?</p>
+
+<p>Keep all appointments with your doctor.</p>
+
+<p>Do not let anyone else take your medication. Eszopiclone is a controlled substance. Prescriptions may be refilled only a limited number of times; ask your pharmacist if you have any questions.</p>
+
+<p>It is important for you to keep a written list of all of the prescription and nonprescription (over-the-counter) medicines you are taking, as well as any products such as vitamins, minerals, or other dietary supplements. You should bring this list with you each time you visit a doctor or if you are admitted to a hospital. It is also important information to carry with you in case of emergencies.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 100pill @ 69.90 USD/100pill!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/10295743>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/10295743 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=10295753>EXPRESS WITH TRACKING NUMBER (12.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_10175733>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Zopiclone 10mg x 98 tablets NEW!!</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/expresspharma>expresspharma</a></span>
+<span class=lgtext style="font-weight: bold">(346)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.66%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/10175863 target=_blank><img class=picture src=/image/10175953></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>You are purchasing 98 pills packaged in blisters of zopiclone 10mg by hab pharma You will receive exactly the tabs in the picture Our products are shipped in registered mail with tracking number and are carefully packaged. we do not ship or sell loose tablets all our products are sourced direct from reputable pharmacies and in original blister packs For more information about the product please contact me</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 98tab @ 99.78 USD/98tab!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/10175733>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/10175733 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=10175743>uk tracked (4.43 USD) </option>
+<option value=10175753>europe tracked (8.86 USD) </option>
+<option value=10175763>international tracked (13.30 USD) </option>
+<option value=10175773>international priority shipping (44.34 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_8103273>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">STILNOX CR 12.5MG X 14 TABLETS ZOLPIDEM TARTRATE (PHARMACEUTICAL</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/omnialabs>omnialabs</a></span>
+<span class=lgtext style="font-weight: bold">(87)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/8317893 target=_blank><img class=picture src=/image/8103403></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>STILNOX CR 12.5MG X 14 TABLETS ZOLPIDEM TARTRATE (PHARMACEUTICAL)
+$120.00</p>
+
+<p>12.5mg x 14 Tablets
+Each tablet contains:
+12.5mg Zolpidem Tartrate (Modified Release)</p>
+
+<p>Australian Pharmaceutical Product</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 unit @ 82.12 USD/unit!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/8103273>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/8103273 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=8720283>Standard Post, shipping faster in most cases. (6.84 USD) </option>
+<option value=8720373>Combined Shipping, Paid for shipping on another item. (0.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_7636923>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">1 BOX OF 28 TABLETS ZOPICLONE 7.5MG TEVA BRAND UK PHARMACY STOCK</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/starmix>starmix</a></span>
+<span class=lgtext style="font-weight: bold">(112)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/7637223 target=_blank><img class=picture src=/image/7637043></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>1 BOX OF 28 TABLETS ZOPICLONE 7.5MG TEVA BRAND UK PHARMACY STOCK</p>
+
+<p>LIKE YOU WOULD BE PRESCRIBED FROM THE DOCTOR</p>
+
+<p>SENT 1ST CLASS</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 BOX @ 25.76 USD/BOX!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/7636923>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/7636923 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=7636933>ROYAL MAIL 1ST CLASS (2.12 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_2039723>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Kern Pharma Diazepam 10mg 60tabs 2boxes</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/NextGeneration>NextGeneration</a></span>
+<span class=lgtext style="font-weight: bold">(402)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.55%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/2039783 target=_blank><img class=picture src=/image/2039623></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Kern Pharma Diazepam</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 piece @ 48.94 USD/piece!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/2039723>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/2039723 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=2039733>FREE UK NDD (0.00 USD) </option>
+<option value=2039743>EU STANDARD AIRMAIL (5.15 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_21036993>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Zolpidem 10mg 28 tab Pharma *UK* Boxed</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/bluemagic>bluemagic</a></span>
+<span class=lgtext style="font-weight: bold">(83)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">95.12%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/21037053 target=_blank><img class=picture src=/image/21036513></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Zolpidem Key Pharma 10mg 28 tab Pharma <em>UK</em></p>
+
+<h2>Min order for Europe and Rest of the World 5 boxes please due to stealth packaging required</h2>
+
+<h2>| Zolpidem 10mg |</h2>
+
+<p>Zolpidem KEy Pharma is a product manufactured by the pharma company</p>
+
+<p>Expiry Date: Minimum 2 years,
+Active Substance: Zolpidem Tartrate 10mg</p>
+
+<p>Zolpidem is a sedative, also called a hypnotic. It affects chemicals in the brain that may be unbalanced in people with sleep problems (insomnia).</p>
+
+<p>Zolpidem is used to treat insomnia. The immediate-release forms are Ambien, Intermezzo, Edluar, and Zolpimist, which are used to help you fall asleep. The extended-release form of zolpidem is Ambien CR, which has a first layer that dissolves quickly to help you fall asleep, and a second layer that dissolves slowly to help you stay asleep.</p>
+
+<p>You&rsquo;re buying whole package originally packed exactly that what you see on picture, with instruction as well.</p>
+
+<p>In case if we would run out of stock for advertised brand, we will ship any other generic brand (eg. Mylan, Bristol, Zentiva ) with same quality as advertised medicine.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 Box @ 51.52 USD/Box!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 45.08 USD/Box!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/21036993>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/21036993 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=21037003>Royal Mail UK Only (3.86 USD) </option>
+<option value=21037013>Europe EU (6.44 USD) </option>
+<option value=21037023>Rest of the World (12.88 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_19388563>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Zunestar 3 mg (Lunesta, Eszopiclone 3mg), 50 pills</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/DoctorDrug>DoctorDrug</a></span>
+<span class=lgtext style="font-weight: bold">(2)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/19393353 target=_blank><img class=picture src=/image/19393453></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Zunestar-3, Generic Lunesta (Eszopiclone) 3mg. Manufactured by HAB Pharma.
+Lunesta (eszopiclone) is a sedative, also called a hypnotic. It affects chemicals in your brain that may become unbalanced and cause sleep problems (insomnia).
+Take Lunesta only if you are able to get a full night&rsquo;s sleep before you must be active again. Never take this medicine during your normal waking hours, unless you have at least 7 to 8 hours to dedicate to sleeping. Usual Adult Dose for Insomnia:
+Initial dose: 1 mg orally immediately before bedtime Maintenance dose: 1 to 3 mg orally immediately before bedtime Maximum dose: 3 mg orally immediately before bedtime</p>
+
+<p>Avoid taking this medicine within 1 hour after eating a high-fat or heavy meal. This will make it harder for your body to absorb the medication.</p>
+
+<p>*Images are used for illustration purposes only.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 50pill @ 34.00 USD/50pill!</span></div>
+<div class=product_data><span class=listprice>Bulk prices start @ 33.00 USD/50pill!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/19388563>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/19388563 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=19388653>For combine products (1.00 USD) </option>
+<option value=19388713>Express shipping with tracking (13.00 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+<div id=prod_9099563>
+<a href=#/ style="height:100%; background-color: #ccc; opacity: 0.5; width: 100%; z-index: 100; position: fixed; top: 0px; left: 0px;"></a>
+<div style="z-index:101" class=buydiv2>
+<h2 style="z-index:101; margin-bottom: 0px;">Zopiclone 7.5mg x 30 Free UK Shipping</h2>
+<div class=toolbar>
+<a href=#/><span class="icono-cross"></span></a>
+</div>
+<span style="margin-top: 0px; margin-bottom: 20px">Sold by <a href=/user/FASTmedsUK>FASTmedsUK</a></span>
+<span class=lgtext style="font-weight: bold">(120)&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<div style="margin-top: 5px; vertical-align: top" class=top_part>
+<a title="Click to view full resolution image." href=/image/9099833 target=_blank><img class=picture src=/image/2033683></a>
+<div class=product_details style="vertical-align: top">
+<div class=product_data><div class=prod_buynow_desc><p>Zopiclone 7.5mg x 30 Free UK Shipping</p>
+
+<p>Introductory price for a limited time only!</p>
+
+<p>7.5mg is the MAX STRENGTH</p>
+
+<p>Zopiclone is similar medication to Benzodiazepines, however the chemical structure is slightly different therefore the medicine is categorized as a Z-Drug with Zolpidem.</p>
+
+<p>This medication is primarily used for sleep.</p>
+
+<p>This is a listing for 10 tablets sealed in a blister strip X 3</p>
+
+<p>All our products are sent UK to UK for FREE</p>
+
+<p>UK to EU for a small postage charge.</p>
+
+<p>UK customers do not risk buying products from overseas as packages are increasing being seized by customs and can lead to arrest and a search of your property.</p></div></div>
+<div class=product_data><span class=listprice>Price: 1 3strip @ 38.64 USD/3strip!</span></div>
+<div class=product_data style="height:5px"></div>
+<div class=product_data><a href=/product/9099563>View Full Description</a></div>
+</div>
+<div style="height: 10px"></div>
+<form action=/product/9099563 method=post>
+<label class="buttonlink buynow" style="z-index:101">ORDER NOW</label><select style="z-index:101" class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=9099573>Free UK Royal Mail First Class Shipping (0.00 USD) </option>
+<option value=9099583>EU Shipping (5.15 USD) </option>
+</select><input type=number name=qty class=qty style="z-index:101" value="1"><input type=submit name=submit class=clickbuy style="z-index:101" value="PLACE ORDER">
+</form>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 6658.23 EUR = 7382.25 USD = 5731.31 GBP = 140.23003335 XMR = 10786.32 AUD = 9668.37 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

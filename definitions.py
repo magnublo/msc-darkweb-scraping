@@ -89,3 +89,4 @@ CRYPTONIA_DIR = ROOT_DIR + "src/cryptonia/"
 
 Base = declarative_base()
 
+CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE = "No products found."

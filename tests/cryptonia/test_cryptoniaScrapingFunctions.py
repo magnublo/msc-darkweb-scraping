@@ -1,6 +1,9 @@
+import re
+
 from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions
 from tests.cryptonia.cryptonia_base_test import CryptoniaBaseTest
 
+PRODUCT_PAGE_URL_REGEX = r'\/product\/[0-9]{8}'
 
 class TestCryptoniaScrapingFunctions(CryptoniaBaseTest):
 
@@ -22,3 +25,39 @@ class TestCryptoniaScrapingFunctions(CryptoniaBaseTest):
         soup_html = self._get_page_as_soup_html(file_name="saved_cryptonia_search_result_in_category_1")
         nr_of_pages_in_category = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
         self.assertEqual(nr_of_pages_in_category, 31)
+
+    def test_get_product_page_urls_zero(self):
+        soup_html = self._get_page_as_soup_html(file_name="saved_cryptonia_search_result_in_category_0")
+        product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
+        self.assertEqual(len(product_page_urls), 25)
+
+        for url in product_page_urls:
+            rs = re.findall(PRODUCT_PAGE_URL_REGEX, url)
+            self.assertNotEqual(len(rs), -1)
+
+    def test_get_product_page_urls_one(self):
+        soup_html = self._get_page_as_soup_html(file_name="saved_cryptonia_search_result_in_category_1")
+        product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
+        self.assertEqual(len(product_page_urls), 25)
+
+        for url in product_page_urls:
+            rs = re.findall(PRODUCT_PAGE_URL_REGEX, url)
+            self.assertNotEqual(len(rs), -1)
+
+    def test_get_product_page_urls_two(self):
+        soup_html = self._get_page_as_soup_html(file_name="saved_cryptonia_search_result_in_category_2")
+        product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
+        self.assertEqual(len(product_page_urls), 2)
+
+        for url in product_page_urls:
+            rs = re.findall(PRODUCT_PAGE_URL_REGEX, url)
+            self.assertNotEqual(len(rs), -1)
+
+    def test_get_product_page_urls_three(self):
+        soup_html = self._get_page_as_soup_html(file_name="saved_cryptonia_search_result_in_category_3")
+        product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
+        self.assertEqual(len(product_page_urls), 15)
+
+        for url in product_page_urls:
+            rs = re.findall(PRODUCT_PAGE_URL_REGEX, url)
+            self.assertNotEqual(len(rs), -1)

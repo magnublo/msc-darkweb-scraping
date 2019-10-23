@@ -1,8 +1,10 @@
+from src.cryptonia.cryptonia_scrape import CryptoniaMarketScraper
+
 LOGGER_VARIABLE_NAME_SUFFIX = "logger"
 
 
 CLASS_HANDLER_CONFIGS = {
-    'CryptoniaMarketScraper': {
+    CryptoniaMarketScraper.__name__: {
             'handlers': ['default'],
             'level': 'INFO',
             'propagate': False
@@ -15,7 +17,8 @@ BASE_LOGGER_CONFIG = {
     'disable_existing_loggers': True,
     'formatters': {
         'standard': {
-            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+            'datefmt': '%e:%m:%y %H:%M:%S'
         },
     },
     'handlers': {
@@ -42,5 +45,3 @@ def get_logger_config() -> dict:
     return config
 
 
-def get_logger_name(cls: object):
-    return cls.__name__

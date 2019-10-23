@@ -7,7 +7,7 @@ from datetime import datetime
 from multiprocessing import Queue
 from time import sleep
 from time import time
-from typing import Callable
+from typing import Callable, List, Tuple
 
 import requests
 from python3_anticaptcha import AntiCaptchaControl
@@ -67,6 +67,14 @@ class BaseScraper(BaseClassWithLogger):
                     sleep(5)
         else:
             self.session_id = self._initiate_session()
+
+    def scrape(self):
+        while not self.queue.empty():
+            queue_item = self.queue.get(timeout=1)
+            self._generic_error_catch_wrapper(queue_item, func=self._scrape_queue_item)
+
+        print("Job queue is empty. Wrapping up...")
+        self._wrap_up_session()
 
     def _initiate_session(self) -> int:
         scraping_session = ScrapingSession(
@@ -172,20 +180,17 @@ class BaseScraper(BaseClassWithLogger):
         assert (url or existing_listing_observation)
         queue_size = self.queue.qsize()
         parsing_time = time() - self.time_last_received_response
-        print(datetime.fromtimestamp(time()))
-        print(f"Last web response was parsed in {parsing_time} seconds.")
+        self.logger.info(f"Last web response was parsed in {parsing_time} seconds.")
         if existing_listing_observation:
-            print("Database already contains listing with this seller and title for this session.")
-            print(f"Listing title: {existing_listing_observation.title}")
-            print("Duplicate listing, skipping...")
+            self.logger.info("Database already contains listing with this seller and title for this session.")
+            self.logger.info(f"Listing title: {existing_listing_observation.title}")
+            self.logger.info("Duplicate listing, skipping...")
 
         else:
-            print("Trying to fetch URL: " + url)
-        print(f"Thread nr. {self.thread_id}")
-        print(f"Web session {self.cookie}")
-        print(f"Crawling page nr. {self.initial_queue_size - queue_size} this session.")
-        print(f"Pages left, approximate: {queue_size}.")
-        print("\n")
+            self.logger.info("Trying to fetch URL: " + url)
+        self.logger.info(f"Web session {self.cookie}")
+        self.logger.info(f"Crawling page nr. {self.initial_queue_size - queue_size} this session.")
+        self.logger.info(f"Pages left, approximate: {queue_size}.\n")
 
     def _get_logged_in_web_response(self, url: str, debug: bool = DEBUG_MODE) -> requests.Response:
         while True:
@@ -228,10 +233,7 @@ class BaseScraper(BaseClassWithLogger):
         self._wrap_up_session()
         raise e
 
-    def _db_error_catch_wrapper(self, *args, func, error_data=None):
-        if not error_data:
-            error_data = []
-
+    def _db_error_catch_wrapper(self, *args, func: Callable, error_data: List[Tuple[object, str, datetime]]=None):
         if not error_data:
             error_data = []
 
@@ -239,20 +241,20 @@ class BaseScraper(BaseClassWithLogger):
             self.db_session.rollback()
             func(*args)
             self.db_session.commit()
-            for entry in error_data:
-                self._log_and_print_error(entry[0], entry[1], updated_date=entry[2], print_error=False)
-            error_data = []
+            for error_object, error_string, timestamp in error_data:
+                self._log_and_print_error(error_object, error_string, updated_date=timestamp, print_error=False)
+
         except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
             error_string = traceback.format_exc()
             if type(error) == AttributeError:
                 if not error_is_sqlalchemy_error(error_string):
                     self._log_and_print_error(error, error_string)
                     raise error
-            error_data.append([error, error_string, datetime.utcnow()])
+            error_data.append((error, error_string, datetime.utcnow()))
             seconds_until_next_try = self._get_wait_interval(error_data)
             traceback.print_exc()
-            print(
-                f"Thread {self.thread_id} has problem with DBMS connection. Retrying in "
+            self.logger.info(
+                f"Problem with DBMS connection. Retrying in "
                 f"{seconds_until_next_try} seconds...")
             sleep(seconds_until_next_try)
             func(*args, func=func, error_data=error_data)
@@ -266,6 +268,9 @@ class BaseScraper(BaseClassWithLogger):
             e = GenericException()
             self._process_generic_error(e)
 
+    def _format_logger_message(self, msg: str) -> str:
+        return f"[Thread_id {self.thread_id}] {msg}"
+
     @staticmethod
     def _is_logged_out(response, login_url, login_page_phrase) -> bool:
         for history_response in response.history:
@@ -277,10 +282,6 @@ class BaseScraper(BaseClassWithLogger):
             return True
 
         return False
-
-    @abstractmethod
-    def scrape(self) -> None:
-        raise NotImplementedError('')
 
     @abstractmethod
     def _login_and_set_cookie(self, response=None) -> None:
@@ -320,4 +321,8 @@ class BaseScraper(BaseClassWithLogger):
 
     @abstractmethod
     def _get_web_session(self) -> requests.Session:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _scrape_queue_item(self, *args) -> None:
         raise NotImplementedError('')
