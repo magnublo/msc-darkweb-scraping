@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from typing import List, Tuple
 
 import dateparser as dateparser
 
@@ -85,7 +86,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return currency, price
 
     @staticmethod
-    def get_origin_country_and_destinations(soup_html):
+    def get_origin_country_and_destinations_and_payment_type(soup_html) -> Tuple[str, List[str], str]:
         tables = [table for table in soup_html.findAll('table', attrs={'class': 'productTbl'})]
         table = tables[0]
         tbodies = [tbody for tbody in table.findAll('tbody')]
@@ -97,7 +98,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         tds = [td for td in tr.findAll('td')]
         assert len(tds) == 4
         td = tds[3]
-        origin_country = td.text
+        origin_country = td.text.strip()
 
         tr = trs[1]
         tds = [td for td in tr.findAll('td')]
@@ -105,7 +106,13 @@ class EmpireScrapingFunctions(BaseFunctions):
         td = tds[3]
         destinations = [destination.strip() for destination in td.text.split(",")]
 
-        return origin_country, destinations
+        tr = trs[2]
+        tds = [td for td in tr.findAll('td')]
+        assert len(tds) == 4
+        td = tds[3]
+        payment_type = td.text.strip()
+
+        return origin_country, destinations, payment_type
 
     @staticmethod
     def get_cryptocurrency_rates(soup_html):

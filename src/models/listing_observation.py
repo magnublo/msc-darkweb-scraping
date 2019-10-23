@@ -44,3 +44,5 @@ class ListingObservation(Base):
     ltc_rate = Column(Float)
     xmr_rate = Column(Float)
 
+    payment_type = Column(String(32))
+

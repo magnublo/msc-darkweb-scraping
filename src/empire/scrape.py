@@ -316,7 +316,9 @@ class EmpireScrapingSession(BaseScraper):
         accepts_BTC, accepts_LTC, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
         nr_sold, nr_sold_since_date = scrapingFunctions.get_nr_sold_since_date(soup_html)
         fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
-        origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
+        origin_country, destination_countries, payment_type = \
+            scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
+            soup_html)
 
         db_category_ids = []
 
@@ -362,6 +364,7 @@ class EmpireScrapingSession(BaseScraper):
         listing_observation.fiat_currency = fiat_currency
         listing_observation.price = price
         listing_observation.origin_country = origin_country
+        listing_observation.payment_type = payment_type
 
         self.db_session.flush()
 

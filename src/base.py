@@ -54,10 +54,6 @@ class BaseFunctions(metaclass=abc.ABCMeta):
         raise NotImplementedError('')
 
     @abstractstaticmethod
-    def get_origin_country_and_destinations(soup_html):
-        raise NotImplementedError('')
-
-    @abstractstaticmethod
     def get_cryptocurrency_rates(soup_html):
         raise NotImplementedError('')
 
