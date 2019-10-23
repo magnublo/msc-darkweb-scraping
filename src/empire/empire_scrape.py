@@ -16,8 +16,8 @@ from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
     RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
     EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE
-from environmentSettings import DEBUG_MODE
-from src.base import BaseScraper
+from environment_settings import DEBUG_MODE
+from src.base_scraper import BaseScraper
 from src.db_utils import get_column_name
 from src.empire.empire_functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country

@@ -1,7 +1,7 @@
 import dateparser as dateparser
 from typing import List, Tuple
 from definitions import EMPIRE_BASE_CATEGORY_URL
-from src.base import BaseFunctions
+from src.base_functions import BaseFunctions
 from src.db_utils import _shorten_and_sanitize_for_text_column
 
 

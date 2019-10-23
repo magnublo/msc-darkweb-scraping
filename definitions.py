@@ -2,9 +2,10 @@ import os
 
 from sqlalchemy.ext.declarative import declarative_base
 
-from environmentSettings import MYSQL_ECHO_DEBUG
+from environment_settings import MYSQL_ECHO_DEBUG
 
 ONE_WEEK = 3600*24*7
+FALSE = 1 == 0
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
@@ -36,35 +37,6 @@ CURRENCY_COLUMN_LENGTH = 3
 
 MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD = 40
 CREATED_DATE_COLUMN_NAME = "created_date"
-
-LOGGER_VARIABLE_NAME = "__logger"
-
-BASE_LOGGER_CONFIG = {
-    "version": 1,
-    "disable_existing_loggers": 1,
-    "root": {
-        "level": "DEBUG",
-        "handlers": [
-            "console"
-        ]
-    },
-    "loggers": {
-
-    },
-    "formatters": {
-        "precise": {
-            "format": "%(asctime)s %(name)-15s %(levelname)-8s %(message)s"
-        }
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "precise",
-            "level": "DEBUG",
-            "stream": "ext://sys.stdout"
-        }
-    }
-}
 
 BEAUTIFUL_SOUP_HTML_PARSER = "lxml"
 

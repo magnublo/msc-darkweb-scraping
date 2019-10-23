@@ -1,7 +1,8 @@
 from typing import List
 
 from definitions import CRYPTONIA_MARKET_CREDENTIALS, CRYPTONIA_MARKET_ID
-from src.base import BaseScrapingManager, BaseScraper
+from src.base_scraper import BaseScraper
+from src.base_scraping_manager import BaseScrapingManager
 from src.cryptonia.cryptonia_scrape import CryptoniaMarketScraper
 from src.models.settings import Settings
 

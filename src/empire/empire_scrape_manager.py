@@ -1,7 +1,8 @@
 from typing import List
 
 from definitions import EMPIRE_MARKET_CREDENTIALS, EMPIRE_MARKET_ID
-from src.base import BaseScrapingManager, BaseScraper
+from src.base_scraper import BaseScraper
+from src.base_scraping_manager import BaseScrapingManager
 from src.empire.empire_scrape import EmpireScrapingSession
 from src.models.settings import Settings
 

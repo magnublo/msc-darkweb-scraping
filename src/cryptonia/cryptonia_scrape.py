@@ -1,13 +1,11 @@
 from random import shuffle
-from typing import Union, List, Tuple
 
+import cfscrape
 import requests
 
 from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX, CRYPTONIA_MARKET_BASE_URL
-from src.base import BaseScraper
+from src.base_scraper import BaseScraper
 from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions
-import cfscrape
-
 from src.db_utils import get_column_name
 from src.models.scraping_session import ScrapingSession
 from src.utils import get_page_as_soup_html
@@ -47,9 +45,10 @@ class CryptoniaMarketScraper(BaseScraper):
         self.db_session.commit()
 
     def scrape(self):
+        self.logger.critical("some statement here")
         while not self.queue.empty():
             search_result_url = self.queue.get(timeout=1)
-            self._generic_error_catch_wrapper(search_result_url, func=self._scrape_items_in_search_result)
+            #self._generic_error_catch_wrapper(search_result_url, func=self._scrape_items_in_search_result)
 
         print("Job queue is empty. Wrapping up...")
         self._wrap_up_session()

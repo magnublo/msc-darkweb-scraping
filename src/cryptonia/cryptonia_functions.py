@@ -2,7 +2,7 @@ from typing import List, Union, Tuple
 
 from bs4 import BeautifulSoup
 
-from src.base import BaseFunctions
+from src.base_functions import BaseFunctions
 
 
 class CryptoniaScrapingFunctions(BaseFunctions):

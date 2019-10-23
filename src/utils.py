@@ -6,8 +6,9 @@ import requests
 from bs4 import BeautifulSoup
 from urllib3.exceptions import HTTPError
 
-from definitions import BASE_LOGGER_CONFIG, BEAUTIFUL_SOUP_HTML_PARSER
-from environmentSettings import DEBUG_MODE, LOCAL_ENVIRONMENT_HANDLERS
+from definitions import BEAUTIFUL_SOUP_HTML_PARSER
+from environment_settings import DEBUG_MODE
+
 
 
 class LoggedOutException(Exception):
@@ -125,11 +126,3 @@ def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline
         return soup_html
     else:
         return BeautifulSoup(web_response.text, features=BEAUTIFUL_SOUP_HTML_PARSER)
-
-
-def get_logger_config() -> dict:
-    logger_config = dict(BASE_LOGGER_CONFIG)
-    logger_config["root"]["handlers"] = [logger_config["root"]["handlers"]] + [key for key in
-                                                                               LOCAL_ENVIRONMENT_HANDLERS]
-    logger_config["handlers"].update(LOCAL_ENVIRONMENT_HANDLERS)
-    return logger_config

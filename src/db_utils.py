@@ -10,7 +10,7 @@ from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH, MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, \
     SQLALCHEMY_CREATE_ENGINE_KWARGS, MYSQL_URL_PARAMS_STRING, PYTHON_SIDE_ENCODING
-from environmentSettings import DB_ENGINE_BASE_URL
+from environment_settings import DB_ENGINE_BASE_URL
 from src.models.feedback import Feedback
 from src.models.listing_observation import ListingObservation
 from src.models.scraping_session import ScrapingSession

@@ -1,24 +1,25 @@
 import faulthandler
 import threading
+from logging.config import dictConfig
 
 import demoji
 
 from definitions import Base, EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID
-from environmentSettings import DEBUG_MODE, DB_USERNAME, log
+from environment_settings import DEBUG_MODE, DB_USERNAME
+from logger_config import get_logger_config
 from src.cryptonia.cryptonia_scrape_manager import CryptoniaScrapingManager
 from src.db_utils import kill_all_existing_db_connections_for_user, get_engine, get_db_session, set_settings, \
     fix_integrity_of_database, get_settings
 from src.empire.empire_scrape_manager import EmpireScrapingManager
 
 faulthandler.enable()
-
-log.info("info message")
+dictConfig(get_logger_config())
 
 if DEBUG_MODE:
-    cryptonia_nr_of_threads = 0
+    cryptonia_nr_of_threads = 1
     cryptonia_start_immediately = True
 
-    empire_nr_of_threads = 1
+    empire_nr_of_threads = 0
     empire_start_immediately = True
 else:
     empire_nr_of_threads = int(input(f"[{EMPIRE_MARKET_ID}] Nr. of threads: "))
@@ -49,9 +50,9 @@ db_session.close()
 Base.metadata.create_all(engine)
 
 # empire market
-cryptonia_scraping_manager = EmpireScrapingManager(settings=empire_settings, nr_of_threads=int(empire_nr_of_threads))
-cryptonia_thread = threading.Thread(target=cryptonia_scraping_manager.run, args=(empire_start_immediately,))
-cryptonia_thread.start()
+empire_scraping_manager = EmpireScrapingManager(settings=empire_settings, nr_of_threads=int(empire_nr_of_threads))
+empire_thread = threading.Thread(target=empire_scraping_manager.run, args=(empire_start_immediately,))
+empire_thread.start()
 
 # cryptonia market
 cryptonia_scraping_manager = CryptoniaScrapingManager(settings=cryptonia_settings, nr_of_threads=int(cryptonia_nr_of_threads))
