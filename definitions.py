@@ -52,7 +52,11 @@ EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
                              ["using_python7", "Password123!"],
                              ["using_python8", "Password123!"],
                              ["using_python9", "Password123!"],
-                             ["using_python10", "Password123!"]]
+                             ["using_python10", "Password123!"],
+                             ["using_python11", "Password123!"],
+                             ["using_python12", "Password123!"],
+                             ["using_python13", "Password123!"],
+                             ["using_python14", "Password123!"]]
 
 RESCRAPE_PGP_KEY_INTERVAL = ONE_WEEK
 EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
