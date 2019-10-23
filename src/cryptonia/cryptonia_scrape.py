@@ -51,7 +51,9 @@ class CryptoniaMarketScraper(BaseScraper):
 
         soup_html = get_page_as_soup_html(self.working_dir, web_response,
                                           file_name="saved_empire_search_result_html")
-        product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
+
+        product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
+        titles, sellers, seller_urls = scrapingFunctions.get_titles_sellers_and_seller_urls(soup_html)
 
         if len(product_page_urls) == 0:
             if soup_html.text.find(CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE) == -1:
@@ -59,8 +61,7 @@ class CryptoniaMarketScraper(BaseScraper):
             else:
                 return
 
-        titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
-        btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+        btc_rate, ltc_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
 
         assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
 

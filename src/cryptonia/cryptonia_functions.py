@@ -1,10 +1,10 @@
-import abc
-import re
 from typing import List, Tuple
 
 from bs4 import BeautifulSoup
 
+from definitions import CRYPTONIA_MARKET_BASE_URL
 from src.base_functions import BaseFunctions
+
 
 class CryptoniaScrapingFunctions(BaseFunctions):
 
@@ -57,8 +57,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         pass
 
     @staticmethod
-    def get_cryptocurrency_rates(soup_html) -> Tuple[int, int, int]:
-        pass
+    def get_cryptocurrency_rates(soup_html: BeautifulSoup) -> Tuple[int, int]:
+
 
     def _format_logger_message(self, message: str) -> str:
         return message
@@ -91,7 +91,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return category_lists, urls
 
     @staticmethod
-    def get_nr_of_result_pages_in_category(soup_html) -> int:
+    def get_nr_of_result_pages_in_category(soup_html: BeautifulSoup) -> int:
         tds = [td for td in soup_html.findAll('td', attrs={'class', 'gridftr'})]
         assert len(tds) == 1
         td: BeautifulSoup = tds[0]
@@ -101,4 +101,32 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         parts_of_span = span.text.split(" ")
         assert len(parts_of_span) == 3
         return int(parts_of_span[2])
+
+    @staticmethod
+    def get_titles_sellers_and_seller_urls(soup_html: BeautifulSoup) -> Tuple[List[str], List[str], List[str]]:
+        titles = []
+        sellers = []
+        seller_urls = []
+
+        tables = [table for table in soup_html.findAll('table', attrs={'style': 'width: 100%'})]
+        assert len(tables) == 1
+        table = tables[0]
+
+        trs = [tr for tr in table.findAll('tr')]
+        assert len(trs) <= 27
+
+        for tr in trs[1:-1]:
+            thumb_td, spacer_td, product_td, price_td, vendor_td = [td for td in tr.findAll('td')]
+            hrefs = [href for href in vendor_td.findAll('a', href=True)]
+            assert len(hrefs) == 1
+            href = hrefs[0]
+            seller_urls.append(f"{CRYPTONIA_MARKET_BASE_URL}{href['href']}")
+            sellers.append(href.text)
+
+            divs = [div for div in product_td.findAll('div', attrs={'style': 'margin-bottom: 5px; width: 270px; overflow: hidden'})]
+            assert  len(divs) == 1
+            name_div = divs[0]
+            titles.append(name_div.text)
+
+        return titles, sellers, seller_urls
 
