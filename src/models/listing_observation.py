@@ -28,6 +28,7 @@ class ListingObservation(Base):
 
     btc = Column(Boolean)
     xmr = Column(Boolean)
+    btc_multisig = Column(Boolean)
 
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     price = Column(Float)
@@ -51,6 +52,6 @@ class ListingObservation(Base):
     # listing type varchar
     # unit type varchar
     # bulk discounts in junction table
-    # btc_multisig
+    #
 
 
