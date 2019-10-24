@@ -15,17 +15,29 @@ from src.empire.empire_scrape_manager import EmpireScrapingManager
 faulthandler.enable()
 dictConfig(get_logger_config())
 
+#TODO: Implement logic to loop over the markets. DRY
 if DEBUG_MODE:
+    empire_nr_of_threads = 0
+    empire_session_id = None
+    empire_start_immediately = True
+
     cryptonia_nr_of_threads = 1
+    cryptonia_session_id = None
     cryptonia_start_immediately = True
 
-    empire_nr_of_threads = 0
-    empire_start_immediately = True
 else:
     empire_nr_of_threads = int(input(f"[{EMPIRE_MARKET_ID}] Nr. of threads: "))
+    try:
+        empire_session_id = int(input(f"[{EMPIRE_MARKET_ID}] Resume session_id [blank makes new]: "))
+    except ValueError:
+        empire_session_id = None
     empire_start_immediately = bool(input(f"[{EMPIRE_MARKET_ID}] Start immediately? (True/False)"))
 
     cryptonia_nr_of_threads = int(input(f"[{CRYPTONIA_MARKET_ID}] Nr. of threads: "))
+    try:
+        cryptonia_session_id = int(input(f"[{CRYPTONIA_MARKET_ID}] Resume session_id [blank makes new]: "))
+    except ValueError:
+        cryptonia_session_id = None
     cryptonia_start_immediately = bool(input(f"[{CRYPTONIA_MARKET_ID}] Start immediately? (True/False)"))
 
 if not demoji.last_downloaded_timestamp():
@@ -50,11 +62,14 @@ db_session.close()
 Base.metadata.create_all(engine)
 
 # empire market
-empire_scraping_manager = EmpireScrapingManager(settings=empire_settings, nr_of_threads=int(empire_nr_of_threads))
+empire_scraping_manager = EmpireScrapingManager(settings=empire_settings, nr_of_threads=int(empire_nr_of_threads),
+                                                initial_session_id=empire_session_id)
 empire_thread = threading.Thread(target=empire_scraping_manager.run, args=(empire_start_immediately,))
 empire_thread.start()
 
 # cryptonia market
-cryptonia_scraping_manager = CryptoniaScrapingManager(settings=cryptonia_settings, nr_of_threads=int(cryptonia_nr_of_threads))
+cryptonia_scraping_manager = CryptoniaScrapingManager(settings=cryptonia_settings,
+                                                      nr_of_threads=int(cryptonia_nr_of_threads),
+                                                      initial_session_id=cryptonia_session_id)
 cryptonia_thread = threading.Thread(target=cryptonia_scraping_manager.run, args=(cryptonia_start_immediately,))
 cryptonia_thread.start()

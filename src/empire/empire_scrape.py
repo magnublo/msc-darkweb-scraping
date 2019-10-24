@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from math import ceil
 from random import shuffle
-from typing import Union
+from typing import Union, Tuple, List
 
 import cfscrape
 import requests
@@ -15,7 +15,7 @@ from sqlalchemy import func
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
     RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
-    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE
+    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, PYTHON_SIDE_ENCODING
 from environment_settings import DEBUG_MODE
 from src.base_scraper import BaseScraper
 from src.db_utils import get_column_name
@@ -146,86 +146,40 @@ class EmpireScrapingSession(BaseScraper):
             {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
         self.db_session.commit()
 
-
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate):
 
-        existing_seller = self.db_session.query(Seller) \
-            .filter_by(name=seller_name).first()
+        seller, is_new_seller = self._get_seller(seller_name)
 
-        if existing_seller:
-            seller = existing_seller
-            is_new_seller = False
-        else:
-            seller = Seller(name=seller_name, market=self.market_id)
-            self.db_session.add(seller)
-            self.db_session.flush()
-            is_new_seller = True
+        listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
 
-        existing_listing_observation = self.db_session.query(ListingObservation) \
-            .filter(ListingObservation.session_id == self.session_id, ListingObservation.title == title) \
-            .join(Seller) \
-            .filter(ListingObservation.seller_id == Seller.id, Seller.name == seller_name) \
-            .first()
-
-        if existing_listing_observation:
-            if existing_listing_observation.promoted_listing != is_sticky:
-                existing_listing_observation.promoted_listing = True
+        if not is_new_listing_observation:
+            if listing_observation.promoted_listing != is_sticky:
+                listing_observation.promoted_listing = True
                 self.db_session.flush()
-            self.print_crawling_debug_message(existing_listing_observation=existing_listing_observation)
-            self.duplicates_this_session += 1
             return
-        else:
-            listing_observation = ListingObservation(session_id=self.session_id,
-                                                     thread_id=self.thread_id,
-                                                     title=title,
-                                                     seller_id=seller.id)
-            self.db_session.add(listing_observation)
-            self.db_session.flush()
 
-        existing_seller_observation = self.db_session.query(SellerObservation) \
-            .filter(SellerObservation.session_id == self.session_id) \
-            .join(Seller) \
-            .filter(SellerObservation.seller_id == Seller.id, Seller.name == seller_name) \
-            .first()
+        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
 
-        if not existing_seller_observation:
+        if is_new_seller_observation:
             self._scrape_seller(seller_url, seller, is_new_seller)
 
         self.print_crawling_debug_message(url=product_page_url)
 
         web_response = self._get_logged_in_web_response(product_page_url)
-
-        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_html")
+        soup_html = get_page_as_soup_html(self.working_dir, web_response)
 
         listing_text = scrapingFunctions.get_description(soup_html)
-        listing_text_id = hashlib.md5(listing_text.encode('utf-8')).hexdigest()
+        listing_text_id = hashlib.md5(listing_text.encode(PYTHON_SIDE_ENCODING)).hexdigest()
         categories, website_category_ids = scrapingFunctions.get_categories_and_ids(soup_html)
         accepts_BTC, accepts_LTC, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
         nr_sold, nr_sold_since_date = scrapingFunctions.get_nr_sold_since_date(soup_html)
         fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
         origin_country, destination_countries, payment_type = \
             scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
-            soup_html)
+                soup_html)
 
-        db_category_ids = []
-
-        for i in range(0, len(categories)):
-            category = self.db_session.query(ListingCategory).filter_by(
-                website_id=website_category_ids[i],
-                name=categories[i],
-                market=self.market_id).first()
-
-            if not category:
-                category = ListingCategory(
-                    website_id=website_category_ids[i],
-                    name=categories[i],
-                    market=self.market_id
-                )
-                self.db_session.add(category)
-                self.db_session.flush()
-
-            db_category_ids.append(category.id)
+        self._add_category_junctions(categories, website_category_ids, listing_observation.id)
 
         self.db_session.merge(ListingText(
             id=listing_text_id,
@@ -236,7 +190,7 @@ class EmpireScrapingSession(BaseScraper):
             id=origin_country
         ))
 
-        self.db_session.flush()
+        self._add_country_junctions(destination_countries, listing_observation.id)
 
         listing_observation.listing_text_id = listing_text_id
         listing_observation.btc = accepts_BTC
@@ -256,23 +210,7 @@ class EmpireScrapingSession(BaseScraper):
 
         self.db_session.flush()
 
-        for destination_country in destination_countries:
-            self.db_session.merge(Country(
-                id=destination_country
-            ))
 
-            self.db_session.flush()
-
-            self.db_session.add(ListingObservationCountry(
-                listing_observation_id=listing_observation.id,
-                country_id=destination_country
-            ))
-
-        for db_category_id in db_category_ids:
-            self.db_session.add(ListingObservationCategory(
-                listing_observation_id=listing_observation.id,
-                category_id=db_category_id
-            ))
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
 
@@ -478,4 +416,22 @@ class EmpireScrapingSession(BaseScraper):
                                                                                urls_is_sticky):
             self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
                                          is_sticky, btc_rate, ltc_rate, xmr_rate, func=self._scrape_listing)
+
+    def _add_country_junctions(self, destination_countries: List[str], listing_observation_id: int) -> None:
+        for destination_country in destination_countries:
+            self.db_session.merge(Country(
+                id=destination_country
+            ))
+
+            self.db_session.flush()
+
+            self.db_session.add(ListingObservationCountry(
+                listing_observation_id=listing_observation_id,
+                country_id=destination_country
+            ))
+
+        self.db_session.flush()
+
+
+
 

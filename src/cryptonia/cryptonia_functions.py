@@ -17,8 +17,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         pass
 
     @staticmethod
-    def get_description(soup_html) -> str:
-        pass
+    def get_description(soup_html: BeautifulSoup) -> str:
+        raise NotImplementedError('')
 
     @staticmethod
     def get_product_page_urls(soup_html) -> List[str]:
@@ -57,8 +57,23 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         pass
 
     @staticmethod
-    def get_cryptocurrency_rates(soup_html: BeautifulSoup) -> Tuple[int, int]:
-        pass
+    def get_cryptocurrency_rates(soup_html: BeautifulSoup) -> Tuple[float, float]:
+        rate_divs = [div for div in soup_html.findAll('div', attrs={'class': 'rate_div'})]
+        assert len(rate_divs) == 1
+        rate_div = rate_divs[0]
+
+        smtexts = [span for span in rate_div.findAll('span', attrs={'class': 'smtext'})]
+        assert len(smtexts) == 1
+        smtext = smtexts[0]
+
+        rates_string = smtext.text
+        rates = rates_string.split("=")
+
+        btc_usd_rate = float(rates[2].split(" ")[1])
+        btc_xmr_rate = float(rates[4].split(" ")[1])
+        xmr_usd_rate = btc_usd_rate / btc_xmr_rate
+
+        return btc_usd_rate, xmr_usd_rate
 
     def _format_logger_message(self, message: str) -> str:
         return message

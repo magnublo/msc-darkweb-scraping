@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from environment_settings import MYSQL_ECHO_DEBUG
 
 ONE_WEEK = 3600*24*7
+ONE_DAY = 3600*24
 FALSE = 1 == 0
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"

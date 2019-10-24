@@ -15,15 +15,20 @@ from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from urllib3.exceptions import HTTPError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
-    ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, PYTHON_SIDE_ENCODING
+    ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, PYTHON_SIDE_ENCODING, ONE_DAY
 from environment_settings import DEBUG_MODE, PROXIES
 from src.base_logger import BaseClassWithLogger
 from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error
 from src.models.error import Error
+from src.models.listing_category import ListingCategory
+from src.models.listing_observation import ListingObservation
+from src.models.listing_observation_category import ListingObservationCategory
 from src.models.scraping_session import ScrapingSession
+from src.models.seller import Seller
+from src.models.seller_observation import SellerObservation
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, is_internal_server_error, \
     InternalServerErrorException, is_bad_gateway, BadGatewayException, error_is_sqlalchemy_error, \
-    GenericException
+    GenericException, get_seconds_until_midnight
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -77,10 +82,12 @@ class BaseScraper(BaseClassWithLogger):
         self._wrap_up_session()
 
     def _initiate_session(self) -> int:
+        from socket import getfqdn
         scraping_session = ScrapingSession(
             market=self.market_id,
             duplicates_encountered=self.duplicates_this_session,
-            nr_of_threads=self.nr_of_threads
+            nr_of_threads=self.nr_of_threads,
+            host_system_fqdn=getfqdn()
         )
         self.db_session.add(scraping_session)
         self.db_session.commit()
@@ -176,10 +183,86 @@ class BaseScraper(BaseClassWithLogger):
                                      min(nr_of_errors - 1, highest_index)] + self.thread_id * 2
         return seconds_until_next_try
 
+    def _get_seller(self, seller_name: str) -> Tuple[Seller, bool]:
+        existing_seller = self.db_session.query(Seller) \
+            .filter_by(name=seller_name, market=self.market_id).first()
+
+        if existing_seller:
+            seller = existing_seller
+            is_new_seller = False
+        else:
+            seller = Seller(name=seller_name, market=self.market_id)
+            self.db_session.add(seller)
+            self.db_session.flush()
+            is_new_seller = True
+
+        return seller, is_new_seller
+
+    def _get_listing_observation(self, title: str, seller_id: int) -> Tuple[ListingObservation, bool]:
+        existing_listing_observation = self.db_session.query(ListingObservation) \
+            .filter(ListingObservation.session_id == self.session_id, ListingObservation.title == title,
+                    ListingObservation.seller_id == seller_id).first()
+
+        if existing_listing_observation:
+            self.print_crawling_debug_message(existing_listing_observation=existing_listing_observation)
+            self.duplicates_this_session += 1
+            listing_observation = existing_listing_observation
+            is_new_listing_observation = False
+        else:
+            listing_observation = ListingObservation(session_id=self.session_id,
+                                                     thread_id=self.thread_id,
+                                                     title=title,
+                                                     seller_id=seller_id)
+            is_new_listing_observation = True
+            self.db_session.add(listing_observation)
+            self.db_session.flush()
+
+        return listing_observation, is_new_listing_observation
+
+    def _exists_seller_observation_from_this_session(self, seller_id: int) -> bool:
+        existing_seller_observation = self.db_session.query(SellerObservation) \
+            .filter(SellerObservation.session_id == self.session_id) \
+            .join(Seller) \
+            .filter(SellerObservation.seller_id == seller_id) \
+            .first()
+
+        if existing_seller_observation:
+            return False
+        else:
+            return True
+
+    def _add_category_junctions(self, categories: List[str], website_category_ids: List[int], listing_observation_id: int) -> None:
+
+        for i in range(0, len(categories)):
+            category = self.db_session.query(ListingCategory).filter_by(
+                website_id=website_category_ids[i],
+                name=categories[i],
+                market=self.market_id).first()
+
+            if not category:
+                category = ListingCategory(
+                    website_id=website_category_ids[i],
+                    name=categories[i],
+                    market=self.market_id
+                )
+                self.db_session.add(category)
+
+            self.db_session.add(ListingObservationCategory(
+                listing_observation_id=listing_observation_id,
+                category_id=category.id
+            ))
+
+        self.db_session.flush()
+
+
     def print_crawling_debug_message(self, url=None, existing_listing_observation=None) -> None:
         assert (url or existing_listing_observation)
         queue_size = self.queue.qsize()
         parsing_time = time() - self.time_last_received_response
+        percent_crawled = ((self.initial_queue_size - queue_size) / self.initial_queue_size) * 100
+        percent_time_spent = ((ONE_DAY - get_seconds_until_midnight()) / ONE_DAY) * 100
+        progress_msg: str = f"Spent {percent_time_spent}% of this day to crawl {percent_crawled}% of site."
+
         self.logger.info(f"Last web response was parsed in {parsing_time} seconds.")
         if existing_listing_observation:
             self.logger.info("Database already contains listing with this seller and title for this session.")
@@ -191,6 +274,10 @@ class BaseScraper(BaseClassWithLogger):
         self.logger.info(f"Web session {self.cookie}")
         self.logger.info(f"Crawling page nr. {self.initial_queue_size - queue_size} this session.")
         self.logger.info(f"Pages left, approximate: {queue_size}.\n")
+        if percent_crawled >= percent_time_spent:
+            self.logger.info(progress_msg)
+        else:
+            self.logger.warn(progress_msg)
 
     def _get_logged_in_web_response(self, url: str, debug: bool = DEBUG_MODE) -> requests.Response:
         while True:

@@ -1,6 +1,5 @@
 import threading
 from abc import abstractmethod
-from datetime import datetime, timedelta
 from multiprocessing import Queue
 from time import sleep
 from typing import List
@@ -11,12 +10,12 @@ from src.base_scraper import BaseScraper
 from src.db_utils import get_db_session, get_engine, get_column_name, get_settings
 from src.models.scraping_session import ScrapingSession
 from src.models.settings import Settings
-from src.utils import queue_is_empty
+from src.utils import queue_is_empty, get_seconds_until_midnight, get_utc_datetime_next_midnight
 
 
 class BaseScrapingManager(BaseClassWithLogger):
 
-    def __init__(self, settings: Settings, nr_of_threads: int):
+    def __init__(self, settings: Settings, nr_of_threads: int, initial_session_id: int):
         super().__init__()
         self.market_credentials = self._get_market_credentials()
         self.market_name = self._get_market_name()
@@ -25,6 +24,7 @@ class BaseScrapingManager(BaseClassWithLogger):
         self.first_run = True
         self.refill_queue_when_complete = settings.refill_queue_when_complete
         self.nr_of_threads = nr_of_threads
+        self.initial_session_id = initial_session_id
 
     def run(self, start_immediately: bool) -> None:
         if self.nr_of_threads <= 0:
@@ -40,7 +40,8 @@ class BaseScrapingManager(BaseClassWithLogger):
     def _start_new_session(self, queue: Queue, nr_of_threads) -> None:
         username = self.market_credentials[0][0]
         password = self.market_credentials[0][1]
-        scraping_session = self._get_scraping_session(queue, username, password, nr_of_threads, thread_id=0)
+        scraping_session = self._get_scraping_session(queue, username, password, nr_of_threads, thread_id=0,
+                                                      session_id=self.initial_session_id)
         session_id = scraping_session.session_id
 
         if DEBUG_MODE:
@@ -87,28 +88,21 @@ class BaseScrapingManager(BaseClassWithLogger):
         self.refill_queue_when_complete = settings.refill_queue_when_complete
 
     def _format_logger_message(self, message: str) -> str:
-        raise NotImplementedError('')
+        return f"[RefillQueue {self.refill_queue_when_complete}] [ThreadCount {self.nr_of_threads}] {message}"
 
-    @staticmethod
-    def _wait_until_midnight_utc() -> None:
-
-        utc_current_datetime = datetime.fromtimestamp(datetime.utcnow().timestamp())
-
-        utc_next_day_datetime = utc_current_datetime + timedelta(days=1)
-
-        utc_next_day_date = utc_next_day_datetime.date()
-
-        utc_next_midnight_datetime = datetime(year=utc_next_day_date.year, month=utc_next_day_date.month,
-                                              day=utc_next_day_date.day)
+    def _wait_until_midnight_utc(self) -> None:
 
         while True:
-            seconds_until_midnight = (utc_next_midnight_datetime - datetime.utcnow()).total_seconds()
+            utc_next_midnight_datetime = get_utc_datetime_next_midnight()
+            seconds_until_midnight = get_seconds_until_midnight(utc_next_midnight_datetime=utc_next_midnight_datetime)
             if seconds_until_midnight > 0:
-                print(f"Waiting until {str(utc_next_midnight_datetime)[:19]} before starting new scraping session.")
+                self.logger.info(
+                    f"Waiting until {str(utc_next_midnight_datetime)[:19]} before starting new scraping session."
+                )
                 hours = int(seconds_until_midnight // 3600)
                 minutes = int((seconds_until_midnight - hours * 3600) // 60)
                 seconds = int(seconds_until_midnight - hours * 3600 - minutes * 60)
-                print(f"{hours} hours, {minutes} minutes and {seconds} seconds left.\n")
+                self.logger.info(f"{hours} hours, {minutes} minutes and {seconds} seconds left.\n")
                 sleep(min(float(30), seconds_until_midnight))
             else:
                 return

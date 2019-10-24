@@ -1,5 +1,5 @@
 import inspect
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import time, sleep
 
 import requests
@@ -117,7 +117,9 @@ def queue_is_empty(queue) -> bool:
     sleep(100)  # Must be sure that queue is indeed empty.
     return queue.empty() and is_empty
 
-
+#TODO: Rework method. Let it accept str, not requests.Response. Implement integration tests so that
+#TODO: self.get_logged_in_web_response is mocked with a method that returns file content based on url argument.
+#TODO: Remove working_dir argument. Let method be proxied by BaseScraper method which passes working_dir.
 def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline_file=DEBUG_MODE) -> BeautifulSoup:
     if use_offline_file:
         file_name = open(working_dir + file_name, "r")
@@ -130,3 +132,22 @@ def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline
 
 def get_logger_name(cls: object):
     return cls.__name__
+
+
+def get_seconds_until_midnight(utc_next_midnight_datetime: datetime=None) -> float:
+    if not utc_next_midnight_datetime:
+        utc_next_midnight_datetime = get_utc_datetime_next_midnight()
+
+    return (utc_next_midnight_datetime - datetime.utcnow()).total_seconds()
+
+
+def get_utc_datetime_next_midnight() -> datetime:
+    utc_current_datetime = datetime.fromtimestamp(datetime.utcnow().timestamp())
+
+    utc_next_day_datetime = utc_current_datetime + timedelta(days=1)
+
+    utc_next_day_date = utc_next_day_datetime.date()
+
+    return datetime(year=utc_next_day_date.year, month=utc_next_day_date.month,
+                                          day=utc_next_day_date.day)
+

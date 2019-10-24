@@ -1,5 +1,8 @@
 import dateparser as dateparser
 from typing import List, Tuple
+
+from bs4 import BeautifulSoup
+
 from definitions import EMPIRE_BASE_CATEGORY_URL
 from src.base_functions import BaseFunctions
 from src.db_utils import _shorten_and_sanitize_for_text_column
@@ -155,7 +158,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert False
 
     @staticmethod
-    def get_categories_and_ids(soup_html):
+    def get_categories_and_ids(soup_html: BeautifulSoup) -> Tuple[List[str], List[int]]:
         h3s = [div for div in soup_html.findAll('h3')]
 
         categories = []
@@ -168,7 +171,7 @@ class EmpireScrapingFunctions(BaseFunctions):
                     category = a_tags[0].text
                     url = str(a_tags[0]['href'])
                     url_fragments = url.split("/")
-                    category_id = url_fragments[-2]
+                    category_id = int(url_fragments[-2])
                     categories.append(category)
                     category_ids.append(category_id)
 
