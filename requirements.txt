@@ -10,3 +10,5 @@ demoji==0.1.5
 lxml==4.4.1
 cfscrape==2.0.8
 mysql-connector-python==8.0.18
+sty==1.0.0b12
+blessings==1.7

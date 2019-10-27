@@ -3,8 +3,9 @@ import hashlib
 import time
 from datetime import datetime
 from math import ceil
+from multiprocessing import Queue
 from random import shuffle
-from typing import Union, Tuple, List
+from typing import Union, List
 
 import cfscrape
 import requests
@@ -22,9 +23,6 @@ from src.db_utils import get_column_name
 from src.empire.empire_functions import EmpireScrapingFunctions as scrapingFunctions
 from src.models.country import Country
 from src.models.feedback import Feedback
-from src.models.listing_category import ListingCategory
-from src.models.listing_observation import ListingObservation
-from src.models.listing_observation_category import ListingObservationCategory
 from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
 from src.models.pgp_key import PGPKey
@@ -37,8 +35,10 @@ from src.utils import get_page_as_soup_html
 
 class EmpireScrapingSession(BaseScraper):
 
-    def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
-        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, session_id=session_id)
+    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int, proxy: dict,
+                 session_id: int = None):
+        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, proxy=proxy,
+                         session_id=session_id)
 
     def _get_web_session(self) -> Union[requests.Session, cfscrape.Session]:
         return requests.Session()
@@ -74,7 +74,8 @@ class EmpireScrapingSession(BaseScraper):
             numeric=True
         ).captcha_handler(captcha_base64=base64_image)
 
-        captcha_solution = captcha_solution_response["solution"]["text"]
+        captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
+                                                             func=lambda d: d["solution"]["text"])
 
         print("Captcha solved. Solving took " + str(time.time() - time_before_requesting_captcha_solve) + " seconds.")
 
@@ -209,8 +210,6 @@ class EmpireScrapingSession(BaseScraper):
         listing_observation.payment_type = payment_type
 
         self.db_session.flush()
-
-
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
 
@@ -431,7 +430,3 @@ class EmpireScrapingSession(BaseScraper):
             ))
 
         self.db_session.flush()
-
-
-
-

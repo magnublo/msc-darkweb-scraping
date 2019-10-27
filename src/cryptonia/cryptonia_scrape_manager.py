@@ -19,5 +19,5 @@ class CryptoniaScrapingManager(BaseScrapingManager):
     def _get_market_name(self) -> str:
         return CRYPTONIA_MARKET_ID
 
-    def __init__(self, settings: Settings, nr_of_threads: int, initial_session_id: int):
-        super().__init__(settings, nr_of_threads, initial_session_id)
+    def __init__(self, settings: Settings, nr_of_threads: int, initial_session_id: int, proxies: List[dict]):
+        super().__init__(settings, nr_of_threads, initial_session_id, proxies)

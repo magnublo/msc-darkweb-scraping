@@ -15,7 +15,7 @@ from src.utils import queue_is_empty, get_seconds_until_midnight, get_utc_dateti
 
 class BaseScrapingManager(BaseClassWithLogger):
 
-    def __init__(self, settings: Settings, nr_of_threads: int, initial_session_id: int):
+    def __init__(self, settings: Settings, nr_of_threads: int, initial_session_id: int, proxies: List[dict]):
         super().__init__()
         self.market_credentials = self._get_market_credentials()
         self.market_name = self._get_market_name()

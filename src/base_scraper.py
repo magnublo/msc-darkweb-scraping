@@ -16,7 +16,7 @@ from urllib3.exceptions import HTTPError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, PYTHON_SIDE_ENCODING, ONE_DAY
-from environment_settings import DEBUG_MODE, PROXIES
+from environment_settings import DEBUG_MODE
 from src.base_logger import BaseClassWithLogger
 from src.db_utils import _shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error
 from src.models.error import Error
@@ -34,12 +34,13 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, i
 class BaseScraper(BaseClassWithLogger):
 
     def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int,
-                 session_id: int = None):
+                 proxy: dict, session_id: int = None):
         super().__init__()
         engine = get_engine()
         self.login_url = self._get_login_url()
         self.login_phrase = self._get_login_phrase()
         self.working_dir = self._get_working_dir()
+        self.proxy = proxy
         self.logged_out_exceptions = 0
         self.db_session = get_db_session(engine)
         self.username = username
@@ -161,9 +162,9 @@ class BaseScraper(BaseClassWithLogger):
             print("Try nr. " + str(tries))
             try:
                 if post_data:
-                    response = self.web_session.post(url, data=post_data, proxies=PROXIES, headers=self.headers)
+                    response = self.web_session.post(url, data=post_data, proxies=self.proxy, headers=self.headers)
                 else:
-                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+                    response = self.web_session.get(url, proxies=self.proxy, headers=self.headers)
                 return response
             except:
                 tries += 1
@@ -286,14 +287,14 @@ class BaseScraper(BaseClassWithLogger):
                     self.time_last_received_response = time()
                     return None
                 else:
-                    response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+                    response = self.web_session.get(url, proxies=self.proxy, headers=self.headers)
 
                     tries = 0
 
                     while tries < 5:
                         if self._is_logged_out(response, self.login_url, self.login_phrase):
                             tries += 1
-                            response = self.web_session.get(url, proxies=PROXIES, headers=self.headers)
+                            response = self.web_session.get(url, proxies=self.proxy, headers=self.headers)
                         else:
                             if is_internal_server_error(response):
                                 raise InternalServerErrorException(response.text)

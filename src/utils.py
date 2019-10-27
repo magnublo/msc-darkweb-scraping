@@ -1,14 +1,15 @@
 import inspect
 from datetime import datetime, timedelta
 from time import time, sleep
+from typing import Tuple, List
 
 import requests
 from bs4 import BeautifulSoup
 from urllib3.exceptions import HTTPError
 
 from definitions import BEAUTIFUL_SOUP_HTML_PARSER
-from environment_settings import DEBUG_MODE
-
+from environment_settings import DEBUG_MODE, LOWEST_TOR_PORT
+from src.tor_proxy_check import get_proxy_dict
 
 
 class LoggedOutException(Exception):
@@ -117,9 +118,10 @@ def queue_is_empty(queue) -> bool:
     sleep(100)  # Must be sure that queue is indeed empty.
     return queue.empty() and is_empty
 
-#TODO: Rework method. Let it accept str, not requests.Response. Implement integration tests so that
-#TODO: self.get_logged_in_web_response is mocked with a method that returns file content based on url argument.
-#TODO: Remove working_dir argument. Let method be proxied by BaseScraper method which passes working_dir.
+
+# TODO: Rework method. Let it accept str, not requests.Response. Implement integration tests so that
+# TODO: self.get_logged_in_web_response is mocked with a method that returns file content based on url argument.
+# TODO: Remove working_dir argument. Let method be proxied by BaseScraper method which passes working_dir.
 def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline_file=DEBUG_MODE) -> BeautifulSoup:
     if use_offline_file:
         file_name = open(working_dir + file_name, "r")
@@ -134,7 +136,7 @@ def get_logger_name(cls: object):
     return cls.__name__
 
 
-def get_seconds_until_midnight(utc_next_midnight_datetime: datetime=None) -> float:
+def get_seconds_until_midnight(utc_next_midnight_datetime: datetime = None) -> float:
     if not utc_next_midnight_datetime:
         utc_next_midnight_datetime = get_utc_datetime_next_midnight()
 
@@ -149,5 +151,20 @@ def get_utc_datetime_next_midnight() -> datetime:
     utc_next_day_date = utc_next_day_datetime.date()
 
     return datetime(year=utc_next_day_date.year, month=utc_next_day_date.month,
-                                          day=utc_next_day_date.day)
+                    day=utc_next_day_date.day)
 
+
+def get_proxies(thread_counts: Tuple[int, ...], available_proxy_ports: List[int]) -> List[List]:
+    proxies = []
+    total_thread_count = 0
+
+    for thread_count in thread_counts:
+        proxies.append([])
+        for i in range(thread_count):
+            total_thread_count += 1
+            proxies[-1].append(get_proxy_dict(available_proxy_ports[total_thread_count%len(available_proxy_ports)]))
+
+    for i in range(0, len(thread_counts)):
+        assert len(proxies[i]) == thread_counts[i]
+
+    return proxies

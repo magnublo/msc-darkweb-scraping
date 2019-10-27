@@ -1,4 +1,5 @@
 import hashlib
+from multiprocessing import Queue
 from random import shuffle
 from typing import List
 
@@ -16,8 +17,9 @@ from src.utils import get_page_as_soup_html
 
 class CryptoniaScrapingSession(BaseScraper):
 
-    def __init__(self, queue, username, password, nr_of_threads, thread_id, session_id=None):
-        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, session_id=session_id)
+    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int, proxy: dict,
+                 session_id: int = None):
+        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
 
     def _get_web_session(self) -> requests.Session:
         return cfscrape.Session()

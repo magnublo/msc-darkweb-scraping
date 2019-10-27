@@ -6,10 +6,13 @@ from environment_settings import MYSQL_ECHO_DEBUG
 
 ONE_WEEK = 3600*24*7
 ONE_DAY = 3600*24
-FALSE = 1 == 0
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 WORKING_DIR = os.getcwd() + "/"
+
+RECOMMENDED_NR_OF_THREADS_PER_TOR_PROXY = 4
+TOR_PROJECT_URL_FOR_CONFIGURATION_CHECK = "https://check.torproject.org/"
+TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE = "Congratulations. This browser is configured to use Tor."
 
 MYSQL_TEXT_COLUMN_MAX_LENGTH = 65535
 MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH = 16777215
