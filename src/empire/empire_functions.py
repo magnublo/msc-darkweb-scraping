@@ -1,11 +1,13 @@
+from datetime import datetime
+
 import dateparser as dateparser
 from typing import List, Tuple
 
 from bs4 import BeautifulSoup
 
-from definitions import EMPIRE_BASE_CATEGORY_URL
+from definitions import EMPIRE_BASE_CATEGORY_URL, EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS
 from src.base_functions import BaseFunctions
-from src.db_utils import _shorten_and_sanitize_for_text_column
+from src.db_utils import shorten_and_sanitize_for_text_column
 
 
 class EmpireScrapingFunctions(BaseFunctions):
@@ -30,7 +32,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'tabcontent'})]
         assert len(descriptions) == 1
         description = descriptions[0].text
-        return _shorten_and_sanitize_for_text_column(description)
+        return shorten_and_sanitize_for_text_column(description)
 
     @staticmethod
     def get_product_page_urls(soup_html):
@@ -86,6 +88,7 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_origin_country_and_destinations_and_payment_type(soup_html) -> Tuple[str, List[str], str]:
+        #TODO: Return 'escrow' as boolean instead of payment_type string
         tables = [table for table in soup_html.findAll('table', attrs={'class': 'productTbl'})]
         table = tables[0]
         tbodies = [tbody for tbody in table.findAll('tbody')]
@@ -232,7 +235,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return category_urls_and_nr_of_listings
 
     @staticmethod
-    def get_login_payload(soup_html, username, password, captcha_solution) -> dict:
+    def get_login_payload(soup_html: BeautifulSoup, username: str, password: str, captcha_solution: str) -> dict:
 
         payload = {}
 
@@ -256,7 +259,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         description = tab_content_divs[0].text
         index_of_seller_name = description.find(seller_name)
         description_after_standard_heading = description[index_of_seller_name + len(seller_name) + 3:]
-        return _shorten_and_sanitize_for_text_column(description_after_standard_heading)
+        return shorten_and_sanitize_for_text_column(description_after_standard_heading)
 
     @staticmethod
     def get_seller_statistics(soup_html):
@@ -339,6 +342,7 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_feedbacks(soup_html):
+        # TODO: Scrape titles of associated products
         autoshop_tables = [div for div in
                            soup_html.findAll('table', attrs={'class': 'user_feedbackTbl autoshop_table'})]
         assert len(autoshop_tables) <= 1
@@ -354,13 +358,13 @@ class EmpireScrapingFunctions(BaseFunctions):
             feedback = {}
             messages = [p for p in tr.findAll('p', attrs={'class': 'setp1 bold1 feedback_msg'})]
             assert len(messages) <= 2
-            feedback["feedback_message"] = _shorten_and_sanitize_for_text_column(messages[0].text)
+            feedback["feedback_message"] = shorten_and_sanitize_for_text_column(messages[0].text)
             if len(messages) == 2:
                 seller_response = messages[1].text.strip()
                 seller_response_header_text = "Seller Response: "
 
                 assert (seller_response[0:len(seller_response_header_text)] == seller_response_header_text)
-                feedback["seller_response_message"] = _shorten_and_sanitize_for_text_column(
+                feedback["seller_response_message"] = shorten_and_sanitize_for_text_column(
                     seller_response[len(seller_response_header_text):])
             else:
                 feedback["seller_response_message"] = ""
@@ -397,7 +401,7 @@ class EmpireScrapingFunctions(BaseFunctions):
 
 
     @staticmethod
-    def get_mid_user_info(soup_html):
+    def get_mid_user_info(soup_html: BeautifulSoup) -> Tuple[float, datetime]:
         user_info_mid_divs = [div for div in soup_html.findAll('div', attrs={'class': 'user_info_mid'})]
         assert len(user_info_mid_divs) == 1
         user_info_mid_div = user_info_mid_divs[0]
@@ -405,31 +409,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         inner_divs = [div for div in user_info_mid_div.findAll('div')]
         assert len(inner_divs) == 1
         inner_div = inner_divs[0]
-
-        dream_market_successful_sales = None
-        dream_market_star_rating = None
-        wall_street_market_successful_sales = None
-        wall_street_market_star_rating = None
-
-        spans = [span for span in inner_div.findAll('span')]
-        if len(spans) > 0:
-            for span in spans:
-                try:
-                    if span["title"].find("Verified Dream Market successful") != -1:
-                        parts = span.text.split(" ")
-                        dream_market_successful_sales = parts[1]
-                        dream_market_star_rating = parts[2][1:-1]
-                        continue
-                except KeyError:
-                    pass
-                try:
-                    if span["title"].find("Verified Wall Street Market successful") != -1:
-                        parts = span.text.split(" ")
-                        wall_street_market_successful_sales = parts[1]
-                        wall_street_market_star_rating = parts[2][1:-1]
-                        continue
-                except KeyError:
-                    pass
 
         bold_ps = [p for p in inner_div.findAll('p', attrs={'class': 'bold', 'style': 'padding: 0;'})]
         assert len(bold_ps) == 1
@@ -441,8 +420,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert len(bold_spans) == 1
         registration_date = dateparser.parse(bold_spans[0].text)
 
-        return dream_market_successful_sales, dream_market_star_rating, wall_street_market_successful_sales, \
-               wall_street_market_star_rating, positive_feedback_received_percent, registration_date
+        return positive_feedback_received_percent, registration_date
 
     @staticmethod
     def get_next_feedback_page(soup_html):
@@ -482,3 +460,31 @@ class EmpireScrapingFunctions(BaseFunctions):
         pre = pres[0]
 
         return pre.text
+
+    @staticmethod
+    def get_external_market_ratings(soup_html: BeautifulSoup) -> List[Tuple[str, int, float]]:
+        external_ratings: List[Tuple[str, int, float]] = []
+
+        user_info_mid_divs = [div for div in soup_html.findAll('div', attrs={'class': 'user_info_mid'})]
+        assert len(user_info_mid_divs) == 1
+        user_info_mid_div = user_info_mid_divs[0]
+
+        inner_divs = [div for div in user_info_mid_div.findAll('div')]
+        assert len(inner_divs) == 1
+        inner_div = inner_divs[0]
+
+        spans = [span for span in inner_div.findAll('span')]
+        if len(spans) > 0:
+            titled_spans = [span for span in spans if "title" in span.keys() and span["title"].find("Verified") != -1]
+            remaining_external_market_ratings = list(EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS)
+            for titled_span in titled_spans:
+                for market_id, market_string in remaining_external_market_ratings:
+                    if titled_span["title"].find(market_string) != -1:
+                        parts = titled_span.text.split(" ")
+                        sales = int(parts[1])
+                        rating = float(parts[2][1:-1])
+                        external_ratings.append((market_id, sales, rating))
+                        remaining_external_market_ratings.remove((market_id, market_string))
+                        break
+
+        return external_ratings

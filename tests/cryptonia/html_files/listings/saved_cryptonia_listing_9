@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - Product Details</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-03 13:30 | 
+Logged in as <a class="controlbox_link" href="/user/usingpython3">usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<h2>0.5g Ketamine (Magic K)        Free Express</h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/messages/new/support/Reporting+product+%2320499263"><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class="toolbar_link" href="/products/"><span class="icono-leftArrow smicon"></span> Back to Products</a>
+</div>
+</div>
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="shipping"></a>
+<a class="noanchor" id="countries"></a>
+<a class="noanchor" id="feedback"></a>
+<a class="noanchor" id="pricing"></a>
+<a class="noanchor" id="autofill"></a>
+<div class="content_div">
+<div class="top_part">
+<a href="/image/20499543" target="_blank" title="Click to view full resolution image."><img class="picture" src="/image/20499543"/></a>
+<div class="product_details">
+<div class="product_data">
+<label>Sold by:</label>
+<a href="/user/AuzzieKet">AuzzieKet</a>
+<span class="verified">LEVEL 1</span>
+<span class="lgtext" style="font-weight: bold"><span title="Total sales">(0)</span> <span style="color: black;" title="Positive Feedback Percentage">0.00%</span></span>
+<a class="smlink" href="/messages/new/AuzzieKet/0%2E5g+Ketamine+%28Magic+K%29++++++++Free+Express+%28Product+%2320499263%29" title="Click to contact this vendor."><span class="icono-mail"></span></a>
+</div>
+<div class="product_data">
+<label>Category:</label>
+<span>Ketamine</span>
+</div>
+<div class="product_data">
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class="product_data">
+<label>Price:</label>
+<span class="lgtext">48.37 USD/each</span>
+<span>(0.00527310 BTC/each)</span>
+</div>
+<div class="product_data">
+<label>FE or Escrow:</label>
+<span class="verified">ESCROW</span>
+</div>
+<div class="product_data">
+<label>In stock:</label>
+<span>10000 each</span>
+</div>
+<div class="product_data">
+<label>Accepted Payments:</label>
+<span><img alt="Bitcoin (BTC)" src="/image/btc_nm.png" style="height: 18px; max-width: 200px"/> <img alt="Monero (XMR)" src="/image/xmr_nm.png" style="height: 18px; max-width: 200px"/></span>
+</div>
+<div class="product_data">
+<label>Ships from:</label>
+<div class="lbllist">Australia → Australia</div>
+</div>
+</div>
+</div>
+</div>
+<form method="post">
+<div class="buydiv">
+<label class="buttonlink buynow">BUY NOW&gt;&gt;</label><select class="shipselect" name="shipping_method">
+<option value="0">--Select Shipping Method--</option>
+<option value="20505943">Express Shipping (0.00 USD)</option>
+</select><input class="qty" name="qty" type="number" value="1"/><input class="clickbuy" name="submit" type="submit" value="PLACE ORDER"/>
+</div>
+<div style="height: 10px"></div>
+</form>
+<div class="tab" id="generaltab"><a class="tablink" href="#general">Description</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<div class="content_div">
+<p>I want to be a trusted vendor but thats hard to do for someone whos new to the market with so few reviews so Ive made this small listing for customers ease of mind so if they want to test the Magic K its very cheap and for some postive reviews.</p>
+<p>This is not gonna come up as k if you put it in a test kit, but trust me its just as good and stronger so you wont be able to have as much, nothing to worry about it is 100% safe</p>
+</div>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>Terms &amp; Conditions</p>
+<p>Shipping will occure 24-48 hrs from receiving your order.
+Shipping Express you need to allow 3 business days for your order to arrive.
+I do not give out tracking numbers.</p>
+<p>There will be no refunds and no reships.
+If you have sent the correct address and name there is very little chance of it not arriving.</p>
+<p>Please do not dispute any orders before discussing it with me first, I will try resolve all issues as best I can.</p>
+<p>By ordering its concluded that you have accepted the terms and conditions</p>
+</div>
+</div>
+<div class="target_content" id="feedback_div">
+<p>This vendor has no feedback yet.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8221.65 EUR = 9173.47 USD = 7091.19 GBP = 148.51999822 XMR = 13274.92 AUD = 12071.46 CAD</span></div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+[get_description()]tab_view_1_divs: [<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<div class="content_div">
+<p>I want to be a trusted vendor but thats hard to do for someone whos new to the market with so few reviews so Ive made this small listing for customers ease of mind so if they want to test the Magic K its very cheap and for some postive reviews.</p>
+<p>This is not gonna come up as k if you put it in a test kit, but trust me its just as good and stronger so you wont be able to have as much, nothing to worry about it is 100% safe</p>
+</div>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>Terms &amp; Conditions</p>
+<p>Shipping will occure 24-48 hrs from receiving your order.
+Shipping Express you need to allow 3 business days for your order to arrive.
+I do not give out tracking numbers.</p>
+<p>There will be no refunds and no reships.
+If you have sent the correct address and name there is very little chance of it not arriving.</p>
+<p>Please do not dispute any orders before discussing it with me first, I will try resolve all issues as best I can.</p>
+<p>By ordering its concluded that you have accepted the terms and conditions</p>
+</div>
+</div>
+<div class="target_content" id="feedback_div">
+<p>This vendor has no feedback yet.</p>
+</div>
+</div>]
+
+
+[get_description()]tab_view_1_div: <div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<div class="content_div">
+<p>I want to be a trusted vendor but thats hard to do for someone whos new to the market with so few reviews so Ive made this small listing for customers ease of mind so if they want to test the Magic K its very cheap and for some postive reviews.</p>
+<p>This is not gonna come up as k if you put it in a test kit, but trust me its just as good and stronger so you wont be able to have as much, nothing to worry about it is 100% safe</p>
+</div>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>Terms &amp; Conditions</p>
+<p>Shipping will occure 24-48 hrs from receiving your order.
+Shipping Express you need to allow 3 business days for your order to arrive.
+I do not give out tracking numbers.</p>
+<p>There will be no refunds and no reships.
+If you have sent the correct address and name there is very little chance of it not arriving.</p>
+<p>Please do not dispute any orders before discussing it with me first, I will try resolve all issues as best I can.</p>
+<p>By ordering its concluded that you have accepted the terms and conditions</p>
+</div>
+</div>
+<div class="target_content" id="feedback_div">
+<p>This vendor has no feedback yet.</p>
+</div>
+</div>
+
+
+[get_description()]content_divs: [<div class="content_div">
+<p>I want to be a trusted vendor but thats hard to do for someone whos new to the market with so few reviews so Ive made this small listing for customers ease of mind so if they want to test the Magic K its very cheap and for some postive reviews.</p>
+<p>This is not gonna come up as k if you put it in a test kit, but trust me its just as good and stronger so you wont be able to have as much, nothing to worry about it is 100% safe</p>
+</div>, <div class="content_div">
+<p>Terms &amp; Conditions</p>
+<p>Shipping will occure 24-48 hrs from receiving your order.
+Shipping Express you need to allow 3 business days for your order to arrive.
+I do not give out tracking numbers.</p>
+<p>There will be no refunds and no reships.
+If you have sent the correct address and name there is very little chance of it not arriving.</p>
+<p>Please do not dispute any orders before discussing it with me first, I will try resolve all issues as best I can.</p>
+<p>By ordering its concluded that you have accepted the terms and conditions</p>
+</div>]

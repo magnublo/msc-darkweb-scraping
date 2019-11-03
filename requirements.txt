@@ -12,3 +12,4 @@ cfscrape==2.0.8
 mysql-connector-python==8.0.18
 sty==1.0.0b12
 blessings==1.7
+text2digits==0.0.5

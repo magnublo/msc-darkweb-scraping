@@ -1,9 +1,10 @@
 import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, ForeignKey, CHAR
+from sqlalchemy import Column, DateTime, Integer, ForeignKey, CHAR, String
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
-from definitions import ERROR_FINGER_PRINT_COLUMN_LENGTH, MYSQL_CASCADE, Base
+from definitions import ERROR_FINGER_PRINT_COLUMN_LENGTH, MYSQL_CASCADE, Base, MYSQL_VARCHAR_DEFAULT_LENGTH, \
+    MYSQL_SET_NULL
 from src.models import scraping_session
 
 TABLE_NAME = 'error'
@@ -16,8 +17,8 @@ class Error(Base):
 
     id = Column(Integer, primary_key=True)
     updated_date = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
-    session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
+    session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_SET_NULL))
     thread_id = Column(Integer)
-    type = Column(String)
+    type = Column(String(MYSQL_VARCHAR_DEFAULT_LENGTH))
     text = Column(MEDIUMTEXT)
     finger_print = Column(CHAR(ERROR_FINGER_PRINT_COLUMN_LENGTH))

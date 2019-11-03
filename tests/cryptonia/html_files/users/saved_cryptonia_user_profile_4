@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Raux18faux Profile</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products/mine><span class="icono-gear smicon"></span>My Store</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-30 19:36&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/vendorPython1>vendorPython1</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width: 195px; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=pgp></a>
+<a class=noanchor id=feedback></a>
+<h2><span class="icono-user"></span>&nbsp;Raux18faux<span class=lgtext>&nbsp;(133)</span>
+&nbsp;<span class=verified>LEVEL 1</span></h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/products/Raux18faux><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class=toolbar_link href=/messages/new/Raux18faux><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class=toolbar_link href=/messages/new/support/Reporting+Raux18faux><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class=inline_div>
+<img class=picture src=/image/19325463>
+</div>
+<div class=inline_div>
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: green;">90.38%</span>
+</div>
+<div>
+<label>Disputes <span class=smtext>(won/lost)</span>:</label>
+<span class=good><span style="fong-weight: bold;">0</span></span>/<span class=bad>9</span>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.66840859 BTC&nbsp;(<b>6105.86 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> United States</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>United States, Netherlands, Australia, France, European Union</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-06-28 10:07:07</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 24 hours</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div id=generaltab class=tab><a class=tablink href=/user/Raux18faux#general>Profile</a></div>
+<div id=termstab class=tab><a class=tablink href=/user/Raux18faux#terms>Terms &amp; Conditions</a></div>
+<div id=pgptab class=tab><a class=tablink href=/user/Raux18faux#pgp>PGP</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=/user/Raux18faux#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<p>This user has not setup his/her profile yet. This is a new feature so please be patient.</p>
+</div>
+<div id=terms_div class=target_content>
+<div class=content_div>
+<p>Eligible for refunds in the following situations:</p>
+
+<pre><code>Your package is not shipped (tracking does not update from label creation)
+
+Tracking fails to update for at least 15 days.
+
+You didn’t get your product AND we can verify.
+</code></pre>
+
+<p>International Orders are eligible for 50% refund or a Reship but however I fell is the most secure way to guarantee delivery!</p>
+
+<p>We are not responsible for:</p>
+
+<pre><code>Tracking delivered but non-receipt
+
+Return-to-sender
+
+Stolen packages but tracking delivered
+</code></pre>
+
+<p>SHIPPING AND PROCESSING - Processing -</p>
+
+<p>May take up to 48 hours to process your order, 72 hours in extreme cases.</p>
+
+<p>Processing may be longer for large custom orders in excess of $500. We will notify you in such cases.</p>
+
+<pre><code>Overnight - Currently not offered
+
+
+Where do you ship to? -
+</code></pre>
+
+<p>We ship to all 50 US states, all US territories, any college, any PO box, any reshipping service.</p>
+
+<p>Please Understand that domestic prices vary from international prices don&rsquo;t place a order for a domestic listing and get it shipped international because shipping methods and stealth are very different and it will be seized and not refunded.</p>
+
+<pre><code>Has my order been shipped? -
+</code></pre>
+
+<p>I mark your order as “shipped” which indicates the label is on the package and runner had picked up package from my shipper and should be dropped off in the next couple of hours and it will be handled by USPS</p>
+
+<p>We do not guarantee the package will be scanned in on time. Although we will make every effort to do so, we do not guarantee that the package will be dropped prior to the cutoff time.</p>
+
+<pre><code>Where is my package? -
+</code></pre>
+
+<p>We kindly ask that you first inquire about your package’s location after the first 4 business days Monday through Friday to reduce inquiries. We will provide the expected delivery date.</p>
+
+<pre><code>Can I have the tracking number? -
+</code></pre>
+
+<p>Tracking number information is available in extreme cases or after 7 business days.</p>
+
+<pre><code>What is the cut off time to get packages shipped the same day as I order? -
+</code></pre>
+
+<p>the day before, any orders accepted that day will be shipped the following day (most the time sooner). I do not work weekends. so orders made thursday will be shipped and some orders may get shipped if placed early friday but this is not a guarantee.</p>
+
+<pre><code>Tracking shows my order as “delivered,” “undeliverable,” or “returned to sender.” Can I get a reship or a refund? -
+</code></pre>
+
+<p>Unfortunately, we do not offer recompense for any of these reasons. Ultimately, contact me. We are more flexible for repeat members and for users who have been here for awhile.</p>
+
+<p>FAQ - Why has my order not been accepted yet? -</p>
+
+<p>Most likely that it was on a weekend. I do not work weekends.</p>
+
+<pre><code>Why haven’t you answered my PM yet? -
+</code></pre>
+
+<p>Probably since its the weekend and I don’t work weekends.</p>
+
+<pre><code>I have a question about my order! What do I do? -
+</code></pre>
+
+<p>First, contact me. Then, provide your order ID to me. You will receive an answer without delay. If you do not provide an order ID to me, resolving your message inquiry may be delayed by 24-48 hours.</p>
+
+<p>Please place your order ID in the subject line. Example: “Order #XXXXXXXXXX” should be the only thing in your subject line. This will automatically link me to your order.</p>
+
+<pre><code>My order was returned to sender (RTS). What can I do? -
+</code></pre>
+
+<p>I do not offer any compensation for an RTS'ed package. This places a great deal of risk upon myself and my OPSEC.</p>
+
+<pre><code>I got my package, but something went wrong! or I got a love letter! -
+</code></pre>
+
+<p>Contact me!</p>
+
+<pre><code>I want to leave negative feedback! -
+</code></pre>
+
+<p>Again, contact me! Its unfair if you leave that kind of feedback without contacting me prior.</p>
+
+<pre><code>Why haven’t you communicated with me yet? -
+</code></pre>
+
+<p>The only reason this would happen would be that I am away on the weekend. I do not work weekends. Lord, could you imagine? I’d go insane.</p>
+</div>
+</div>
+<div id=pgp_div class=target_content>
+<textarea class=ascii_armour_textarea readonly>-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+qsgBjeRX0PL20bBGkWNhLf/nIAzPY0/9Hg==
+=R6/x
+-----END PGP PUBLIC KEY BLOCK-----</textarea>
+</div>
+<div id=feedback_div class=target_content>
+<div class=content_div>
+<div class=mainbox>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr rating_good">&nbsp;</td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user">&nbsp;</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message">
+<span class="rating_product">1 M30 Oxy Pills</span>
+<p>Seized Stay Away</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00630000 BTC</span>
+<span class="smtext rating_date">d***6</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">5gr China White (High purity)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.03960000 BTC</span>
+<span class="smtext rating_date">n***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message">
+<span class="rating_product">1 pill China White (High purity)</span>
+<p>WATCH OUT! POLICE WARNING! He claimed his runner fucked up and got some packs seized.Not true. HE fucked up and got packs seized by LE and then kept the $$ Dont believe me? Check the Avengers forum under this clowns review thread! DISPUTED AND WON! BEWARE</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.01000000 BTC</span>
+<span class="smtext rating_date">s***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">5 gr China White Faux Batch</span>
+<p>Stealth was good, product is absolute fire, I am not sure about T2D i ordered and left for a short trip and it was here when I got back. 10/10 experience for me.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.05740000 BTC</span>
+<span class="smtext rating_date">s***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1 M30 Oxy Pills</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.01380000 BTC</span>
+<span class="smtext rating_date">s***g</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">5 gr China White Faux Batch</span>
+<p>4 daysT2D.prettygoood,not as good as ppl were reveiwing on avengers-CHECKFORUM!,was hoping for better especially since I paid an extra 50%4the beterbatch.Iget fire locallythats betterand It clogged mynosebad! 2 ppl got CD's!!STAY AWAY UNTIL WE KNOW MORE!!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">0.05720000 BTC</span>
+<span class="smtext rating_date">c***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">28gr Crystal Meth</span>
+<p>No hassle, as advertised. Will buy again.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">0.02590000 BTC</span>
+<span class="smtext rating_date">k***5</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">12.5 g Black Tar Heroin</span>
+<p>Never received.  Vendor possible compromised.  Buyer BewareQQQ  Disputed!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">0.09390000 BTC</span>
+<span class="smtext rating_date">d***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">7 gr Crystal Meth</span>
+<p>T2D in three days. Excellent OpSec? Check. Fast shipping? Check. I just picked the product up and haven't sampled it yet, but I have every confidence that it will meet the high bar the reviews have set, so Quality? Check. What's not to love about Raux?</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">2.15580000 XMR</span>
+<span class="smtext rating_date">S***o</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">10 M30 Oxy Pills</span>
+<p>thats so weird, i finilize already and it came back with another one?? sorry it seems like im late now!! i really did finilaze the day i got it. sorry about the extra 3 days here.... not sure why that happened. anyways. THIS IS MY FAVORITEVENDOR HANDSDOWN</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.01510000 BTC</span>
+<span class="smtext rating_date">q***5</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message">
+<span class="rating_product">5gr China White (High purity)</span>
+<p>Nothing ever arrived, auto finalized.... waiting to hear back from him now for trking info</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.03920000 BTC</span>
+<span class="smtext rating_date">Z***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28gr Crystal Meth</span>
+<p>As smooth as a transaction can get.. landed quick, on point and looks as expected. Thanks ill be back</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.02670000 BTC</span>
+<span class="smtext rating_date">1***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">25 gr China White (High purity)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.16030000 BTC</span>
+<span class="smtext rating_date">E***6</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28gr Crystal Meth</span>
+<p>Oh thank the gods, a vendor with good product who delivers as promised. Smooth transaction, good product. </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">3.94760000 XMR</span>
+<span class="smtext rating_date">P***M</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message">
+<span class="rating_product">28gr Crystal Meth</span>
+<p>POLICE LEO DO NOT USE THIS WILL BE MY LAST MESSSAGE</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.05180000 BTC</span>
+<span class="smtext rating_date">p***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28gr Crystal Meth</span>
+<p>POLICE</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.05140000 BTC</span>
+<span class="smtext rating_date">p***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">112 gr Crystal Meth</span>
+<p>Sorry if I was a day or so late to finalize, wasnt sure when it landed. All good all around. 2 big ass chunks lol. Will be back for sure</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.09280000 BTC</span>
+<span class="smtext rating_date">t***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">5gr China White (High purity)</span>
+<p>2D delivery, correct weight, good stealth. Thanks R18F!!!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.03850000 BTC</span>
+<span class="smtext rating_date">c***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1 M30 Oxy Pills</span>
+<p>Damn these things are freaking strong!  I was cross-eyed for about 5 min after snorting just one lol.. damn good shit brother! I will definitely be back.  Thanks </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00730000 BTC</span>
+<span class="smtext rating_date">b***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">7 gr Crystal Meth</span>
+<p>fire product, fire service. i will pray for dude to live long and prosper. best shit around and when you take price into account you are retarded if you go to anyone else. </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.01450000 BTC</span>
+<span class="smtext rating_date">s***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">5gr China White (High purity)</span>
+<p>my experience with this vendor was awesome! what a great guy! i placed my order on monday and it was at my door step on thursday. i just tried it out and immediately went from being agonizingly sick to feeling amazing in just a minute or so. product=9/10 </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.03820000 BTC</span>
+<span class="smtext rating_date">c***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1 kg Meth</span>
+<p>All good</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.99400000 BTC</span>
+<span class="smtext rating_date">R***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">7 gr Crystal Meth</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.02510000 BTC</span>
+<span class="smtext rating_date">S***8</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1 pill China White (High purity)</span>
+<p>man dude is smooth as hell, recommend!!! so get to it.!!!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.01000000 BTC</span>
+<span class="smtext rating_date">m***d</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">5gr China White (High purity)</span>
+<p>the3 best here is. 10/10 on all aspects! - only go to for me.....</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.03940000 BTC</span>
+<span class="smtext rating_date">S***A</span>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan=5>
+<span>&lt;&lt;</span>
+<span>1 of 5</span>
+<a href=/user/Raux18faux/2#feedback>&gt;&gt;</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8239.94 EUR = 9134.92 USD = 7099.24 GBP = 155.32991297 XMR = 13304.94 AUD = 12035.14 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

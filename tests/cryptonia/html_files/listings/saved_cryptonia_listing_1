@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Product Details</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-27 13:32&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/usingpython3>usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<h2>Ephedrine Hcl 20mg x 500 tablets (Weight Loss)</h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/messages/new/support/Reporting+product+%2322210933><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class=toolbar_link href=/products/><span class="icono-leftArrow smicon"></span>&nbsp;Back to Products</a>
+</div>
+</div>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=shipping></a>
+<a class=noanchor id=countries></a>
+<a class=noanchor id=feedback></a>
+<a class=noanchor id=pricing></a>
+<a class=noanchor id=autofill></a>
+<div class=content_div>
+<div class=top_part>
+<a title="Click to view full resolution image." href=/image/22216873 target=_blank><img class=picture src=/image/22216873></a>
+<div class=product_details>
+<div class=product_data>
+<label>Sold by:</label>
+<a href=/user/monoko>monoko</a>
+<span class=verified>LEVEL 1</span>
+<span class=verified>VERIFIED</span>
+<span class=lgtext style="font-weight: bold"><span title="Total sales">(887)</span>&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.39%</span></span>
+<a title="Click to contact this vendor." class=smlink href=/messages/new/monoko/Ephedrine+Hcl+20mg+x+500+tablets+%28Weight+Loss%29+%28Product+%2322210933%29><span class=icono-mail></span></a>
+</div>
+<div class=product_data>
+<label>Verifications:</label>
+<div class=lbllist><span class=verified>Dream: 26,000 deals, 4.94/5</span></div>
+</div>
+<div class=product_data>
+<label>Category:</label>
+<span>Other Pharma</span>
+</div>
+<div class=product_data>
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class=product_data>
+<label>Price:</label>
+<span class="lgtext">87.21 USD/Order</span>
+<span>(0.00925411 BTC/Order)</span>
+</div>
+<div class=product_data>
+<label>FE or Escrow:</label>
+<span class="verified tagbad" title="This is a finalize-early listing and is not protected by escrow!">FE Required</span>
+</div>
+<div class=product_data>
+<label>In stock:</label>
+<span>99 Order</span>
+</div>
+<div class=product_data>
+<label>Accepted Payments:</label>
+<span><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></span>
+</div>
+<div class=product_data>
+<label>Ships from:</label>
+<div class=lbllist>United Kingdom &rarr; Worldwide</div>
+</div>
+</div>
+</div>
+</div>
+<form method=post>
+<div class=buydiv>
+<label class="buttonlink buynow">BUY NOW>></label><select class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=22210943>1st Class Post UK&nbsp;(5.11 USD)</option>
+<option value=22210953>Special Delivery (N.D. Before 1pm) UK&nbsp;(6.40 USD)</option>
+<option value=22210963>Priority Post Europe&nbsp;(7.68 USD)</option>
+<option value=22210973>Tracked/Signed Xpress Europe&nbsp;(12.81 USD)</option>
+<option value=22210983>Special Delivery Saturday Before 1pm UK&nbsp;(12.81 USD)</option>
+</select><input type=number name=qty class=qty value="1"><input type=submit name=submit class=clickbuy value="PLACE ORDER">
+</div>
+<div style="height: 10px"></div>
+</form>
+<div id=generaltab class=tab><a class=tablink href=#general>Description</a></div>
+<div id=termstab class=tab><a class=tablink href=#terms>Terms &amp; Conditions</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<div class=content_div>
+<p>Ephedrine Hydrochloride 20mg.
+NOTE: “NOT” suitable to make Methamphetamine!
+Note: Selling loose from bags of 1,000 which have been obtained directly from a large pharmaceutical manufacturer in the Far East.
+Ephedrine is a potent stimulant, closely related to methamphetamine (don&rsquo;t get the wrong impression, most effective stimulants are), although possessing less profound effects. It is an alkaloid, being a sympathomimetic responsible for inducing activation of the sympathetic nervous system. Ephedrine has been used for centuries in China, and has well documented effects including use as an anti-asthmatic also in cough mixtures and as a Decongestant- Ephedrine, being a potent vasoconstrictor, is highly effective for treatment of nasal congestion resulting from the common cold. However, as you may have guessed, thanks to its powerful stimulatory and sympathomimetic effects, it is an incredibly effective fat burner and performance aid, making it a vital part of any cutting cycles.
+Being a stimulant, many of the effects of Ephedrine are highly sought after. Taking in a dose of Ephedrine will most likely result in;
+    You being more focused and improves concentration
+    Your heart rate will increase as the body tries to dissipate heat faster
+    Your metabolism increases (sweating, perspiration)
+    You fatigue less easily
+    Strength increases modestly via nervous system stimulation
+    Your appetite will crash as many sympathomimetics frequently cause
+Dosage: 2-4 tablets 2-3 times daily, for best results take Ephedrine for 2 days then Clenbuterol 2-4 tablets twice daily for 2 days. Important to have two days off to clear repertory sites and prevent receptor saturation.</p>
+</div>
+</div>
+<div id=terms_div class=target_content>
+<div class=content_div>
+<p>Terms &amp; Conditions
+Tracking, direct contact if websites go down. Email  monoko-mail@protonmail.com (I do not sell direct, don’t ask. It is too inconvenient &amp; time-consuming)
+Firstly: I am the “ONLY SELLER” on DarkNet who can guarantee surreptitious postal security and 100% anonymity primarily from within UK, there is almost no chance of any intervention from the authorities and the likelihood of packages being seized is almost zero because of my connections. This means that almost all orders I dispatch are certain to be delivered if the buyer complies with my terms and also provides valid details. Orders not received have a high propensity to be refunded or resent depending on the actions of the buyer.
+Secondly: If you are in any way hesitant or concerned then please “do not order” If you wish to proceed you should read and comply with my terms and don’t create your own narrative.
+DISPATCH: Guaranteed dispatch before 1pm (weekday cut-off) Orders later than 1pm normally dispatched the following day. Make sure you submit in good time as there is often lead time latency. Please allow sufficient time for delivery to take place before you request tracking especially as UK is next day delivery.
+NOTE: delays are normally down to the postal system postal address (outlay), size of package, mail centre or operatives, location, Customs or in rare events loss. (See Terms)
+Combined orders: To avoid complicating this issue we now combine only within UK.
+Order change request: To avoid confusion or complications we normally cannot/will not change the items ordered, we will instead cancel and advise you cancel then reorder correctly rather than make the request.
+Cancellation: Do not request cancellation after submitting your order because unlike other sellers, i immediately dispatch.<br/>
+GUARANTEE VOID: The chances of successful delivery is reduced when providing Universities, HMO, Parcel Motel, Parcel Locker, Pakstations and PO Box’s or similar 5%-20% of packages sent to drop-off stations/centres are often subjected to adverse scrutiny by authorities causing possibly seizure. Incompetence or theft by employees is another major risk. Another major problem is unnecessarily claiming RTS (Return to sender).  We strongly advise using mainly residential or business address.
+Noise &amp; Rattling Paranoia within a package! Quite often people complain about rattling pills myth. Facts are, one of the biggest sellers online is vitamins &amp; toys which essentially rattle, now does anyone ever thinks they are contraband. Years of experience suggest noise never raised any issues or caused any problem shipping within low-risk destinations so this should alleviate any psychological aspects regarding concerns. Shipping Worldwide or higher risk obviously is done differently.
+Note: Feedback. Leaving negative or derogative profane feedback in order to coerce blackmail before allowing an offer of resolution will immediately result in retaliatory feedback along with being permanently blocked from further purchasing. Resolution is always offered amicably without malevolence.
+Messages: All messages are answered at the earliest opportunity however if your message has not been answered within 12 hours, please send again as it may have been missed due to receiving an increasingly large volume of messages daily. Please, to avoid confusion Do NOT message on one site in relation to orders on another site.
+PGP: If you do not know how to use PGP please use this - https://privnote.com. Do NOT manually encrypt then tick PGP box on the website to further encrypt the already encrypted PGP as this may result in an invalid address, loss or cancellation of your order.</p>
+
+<h1>Note: I do not and will open links. Do not send them.</h1>
+
+<p>Understanding Postal Mail Service.
+High-risk: Americas. Australasia. Scandinavia. Far East. WE NO LONGER DISPATCH! Due to incessant deceptive activity.
+Please Note: UK = United Kingdom. EU = European Union. WW = World Wide
+All Tracked orders are applied with enhanced stealth as well as ensured delivery, refund or resend ONLY if terms complied with and abided by. High-risk = Delivery into the country completes the contract on my part.
+Delivery Time = Delivery days = Weekdays only, weekends &amp; Bank Holidays excluded. All packages dispatched before 1pm cut-off weekdays, 9am Saturday using secure, surreptitious efficient methods please allow sufficient time for delivery to take place before requesting tracking.
+1st Class UK = United Kingdom Normally Next Working Day although Often 1-3 Days Depending Upon Location, Dispatch Time, day or year.
+Special Delivery UK = United Kingdom Signed Tracked Special Delivery Guaranteed Next weekday depending on location, time of day order submitted. (Tracking immediately provided ONLY if there is a problem).
+Priority Airmail EU = Europe Standard Fast Airmail. 3 – 7 Days Depending Upon Location dispatch Time, day or year.
+Priority Tracked Signed Airmail EU = Europe Secure Guaranteed Delivery Signed Tracked Fast Airmail Service. 4 – 9 Days Depending Upon Location Time of day or year. (Tracking immediately provided if there is a problem).
+NOTE: ALL Tracked Signed: The recipient SHOULD sign for the delivery.
+GUARANTEE VOID: Invalid address details or format. The buyer’s responsibility is to provide a valid delivery address format in full without punctuation, a valid delivery name &amp; postal code spaced in English selecting the correct postage option otherwise incorrect/invalid details may devoid any guarantee resulting in loss of payment, items or both. RTS will result in loss. You must not apply unnecessary text incorporated into the address such as “name” “address”  “postcode” “street. Examples can be provided. For more information see - royalmail.com Invalid details WILL result in loss.
+Important: To comply with mail service terms it’s the purchaser’s responsibility to ensure they sign for the package especially if a non-residential address is used, should they allow a third party to sign then full responsibility is with the buyer.
+Postal Cost. The postage paid is often less than the actual cost specifically for guaranteed services.
+Note Incorrect items received, discrepancies, damages etc.: Buyers must make contact within 24 hours of receipt; essentially retain all packaging and contents (Photographic evidence required). Additional replacements dispatch must be signed.
+Refunds: A full refund, resend or resolution for almost all orer only if terms are complied with and before leaving unnecessary hostile derogatory feedback or threatening messages and only if the allotted time has elapsed to allow the initial delivery to take place. (See Above) Failure to comply will result in loss.
+It’s the buyers responsibility to accept or rearrange delivery if out. Refusal of signed packages will result in buyer’s loss due to false return address
+NOTE: Late Delivery &amp; Disputes: 100% guaranteed refund or resend to genuine cases only if secure postage option selected, terms complied. Contact must be made ASAP (Maximum Special Delivery = 24hrs. UK = 3 days. EU = 7 days. WW = 9 days) Failure to comply may result in loss. Re-sent packages must be signed.
+Missing/Lost/Late deliveries: R/M requires TEN working days to elapse UK &amp; 21 working days EU/WW before an item can be declared as lost.
+NOTE: By ordering, you accept my terms above. Should you not want to accept then please refrain from ordering. Thank you.</p>
+</div>
+</div>
+<div id=feedback_div class=target_content>
+<div class=content_div>
+<div class=mainbox>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr rating_good">&nbsp;</td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user">&nbsp;</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">HALF PRICE Xanax 2mg x 100 Bars Alprazolam</span>
+<p>Arrived on time and as described.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.00900000 BTC</span>
+<span class="smtext rating_date">n***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Genuine Oxycodone 80mg Tablets x 5 (8.99 Each)</span>
+<p>24 hour delivery pretty much and exactly as ordered. What more could you want really?</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01020000 BTC</span>
+<span class="smtext rating_date">g***h</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Xanax 2mg x 20 Bars Alprazolam + 50% FREE</span>
+<p>As usual everything is 5/5. Most consistent seller out there.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00350000 BTC</span>
+<span class="smtext rating_date">R***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kern Diazepam 10mg x 30 Tablets (Valium) 1 Box</span>
+<p>As usual everything is 5/5. Most consistent seller out there.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00350000 BTC</span>
+<span class="smtext rating_date">R***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Genuine Oxycodone 80mg Tablets x 5 (8.99 Each)</span>
+<p>As usual everything is 5/5. Most consistent seller out there.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00930000 BTC</span>
+<span class="smtext rating_date">R***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">HALF PRICE Xanax 2mg x 100 Bars Alprazolam</span>
+<p>Reliable seller, received the package within a few days. Thanks!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00870000 BTC</span>
+<span class="smtext rating_date">u***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Genuine Oxycodone 80mg Tablets x 25 (OxyContin)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.03540000 BTC</span>
+<span class="smtext rating_date">c***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Xanax 2mg x 100 BROKEN Bars Alprazolam</span>
+<p>PERFECT AS ALWAYS</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.01030000 BTC</span>
+<span class="smtext rating_date">b***z</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Xanax 2mg x 50 Bars Alprazolam + 50% FREE</span>
+<p>thanks as always</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00710000 BTC</span>
+<span class="smtext rating_date">m***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kern Diazepam 10mg x 30 Tablets (Valium) 1 Box</span>
+<p>5/5 as always, cheers.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">Q***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">HALF PRICE Xanax 2mg x 100 Bars Alprazolam</span>
+<p>Excellent Bars, Strong strength and fast delivery.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">1.21690000 XMR</span>
+<span class="smtext rating_date">C***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Genuine Oxycodone 20mg Tablet (OxyContin)</span>
+<p>NDD, All good</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00180000 BTC</span>
+<span class="smtext rating_date">e***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Xanax 2mg x 20 Bars Alprazolam + 50% FREE</span>
+<p>5 star all round</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00360000 BTC</span>
+<span class="smtext rating_date">p***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Xanax 2mg x 20 Bars Alprazolam + 50% FREE</span>
+<p>Always comes through.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00350000 BTC</span>
+<span class="smtext rating_date">p***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">HALF PRICE Xanax 2mg x 100 Bars Alprazolam</span>
+<p>top quality, stealth and service</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00860000 BTC</span>
+<span class="smtext rating_date">r***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Genuine Oxycodone 80mg Tablets x 5 (8.99 Each)</span>
+<p>NDD delivery always on point has and will continue to be my go to guy for my pharmaceutical needs! </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00910000 BTC</span>
+<span class="smtext rating_date">F***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Genuine Oxycodone 20mg Tablet (OxyContin)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00700000 BTC</span>
+<span class="smtext rating_date">h***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Xanax 2mg x 50 Bars Alprazolam + 50% FREE</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00700000 BTC</span>
+<span class="smtext rating_date">b***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Genuine Oxycodone 80mg Tablets x 5 (8.99 Each)</span>
+<p>very fast delivery perfect product</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">2.70290000 XMR</span>
+<span class="smtext rating_date">c***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Xanax 2mg x 20 Bars Alprazolam + 50% FREE</span>
+<p>Best vendor around</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.00340000 BTC</span>
+<span class="smtext rating_date">H***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kern Diazepam 10mg x 30 Tablets (Valium) 1 Box</span>
+<p>ND as always. 100% trusted and genuine</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">r***d</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Oxycodone 80mg Tablets (Genuine Blister)</span>
+<p>Very fast Shi&#246ping, good stealth</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-22</span>
+<span class="smtext rating_date">0.00530000 BTC</span>
+<span class="smtext rating_date">c***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kern Diazepam 10mg x 30 Tablets (Valium) 1 Box</span>
+<p>perfect as usual </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-22</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">j***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Genuine Oxycodone 20mg 5 Tablets (OxyContin)</span>
+<p>Always arrives next day, always top quality blistered Oxycodone at a great price.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-22</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">s***g</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kern Diazepam 10mg x 30 Tablets (Valium) 1 Box</span>
+<p>there was a problem with shipping but i think its a problem caused by external circumstances. monoko was always reliable in the past</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-22</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">y***x</span>
+</td>
+</tr>
+</table>
+</div>
+<span class=smtext>This is the most recent feedback. To view all feedback visit the vendor profile.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8496.89 EUR = 9424.18 USD = 7346.99 GBP = 164.99009234 XMR = 13814.06 AUD = 12309.20 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

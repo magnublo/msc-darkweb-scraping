@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 from definitions import MYSQL_TEXT_COLUMN_MAX_LENGTH, MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, \
-    SQLALCHEMY_CREATE_ENGINE_KWARGS, MYSQL_URL_PARAMS_STRING, PYTHON_SIDE_ENCODING
+    SQLALCHEMY_CREATE_ENGINE_KWARGS, MYSQL_URL_PARAMS_STRING, PYTHON_SIDE_DB_ENCODING
 from environment_settings import DB_ENGINE_BASE_URL
 from src.models.feedback import Feedback
 from src.models.listing_observation import ListingObservation
@@ -192,9 +192,9 @@ def sanitize_error(error_text, vars):
 
     return error_text
 
-def shorten_and_sanitize_text(max_length, text):
-    text = demoji.replace(bytes(text, PYTHON_SIDE_ENCODING).decode(PYTHON_SIDE_ENCODING, 'ignore').strip())
-    encoded_text = text.encode(PYTHON_SIDE_ENCODING)
+def _shorten_and_sanitize_text(max_length, text):
+    text = demoji.replace(bytes(text, PYTHON_SIDE_DB_ENCODING).decode(PYTHON_SIDE_DB_ENCODING, 'ignore').strip())
+    encoded_text = text.encode(PYTHON_SIDE_DB_ENCODING)
 
     if len(encoded_text) <= max_length:
         return text
@@ -204,19 +204,19 @@ def shorten_and_sanitize_text(max_length, text):
     while (encoded_text[mxlen - 1] & 0xc0 == 0xc0):
         mxlen -= 1
 
-    text = encoded_text[:mxlen].decode(PYTHON_SIDE_ENCODING)
+    text = encoded_text[:mxlen].decode(PYTHON_SIDE_DB_ENCODING)
 
-    assert(len(text.encode(PYTHON_SIDE_ENCODING)) <= max_length)
+    assert(len(text.encode(PYTHON_SIDE_DB_ENCODING)) <= max_length)
 
     return text
 
 
-def _shorten_and_sanitize_for_text_column(text):
-    return shorten_and_sanitize_text(MYSQL_TEXT_COLUMN_MAX_LENGTH, text)
+def shorten_and_sanitize_for_text_column(text):
+    return _shorten_and_sanitize_text(MYSQL_TEXT_COLUMN_MAX_LENGTH, text)
 
 
-def _shorten_and_sanitize_for_medium_text_column(text):
-    return shorten_and_sanitize_text(MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, text)
+def shorten_and_sanitize_for_medium_text_column(text):
+    return _shorten_and_sanitize_text(MYSQL_MEDIUM_TEXT_COLUMN_MAX_LENGTH, text)
 
 
 def get_column_name(column: InstrumentedAttribute) -> str:
@@ -238,11 +238,11 @@ def get_db_session(engine):
 
 def get_settings(market_name : str, db_session=None) -> Settings:
     if db_session:
-        existing_settings = db_session.query(Settings).first()
+        existing_settings = db_session.query(Settings).filter(Settings.market == market_name).first()
     else:
         engine = get_engine()
         db_session = get_db_session(engine)
-        existing_settings = db_session.query(Settings).first()
+        existing_settings = db_session.query(Settings).filter(Settings.market == market_name).first()
         db_session.expunge_all()
         db_session.close()
 
@@ -253,11 +253,9 @@ def get_settings(market_name : str, db_session=None) -> Settings:
 
 
 def set_settings(db_session : Session, market_name : str, refill_queue_when_complete : bool = False) -> None:
-    existing_settings = db_session.query(Settings).first()
+    existing_settings = db_session.query(Settings).filter(Settings.market == market_name).first()
     if not existing_settings:
         settings = Settings(refill_queue_when_complete=refill_queue_when_complete, market=market_name)
         db_session.add(settings)
         db_session.commit()
-        db_session.expunge_all()
-        db_session.close()
 

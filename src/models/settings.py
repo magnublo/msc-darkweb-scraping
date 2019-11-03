@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Boolean, CHAR
 
-from definitions import Base, MARKET_NAME_COLUMN_LENGTH
+from definitions import MARKET_NAME_COLUMN_LENGTH, Base
 
 TABLE_NAME = 'settings'
 PRIMARY_KEY = 'id'

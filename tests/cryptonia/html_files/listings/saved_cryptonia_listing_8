@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Product Details</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products/mine><span class="icono-gear smicon"></span>My Store</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-02 12:18&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/vendorPython1>vendorPython1</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<h2>Amoxicillin Antibiotic 500mg 21 tab BOX</h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/messages/new/support/Reporting+product+%23259193><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class=toolbar_link href=/products/><span class="icono-leftArrow smicon"></span>&nbsp;Back to Products</a>
+</div>
+</div>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=shipping></a>
+<a class=noanchor id=countries></a>
+<a class=noanchor id=feedback></a>
+<a class=noanchor id=pricing></a>
+<a class=noanchor id=autofill></a>
+<div class=content_div>
+<div class=top_part>
+<a title="Click to view full resolution image." href=/image/259321 target=_blank><img class=picture src=/image/259321></a>
+<div class=product_details>
+<div class=product_data>
+<label>Sold by:</label>
+<a href=/user/terrysukstock>terrysukstock</a>
+<span class=verified>LEVEL 1</span>
+<span class=verified>VERIFIED</span>
+<span class=lgtext style="font-weight: bold"><span title="Total sales">(1540)</span>&nbsp;<span title="Positive Feedback Percentage" style="color: green;">96.99%</span></span>
+<a title="Click to contact this vendor." class=smlink href=/messages/new/terrysukstock/Amoxicillin+Antibiotic+500mg+21+tab+BOX+%28Product+%23259193%29><span class=icono-mail></span></a>
+</div>
+<div class=product_data>
+<label>Verifications:</label>
+<div class=lbllist><span class=verified>Dream: 34000 deals, 4.82/5</span>
+<span class=verified>Wallstreet: 354 deals, 4.7/5</span>
+<span class=verified>Alphabay: 9888/44/57</span></div>
+</div>
+<div class=product_data>
+<label>Category:</label>
+<span>Other Pharma</span>
+</div>
+<div class=product_data>
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class=product_data>
+<label>Price:</label>
+<span class="lgtext">18.11 USD/Each</span>
+<span>(0.00195706 BTC/Each)</span>
+</div>
+<div class=product_data>
+<label>FE or Escrow:</label>
+<span class="verified tagbad" title="This is a finalize-early listing and is not protected by escrow!">FE Required</span>
+</div>
+<div class=product_data>
+<label>In stock:</label>
+<span>487 Each</span>
+</div>
+<div class=product_data>
+<label>Accepted Payments:</label>
+<span><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></span>
+</div>
+<div class=product_data>
+<label>Ships from:</label>
+<div class=lbllist>United Kingdom &rarr; Worldwide</div>
+</div>
+</div>
+</div>
+</div>
+<form method=post>
+<div class=buydiv>
+<label class="buttonlink buynow">BUY NOW>></label><select class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=259203>UK Non Registred Letter&nbsp;(3.88 USD)</option>
+<option value=259213>UK Tracked and Signed&nbsp;(6.47 USD)</option>
+<option value=259223>INTERNATIONAL Tracked and Signed&nbsp;(15.52 USD)</option>
+<option value=259233>PAID shipping costs with another listing&nbsp;(0.00 USD)</option>
+</select><input type=number name=qty class=qty value="1"><input type=submit name=submit class=clickbuy value="PLACE ORDER" disabled>
+</div>
+<div style="height: 10px"></div>
+</form>
+<div id=generaltab class=tab><a class=tablink href=#general>Description</a></div>
+<div id=termstab class=tab><a class=tablink href=#terms>Terms &amp; Conditions</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<div class=content_div>
+<hr />
+
+<h2>| Amoxicillin 500mg 21 tab |</h2>
+
+<p>Amoxicillin 500mg, 21 tab is a product manufactured by the UK pharma company.</p>
+
+<p>Expiry Date: Minimum 1 year,
+Active Substance: Amoxicillin 500mg</p>
+
+<p>Amoxicillin is an antibiotic often used for the treatment of a number of bacterial infections. These include middle ear infection, strep throat, pneumonia, skin infections, and urinary tract infections among others. It is taken by mouth, or less commonly by injection.</p>
+
+<p>Common adverse effects include nausea and rash. It may also increase the risk of yeast infections and, when used in combination with clavulanic acid, diarrhea. It should not be used in those who are allergic to penicillin. While usable in those with kidney problems, the dose may need to be decreased. Its use in pregnancy and breastfeeding does not appear to be harmful. Amoxicillin is in the beta-lactam family of antibiotics.</p>
+
+<p>Amoxicillin was discovered in 1958 and came into medical use in 1972. It is on the World Health Organization&rsquo;s List of Essential Medicines.</p>
+
+<p>You&rsquo;re buying whole package originally packed exactly that what you see on picture, with instruction as well.</p>
+
+<hr />
+
+<h2>| WHAT WILL YOU GET |</h2>
+
+<p>One factory sealed box of 21 tab with Amoxicillin 500mg made by pharma UK</p>
+
+<hr />
+
+<h2>| DELIVERY CONDITIONS |</h2>
+
+<ol>
+<li>This product will be shipped from UK,</li>
+<li>Once your order is marked &ldquo; shipped &rdquo;, we will send it same day or maximum in 24 hours.</li>
+<li>All of our parcels have tracking numbers, which is means you will be able to track it once it wont come in time.</li>
+<li>Delivery times:
+United Kingdom from Next Working Day up to 3 Working Days
+European Union from 3 Working Days up to 9 Working Days
+Any other country from 3 Working Days up to 14 Working days ( eg. Australia )</li>
+<li>Do not ask for tracking number, before this time - if your parcel wont show up on time, before you open dispute please message us for tracking - we will provide it.</li>
+</ol>
+
+
+<hr />
+
+<h2>| LOOKING FOR BULK ORDER? |</h2>
+
+<p>Are you reseller? or you might be interested in bigger quantity for yourself,
+Message us thorugh private message and request pricing for your order,
+We are able to provide best prices for bulk deals thanks to our pharma-industry
+connection.</p>
+</div>
+</div>
+<div id=terms_div class=target_content>
+<div class=content_div>
+<p>Shipping:
+Products are going to be shipped from UK. If your order is marked as shipped it is shipped. You do not have ask for confrimation.</p>
+
+<p>Delivery conditions:</p>
+
+<p>I promise to deliver goods within following time:
+1] UK to UK. 1 up to 5 working days
+2] UK to EU. 3 up to 15 working days
+3] UK to WW. 3 up to 21 workng days [eg. Australia]</p>
+
+<p>Refunds:
+Please make sure you know the rules and you accept my terms&amp;conditions before you make a purchase. Every international orders comes with tracking number that can be provied upon request. I do my best to deliver goods but if order is seized by customs I do not offer reship &amp; refund. Same rule for 1st class mail non-registred letters UK to UK. Make a notice before you contact support.</p>
+</div>
+</div>
+<div id=feedback_div class=target_content>
+<div class=content_div>
+<div class=mainbox>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr rating_good">&nbsp;</td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user">&nbsp;</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message">
+<span class="rating_product">Oxy Oxycontin Oxycodone 80mg Pharma 28 tab BOX</span>
+<p>8 days no nothing !</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.04670000 BTC</span>
+<span class="smtext rating_date">m***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Oxy Oxycontin Oxycodone 80mg Pharma 28 tab BOX</span>
+<p>Best Vendor i have ever dealt with. Order always arrives!!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.36510000 BTC</span>
+<span class="smtext rating_date">H***d</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Oxy Oxycontin Oxycodone 80mg Pharma 28 tab BOX</span>
+<p>3rd order with Terry to USA major city.  First two took about a week.  THis one took 2.  Also, this one never showed up on Informed Delivery.  Not sure why, but it did arrive and still in a good timeframe from UK.  Product is great and clearly pharma.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.02460000 BTC</span>
+<span class="smtext rating_date">a***6</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Diazepam 10mg Pharma 30 tab BOX</span>
+<p>3rd order with Terry to USA major city.  First two took about a week.  THis one took 2.  Also, this one never showed up on Informed Delivery.  Not sure why, but it did arrive and still in a good timeframe from UK.  Product is great and clearly pharma.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.00560000 BTC</span>
+<span class="smtext rating_date">a***6</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Zolpidem Ambien 10mg Pharma 30 tab BOX</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">N***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Xanax 1mg Pharma 20 tab BOX</span>
+<p>FE will update when the item arrives.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.00970000 BTC</span>
+<span class="smtext rating_date">c***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Oxy Oxycodone Oxycontin 40mg Pharma 28 tab BOX</span>
+<p>FE Will update when the item arrives.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.01880000 BTC</span>
+<span class="smtext rating_date">c***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Nitrazepam 5mg 28 tab UK grade BOX</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-01</span>
+<span class="smtext rating_date">0.00390000 BTC</span>
+<span class="smtext rating_date">i***k</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Pregabalin Lyrica 300mg 56 cap UK Box</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-01</span>
+<span class="smtext rating_date">0.00840000 BTC</span>
+<span class="smtext rating_date">i***k</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Sildenafil Citrate  Viagra 100mg 4 tab UK BOX</span>
+<p>NDD, product as described and good packaging. Thanks!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00200000 BTC</span>
+<span class="smtext rating_date">m***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Diazepam 10mg 28 tab UK grade BOX</span>
+<p>Celebrating tonight! Grateful to have such a fantastic vendor. Thanks again.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00380000 BTC</span>
+<span class="smtext rating_date">t***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Codeine Phosphate 60mg 28 tab UK grade BOX</span>
+<p>Many thanks again for your usual fantastic service.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00310000 BTC</span>
+<span class="smtext rating_date">t***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Diazepam 5mg 28 tab UK grade BOX</span>
+<p>top quality as ever</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.03650000 BTC</span>
+<span class="smtext rating_date">S***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Dihydrocodeine 30mg 28 tab UK grade BOX</span>
+<p>Perfect as ever</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.02700000 BTC</span>
+<span class="smtext rating_date">S***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Nitrazepam 5mg 28 tab UK grade BOX</span>
+<p>great product, thanks</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00450000 BTC</span>
+<span class="smtext rating_date">m***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Oxy Oxycontin Oxycodone 80mg Pharma 28 tab BOX</span>
+<p>Much Appreciated for always coming through for me. I REALLY appreciate you!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.02570000 BTC</span>
+<span class="smtext rating_date">f***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Dihydrocodeine 30mg 28 tab UK grade BOX</span>
+<p>delivered</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.02080000 BTC</span>
+<span class="smtext rating_date">G***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Diazepam 10mg 28 tab UK grade BOX</span>
+<p>Great as usual...</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">t***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Xanax 1mg Pharma 20 tab BOX</span>
+<p>Great as usual...</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00330000 BTC</span>
+<span class="smtext rating_date">t***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Diazepam 10mg Pharma 30 tab BOX</span>
+<p>Great as usual...</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00560000 BTC</span>
+<span class="smtext rating_date">t***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Oxy Oxycontin Oxycodone 80mg Pharma 28 tab BOX</span>
+<p>Great as usual...</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.02450000 BTC</span>
+<span class="smtext rating_date">t***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Modafinil Modalert 200mg Pharma 30 tab BOX</span>
+<p>First order but im confident everything will go perfectly nice! Thanks.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00600000 BTC</span>
+<span class="smtext rating_date">m***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Xanax 1mg Pharma 20 tab BOX</span>
+<p>Good stuff, thanks Terry.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00850000 BTC</span>
+<span class="smtext rating_date">b***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Zolpidem Ambien 10mg Pharma 30 tab BOX</span>
+<p>FYI to others - I think Terry is out of Zolpidem, as I got Zopiclone instead.  Guess I will be trying something new.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00660000 BTC</span>
+<span class="smtext rating_date">b***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Oxy Oxycontin Oxycodone 80mg Pharma 28 tab BOX</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.04650000 BTC</span>
+<span class="smtext rating_date">l***n</span>
+</td>
+</tr>
+</table>
+</div>
+<span class=smtext>This is the most recent feedback. To view all feedback visit the vendor profile.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8295.31 EUR = 9257.54 USD = 7153.58 GBP = 148.10009789 XMR = 13399.43 AUD = 12180.26 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

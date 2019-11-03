@@ -1,14 +1,16 @@
 import inspect
+import re
 from datetime import datetime, timedelta
 from time import time, sleep
 from typing import Tuple, List
 
 import requests
 from bs4 import BeautifulSoup
+from regex.regex import Match
 from urllib3.exceptions import HTTPError
 
-from definitions import BEAUTIFUL_SOUP_HTML_PARSER
-from environment_settings import DEBUG_MODE, LOWEST_TOR_PORT
+from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS
+from environment_settings import DEBUG_MODE
 from src.tor_proxy_check import get_proxy_dict
 
 
@@ -122,18 +124,19 @@ def queue_is_empty(queue) -> bool:
 # TODO: Rework method. Let it accept str, not requests.Response. Implement integration tests so that
 # TODO: self.get_logged_in_web_response is mocked with a method that returns file content based on url argument.
 # TODO: Remove working_dir argument. Let method be proxied by BaseScraper method which passes working_dir.
-def get_page_as_soup_html(working_dir, web_response, file_name=None, use_offline_file=DEBUG_MODE) -> BeautifulSoup:
-    if use_offline_file:
-        file_name = open(working_dir + file_name, "r")
-        soup_html = BeautifulSoup(file_name, features=BEAUTIFUL_SOUP_HTML_PARSER)
-        file_name.close()
-        return soup_html
-    else:
-        return BeautifulSoup(web_response.text, features=BEAUTIFUL_SOUP_HTML_PARSER)
+def get_page_as_soup_html(web_response_text: str) -> BeautifulSoup:
+    return BeautifulSoup(web_response_text, features=BEAUTIFUL_SOUP_HTML_PARSER)
 
 
-def get_logger_name(cls: object):
-    return cls.__name__
+def get_logger_name(cls: object) -> str:
+    class_name = cls if type(cls) == str else cls.__name__
+    capital_letter_indices = [i.start(0) for i in re.finditer(r"[A-Z]", class_name)]
+    unshortened_name_parts = [class_name[i:j] for i, j in
+                              zip(capital_letter_indices, capital_letter_indices[1:] + [None])]
+    name_parts = []
+    for unshortened_name_part in unshortened_name_parts:
+        name_parts.append(unshortened_name_part[:min(3, len(unshortened_name_part))])
+    return "".join(name_parts)
 
 
 def get_seconds_until_midnight(utc_next_midnight_datetime: datetime = None) -> float:
@@ -154,17 +157,42 @@ def get_utc_datetime_next_midnight() -> datetime:
                     day=utc_next_day_date.day)
 
 
-def get_proxies(thread_counts: Tuple[int, ...], available_proxy_ports: List[int]) -> List[List]:
+def get_proxies(web_site_thread_counts: Tuple[int, ...], available_proxy_ports: List[int]) -> Tuple[Tuple[dict], ...]:
     proxies = []
     total_thread_count = 0
 
-    for thread_count in thread_counts:
-        proxies.append([])
+    for thread_count in web_site_thread_counts:
+        proxies_for_web_site: List[dict] = []
         for i in range(thread_count):
             total_thread_count += 1
-            proxies[-1].append(get_proxy_dict(available_proxy_ports[total_thread_count%len(available_proxy_ports)]))
+            proxies_for_web_site.append(
+                get_proxy_dict(available_proxy_ports[total_thread_count % len(available_proxy_ports)]))
+        proxies.append(tuple(proxies_for_web_site))
 
-    for i in range(0, len(thread_counts)):
-        assert len(proxies[i]) == thread_counts[i]
+    for i in range(0, len(web_site_thread_counts)):
+        assert len(proxies[i]) == web_site_thread_counts[i]
 
-    return proxies
+    return tuple(proxies)
+
+
+def get_user_input() -> Tuple[Tuple[int, int, bool], ...]:
+    user_input_tuples = []
+    for market_id in MARKET_IDS:
+        nr_of_threads = int(input(f"[{market_id}] Nr. of threads: "))
+        try:
+            initial_session_id = int(
+                input(f"[{market_id}] Resume session_id [blank makes new]: ")) if nr_of_threads > 0 else None
+        except ValueError:
+            initial_session_id = None
+        start_immediately = bool(input(f"[{market_id}] Start immediately? (True/False)")) if nr_of_threads > 0 else True
+        user_input_tuples.append((nr_of_threads, initial_session_id, start_immediately))
+
+    return tuple(user_input_tuples)
+
+
+def _parse_float(unparsed_float: str) -> float:
+    return float(re.sub(r'[^\d.]+', '', unparsed_float))
+
+
+def _parse_int(unparsed_float: str) -> int:
+    return int(re.sub(r'[^\d.]+', '', unparsed_float))

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - GreenSupreme Profile</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products/mine><span class="icono-gear smicon"></span>My Store</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-30 13:24&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/vendorPython1>vendorPython1</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width: 195px; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=pgp></a>
+<a class=noanchor id=feedback></a>
+<h2><span class="icono-user"></span>&nbsp;GreenSupreme<span class=lgtext>&nbsp;(683)</span>
+&nbsp;<span class=verified>LEVEL 2</span>&nbsp;<span class=verified>VERIFIED</span></h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/products/GreenSupreme><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class=toolbar_link href=/messages/new/GreenSupreme><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class=toolbar_link href=/messages/new/support/Reporting+GreenSupreme><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class=inline_div>
+<img class=picture src=/image/822053>
+</div>
+<div class=inline_div>
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: green;">100.00%</span>
+</div>
+<div>
+<label>Disputes <span class=smtext>(won/lost)</span>:</label>
+<span class=good><span style="fong-weight: bold;">1</span></span>/<span class=bad>0</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class=lbllist><span class=verified>Dream: 3700+ deals, 4.96/5</span>
+<span class=verified>Wallstreet: 910 deals, 4.93/5</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>1.07896587 BTC&nbsp;(<b>9815.02 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> Germany</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Austria, Belgium, France, Finland, Germany, Denmark, Luxembourg, Poland, Sweden, Norway</span>
+</div>
+<div>
+<label>XMPP/Jabber ID:</label>
+<span>horch@xabber.de</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>Yes</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-04-22 10:20:33</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 24 hours</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div id=generaltab class=tab><a class=tablink href=/user/GreenSupreme#general>Profile</a></div>
+<div id=termstab class=tab><a class=tablink href=/user/GreenSupreme#terms>Terms &amp; Conditions</a></div>
+<div id=pgptab class=tab><a class=tablink href=/user/GreenSupreme#pgp>PGP</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=/user/GreenSupreme#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<p>R.i.P. CGMC:5400+, Rating 4,98/5
+R.i.P. WSM: 910, Rating 4,96/5
+R.i.P. Dream: 3750+, Rating 4,97/5
+R.i.P. Nightmare 1700+. Ratings 5/5</p>
+
+<p>Versand: Mo. - Do. 13:00 Uhr (CEST), Fr. - So. kein Versand.
+Wir versenden IMMER am SELBEN Tag, sofern Eure Bestellung vollständig vorliegt.
+Bestellungen ab Do. 13:00 werden am folgenden Montag versendet.</p>
+
+<p>KEINE PACKSTATIONEN, kein &ldquo;Postlagernd&rdquo;.</p>
+
+<p>We’re shipping to these countries, only:</p>
+
+<p>(DE) Germany / Deutschland</p>
+
+<p>(EU) Austria / Österreich
+(EU) France / Frankreich
+(EU) Luxembourg / Lätzebuerg / Luxemburg
+(EU) Belgium / Belgique / Belgien
+(EU) Polska / Poland / Polen</p>
+
+<p>No non-Europe!</p>
+
+<p>+++++++++++++++++++++++++++++++++++++++++++++++++++++++</p>
+
+<p>Die TID zum Tracken gibt es aus Sicherheitsgründen frühestens 5 volle Tage nach Versand.
+Due to security reasons we give out TID for tracking no earlier than 5 full days after shipping.</p>
+
+<p>+++++++++++++++++++++++++++++++++++++++++++++++++++++++</p>
+
+<p>Bitte keine Bulk-Anfragen!</p>
+
+<p>+++++++++++++++++++++++++++++++++++++++++++++++++++++++</p>
+
+<p>WILLKOMMEN bei uns im Shop!</p>
+
+<p>Mit diesen Informationen versuchen wir die größten Missverständnisse zu vermeiden, damit alle glücklich sind.</p>
+
+<p>✔ Wir legen hohen Wert auf deine Zufriedenheit!
+✔ Es kommt nur einwandfreie und getestete Ware in den Versand.
+✔ Wir bieten nur an, was wir selbst auch kaufen und konsumieren.
+✔ Natürlich keinerlei Füllstoffe (Blei, Sand, Haarspray, usw.).
+✔ Wir streben eine umsatzunabhängige Langzeitbeziehung mit jedem unseren Kunden an.
+✔ Wir kaufen direkt beim Züchter/Grower, i.d.R. kein Zwischenhandel (Ausnahme: Hash).
+✔ Konstant hohe Qualität zum fairen Preis! Keine Billigware zum Ramsch-Preis.</p>
+
+<p>-> Eigentlich ganz einfach: Wir machen, was wir sagen und tun, was wir versprechen, nur verarschen lassen wir uns nicht</p>
+
+<p>✔ Kommt es zu Zwischenfällen, dann ist es menschliches Versagen oder die Deutsche Post, nie aber Absicht oder Vorsatz.</p>
+
+<p>Digitale Sicherheit:
+✔ Benutze bei sensiblen Daten IMMER die PGP-Option zur Verschlüsselung! Eine Anleitung: http://einklich.net/anleitung/pgp2.htm (ClearNet!)</p>
+
+<p>✔ Deine Adressdaten werden nur für die Etikettierung benötigt und danach sofort vernichtet. Auf den Löschzeitraum des Marktes haben wir keinen Einfluss.</p>
+
+<p>Analoge Sicherheit:
+✔ Bitte UNBEDINGT eine gültige Versandadresse angeben! Ein &ldquo;windiger&rdquo; Drop ist DEIN Problem, nicht unser.
+✔ Wir versenden ausschließlich mit Fake-Absendeadresse, d.h. unzustellbar wg. fehlerhafter Versandanschrift = Ware weg!
+✔ Unser Stealth ist ausnahmslos mehrschichtig aufgebaut, gereinigte und hermetisch verschweißte Ware.</p>
+
+<p>Safty first!
+✔ Alle Infos zu unserem PGP-Key &hellip; wir haben keinen anderen!
+✔ Clearnet: https://pgp.key-server.io/0x6E8BE8E29A428BA6
+✔ Darknet: http://gnjtzu5c2lv4zasv.onion/0x6E8BE8E29A428BA6
+✔ Fingerprint=6EF3 A9F6 9688 F4B5 F09F C6DF 6E8B E8E2 9A42 8BA6
+✔ Hash=95B43DF871AE7D4104C6D6634687B027
+✔ KeyID 0x9A428BA6 [selfsig]</p>
+
+<p>Sofern Tracking beauftragt wurde (Prio-Brief bzw. Einschreiben), geben wir aus Sicherheitsgründen die TID zum Tracken der Briefe erst nach 5 vollen Versandtagen heraus. Bis dahin sollten aber sowieso alle Sendungen bei euch sein.</p>
+
+<p>We&rsquo;re shipping to these fine countries:</p>
+
+<p>(DE) Germany / Deutschland</p>
+
+<p>(EU) Austria / Österreich
+(EU) France / Frankreich
+(EU) Luxembourg / Lëtzebuerg / Luxemburg
+(EU) Belgium / Belgique / Belgien
+(EU) Polska / Poland / Polen</p>
+
+<p>We&rsquo;ll NEVER ship to this countries again:</p>
+
+<p>(EU) Italy / Italia / Italien &hellip; takes up to 20 days! &ldquo;Poste Italiane&rdquo; realy suckz! Do your work!</p>
+
+<p>Other EU-countries: Ask! But mostly our answer is: No!
+Other non EU-countries: No!</p>
+
+<p>Bestellanname: Mo. -Do. 13:00 Uhr, Fr. - So. kein Versand, aber Bestellannahme.</p>
+
+<p>Unsere Verpackung ist sehr aufwändig und entsprechend wertig. Das machen wir zu Eurem und unseren Schutz. Wer ein günstiges Produkt zum Spottpreis versendet, kann es mit Eurer Sicherheit nicht besonders ernst nehmen. Es gibt nur &ldquo;entweder oder&rdquo;.</p>
+
+<p>Versandoptionen:</p>
+
+<p>(DE) DOMESTIC only (KEIN Tracking) bzw.
+(DE) FREE SHIPPING (OHNE TRACKING)
+-> Deutschland, KEIN Versandnachweis, KEIN persönlicher Kontakt</p>
+
+<p>(DE) PRIO-Brief (MIT Tracking)</p>
+
+<pre><code>&gt; Deutschland, MIT Versandnachweis, KEIN persönlicher Kontakt
+&gt; bevorzugte Behandlung durch die Deutsche Post
+</code></pre>
+
+<p>(DE) Einschreiben-Einwurf (MIT Tracking)
+-> Deutschland, MIT Versandnachweis, KEIN persönlicher Kontakt</p>
+
+<p>(EU) Reg. Mail / Recommandé
+-> Europe, nur zulässige Länder (s.o.), MIT Tracking, MIT Unterschft</p>
+
+<p>Wir versenden unsere Ware als Maxi-Brief, damit wir die Ware nicht auf Vacuum ziehen müssen:</p>
+
+<p>✔ Maxi-Brief &ldquo;Domestic&rdquo; = 2,60 €
+✔ Maxi-Brief &ldquo;Prio&rdquo; = 3,50 € + Abgabe in einer Filiale
+✔ Maxi-Brief &ldquo;Einwurf-Einschreiben&rdquo; = 4,75 € + Abgabe in einer Filiale
+✔ Maxi-Brief &ldquo;Ausland, Einschreiben&rdquo; = 6,20 € + Abgabe in einer Filiale</p>
+
+<p>Ja nach Menge verlangen wir also ein wenig für die sichwere Verpackung extra von euch, teilen die Kosten mit Euch oder übernehmen die Kosten selbst. Der Aufwand, den wir betreiben, steckt schon im Produktpreis.</p>
+
+<p>✔ Wir versenden am Tage deiner Bestellung Bestellanname: Mo. -Do. 13:00 Uhr, Fr. - So. kein Versand, aber Bestellannahme., Zustellung in 1 - 5 Tagen innerhalb Deutschland per Briefpost, Feiertage (speziell Weihanchten) auch deutlich länger (Rekord ist 17 Tage).
+✔ Bestellannahme bis 13:00 Uhr bedeutet Versand noch AM SELBEN Tag. Nach 13:00 Uhr bedeutet Versand am nächsten Tag (nicht Freitag - Sonntag, diese Bestellungen versenden wir am folgenden Montag).
+✔ Wir versenden NICHT am Freitag, an Feiertagen oder am Wochenende!
+✔ Naturkatastrophen, Ferien, Feiertage (speziell Weihnachten) u.ä. Unwegbarkeiten sorgen für Verzögerungen und liegen außerhalb unserer Macht &hellip; trotzdem ist die Sendung unterwegs. Wir maßen uns an, uns als durchaus zuverlässig bezeichnen zu dürfen (s. Bewertungen).</p>
+
+<p>Versandanschrift:
+✔ Vorname Familienname
+✔ ggf. Zusatzinformationen (z.B. Hinterhaus o.ä.) &lt;- nur, wenn es der Zusteller wissen MUSS
+✔ Straße Hausnummer
+✔ PLZ Ort</p>
+
+<p>BITTE BITTE, auch wenn es noch so nett ist, schreibt uns keine Liebesbriefe zur Versandadresse, nur die (vollständige) Adresse wäre ein Träumchen für den Ablauf! Und ist auch ohne Liebesbrief klar, dass es sich um Eure Versandanschrift handelt. ;-)
+Schreibt uns sonst einfach über das Nachrichtensystem an.</p>
+
+<p>KEIN Versand mehr an &ldquo;Packstationen&rdquo; oder &ldquo;Postlagernd&rdquo;, sorry!
+Das klappt beim Weltkonzern Post/DHL nicht zuverlässig und wir sind die Doofen. Entsprechende Bestellungen werden ausnahmslos abgelehnt, Kosten für den Transfer eurer Kryptos werden natürlich nicht erstattet. Postfächer sind ok.</p>
+
+<p>Bestellungen mit unverschlüsselten Adressdaten werden konsequent abgelehnt.
+Ihr bringt euch selbst und auch uns in große Gefahr!
+Macht euch die Mühe, setzt euch bitte mit PGP auseinander!
+Eine Anleitung: http://einklich.net/anleitung/pgp2.htm (ClearNet!), aber auch YouTube und Google!</p>
+
+<p>Die Adresse eines Zusatzartikels wird ignoriert und nicht verglichen! Lasst sie einfach leer oder schreibt ein unverschlüsseltes &ldquo;X&rdquo; oder so &hellip; das würde uns wirklich Zeit sparen.</p>
+
+<p>Wir überprüfen keine Adressen, keine Namen oder Postleitzahlen. Ihr solltet wissen wie Ihr oder Euer Drop heißt und wo Ihr wohnt bzw. der Briefkasten hängt, den ihr benutzt.</p>
+
+<p>Nochmal der Aufbau einer korrekten Adresse:
+✔ Vorname Familienname
+✔ ggf. Zusatzinformationen (z.B. Hinterhaus o.ä.) &lt;- NUR, wenn es der Zusteller wissen MUSS
+✔ Straße Hausnummer
+✔ PLZ Ort
+- Land (NUR wenn nicht Deutschland)</p>
+
+<p>Wir verwenden NUR die Adresse des Hauptartikels, für den Ihr auch Porto zahlt, bzw. der versandkostenfrei ist. Eure Adresse wird per Copy&amp;Paste auf&rsquo;s Etikett gebracht, KEINE Korrektur durch uns. Nur &ldquo;ue&rdquo; (Muenchen -> München) usw. ändern wir, wenn es denn auffällt.</p>
+
+<p>Gebt Euch bitte Mühe mit der Adresse, das ist elementar wichtig!</p>
+
+<p>Versandweg:
+✔ Wir versenden mit der Deutschen Post.
+✔ Die Abholzeiten sind getestet und mehrfach verifiziert.
+✔ Wir frankieren IMMER ausreichend.
+✔ Unsere Versandformate (Maße) entsprechen den Vorgaben der Deutschen Post, auch für intl. Sendungen.
+✔ Wir versenden IMMER nach den Vorgaben zur Adressierung der Deutschen Post, auch für intl. Sendungen.
+✔ Verzögerungen im Versand liegen bei der Post.</p>
+
+<p>Laufzeiten Deutsche Post:
+✔ Die Deutsche Post stellt NICHT 99% aller Sendungen innerhalb von 48h zu, das ist einfach eine Lüge.
+✔ Postlaufzeiten liegen außerhalb unseres Einflusses. Es ist ungerecht uns dafür negativ zu bewerten, weil die Post ihren Job nicht macht.
+✔ Hamburger Abendblatt (ClearNet):
+www.abendblatt.de/hamburg/article211961163/Leere-Briefkaesten-der-Aerger-mit-der-Post.html
+✔ WELT (ClearNet):
+www.welt.de/finanzen/verbraucher/article111477812/So-langsam-ist-die-Deutsche-Post-bei-der-Zustellung.html
+✔ Bitte bedenkt auch, dass in einigen Regionen die Post nicht mehr täglich ausgeliefert wird oder Pakete Vorrang haben und die Briefzustellung verschoben wird.
+✔ Augsburger Allgemeine (ClearNet):
+www.augsburger-allgemeine.de/wirtschaft/Test-Deutsche-Post-liefert-Briefe-nur-noch-an-bestimmten-Tagen-id42558166.html
+✔ Der Westen (ClearNet):
+www.derwesten.de/wirtschaft/deutsche-post-erprobt-seltenere-zustellung-von-briefen-id211791035.html</p>
+
+<p>Hier sind wir für Euch hauptsächlich aktiv:
+✔ Cannazon, CGMC, Nighmare und Empire
+✔ aktuelle Links zu den Märkten findest du immer auf DeepDotWeb.com (Clearnet)</p>
+
+<p>✔ Du findest uns IMMER unter &ldquo;GreenSupreme&rdquo; und IMMER mit dem identischen PGP-Key (s. &ldquo;Sicherheit&rdquo;)!</p>
+
+<p>Bezahlung:
+✔ Bitte nach Erhalt der Ware(n) die Bestellung unbedingt finalisieren, nur so kommen auch wir zügig an unser Geld! Autofinalize ist schäbig. Wir haben unseren Job doch gemacht, also warum uns warten lassen?</p>
+
+<p>Feedback:
+✔ Bitte gebt nach dem Erhalt JEDER Sendung ein (kurzes oder ewig langes) Feedback ab. Danke!</p>
+
+<p>Sonstiges:
+✔ Wir behalten uns vor, auch ohne Angaben von Gründen, Bestellungen jederzeit abzulehnen!
+✔ &ldquo;Customs&rdquo; können wir nicht leisten, da fehlt uns leider die Zeit für. Sorry! Aber wir haben ja genug Auswahl.
+✔ Wir bieten hier nur Produkte von bester Qualität an, welche wir vorher intensiv getestet haben. ;-)
+✔ Wir vermeiden das Quetschen der Waren bestmöglich, damit du auch schöne Ware nach Hause bekommst.
+✔ Jede Sendung ist mehrschichtig (Stealth) aufgebaut, die Ware ist IMMER luftdicht eingeschweißt.
+✔ Nur auf ausdrücklichen Wunsch vakuumieren wir deine Ware, da es in unseren Augen die Qualität mindert und die Ware zudem austrocknet.</p>
+</div>
+<div id=terms_div class=target_content>
+<div class=content_div>
+<p>Bestellanname: 24/7/365</p>
+
+<p>Versand: Mo. -Do. (Deadline 13:00 Uhr), Fr. - So. kein Versand, aber Bestellannahme.</p>
+
+<p>Unsere Verpackung ist sehr aufwändig und entsprechend wertig. Das machen wir zu Eurem und unseren Schutz. Wer ein günstiges Produkt zum Spottpreis versendet, kann es mit Eurer Sicherheit nicht besonders ernst nehmen. Es gibt nur &ldquo;entweder oder&rdquo;.</p>
+
+<p>Reklamationen:</p>
+
+<p>✔ Ruhe bewahren und tief einatmen!
+✔ Nehmt Kontakt mit uns auf und wir finden eine Lösung. Keiner will dich abziehen!
+✔ Ruhe bewahren und wieder ausatmen!</p>
+
+<p>✔ Refund / Reship gibt es i.d.R. nur, wenn ein Versäumnis unsererseits vorliegt.
+✔ Erstkunden, die ohne Tracking (Prio / Einschreiben-Einwurf) bestellen, erhalten kein ReShip/ReFund.</p>
+
+<p>✔ Digga, Ruhe bewahren, Digga!</p>
+
+<p>Bedenke: Auch wir sind nur Menschen und Menschen machen auch mal Fehler.</p>
+</div>
+</div>
+<div id=pgp_div class=target_content>
+<textarea class=ascii_armour_textarea readonly>-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2
+
+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
+GaFO3nIRmA==
+=GfqO
+-----END PGP PUBLIC KEY BLOCK-----</textarea>
+</div>
+<div id=feedback_div class=target_content>
+<div class=content_div>
+<div class=mainbox>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr rating_good">&nbsp;</td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user">&nbsp;</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00850000 BTC</span>
+<span class="smtext rating_date">j***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>. </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.01620000 BTC</span>
+<span class="smtext rating_date">d***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Speed Paste / Amphetamin * 10g *</span>
+<p>10 of 5 *gg*</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00720000 BTC</span>
+<span class="smtext rating_date">b***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Cocaine  *** 1g Aceton washed ***</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.01460000 BTC</span>
+<span class="smtext rating_date">d***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>Perfect</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00790000 BTC</span>
+<span class="smtext rating_date">a***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Speed Paste / Amphetamin * 10g *</span>
+<p>schnell da, quali gut. 5/5</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00820000 BTC</span>
+<span class="smtext rating_date">F***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Speed Paste / Amphetamin * 10g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00680000 BTC</span>
+<span class="smtext rating_date">P***7</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Amnesia Haze 10g</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.01440000 BTC</span>
+<span class="smtext rating_date">P***7</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Speed Paste / Amphetamin * 5g *</span>
+<p>1DD domestic, perfect stealth and product looks very good! will order again!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">v***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Speed Paste / Amphetamin * 10g *</span>
+<p>Perfect</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">0.00780000 BTC</span>
+<span class="smtext rating_date">s***d</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>Top Notch Stealth! Product is very nice! I'll come back! </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">0.01090000 BTC</span>
+<span class="smtext rating_date">W***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>Fast shipping, great stealth &#38 very nice product!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">1.55680000 XMR</span>
+<span class="smtext rating_date">6***x</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">L.A. Confidential * Weed * 5g</span>
+<p>quick shipping and a generous portion of a great product, will come back.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">1.27840000 XMR</span>
+<span class="smtext rating_date">o***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Northern Light #5 x Haze* Weed * 5g</span>
+<p>quick shipping and a generous portion of a great product, will come back.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">1.33740000 XMR</span>
+<span class="smtext rating_date">o***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">L.A. Confidential * Weed * 10g</span>
+<p>stealth good and quality</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.01710000 BTC</span>
+<span class="smtext rating_date">A***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Mango Haze* Weed * 20g</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.03050000 BTC</span>
+<span class="smtext rating_date">h***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.00930000 BTC</span>
+<span class="smtext rating_date">l***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Ketamin Sugar * 1g * Ketamine</span>
+<p>ordered on monday, delivery on wednesday. Awesome service, thank you!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.61120000 XMR</span>
+<span class="smtext rating_date">r***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>Ihr habt einen neuen Stammkunden. Lieferung nach einem Tag. Hab in den letzten Jahren bei vielen H&#228ndlern bestellt, Stealth ist hier mit Abstand am besten. Vielen Dank.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01050000 BTC</span>
+<span class="smtext rating_date">R***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01990000 BTC</span>
+<span class="smtext rating_date">a***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">5 g Amnesia Haze</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.00880000 BTC</span>
+<span class="smtext rating_date">a***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>+++++</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01110000 BTC</span>
+<span class="smtext rating_date">N***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Damnesia* Weed * 10g</span>
+<p>++++</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01190000 BTC</span>
+<span class="smtext rating_date">N***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Mango Haze * Weed * 10g</span>
+<p>best</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01870000 BTC</span>
+<span class="smtext rating_date">V***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Damnesia * Weed * 50g</span>
+<p>Sehr schnell und sehr gut!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.04160000 BTC</span>
+<span class="smtext rating_date">r***2</span>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan=5>
+<span>&lt;&lt;</span>
+<span>1 of 23</span>
+<a href=/user/GreenSupreme/2#feedback>&gt;&gt;</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8194.03 EUR = 9096.69 USD = 7053.18 GBP = 156.25000000 XMR = 13252.05 AUD = 11900.51 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

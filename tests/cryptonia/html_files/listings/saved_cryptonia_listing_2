@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Product Details</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-27 13:32&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/usingpython3>usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<h2>15X DISTILLATE CARTRIDGE (INDICA)</h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/messages/new/support/Reporting+product+%231516123><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class=toolbar_link href=/products/><span class="icono-leftArrow smicon"></span>&nbsp;Back to Products</a>
+</div>
+</div>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=shipping></a>
+<a class=noanchor id=countries></a>
+<a class=noanchor id=feedback></a>
+<a class=noanchor id=pricing></a>
+<a class=noanchor id=autofill></a>
+<div class=content_div>
+<div class=top_part>
+<a title="Click to view full resolution image." href=/image/1517133 target=_blank><img class=picture src=/image/1517133></a>
+<div class=product_details>
+<div class=product_data>
+<label>Sold by:</label>
+<a href=/user/drgreenthumb4201>drgreenthumb4201</a>
+<span class=verified>LEVEL 1</span>
+<span class=verified>VERIFIED</span>
+<span class=lgtext style="font-weight: bold"><span title="Total sales">(676)</span>&nbsp;<span title="Positive Feedback Percentage" style="color: green;">98.71%</span></span>
+<a title="Click to contact this vendor." class=smlink href=/messages/new/drgreenthumb4201/15X+DISTILLATE+CARTRIDGE+%28INDICA%29+%28Product+%231516123%29><span class=icono-mail></span></a>
+</div>
+<div class=product_data>
+<label>Verifications:</label>
+<div class=lbllist><span class=verified>Dream: 6400 deals, 4.98/5</span>
+<span class=verified>CGMC: 5000+ deals, 4.96/5</span></div>
+</div>
+<div class=product_data>
+<label>Category:</label>
+<span>Concentrate</span>
+</div>
+<div class=product_data>
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class=product_data>
+<label>Price:</label>
+<span class="lgtext">240.00 USD/ORDER</span>
+<span>(0.02546640 BTC/ORDER)</span>
+</div>
+<div class=product_data>
+<label>FE or Escrow:</label>
+<span class=verified>ESCROW</span>
+</div>
+<div class=product_data>
+<label>In stock:</label>
+<span>1000 ORDER</span>
+</div>
+<div class=product_data>
+<label>Accepted Payments:</label>
+<span><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"></span>
+</div>
+<div class=product_data>
+<label>Ships from:</label>
+<div class=lbllist>United States &rarr; United States</div>
+</div>
+</div>
+</div>
+</div>
+<form method=post>
+<div class=buydiv>
+<label class="buttonlink buynow">BUY NOW>></label><select class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=1516133>PRIORITY SHIPPING 2-3 DAY&nbsp;(84817.64 USD)</option>
+<option value=1516143>COMBINED SHIPPING ONLY&nbsp;(0.00 USD)</option>
+</select><input type=number name=qty class=qty value="1"><input type=submit name=submit class=clickbuy value="PLACE ORDER">
+</div>
+<div style="height: 10px"></div>
+</form>
+<div id=generaltab class=tab><a class=tablink href=#general>Description</a></div>
+<div id=termstab class=tab><a class=tablink href=#terms>Terms &amp; Conditions</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<div class=content_div>
+<p>We have worked hard to provide you with a CLEAN, SMOOTH and POTENT distillate</p>
+
+<p>CHERRY PIE ( INDICA )</p>
+
+<p>0.5 ML</p>
+
+<p>93% THC</p>
+
+<p>NO PG or VG ONLY TERPENES ADDED!!</p>
+
+<p>510 thread</p>
+
+<p>Metal cartridge fits most batteries (cartridges may vary due to high volume)</p>
+
+<p>OUR BUBBLE DOESNT MOVE!</p>
+
+<p>As a new store we have alot to prove and alot to provide also.
+We stand behind our product and ensure the highest grade quality</p>
+
+<p>A) Communication
+Communication is key! any questions please feel free to ask</p>
+
+<p>B) Address Format:
+Please include your full address with each order. I only ship
+to United States (no territories).
+EXAMPLE</p>
+
+<p>JOHN DOE</p>
+
+<p>420 elm st</p>
+
+<p>beverly hills ca, 90420</p>
+
+<p>C) Bulk
+If you are interested in wholesale orders please message us</p>
+
+<p>and we can create a custom listing .</p>
+
+<p>SHIPPING&mdash;&mdash;&mdash;&mdash;&mdash;-</p>
+
+<p>A) &ldquo;Marked as shipped&rdquo;
+When your order is marked it means the shipping label has been</p>
+
+<p>created. We will ship within 24 hours of the order being</p>
+
+<p>marked.</p>
+
+<p>B) Expected Delivery Time
+Currently we offer one shipping option, USPS priority mail. We</p>
+
+<p>ship form the west coast, times will vary according to where</p>
+
+<p>you are located, 2-4 days typically, but can take up to 7</p>
+
+<p>days. of course the sooner the better</p>
+
+<p>C) Tracking Requests
+If you have not received your order in 5 business days from</p>
+
+<p>the time we &ldquo;marked as shipped&rdquo;, you may request tracking, all</p>
+
+<p>other requests prior to 5 business days will be ignored.</p>
+
+<p>D) Combined
+We are offering combined order shipping.</p>
+
+<p>E) Weekend
+Currently we are shipping every day during the business week.</p>
+
+<p>Orders placed on the weekend, or Friday after 5 will be</p>
+
+<p>processed (marked as shipped that day) and dropped Monday</p>
+</div>
+</div>
+<div id=terms_div class=target_content>
+<p class=error>This vendor has not set his/her terms and conditions yet..</p>
+</div>
+<div id=feedback_div class=target_content>
+<div class=content_div>
+<div class=mainbox>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr rating_good">&nbsp;</td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user">&nbsp;</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">14G PINEAPPLE EXPRESS SHATTER</span>
+<p>slight delay in shipping but made up for it with some freebies :). product is on point!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.02610000 BTC</span>
+<span class="smtext rating_date">s***g</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">14G PINEAPPLE EXPRESS SHATTER</span>
+<p>Super fire. Way better than pictured.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.02630000 BTC</span>
+<span class="smtext rating_date">l***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">28G CHERRY PIE (HYBRID) AAA</span>
+<p>Quick shipping. Good value. Product was dry and had a fair amount of stems. Still a strong buzz and good scent and taste. The sack was half a gram short. Vendor also promised to send an extra because of a previous order and did not. </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.04240000 BTC</span>
+<span class="smtext rating_date">F***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">7G WEDDING CAKE (HYBRID)</span>
+<p>Decent speed, good stealth, great bud, on par with bud I've bought in LA leagally. Will be back. Thanks Doc</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.01200000 BTC</span>
+<span class="smtext rating_date">b***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">5X DISTILLATE CARTRIDGE (INDICA)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.01260000 BTC</span>
+<span class="smtext rating_date">h***k</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">STORE PROMO! 5 FULL G DISTILLATE CARTS $75</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.01040000 BTC</span>
+<span class="smtext rating_date">N***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">8G GORILLA GLUE SHATTER</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.01560000 BTC</span>
+<span class="smtext rating_date">j***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">STORE PROMO! 5 FULL G DISTILLATE CARTS $75</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.01010000 BTC</span>
+<span class="smtext rating_date">t***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">DISTILLATE CARTRIDGE (INDICA)</span>
+<p>The cartridge is on the smaller side of the 1G cartridges ive bought from others, but what's in it is some of best ive had.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00350000 BTC</span>
+<span class="smtext rating_date">B***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">15X DISTILLATE CARTRIDGE (SATIVA)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.02980000 BTC</span>
+<span class="smtext rating_date">B***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">2X DISTILLATE CARTRIDGE (SATIVA)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.00560000 BTC</span>
+<span class="smtext rating_date">P***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28G CHERRY PIE (HYBRID) AAA</span>
+<p>Ordered to delivered in 5 days. Quality is in line with price. Good experience, would use again.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-21</span>
+<span class="smtext rating_date">0.02170000 BTC</span>
+<span class="smtext rating_date">S***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">112G CHERRY PIE (HYBRID) AAA</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-21</span>
+<span class="smtext rating_date">0.06720000 BTC</span>
+<span class="smtext rating_date">l***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">7G CHERRY PIE (HYBRID) AAA</span>
+<p>Arrived on time, happy with product and packaging. </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-20</span>
+<span class="smtext rating_date">0.01070000 BTC</span>
+<span class="smtext rating_date">g***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">4G DOSIDO SHATTER</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-19</span>
+<span class="smtext rating_date">0.01070000 BTC</span>
+<span class="smtext rating_date">w***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">DISPOSABLE CARTRIDGE W/ BATTERY</span>
+<p>AAAA+++</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-19</span>
+<span class="smtext rating_date">0.00340000 BTC</span>
+<span class="smtext rating_date">p***c</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">5X SUPREME BRAND CARTRIDGES</span>
+<p>AAAA++++</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-19</span>
+<span class="smtext rating_date">0.01250000 BTC</span>
+<span class="smtext rating_date">p***c</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28G CHERRY PIE (HYBRID) AAA</span>
+<p>5/5</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.02080000 BTC</span>
+<span class="smtext rating_date">h***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">JOEBATTERSSS</span>
+<p>good exotic carts</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.04030000 BTC</span>
+<span class="smtext rating_date">j***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">15X SUPREME BRAND CARTRIDGES</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.02980000 BTC</span>
+<span class="smtext rating_date">a***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">!STORE PROMO! 5 HALF G DISTILLATE CARTS $50</span>
+<p>Excellent quality, extremely fast shipping and excellent stealth. Great vendor, 5 stars.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.01300000 BTC</span>
+<span class="smtext rating_date">a***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">4G SOUR DIESEL (NUG RUN)</span>
+<p>Excellent security, great value, and extremely fast shipping. Best stealth I've ever seen. Vendor included a bonus. 5 stars! </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.00960000 BTC</span>
+<span class="smtext rating_date">a***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">8G DOSIDO SHATTER</span>
+<p>5/5 terpy golden goodness</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.01550000 BTC</span>
+<span class="smtext rating_date">j***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">8G DOSIDO SHATTER</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.01540000 BTC</span>
+<span class="smtext rating_date">z***k</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">5X DISTILLATE CARTRIDGE (INDICA)</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-18</span>
+<span class="smtext rating_date">0.01240000 BTC</span>
+<span class="smtext rating_date">n***7</span>
+</td>
+</tr>
+</table>
+</div>
+<span class=smtext>This is the most recent feedback. To view all feedback visit the vendor profile.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8496.89 EUR = 9424.18 USD = 7346.99 GBP = 164.99009234 XMR = 13814.06 AUD = 12309.20 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

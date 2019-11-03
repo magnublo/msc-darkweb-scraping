@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - Product Details</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-03 15:14 | 
+Logged in as <a class="controlbox_link" href="/user/usingpython3">usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<h2>GIFT CARDS / ecodes and pysical cards</h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/messages/new/support/Reporting+product+%2322018203"><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class="toolbar_link" href="/products/"><span class="icono-leftArrow smicon"></span> Back to Products</a>
+</div>
+</div>
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="shipping"></a>
+<a class="noanchor" id="countries"></a>
+<a class="noanchor" id="feedback"></a>
+<a class="noanchor" id="pricing"></a>
+<a class="noanchor" id="autofill"></a>
+<div class="content_div">
+<div class="top_part">
+<a href="/image/22018323" target="_blank" title="Click to view full resolution image."><img class="picture" src="/image/22018323"/></a>
+<div class="product_details">
+<div class="product_data">
+<label>Sold by:</label>
+<a href="/user/Stricky710">Stricky710</a>
+<span class="verified">LEVEL 1</span>
+<span class="lgtext" style="font-weight: bold"><span title="Total sales">(0)</span> <span style="color: black;" title="Positive Feedback Percentage">0.00%</span></span>
+<a class="smlink" href="/messages/new/Stricky710/GIFT+CARDS+%2F+ecodes+and+pysical+cards+%28Product+%2322018203%29" title="Click to contact this vendor."><span class="icono-mail"></span></a>
+</div>
+<div class="product_data">
+<label>Category:</label>
+<span>Digital Items</span>
+</div>
+<div class="product_data">
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class="product_data">
+<label>Price:</label>
+<span class="lgtext">100.00 USD/$400</span>
+<span>(0.01091500 BTC/$400)</span>
+</div>
+<div class="product_data">
+<label>FE or Escrow:</label>
+<span class="verified">ESCROW</span>
+</div>
+<div class="product_data">
+<label>In stock:</label>
+<span>2000 $400</span>
+<span style="font-weight:bold">(Minimum order 100 $400)</span>
+</div>
+<div class="product_data">
+<label>Accepted Payments:</label>
+<span><img alt="Bitcoin (BTC)" src="/image/btc_nm.png" style="height: 18px; max-width: 200px"/></span>
+</div>
+<div class="product_data">
+<label>Ships from:</label>
+<div class="lbllist">United States → Worldwide</div>
+</div>
+</div>
+</div>
+</div>
+<form method="post">
+<div class="buydiv">
+<label class="buttonlink buynow">BUY NOW&gt;&gt;</label><select class="shipselect" name="shipping_method">
+<option value="0">--Select Shipping Method--</option>
+<option value="22018343">priority shipping (10.00 USD)</option>
+</select><input class="qty" name="qty" type="number" value="100"/><input class="clickbuy" name="submit" type="submit" value="PLACE ORDER"/>
+</div>
+<div style="height: 10px"></div>
+</form>
+<div class="tab" id="generaltab"><a class="tablink" href="#general">Description</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<div class="content_div">
+<p>Amazon, Google Play gift cards, eBay and Walmart gift cards with codes both physical
+and E-gift. eBay $1600 Gift card= $400 Amazon $1600 Gift card= $400 Walmart $1600
+Gift card= $400 Google Play $1600 Gift card= $400 Steam $1600 Gift card= $400.
+wickr…Stricky710</p>
+</div>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>IMPORTANT INFORMATION:</p>
+<p>â¢ ALWAYS double-check the shipping address is accurate and encrypted.</p>
+<p>â¢ We are not liable for any errors made by you. on
+orders. If you are trusted, we may offer to refund instead of reship.</p>
+<p>â¢ PROOF OF POSTAGE IS KEPT FOR ALL ORDERS UNTIL THE ORDER IS MARKED RECEIVED THEN THE RECEIPT WILL BE DESTROYED,
+IF ON THE ROYAL MAIL WEBSITE IT SAYS YOUR ITEM HAS BEEN DELIVERED NO REFUNDS WILL BE GIVEN.</p>
+<p>â¢ Genuine customers have no fear â we will consider mail issues with a fair eye and help you out where we can.</p>
+<p>â¢ We will respond quickly and professionally on a individual basis to queries.</p>
+<p>â¢ Orders are dispatched via Royal Mail 1st class
+or Special NDD</p>
+<p>â¢ ORDERS THAT ARE 28g AND OVER WILL BE SENT Singed for</p>
+<p>â¢ [Order cut off/Dispatch time: 15:30hrs GMT] [U.S estimated delivery time: 1-2 Days]</p>
+<p>Donât forget to blaze it &gt; review it &gt; finalize it &gt; then blaze some more !</p>
+</div>
+</div>
+<div class="target_content" id="feedback_div">
+<p>This vendor has no feedback yet.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8213.55 EUR = 9161.70 USD = 7082.15 GBP = 145.55998381 XMR = 13259.08 AUD = 12056.90 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, DateTime, Integer, Date, UniqueConstraint, CHAR
+from sqlalchemy import Column, DateTime, Integer, UniqueConstraint, CHAR
 
 from definitions import SELLER_NAME_COLUMN_LENGTH, MARKET_NAME_COLUMN_LENGTH, Base
 

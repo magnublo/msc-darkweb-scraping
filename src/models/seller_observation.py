@@ -1,9 +1,10 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Float, UniqueConstraint, CHAR
+from sqlalchemy import Column, Integer, Date, DateTime, ForeignKey, Float, UniqueConstraint, CHAR, Boolean, String
 
-from definitions import MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, Base
-from src.models import scraping_session
+from definitions import MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, Base, CURRENCY_COLUMN_LENGTH, \
+    XMPP_JABBER_ID_COLUMN_LENGTH
+from src.models import scraping_session, seller_terms_and_conditions
 from src.models import seller
 from src.models import seller_description_text
 
@@ -21,26 +22,23 @@ class SellerObservation(Base):
 
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     description = Column(CHAR(32), ForeignKey(seller_description_text.TABLE_NAME_AND_PRIMARY_KEY))
+    terms_and_conditions_id = Column(Integer, ForeignKey(seller_terms_and_conditions.TABLE_NAME_AND_PRIMARY_KEY))
     disputes = Column(Integer)
-    orders = Column(Integer)
-    spendings = Column(String)
-    feedback_left = Column(Integer)
-    feedback_percent_positive = Column(Float)
     last_online = Column(Date) #Within the last 3 days # Within the last 24 hours
-
-    dream_market_successful_sales = Column(Integer)
-    dream_market_star_rating = Column(Float)
-    wall_street_market_successful_sales = Column(Integer)
-    wall_street_market_star_rating = Column(Float) #Wallstreet: 214 deals, 4.45/5
 
     parenthesis_number = Column(Integer)
     positive_feedback_received_percent = Column(Float)
+    vendor_level = Column(Integer)
 
     # empire market columns
+    orders = Column(Integer)
+    spendings = Column(String(10))
+    feedback_left = Column(Integer)
+    feedback_percent_positive = Column(Float)
+
     stealth_rating = Column(Integer)
     quality_rating = Column(Integer)
     value_price_rating = Column(Integer)
-    vendor_level = Column(Integer)
     trust_level = Column(Integer)
 
     positive_1m = Column(Integer)
@@ -54,23 +52,13 @@ class SellerObservation(Base):
     negative_12m = Column(Integer)
 
     # cryptonia columns
-    # Nucleus: 670 deals, 4.97/5
-    # Alphabay: 346 / 3 / 1
-    # CGMC: 2000+ deals, 4.95/5
-    # Hansa: 716/2/2
-    # Black Bank: 25/0/0
-    # Agora: 500 deals, 4.99/5
-    # Black Market Reloaded: 54/4/1
-    # Abraxas: 50 deals, 5.0/5
-    # Middle Earth: 36 deals, 9.97/10
-    # verified boolean
-    # level int
-    # disputes won
-    # disputes lost
-    # amount on escrow, btc
-    # amount on escrow, usd
-    # FE enabled
-    #  XMPP/Jabber ID: enjoymyaccounts@jabber.cat
-
+    disputes_won = Column(Integer)
+    disputes_lost = Column(Integer)
+    cryptocurrency_amount_on_escrow = Column(Float)
+    fiat_amount_on_escrow = Column(Float)
+    cryptocurrency_unit_on_escrow = Column(CHAR(CURRENCY_COLUMN_LENGTH))
+    fiat_unit_on_escrow = Column(CHAR(CURRENCY_COLUMN_LENGTH))
+    fe_enabled = Column(Boolean)
+    xmpp_jabber_id = Column(String(XMPP_JABBER_ID_COLUMN_LENGTH))
 
     UniqueConstraint(session_id, url)

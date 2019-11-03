@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - Product Details</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-03 19:56 | 
+Logged in as <a class="controlbox_link" href="/user/usingpython3">usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<h2>Light Dep Trim  - 1 OZ | Trim | Shake | Microbuds *FREE SHIP**</h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/messages/new/support/Reporting+product+%238244813"><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class="toolbar_link" href="/products/"><span class="icono-leftArrow smicon"></span> Back to Products</a>
+</div>
+</div>
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="shipping"></a>
+<a class="noanchor" id="countries"></a>
+<a class="noanchor" id="feedback"></a>
+<a class="noanchor" id="pricing"></a>
+<a class="noanchor" id="autofill"></a>
+<div class="content_div">
+<div class="top_part">
+<a href="/image/16817153" target="_blank" title="Click to view full resolution image."><img class="picture" src="/image/16817153"/></a>
+<div class="product_details">
+<div class="product_data">
+<label>Sold by:</label>
+<a href="/user/vessel">vessel</a>
+<span class="verified">LEVEL 1</span>
+<span class="verified">VERIFIED</span>
+<span class="lgtext" style="font-weight: bold"><span title="Total sales">(309)</span> <span style="color: green;" title="Positive Feedback Percentage">97.35%</span></span>
+<a class="smlink" href="/messages/new/vessel/Light+Dep+Trim++%2D+1+OZ+%7C+Trim+%7C+Shake+%7C+Microbuds+%2AFREE+SHIP%2A%2A+%28Product+%238244813%29" title="Click to contact this vendor."><span class="icono-mail"></span></a>
+</div>
+<div class="product_data">
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Dream: 4600 deals, 4.95/5</span>
+<span class="verified">Alphabay: 346/3/1</span>
+<span class="verified">Hansa: 716/2/2</span>
+<span class="verified">CGMC: 1000 deals, 4.88/5</span></div>
+</div>
+<div class="product_data">
+<label>Category:</label>
+<span>Weed</span>
+</div>
+<div class="product_data">
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class="product_data">
+<label>Price:</label>
+<span class="lgtext">2.80 USD/gram</span>
+<span>(0.00030598 BTC/gram)</span>
+</div>
+<div class="product_data">
+<label>FE or Escrow:</label>
+<span class="verified">ESCROW</span>
+</div>
+<div class="product_data">
+<label>In stock:</label>
+<span>2 gram</span>
+<span style="font-weight:bold">(Minimum order 28 gram)</span>
+<span class="error">Out of Stock</span>
+</div>
+<div class="product_data">
+<label>Accepted Payments:</label>
+<span><img alt="Bitcoin (BTC)" src="/image/btc_nm.png" style="height: 18px; max-width: 200px"/> <img alt="Monero (XMR)" src="/image/xmr_nm.png" style="height: 18px; max-width: 200px"/></span>
+</div>
+<div class="product_data">
+<label>Ships from:</label>
+<div class="lbllist">United States → United States</div>
+</div>
+</div>
+</div>
+</div>
+<form method="post">
+<div class="buydiv">
+<label class="buttonlink buynow">BUY NOW&gt;&gt;</label><select class="shipselect" name="shipping_method">
+<option value="0">--Select Shipping Method--</option>
+<option value="8244823">Domestic Priority Flat Rate (0.00 USD)</option>
+</select><input class="qty" name="qty" type="number" value="28"/><input class="clickbuy" name="submit" type="submit" value="PLACE ORDER"/>
+</div>
+<div style="height: 10px"></div>
+</form>
+<div class="tab" id="generaltab"><a class="tablink" href="#general">Description</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<div class="content_div">
+<p>This offerâs for 1 gram of Indoor Trim, Shake, and Microbuds. We will do our best to balance out the trim, shake, buds and plant matter you receive with each order.</p>
+<p>â¢ Mixed Strains â¢ Micro Buds â¢ Shake â¢ Trim â¢ Limited Supply â¢ Photos are of the actual product</p>
+<p>Strain Included: - Blue Dream - Banana Kush - Sour Diesel</p>
+<p>Free Shipping!!</p>
+</div>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>Refunds</p>
+<p>100% refund or reship on any packages that do not show up, or tracking has shown no movement past the allotted delivery dates.</p>
+<p>Buyers will NOT receive a refund if the tracking indicates the item was successfully delivered or returned, due to an incorrect address provided to us. It also will NOT cover incorrect address formats in which the tracking indicates undeliverable as addressed.  Address info will be copied and pasted exactly as it is originally provided to us.</p>
+<p>Write your address as follows:</p>
+<p>First Name Last Name
+1234 Nowhere St.
+Apt. 125
+City, State Zip</p>
+<p>Customer satisfaction is very important to us. If for any reason you’re not happy with your product or service, please contact us before leaving negative feedback, or a bad review and give us a chance to make it right.</p>
+<p>Customer satisfaction is very important to us. If for any reason you’re not happy with your product or service, please contact us before leaving negative feedback, or a bad review and give us a chance to make it right.</p>
+<hr/>
+<p>Escrow:</p>
+<p>PLEASE RELEASE ESCROW WITHING 48HRS OF ITEMS BEING DELIVERED. If you allow an escrow order to auto-finalize, we will not accept orders from you in the future.</p>
+<hr/>
+<p>PGP:</p>
+<p>PGP is ALWAYS required for your name and address. We will cancel any orders where PGP is not used as asked.</p>
+<hr/>
+<p>FAQ’s</p>
+<ol>
+<li><p>Question: Can I combine multiple orders into one as to avoid several shipping charges?
+Answer : Even though we offer free shipping on most of our products we can still combine orders into one package, so all your items are delivered at the same time. If multiple products have shipping charges please just send us a message describing which products you’re interested in, we’ll create a custom listing for you.</p></li>
+<li><p>Question : Do you grow your offered strains?
+Answer: No we do not grow the strains ourselves.</p></li>
+<li><p>Question : If I order an LB, or more can I mix and match the strains?
+Answer: Yes you can, please include your stain preferences request in a message after placing your order.</p></li>
+<li><p>Question: Do you ship outside the USA?
+Answer: No we do not. We currently only ship Domestic.</p></li>
+<li><p>Question: Do you ship to P.O. Boxes?
+Answer: We do not ship to P.O. Boxes.</p></li>
+<li><p>Question : Can I purchase larger amounts of product that you currently have listed?
+Answer : It depends on the product. Please send us a message detailing which product you’re interested in and we’ll let you know if we have bulk deals available.</p></li>
+<li><p>Question : What is the maximum weight of marijuana you will ship at one time?
+Answer : 6 LBS is the max.</p></li>
+<li><p>Question : When will my order be shipped?
+Answer : All orders placed before 3:00pm PST will be shipped that same day. Any orders placed after that will be shipped the following day.</p></li>
+<li><p>Question : What if I order Friday or over the weekend.
+Answer: Shipping is done daily, Monday Ã¢â¬â Saturday as orders come in. Full LB units of Marijuana will only ship Monday - Thursday.</p></li>
+<li><p>Question : Do you ship with tracking?
+Answer: Yes we ship all orders with tracking. For security reasons we do not provide tracking numbers to any buyers, but we’re always happy to check on the shipping status for you at any time.</p></li>
+<li><p>Question : What shipping service do you use and what are shipping times like?
+Answer : We ship using USPS Priority Flat Rate. Shipping times will usually range from 3-5 business days from the time your order has been marked shipped.</p></li>
+<li><p>Question : Can I pay for overnight shipping?
+We will only overnight orders for an LB and up. In this situation the buyer will pay for the cost of overnight shipping, as soon as we receive the funds for shipping the product will go out.</p></li>
+</ol>
+</div>
+</div>
+<div class="target_content" id="feedback_div">
+<div class="content_div">
+<div class="mainbox">
+<table style="width: 100%">
+<tr class="gridhdr">
+<td class="gridhdr rating_good"> </td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user"> </td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1g FORBIDDEN FRUIT | LIGHT DEPO | DISCOUNT!!! *FREE SHIPPING*</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-03</span>
+<span class="smtext rating_date">0.00810000 BTC</span>
+<span class="smtext rating_date">c***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g FORBIDDEN FRUIT | LIGHT DEPO | DISCOUNT!!! *FREE SHIPPING*</span>
+<p>5/5/5</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-03</span>
+<span class="smtext rating_date">0.00560000 BTC</span>
+<span class="smtext rating_date">f***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>just emptying my wallet.for the price its fine.some popcorn nugs and shake mix.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-03</span>
+<span class="smtext rating_date">0.00160000 BTC</span>
+<span class="smtext rating_date">C***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g FORBIDDEN FRUIT | LIGHT DEPO | DISCOUNT!!! *FREE SHIPPING*</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.01290000 BTC</span>
+<span class="smtext rating_date">C***o</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.00440000 BTC</span>
+<span class="smtext rating_date">C***o</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1000mg ICE KREAM THC Cannabis  Oil Cartridges | FREE SHIPPING!!!</span>
+<p>Great quality, great stealth. Thanks, man. </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-02</span>
+<span class="smtext rating_date">0.01180000 BTC</span>
+<span class="smtext rating_date">T***a</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>Thank You Vessel! A+++</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00440000 BTC</span>
+<span class="smtext rating_date">t***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g SILVERBACK FLOWER | LIGHT DEPO | DISCOUNT!!! *FREE SHIPPING*</span>
+<p>Quick shipping, A+++ stealth, quality product! Will be ordering again!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.01570000 BTC</span>
+<span class="smtext rating_date">u***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>I keep buying from this vendor because the product is top shelf and fast free shipping really is appreciated.  FE Early.  Trusted Vendor</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00240000 BTC</span>
+<span class="smtext rating_date">F***g</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g FORBIDDEN FRUIT | LIGHT DEPO | DISCOUNT!!! *FREE SHIPPING*</span>
+<p>Super fast shipping. Contents very secure. Good quality nugs. Very satisfied.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.25400000 XMR</span>
+<span class="smtext rating_date">d***7</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>Prompt shipping and product exactly as described. Will order from this vendor again.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00130000 BTC</span>
+<span class="smtext rating_date">s***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g Banana Kush | TOP SHELF Indoor | FREE SHIPPING!!</span>
+<p>Hasn't came yet. But vessel is a good dude i appreciate it</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00180000 BTC</span>
+<span class="smtext rating_date">P***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>I would not buy this if you're planning to smoke it. I thought I would get more nug than I did but for the price I can't complain. Would be good as a filler for prerolls etc.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00230000 BTC</span>
+<span class="smtext rating_date">j***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.07020000 BTC</span>
+<span class="smtext rating_date">a***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1g SILVERBACK FLOWER | LIGHT DEP | DISCOUNT!!! *FREE SHIPPING*</span>
+<p>works great, shipped in a timely manner, 10/10</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00470000 BTC</span>
+<span class="smtext rating_date">B***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">4G OF HIGH QUALITY PRESSED HASH A+++*FREE SHIPPING*</span>
+<p>great product, arrived VERY quickly, absolutely would buy from again and recommend to others</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00860000 BTC</span>
+<span class="smtext rating_date">B***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">ADDERALL 30mg TEVA | Pharma Grade | *FREE SHIPPING*</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-28</span>
+<span class="smtext rating_date">0.02270000 BTC</span>
+<span class="smtext rating_date">k***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>First bad experience on cryptonia. MISLEADING trim and shake for twice the price as everyone else on here. By selling it out by the gram makes you think it's bud. I got 70 grams of stems. Some were enormous. Brownish color too. DONT ORDER!!!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.06310000 BTC</span>
+<span class="smtext rating_date">c***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>Fast shipping and good mix.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.00150000 BTC</span>
+<span class="smtext rating_date">P***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>Awesome stuff came in time and great smoke. Also packaging was pretty awesome. Definitely will order again</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00940000 BTC</span>
+<span class="smtext rating_date">v***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>Good stuff 5/5</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.22620000 XMR</span>
+<span class="smtext rating_date">p***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g SILVERBACK FLOWER | LIGHT DEP | DISCOUNT!!! *FREE SHIPPING*</span>
+<p>Good stuff 5/5</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.62740000 XMR</span>
+<span class="smtext rating_date">p***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">ADDERALL 30mg TEVA | Pharma Grade | *FREE SHIPPING*</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.04220000 BTC</span>
+<span class="smtext rating_date">f***q</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Light Dep Trim  - 1 OZ | Trim | Shake | Microbuds *FREE SHIP**</span>
+<p>fast delivery. Definitely trim, not even popcorn nugs more like kernels. Even after picking out a lot of leaf, still some of the harshest I've ever smoked. I get that it is trim but still poor quality for price. I'll stick to cheap nugs from others</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.00940000 BTC</span>
+<span class="smtext rating_date">m***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Light Dep Trim  - 1G | Trim | Shake | Microbuds *FREE SHIPPING**</span>
+<p>Quick delivery, good stealth, weight on point. Quite a bit of sugar leaf, but also still quite a bit of smaller buds and smoke-able shake. Pretty potent stuff with a good smell. Holding onto the sugar leaf and plant matter for edibles.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.01260000 BTC</span>
+<span class="smtext rating_date">c***r</span>
+</td>
+</tr>
+</table>
+</div>
+<span class="smtext">This is the most recent feedback. To view all feedback visit the vendor profile.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8205.46 EUR = 9150.80 USD = 7074.13 GBP = 142.92002767 XMR = 13245.03 AUD = 12042.38 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

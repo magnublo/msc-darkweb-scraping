@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Product Details</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-27 15:13&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/usingpython3>usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<h2>Speed Paste / Amphetamin * 50g *</h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/messages/new/support/Reporting+product+%238879403><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class=toolbar_link href=/products/><span class="icono-leftArrow smicon"></span>&nbsp;Back to Products</a>
+</div>
+</div>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=shipping></a>
+<a class=noanchor id=countries></a>
+<a class=noanchor id=feedback></a>
+<a class=noanchor id=pricing></a>
+<a class=noanchor id=autofill></a>
+<div class=content_div>
+<div class=top_part>
+<a title="Click to view full resolution image." href=/image/8879623 target=_blank><img class=picture src=/image/8879623></a>
+<div class=product_details>
+<div class=product_data>
+<label>Sold by:</label>
+<a href=/user/GreenSupreme>GreenSupreme</a>
+<span class=verified>LEVEL 2</span>
+<span class=verified>VERIFIED</span>
+<span class=lgtext style="font-weight: bold"><span title="Total sales">(663)</span>&nbsp;<span title="Positive Feedback Percentage" style="color: green;">100.00%</span></span>
+<a title="Click to contact this vendor." class=smlink href=/messages/new/GreenSupreme/Speed+Paste+%2F+Amphetamin+%2A+50g+%2A+%28Product+%238879403%29><span class=icono-mail></span></a>
+</div>
+<div class=product_data>
+<label>Verifications:</label>
+<div class=lbllist><span class=verified>Dream: 3700+ deals, 4.96/5</span>
+<span class=verified>Wallstreet: 910 deals, 4.93/5</span></div>
+</div>
+<div class=product_data>
+<label>Category:</label>
+<span>Amphetamine</span>
+</div>
+<div class=product_data>
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class=product_data>
+<label>Price:</label>
+<span class="lgtext">202.13 USD/50g</span>
+<span>(0.02123394 BTC/50g)</span>
+</div>
+<div class=product_data>
+<label>FE or Escrow:</label>
+<span class=verified>ESCROW</span>
+</div>
+<div class=product_data>
+<label>In stock:</label>
+<span>100 50g</span>
+</div>
+<div class=product_data>
+<label>Accepted Payments:</label>
+<span><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></span>
+</div>
+<div class=product_data>
+<label>Ships from:</label>
+<div class=lbllist>Germany &rarr; Austria, Belgium, France, Finland, Germany, Denmark, Luxembourg, Poland, Sweden, Norway</div>
+</div>
+</div>
+</div>
+</div>
+<form method=post>
+<div class=buydiv>
+<label class="buttonlink buynow">BUY NOW>></label><select class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=8879413>(DE) DOMESTIC only (KEIN Tracking), 1-5 Tage&nbsp;(3.33 USD)</option>
+<option value=8879423>(DE) PRIO-Brief (MIT Tracking), 1-3 Tage&nbsp;(5.55 USD)</option>
+<option value=8879433>(DE) Einschreiben-Einwurf (MIT Tracking), 1-5 Tage&nbsp;(7.77 USD)</option>
+<option value=8879443>(DE+EU) Zusatzartikel / additional item&nbsp;(0.00 USD)</option>
+<option value=8879453>(EU) Reg. Mail / Recommand&#233 (Track&#38Sign!), 3-10 days&nbsp;(8.32 USD)</option>
+</select><input type=number name=qty class=qty value="1"><input type=submit name=submit class=clickbuy value="PLACE ORDER">
+</div>
+<div style="height: 10px"></div>
+</form>
+<div id=generaltab class=tab><a class=tablink href=#general>Description</a></div>
+<div id=termstab class=tab><a class=tablink href=#terms>Terms &amp; Conditions</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<div class=content_div>
+<p>Von hoher Reinheit und guter Qualität!
+Achtung, kein Spielzeug!</p>
+
+<p>Konsistenz: Paste</p>
+
+<p>Konsum:
+getrocknet nasal/Snief
+trocken/feucht oral (&ldquo;Bombe&rdquo;)
+gespritzt &hellip; bitte lasst das!</p>
+
+<p>Kompakte Infos über Speed (ClearNet):
+mindzone.info/drogen/speed/</p>
+
+<p>Hinweis:
+Gegen Koffein, Ephedrin, 4-FA oder 4-FMP kann man in der Lieferkette nichts machen &hellip; da hilft nur mit Aceton auswaschen! Anleitungen im Netz, z.B. auf YouTube.</p>
+</div>
+</div>
+<div id=terms_div class=target_content>
+<div class=content_div>
+<p>Bestellanname: 24/7/365</p>
+
+<p>Versand: Mo. -Do. (Deadline 13:00 Uhr), Fr. - So. kein Versand, aber Bestellannahme.</p>
+
+<p>Unsere Verpackung ist sehr aufwändig und entsprechend wertig. Das machen wir zu Eurem und unseren Schutz. Wer ein günstiges Produkt zum Spottpreis versendet, kann es mit Eurer Sicherheit nicht besonders ernst nehmen. Es gibt nur &ldquo;entweder oder&rdquo;.</p>
+
+<p>Reklamationen:</p>
+
+<p>✔ Ruhe bewahren und tief einatmen!
+✔ Nehmt Kontakt mit uns auf und wir finden eine Lösung. Keiner will dich abziehen!
+✔ Ruhe bewahren und wieder ausatmen!</p>
+
+<p>✔ Refund / Reship gibt es i.d.R. nur, wenn ein Versäumnis unsererseits vorliegt.
+✔ Erstkunden, die ohne Tracking (Prio / Einschreiben-Einwurf) bestellen, erhalten kein ReShip/ReFund.</p>
+
+<p>✔ Digga, Ruhe bewahren, Digga!</p>
+
+<p>Bedenke: Auch wir sind nur Menschen und Menschen machen auch mal Fehler.</p>
+</div>
+</div>
+<div id=feedback_div class=target_content>
+<div class=content_div>
+<div class=mainbox>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr rating_good">&nbsp;</td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user">&nbsp;</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Mango Haze* Weed * 20g</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.03050000 BTC</span>
+<span class="smtext rating_date">h***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.00930000 BTC</span>
+<span class="smtext rating_date">l***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Ketamin Sugar * 1g * Ketamine</span>
+<p>ordered on monday, delivery on wednesday. Awesome service, thank you!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.61120000 XMR</span>
+<span class="smtext rating_date">r***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>Ihr habt einen neuen Stammkunden. Lieferung nach einem Tag. Hab in den letzten Jahren bei vielen H&#228ndlern bestellt, Stealth ist hier mit Abstand am besten. Vielen Dank.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01050000 BTC</span>
+<span class="smtext rating_date">R***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01990000 BTC</span>
+<span class="smtext rating_date">a***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">5 g Amnesia Haze</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.00880000 BTC</span>
+<span class="smtext rating_date">a***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>+++++</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01110000 BTC</span>
+<span class="smtext rating_date">N***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Damnesia* Weed * 10g</span>
+<p>++++</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01190000 BTC</span>
+<span class="smtext rating_date">N***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Mango Haze * Weed * 10g</span>
+<p>best</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.01870000 BTC</span>
+<span class="smtext rating_date">V***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Damnesia * Weed * 50g</span>
+<p>Sehr schnell und sehr gut!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.04160000 BTC</span>
+<span class="smtext rating_date">r***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>Top vendor with top notch service! Great stealth, super fast delivery and good product for the money.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.04660000 BTC</span>
+<span class="smtext rating_date">w***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Speed Paste / Amphetamin * 5g *</span>
+<p>Fast Delivery. Will purchase again.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00470000 BTC</span>
+<span class="smtext rating_date">C***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Cocaine  *** 1g Aceton u. Alcohol washed ***</span>
+<p>Didn't get exactly what I've ordered, GS changed the Order without notice, it's ok with me for this time... beside that the (washed) coke is very very good</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.06860000 BTC</span>
+<span class="smtext rating_date">Z***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Koks / Cocaine * 1 g *</span>
+<p>Great. Don't look any further. Most professional vendor out of many I dealt so far with. Every promise held. Next DD. Very good product. Fantastic stealth. I'll be back!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.01030000 BTC</span>
+<span class="smtext rating_date">r***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Kokain / Cocaine  ***Aceton washed*** 1g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.02950000 BTC</span>
+<span class="smtext rating_date">Y***h</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Kokain / Cocaine  *** Aceton u. Alcohol*** washed*** 2g *</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.03310000 BTC</span>
+<span class="smtext rating_date">Y***h</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">L.A. Confidential * Weed * 10g</span>
+<p>NDD, good stealth and a great quality like always! </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">2.64480000 XMR</span>
+<span class="smtext rating_date">W***w</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Ketamin Sugar * 1g * Ketamine</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00860000 BTC</span>
+<span class="smtext rating_date">B***g</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Chronic * Weed * 10g</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.01610000 BTC</span>
+<span class="smtext rating_date">S***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Chronic * Weed * 5g</span>
+<p>Fast shipping.Thanks for the candys</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00940000 BTC</span>
+<span class="smtext rating_date">j***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Chronic * Weed * 10g</span>
+<p>top</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.01580000 BTC</span>
+<span class="smtext rating_date">i***u</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Speed Paste / Amphetamin * 10g *</span>
+<p>Prompt, perfekt &#38 pr&#228chtiges Pep, wie stets! Danke, allzeit gerne wieder!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00850000 BTC</span>
+<span class="smtext rating_date">p***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Chronic * Weed * 5g</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00860000 BTC</span>
+<span class="smtext rating_date">r***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">5 g Amnesia Haze</span>
+<p>Danke, Alles perfekt wie immer!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00930000 BTC</span>
+<span class="smtext rating_date">m***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Speed Paste / Amphetamin * 10g *</span>
+<p>Danke, alles perfekt wie immer!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.00820000 BTC</span>
+<span class="smtext rating_date">m***t</span>
+</td>
+</tr>
+</table>
+</div>
+<span class=smtext>This is the most recent feedback. To view all feedback visit the vendor profile.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8571.18 EUR = 9519.27 USD = 7421.15 GBP = 162.07008883 XMR = 13952.83 AUD = 12431.62 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

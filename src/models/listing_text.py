@@ -14,5 +14,5 @@ class ListingText(Base):
 
     id = Column(CHAR(32), primary_key=True)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
-    text = Column(Text)
+    text = Column(Text) # max 16384 on cryptonia
 

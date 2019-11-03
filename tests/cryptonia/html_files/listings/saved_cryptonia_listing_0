@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Product Details</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-27 12:58&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/usingpython3>usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<h2>112g Purple Tangie GREENHOUSE</h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/messages/new/support/Reporting+product+%2319926843><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class=toolbar_link href=/products/><span class="icono-leftArrow smicon"></span>&nbsp;Back to Products</a>
+</div>
+</div>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=shipping></a>
+<a class=noanchor id=countries></a>
+<a class=noanchor id=feedback></a>
+<a class=noanchor id=pricing></a>
+<a class=noanchor id=autofill></a>
+<div class=content_div>
+<div class=top_part>
+<a title="Click to view full resolution image." href=/image/19928643 target=_blank><img class=picture src=/image/19928643></a>
+<div class=product_details>
+<div class=product_data>
+<label>Sold by:</label>
+<a href=/user/CaliTerps>CaliTerps</a>
+<span class=verified>LEVEL 2</span>
+<span class=verified>VERIFIED</span>
+<span class=lgtext style="font-weight: bold"><span title="Total sales">(1335)</span>&nbsp;<span title="Positive Feedback Percentage" style="color: green;">99.31%</span></span>
+<a title="Click to contact this vendor." class=smlink href=/messages/new/CaliTerps/112g+Purple+Tangie+GREENHOUSE+%28Product+%2319926843%29><span class=icono-mail></span></a>
+</div>
+<div class=product_data>
+<label>Verifications:</label>
+<div class=lbllist><span class=verified>Dream: 4300 deals, 4.96/5</span></div>
+</div>
+<div class=product_data>
+<label>Category:</label>
+<span>Weed</span>
+</div>
+<div class=product_data>
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class=product_data>
+<label>Price:</label>
+<span class="lgtext">485.00 USD/112g</span>
+<span>(0.05199685 BTC/112g)</span>
+</div>
+<div class=product_data>
+<label>FE or Escrow:</label>
+<span class=verified>ESCROW</span>
+</div>
+<div class=product_data>
+<label>In stock:</label>
+<span>17 112g</span>
+</div>
+<div class=product_data>
+<label>Accepted Payments:</label>
+<span><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/btc_ms_nm.png alt="Bitcoin (BTC) Multisig"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></span>
+</div>
+<div class=product_data>
+<label>Ships from:</label>
+<div class=lbllist>United States &rarr; United States</div>
+</div>
+</div>
+</div>
+</div>
+<form method=post>
+<div class=buydiv>
+<label class="buttonlink buynow">BUY NOW>></label><select class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=19926853>Priority Mail&nbsp;(16.00 USD)</option>
+<option value=19927113>Add On&nbsp;(0.00 USD)</option>
+</select><input type=number name=qty class=qty value="1"><input type=submit name=submit class=clickbuy value="PLACE ORDER">
+</div>
+<div style="height: 10px"></div>
+</form>
+<div id=generaltab class=tab><a class=tablink href=#general>Description</a></div>
+<div id=termstab class=tab><a class=tablink href=#terms>Terms &amp; Conditions</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<div class=content_div>
+<p>112g Purple Tangie GreenHouse Flower</p>
+
+<p>Frosty, green/purple buds. Mostly medium and large nugs. really nice quality. Loud citrus nose.</p>
+
+<p>These will go fast</p>
+
+<p>NO SEEDS</p>
+</div>
+</div>
+<div id=terms_div class=target_content>
+<div class=content_div>
+<p>Refund Policy:</p>
+
+<p>If package does not make it and tracking is marked SEIZED, we offer a RESHIP or 50/50
+If package tracking is showing DELIVERED, we cannot offer a refund</p>
+
+<p>Please provide your address in the following format:</p>
+
+<p>FULL NAME
+STREET ADDRESS
+CITY
+STATE
+ZIP</p>
+</div>
+</div>
+<div id=feedback_div class=target_content>
+<div class=content_div>
+<div class=mainbox>
+<table style="width: 100%">
+<tr class=gridhdr>
+<td class="gridhdr rating_good">&nbsp;</td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user">&nbsp;</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">448g Super Lemon Haze GREENHOUSE</span>
+<p>amazing! love u</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.23110000 BTC</span>
+<span class="smtext rating_date">g***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1 LB Blueberry Short Cake LIGHT DEP</span>
+<p>amazing! love u</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.24180000 BTC</span>
+<span class="smtext rating_date">g***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1 LB Platinum OG Kush GREENHOUSE</span>
+<p>amazing! love u</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.22070000 BTC</span>
+<span class="smtext rating_date">g***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1 LB Strawberry Diesel GREENHOUSE</span>
+<p>amazing. love u</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.22430000 BTC</span>
+<span class="smtext rating_date">g***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">28g EXOTIC Indoor VENDORS CHOICE</span>
+<p>Truly good bud, worth the price. Almost teleportation-like shipping speed. TYVM CaliTerps</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-27</span>
+<span class="smtext rating_date">0.06230000 BTC</span>
+<span class="smtext rating_date">S***P</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28g EXOTIC Indoor VENDORS CHOICE</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">4.46320000 XMR</span>
+<span class="smtext rating_date">P***a</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">224g Strawberry Diesel GREENHOUSE</span>
+<p>great gas.. great business as usual</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.13310000 BTC</span>
+<span class="smtext rating_date">s***o</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28g Live Resin Sugar VENDORS CHOICE</span>
+<p>Excellent product, CaliTerps has always been the plug</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.08690000 BTC</span>
+<span class="smtext rating_date">v***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1 LB Tahoe OG LIGHT DEP</span>
+<p>Everything as expected.  Great vendor.  Thanks CT</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">28.18980000 XMR</span>
+<span class="smtext rating_date">r***6</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">448g Purple Tangie GREENHOUSE</span>
+<p>Fire</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.22500000 BTC</span>
+<span class="smtext rating_date">J***5</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">224g Tahoe OG LIGHT DEP</span>
+<p>Fast shipping 2 days. Great stealth no smell. I got some bonus gifts 2 joints and live resin!!! I been doing business with CaliTerps for sometime and will always be a customer here. The best service getting high quality weed for the price. Thank you.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">14.48110000 XMR</span>
+<span class="smtext rating_date">a***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">224g Tahoe OG LIGHT DEP</span>
+<p>Very trustworthy.  Love the little extra samples sent that preroll was fire.  2 days tor to door.  Very good bud</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.10610000 BTC</span>
+<span class="smtext rating_date">m***8</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">224g Purple Tangie GREENHOUSE</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.11880000 BTC</span>
+<span class="smtext rating_date">M***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">112g Platinum OG Kush GREENHOUSE</span>
+<p>10/10 we will be back </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.06110000 BTC</span>
+<span class="smtext rating_date">t***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">448g Purple Tangie GREENHOUSE</span>
+<p>Great product, fast 3 day shipping as always.  CT always the most reliable vendor</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.23430000 BTC</span>
+<span class="smtext rating_date">y***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1 LB Strawberry Diesel GREENHOUSE</span>
+<p>super dry this time, could have at least drop the price. still smokin</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.22770000 BTC</span>
+<span class="smtext rating_date">N***E</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">112g Super Lemon Haze GREENHOUSE</span>
+<p>as always, thank you </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-26</span>
+<span class="smtext rating_date">0.05660000 BTC</span>
+<span class="smtext rating_date">o***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">224g Platinum OG Kush GREENHOUSE</span>
+<p>Really great bud for the price!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.11780000 BTC</span>
+<span class="smtext rating_date">b***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">112g Platinum OG Kush GREENHOUSE</span>
+<p>ordered on Monday, arrived Friday. stealth was solid. absolute fire weed, the buds are sticky and glistening. great first experience, will order again, thanks CT</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.06120000 BTC</span>
+<span class="smtext rating_date">r***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28g EXOTIC Indoor VENDORS CHOICE</span>
+<p>best bud on the market, hands down.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.02970000 BTC</span>
+<span class="smtext rating_date">f***k</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">112g Platinum OG Kush GREENHOUSE</span>
+<p>I got my last package stolen in the mail. This fucking vendor gave me more than enough to recover from my loss in this pack i just got. Huge respect. This is by far the best seller on the market for bud. Dont use anyone else.
+<br>
+<br>3day TTD as well</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.05980000 BTC</span>
+<span class="smtext rating_date">f***k</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">224g Super Lemon Haze GREENHOUSE</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.11020000 BTC</span>
+<span class="smtext rating_date">k***o</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">224g Sherbet LIGHT DEP</span>
+<p>awesome stuff </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.10560000 BTC</span>
+<span class="smtext rating_date">l***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">28g EXOTIC Indoor VENDORS CHOICE</span>
+<p>11/10</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.05740000 BTC</span>
+<span class="smtext rating_date">R***l</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1 LB Platinum OG Kush GREENHOUSE</span>
+<p>Once again, sorry for the delay. Will FE next time. Very good stuff!! Huge nugs.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.22690000 BTC</span>
+<span class="smtext rating_date">R***l</span>
+</td>
+</tr>
+</table>
+</div>
+<span class=smtext>This is the most recent feedback. To view all feedback visit the vendor profile.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8404.77 EUR = 9327.48 USD = 7272.19 GBP = 164.04011109 XMR = 13672.40 AUD = 12181.75 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

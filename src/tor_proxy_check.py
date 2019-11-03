@@ -93,7 +93,7 @@ def check_proxy(line_nr: int, proxy_port: int, lock: RLock, total_lines: int, re
     proxy_works = res_text.find(TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE) != -1
     proxy_status = ProxyStatus.OK if proxy_works else ProxyStatus.ERROR
     print_tor_proxy_status(proxy_status, proxy_port, line_nr, lock, total_lines)
-    result_queue.put(proxy_port, proxy_status)
+    result_queue.put((proxy_port, proxy_status.value))
 
 def get_recommended_nr_of_tor_proxies(total_nr_of_threads: int) -> int:
     return math.ceil(total_nr_of_threads / RECOMMENDED_NR_OF_THREADS_PER_TOR_PROXY)

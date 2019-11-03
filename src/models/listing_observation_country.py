@@ -9,7 +9,7 @@ LISTING_OBSERVATION_ID_NAME = 'listing_observation_id'
 COUNTRY_ID_NAME = 'country_id'
 
 class ListingObservationCountry(Base):
-
+    #TODO: add logic to add appropriate junctions for terms such as "Europe" or "Worldwide"
     __tablename__ = TABLE_NAME
 
     listing_observation_id = Column(LISTING_OBSERVATION_ID_NAME, Integer,

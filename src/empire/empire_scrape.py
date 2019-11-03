@@ -1,46 +1,49 @@
-import base64
 import hashlib
-import time
-from datetime import datetime
 from math import ceil
 from multiprocessing import Queue
 from random import shuffle
-from typing import Union, List
+from typing import List, Tuple, Type
 
-import cfscrape
 import requests
-from python3_anticaptcha import ImageToTextTask
 from requests.cookies import create_cookie
 from sqlalchemy import func
 
 from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, ANTI_CAPTCHA_ACCOUNT_KEY, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
-    RESCRAPE_PGP_KEY_INTERVAL, FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
-    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, PYTHON_SIDE_ENCODING
+    EMPIRE_MARKET_LOGIN_URL, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
+    FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
+    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, MD5_HASH_STRING_ENCODING
 from environment_settings import DEBUG_MODE
+from src.base_functions import BaseFunctions
 from src.base_scraper import BaseScraper
 from src.db_utils import get_column_name
-from src.empire.empire_functions import EmpireScrapingFunctions as scrapingFunctions
+from src.empire.empire_functions import EmpireScrapingFunctions
 from src.models.country import Country
 from src.models.feedback import Feedback
-from src.models.listing_observation_country import ListingObservationCountry
 from src.models.listing_text import ListingText
-from src.models.pgp_key import PGPKey
 from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
-from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
+from src.models.verified_external_account import VerifiedExternalAccount
 from src.utils import get_page_as_soup_html
 
 
 class EmpireScrapingSession(BaseScraper):
 
-    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int, proxy: dict,
-                 session_id: int = None):
-        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, proxy=proxy,
-                         session_id=session_id)
+    def _get_anti_captcha_kwargs(self) -> dict:
+        return {'numeric': 1}
 
-    def _get_web_session(self) -> Union[requests.Session, cfscrape.Session]:
+    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int, proxy: dict,
+                 session_id: int, mirror_base_url: str):
+        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, proxy=proxy,
+                         session_id=session_id, mirror_base_url=mirror_base_url)
+
+    def get_base_url(self) -> str:
+        raise NotImplementedError('')
+
+    def _get_scraping_funcs(self) -> Type[BaseFunctions]:
+        return EmpireScrapingFunctions
+
+    def _get_web_session(self) -> requests.Session:
         return requests.Session()
 
     def _get_working_dir(self) -> str:
@@ -49,45 +52,8 @@ class EmpireScrapingSession(BaseScraper):
     def _get_login_url(self) -> str:
         return EMPIRE_MARKET_LOGIN_URL
 
-    def _get_login_phrase(self) -> str:
+    def _get_is_logged_out_phrase(self) -> str:
         return EMPIRE_MARKET_LOGIN_PHRASE
-
-    def _login_and_set_cookie(self, web_response=None, debug=DEBUG_MODE):
-        if debug:
-            self._set_cookies()
-            return
-
-        if not web_response:
-            web_response = self._get_logged_out_web_response(EMPIRE_MARKET_LOGIN_URL)
-
-        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_login_html")
-
-        image_url = scrapingFunctions.get_captcha_image_url(soup_html)
-
-        image_response = self._get_logged_out_web_response(image_url).content
-        base64_image = base64.b64encode(image_response).decode("utf-8")
-
-        time_before_requesting_captcha_solve = time.time()
-        print("Thread nr. " + str(self.thread_id) + " sending image to anti-catpcha.com API...")
-        captcha_solution_response = ImageToTextTask.ImageToTextTask(
-            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY,
-            numeric=True
-        ).captcha_handler(captcha_base64=base64_image)
-
-        captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
-                                                             func=lambda d: d["solution"]["text"])
-
-        print("Captcha solved. Solving took " + str(time.time() - time_before_requesting_captcha_solve) + " seconds.")
-
-        login_payload = scrapingFunctions.get_login_payload(soup_html, self.username, self.password, captcha_solution)
-        web_response = self._get_logged_out_web_response(EMPIRE_MARKET_LOGIN_URL, post_data=login_payload)
-
-        if self._is_logged_out(web_response, self.login_url, self.login_phrase):
-            print("INCORRECTLY SOLVED CAPTCHA, TRYING AGAIN...")
-            self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
-            self._login_and_set_cookie(web_response)
-        else:
-            self.cookie = self._get_cookie_string()
 
     def _set_cookies(self):
 
@@ -114,7 +80,7 @@ class EmpireScrapingSession(BaseScraper):
     def _get_market_URL(self) -> str:
         return EMPIRE_MARKET_URL
 
-    def _get_market_ID(self) -> str:
+    def _get_market_id(self) -> str:
         return EMPIRE_MARKET_ID
 
     def _get_headers(self) -> dict:
@@ -125,8 +91,8 @@ class EmpireScrapingSession(BaseScraper):
 
     def populate_queue(self):
         web_response = self._get_logged_in_web_response(EMPIRE_MARKET_HOME_URL)
-        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_search_result_html")
-        pairs_of_category_base_urls_and_nr_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(
+        soup_html = get_page_as_soup_html(web_response)
+        pairs_of_category_base_urls_and_nr_of_listings = self.scraping_funcs.get_category_urls_and_nr_of_listings(
             soup_html)
         task_list = []
 
@@ -150,6 +116,8 @@ class EmpireScrapingSession(BaseScraper):
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate):
 
+        # TODO: Scrape shipping methods, accepts_multisig, in_stock, product_type, ends_in, bulk price
+
         seller, is_new_seller = self._get_seller(seller_name)
 
         listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
@@ -168,16 +136,16 @@ class EmpireScrapingSession(BaseScraper):
         self.print_crawling_debug_message(url=product_page_url)
 
         web_response = self._get_logged_in_web_response(product_page_url)
-        soup_html = get_page_as_soup_html(self.working_dir, web_response)
+        soup_html = get_page_as_soup_html(web_response.text)
 
-        listing_text = scrapingFunctions.get_description(soup_html)
-        listing_text_id = hashlib.md5(listing_text.encode(PYTHON_SIDE_ENCODING)).hexdigest()
-        categories, website_category_ids = scrapingFunctions.get_categories_and_ids(soup_html)
-        accepts_BTC, accepts_LTC, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
-        nr_sold, nr_sold_since_date = scrapingFunctions.get_nr_sold_since_date(soup_html)
-        fiat_currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
-        origin_country, destination_countries, payment_type = \
-            scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
+        listing_text = self.scraping_funcs.get_description(soup_html)
+        listing_text_id = hashlib.md5(listing_text.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
+        categories, website_category_ids = self.scraping_funcs.get_categories_and_ids(soup_html)
+        accepts_BTC, accepts_LTC, accepts_XMR = self.scraping_funcs.accepts_currencies(soup_html)
+        nr_sold, nr_sold_since_date = self.scraping_funcs.get_nr_sold_since_date(soup_html)
+        fiat_currency, price = self.scraping_funcs.get_fiat_currency_and_price(soup_html)
+        origin_country, destination_countries, escrow = \
+            self.scraping_funcs.get_origin_country_and_destinations_and_payment_type(
                 soup_html)
 
         self._add_category_junctions(categories, website_category_ids, listing_observation.id)
@@ -207,56 +175,42 @@ class EmpireScrapingSession(BaseScraper):
         listing_observation.fiat_currency = fiat_currency
         listing_observation.price = price
         listing_observation.origin_country = origin_country
-        listing_observation.payment_type = payment_type
+        listing_observation.escrow = escrow
 
         self.db_session.flush()
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
-
         self.print_crawling_debug_message(url=seller_url)
 
         web_response = self._get_logged_in_web_response(seller_url)
-        soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_user_html")
+        soup_html = get_page_as_soup_html(web_response)
 
         seller_name = seller.name
-        description = scrapingFunctions.get_seller_about_description(soup_html, seller_name)
+        description = self.scraping_funcs.get_seller_about_description(soup_html, seller_name)
 
         disputes, orders, spendings, feedback_left, \
-        feedback_percent_positive, last_online = scrapingFunctions.get_buyer_statistics(soup_html)
+        feedback_percent_positive, last_online = self.scraping_funcs.get_buyer_statistics(soup_html)
 
         positive_1m, positive_6m, positive_12m, \
         neutral_1m, neutral_6m, neutral_12m, \
-        negative_1m, negative_6m, negative_12m = scrapingFunctions.get_seller_statistics(soup_html)
+        negative_1m, negative_6m, negative_12m = self.scraping_funcs.get_seller_statistics(soup_html)
 
-        stealth_rating, quality_rating, value_price_rating = scrapingFunctions.get_star_ratings(soup_html)
+        stealth_rating, quality_rating, value_price_rating = self.scraping_funcs.get_star_ratings(soup_html)
 
         parenthesis_number, vendor_level, trust_level = \
-            scrapingFunctions.get_parenthesis_number_and_vendor_and_trust_level(
+            self.scraping_funcs.get_parenthesis_number_and_vendor_and_trust_level(
                 soup_html)
 
-        dream_market_successful_sales, dream_market_star_rating, wall_street_market_successful_sales, \
-        wall_street_market_star_rating, positive_feedback_received_percent, registration_date \
-            = scrapingFunctions.get_mid_user_info(soup_html)
+        positive_feedback_received_percent, registration_date = self.scraping_funcs.get_mid_user_info(soup_html)
 
-        existing_seller_description_text = self.db_session.query(SellerDescriptionText).filter_by(
-            id=hashlib.md5(description.encode('utf-8')).hexdigest()).first()
+        external_market_verifications: List[Tuple[str, int, float]] = self.scraping_funcs.get_external_market_ratings(
+            soup_html)
 
-        if existing_seller_description_text:
-            seller_observation_description = existing_seller_description_text.id
-        else:
-            seller_description_text = SellerDescriptionText(
-                id=hashlib.md5(description.encode('utf-8')).hexdigest(),
-                text=description
-            )
-            self.db_session.add(seller_description_text)
-            self.db_session.flush()
-            seller_observation_description = seller_description_text.id
-
-        date_of_most_recent_seller_observation = self.db_session.query(func.max(SellerObservation.created_date)).filter(
-            SellerObservation.seller_id == seller.id).scalar()
+        seller_observation_description = self._add_seller_observation_description(description)
 
         previous_seller_observation = self.db_session.query(SellerObservation).filter(
-            SellerObservation.created_date == date_of_most_recent_seller_observation).first()
+            SellerObservation.created_date == self.db_session.query(func.max(SellerObservation.created_date)).filter(
+                SellerObservation.seller_id == seller.id).subquery().as_scalar()).first()
 
         if previous_seller_observation:
             new_positive_feedback = previous_seller_observation.positive_1m < positive_1m
@@ -269,7 +223,7 @@ class EmpireScrapingSession(BaseScraper):
             category_contains_new_feedback = [True, True, True, True]
 
         feedback_categories, feedback_urls, pgp_url = \
-            scrapingFunctions.get_feedback_categories_and_feedback_urls_and_pgp_url(
+            self.scraping_funcs.get_feedback_categories_and_feedback_urls_and_pgp_url(
                 soup_html)
 
         assert len(feedback_urls) == len(feedback_categories) == len(category_contains_new_feedback)
@@ -292,10 +246,6 @@ class EmpireScrapingSession(BaseScraper):
             feedback_percent_positive=feedback_percent_positive,
             last_online=last_online,
             parenthesis_number=parenthesis_number,
-            dream_market_successful_sales=dream_market_successful_sales,
-            dream_market_star_rating=dream_market_star_rating,
-            wall_street_market_successful_sales=wall_street_market_successful_sales,
-            wall_street_market_star_rating=wall_street_market_star_rating,
             positive_feedback_received_percent=positive_feedback_received_percent,
             positive_1m=positive_1m,
             positive_6m=positive_6m,
@@ -319,16 +269,17 @@ class EmpireScrapingSession(BaseScraper):
         self.db_session.add(seller_observation)
         self.db_session.flush()
 
+        self._add_external_market_verifications(seller_observation.id, external_market_verifications)
+
     def _scrape_feedback(self, seller, is_new_seller, category, url):
 
         self.print_crawling_debug_message(url=url)
 
         web_response = self._get_logged_in_web_response(url)
 
-        soup_html = get_page_as_soup_html(self.working_dir, web_response,
-                                          file_name="saved_empire_user_positive_feedback")
+        soup_html = get_page_as_soup_html(web_response)
 
-        feedback_array = scrapingFunctions.get_feedbacks(soup_html)
+        feedback_array = self.scraping_funcs.get_feedbacks(soup_html)
 
         for feedback in feedback_array:
             if not is_new_seller:
@@ -337,7 +288,7 @@ class EmpireScrapingSession(BaseScraper):
                     buyer=feedback["buyer"],
                     category=category,
                     text_hash=hashlib.md5((feedback["feedback_message"] + feedback["seller_response_message"]).encode(
-                        'utf-8')).hexdigest()[:FEEDBACK_TEXT_HASH_COLUMN_LENGTH],
+                        MD5_HASH_STRING_ENCODING)).hexdigest()[:FEEDBACK_TEXT_HASH_COLUMN_LENGTH],
                     market=self.market_id) \
                     .join(Seller, Seller.id == Feedback.seller_id) \
                     .first()
@@ -356,7 +307,7 @@ class EmpireScrapingSession(BaseScraper):
                 feedback_message_text=feedback["feedback_message"],
                 seller_response_message=feedback["seller_response_message"],
                 text_hash=hashlib.md5(
-                    (feedback["feedback_message"] + feedback["seller_response_message"]).encode('utf-8')).hexdigest()[
+                    (feedback["feedback_message"] + feedback["seller_response_message"]).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[
                           :FEEDBACK_TEXT_HASH_COLUMN_LENGTH],
                 buyer=feedback["buyer"],
                 currency=feedback["currency"],
@@ -366,38 +317,26 @@ class EmpireScrapingSession(BaseScraper):
 
         self.db_session.flush()
 
-        next_url_with_feeback = scrapingFunctions.get_next_feedback_page(soup_html)
+        next_url_with_feeback = self.scraping_funcs.get_next_feedback_page(soup_html)
 
         if next_url_with_feeback and not DEBUG_MODE:
             self._scrape_feedback(seller, is_new_seller, category, next_url_with_feeback)
 
-    def _scrape_pgp_key(self, seller, is_new_seller, url):
+    def _scrape_pgp_key(self, seller: Seller, is_new_seller: bool, url: str) -> None:
 
-        most_recent_pgp_key = self.db_session.query(PGPKey).filter_by(seller_id=seller.id).order_by(
-            PGPKey.created_date.desc()).first()
-
-        scrape_pgp_this_session = False
-
-        if is_new_seller:
-            scrape_pgp_this_session = True
-        elif most_recent_pgp_key is not None:
-            seconds_since_last_pgp_key_scrape = (datetime.utcnow() - most_recent_pgp_key.created_date).total_seconds()
-            if seconds_since_last_pgp_key_scrape > RESCRAPE_PGP_KEY_INTERVAL:
-                scrape_pgp_this_session = True
+        scrape_pgp_this_session = self._should_scrape_pgp_key_this_session(seller, is_new_seller)
 
         if scrape_pgp_this_session:
             web_response = self._get_logged_in_web_response(url)
-            soup_html = get_page_as_soup_html(self.working_dir, web_response, file_name="saved_empire_pgp_html")
-            pgp_key_content = scrapingFunctions.get_pgp_key(soup_html)
-            self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content))
-            self.db_session.flush()
+            soup_html = get_page_as_soup_html(web_response)
+            pgp_key_content = self.scraping_funcs.get_pgp_key(soup_html)
+            self._add_pgp_key(seller, pgp_key_content)
 
     def _scrape_queue_item(self, search_result_url: str):
         web_response = self._get_logged_in_web_response(search_result_url)
 
-        soup_html = get_page_as_soup_html(self.working_dir, web_response,
-                                          file_name="saved_empire_search_result_html")
-        product_page_urls, urls_is_sticky = scrapingFunctions.get_product_page_urls(soup_html)
+        soup_html = get_page_as_soup_html(web_response)
+        product_page_urls, urls_is_sticky = self.scraping_funcs.get_product_page_urls(soup_html)
 
         if len(product_page_urls) == 0:
             if soup_html.text.find(EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE) == -1:
@@ -405,8 +344,8 @@ class EmpireScrapingSession(BaseScraper):
             else:
                 return
 
-        titles, sellers, seller_urls = scrapingFunctions.get_titles_and_sellers(soup_html)
-        btc_rate, ltc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+        titles, sellers, seller_urls = self.scraping_funcs.get_titles_and_sellers(soup_html)
+        btc_rate, ltc_rate, xmr_rate = self.scraping_funcs.get_cryptocurrency_rates(soup_html)
 
         assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
 
@@ -416,17 +355,15 @@ class EmpireScrapingSession(BaseScraper):
             self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
                                          is_sticky, btc_rate, ltc_rate, xmr_rate, func=self._scrape_listing)
 
-    def _add_country_junctions(self, destination_countries: List[str], listing_observation_id: int) -> None:
-        for destination_country in destination_countries:
-            self.db_session.merge(Country(
-                id=destination_country
-            ))
 
+    def _add_external_market_verifications(self, seller_observation_id: int,
+                                           external_market_verifications: List[Tuple[str, int, float]]) -> None:
+
+        for market_id, sales, rating in external_market_verifications:
+            self.db_session.add(
+                                VerifiedExternalAccount(
+                                        seller_observation_id=seller_observation_id, market_id=market_id,
+                                        confirmed_sales=sales, rating=rating)
+                                )
             self.db_session.flush()
 
-            self.db_session.add(ListingObservationCountry(
-                listing_observation_id=listing_observation_id,
-                country_id=destination_country
-            ))
-
-        self.db_session.flush()

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - TheBodyShop Profile</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-03 13:00 | 
+Logged in as <a class="controlbox_link" href="/user/usingpython3">usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width: 195px; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="pgp"></a>
+<a class="noanchor" id="feedback"></a>
+<h2><span class="icono-user"></span> TheBodyShop<span class="lgtext"> (42)</span>
+ <span class="verified">LEVEL 1</span> <span class="verified">VERIFIED</span></h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/products/TheBodyShop"><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class="toolbar_link" href="/messages/new/TheBodyShop"><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class="toolbar_link" href="/messages/new/support/Reporting+TheBodyShop"><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class="inline_div">
+<img class="picture" src="/image/7553253"/>
+</div>
+<div class="inline_div">
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: green;">96.43%</span>
+</div>
+<div>
+<label>Disputes <span class="smtext">(won/lost)</span>:</label>
+<span class="good"><span style="fong-weight: bold;">1</span></span>/<span class="bad">1</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Dream: 35 deals, 5.00/5</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.07730906 BTC (<b>709.19 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> Worldwide</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Worldwide</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-07-18 13:50:19</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 24 hours</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div class="tab" id="generaltab"><a class="tablink" href="/user/TheBodyShop#general">Profile</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="/user/TheBodyShop#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="pgptab"><a class="tablink" href="/user/TheBodyShop#pgp">PGP</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="/user/TheBodyShop#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<p>TheBodyShop AUTHENTIC GUARANTEE ALL our products are AUTHENTIC, purchased from directly from the manufacturer by major pharmaceuticals in India . No pressed, homemade, or counterfeit drugs sold !! Our service should help YOU to get equal generic medication for a way more better price as in your home country.</p>
+<pre><code>                 !!!!!!!!!!!!!!!!!!!!DELIVERY GUARANTEED!!!!!!!!!!!!!!!!!!!!
+</code></pre>
+<p>ALL OUR PARCEL WILL BE SEND WITH A TRACKING NUMBER IF YOUR ORDER WILL NOT BE DELIVERED DONâT WORRIES WE WILL RESEND IT FOR FREE</p>
+<pre><code>   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!MUCH MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+</code></pre>
+<p>WE HAVE MUCH MORE PRODUCT NOT LISTING!!! PLEASE ASK US WITH A PRIVATE MESSAGE IF YOU NEED SOMETHING MORE. OR IF YOU NEED DIFFERENT QUANTITY.</p>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>Welcome to TheBodyShop.
+please take time to read that you can have an awesome shopping experience with us!</p>
+<p>!!!!!!!!!!!!!!!!!!!!DELIVERY GUARANTEED!!!!!!!!!!!!!!!!!!!!</p>
+<p>ALL OUR PARCEL WILL BE SEND WITH A TRACKING NUMBER IF YOUR ORDER WILL NOT BE DELIVERED DONâT WORRIES WE WILL RESEND IT FOR FREE</p>
+<p>!!!!!!!!!!!!!!!!!!!!!!!!!MUCH MORE!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
+<p>WE HAVE MUCH MORE PRODUCT NOT LISTING!!! PLEASE ASK US WITH A PRIVATE MESSAGE IF YOU NEED SOMETHING MORE, OR IF YOU NEED DIFFERENT QUANTITY.</p>
+<p>ÊÂ·Í¡á´¥Â·Ê PGP/GPG POLICY
+Encrypt ONLY for sharing your delivery address - NOT questions or comments.</p>
+<p>When ordering from TheBodyShop you are entering a business relationship where BOTH parties have an equal responsibility to be professional.
+It is the clients responsibility to read a vendors listing and T&amp;C before ordering.
+Issues arising from not carefully reading the T&amp;C is the clients responsibility.</p>
+<p>(-â¿-)  AUTHENTIC GUARANTEE
+ALL our products are AUTHENTIC, purchased from directly from the manufacturer by major pharmaceuticals in India and ship from Singapore.
+No pressed, homemade, or counterfeit drugs sold !!
+Our service should help YOU to get equal generic medication for a way more better price as in your home country.</p>
+<p>â SHIPPING
+We ship Monday - Friday - official holidays excluded in our processing centers.</p>
+<p>DEADLINE is 7:00 PM pacific for same day send out.
+Orders placed after 7:00 PM are sent following day.
+We do not ship on Sat or Sun.
+Delivery time: ETA is 7-18 days from day sent.</p>
+<p>ETA means “Estimate Time of Arrival”. Many clients do not understand what estimate means.<br/>
+We cannot guarantee how long the shipping takes - it is beyond our control.
+We can only provide estimated time frames according to our experience in the past.
+DO NOT complain, get mad, penalize or pester a vendor if the postal service lags.</p>
+<p>â â Check your ADDRESS FORMAT â
+example:</p>
+<p>Angelina Smith
+1234 Street name, Apt.1
+CITY,  STATE
+COUNTRY</p>
+<p>âï¸ Do not use fake names (name must match post office records otherwise undeliverable)
+âï¸ Do not use fake address (unoccupied), must be where you either live or work.
+âï¸ Do no use initials, must use full first &amp; last name (even with business addresses).</p>
+<p>â WE COPY &amp; PASTE YOUR ADDRESS ONTO LABELâ
+âï¸TRANSCRIBING MISTAKE NEARLY IMPOSSIBLE</p>
+<p>(â¢â¡â¢)                                                                               TRACKING                                                                           (â¢â¡â¢)
+For every order placed in our store you will receive a tracking number within 12 to 36 hours.</p>
+<p>Order PAID                      MON    TUE    WED   THU      FRI       SAT      SUN
+                              â       â     â     â       â      â       â
+Tracking RECEIVED*      TUE      WED   THU    FRI     MON   MON    MON</p>
+<p>*it is an indicative timeframe which is valid for 99% of all orders. In some cases there might some slight delays that tracking details will be shared on the next following day.</p>
+<p>{::::::::::::::::::&gt;                                                        STEALTH
+The products we do sell are medications and not regulated in most countries. So our stealth is BASIC and according to international export standards.
+1. We do not vacuum seal.
+2. We do not use decoys.</p>
+<p> â â¿ â FEEDBACK POLICY &amp; REFUNDS
+1. CONTACT &amp; GIVE us the opportunity to fix ALL issues BEFORE leaving negative feedback.
+If u leave negative feedback first &amp; then contact us for help, we will not be able to help you &amp; instead leave you negative feedback for not following directions.
+2. It is the clients responsibility to Inspect product pictures and descriptions carefully before ordering.
+As long as product received is same as product depicted on that particular product listing’s pic you have no grounds to complain.
+3. It is the clients responsibility to research product (brand markings &amp; manufacturer) before ordering.
+4. All products are genuine so we can not accept complaints regarding the effectiveness of products.</p>
+<p>[Ì²Ì$Ì²Ì(Ì²ÌÎ¹Î¿Ì²ÌÌ)Ì²Ì$Ì²Ì]  REFUNDS
+Ex:
+Sending wrong product â send back the wrong product and get Full refund if also active substance does not match or free reship.
+Sending incorrect amount â Partial refund.
+Didnât like the product (very rare) â No refund.
+Product is too weak â No refund - you have developed tolerance to active substance. Consult a physician.</p>
+<p>Shipment stuck at customs â if delivery to HIGH RISK COUNTRY no refund. Other countries FREE RESHIP.
+Shipment in transit &gt;14d â free reship.
+No tracking for shipment &gt;7d â full refund.</p>
+<p>Generally we offer our customers the choice between a partial/full refund or a reship, depending on situation.
+If yu not contact us &amp; make the effort to remedy the situation, we will leave u a negative feedback &amp; contact ADMIN.
+Plz allow 24-48hours for a response to any complaints or concerns.</p>
+<ul>
+<li>Special Note for shipping
+Orders with shipping destinations to HIGH RISK COUNTRIES can ONLY be processed by FE. Better find a domestic vendor to avoid trouble with seized shipments.</li>
+</ul>
+<p>HIGH RISKS COUNTRIES</p>
+<p>AUSTRIA â chance less than 20%
+IRELAND â chance less than 50% for bulk
+FINLAND â chance less than 10% for orders above 2 blister
+SWEDEN â chance less than 40%
+DENMARK â chance less than 40%
+CANADA â chance less than 80%
+GERMANY â chance less than 80%</p>
+<p>Questions?! Just ask. We are here to serve you.
+ â â¿ â</p>
+</div>
+</div>
+<div class="target_content" id="pgp_div">
+<textarea class="ascii_armour_textarea" readonly="">-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+=Gls5
+-----END PGP PUBLIC KEY BLOCK-----</textarea>
+</div>
+<div class="target_content" id="feedback_div">
+<div class="content_div">
+<div class="mainbox">
+<table style="width: 100%">
+<tr class="gridhdr">
+<td class="gridhdr rating_good"> </td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user"> </td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">PREDNISOLONE Wysolone 20mg</span>
+<p>Thanks, great seller, fast shipping!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-09-25</span>
+<span class="smtext rating_date">0.00260000 BTC</span>
+<span class="smtext rating_date">a***w</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">CIPROFLOXACIN (antibiotic) Floxip 500mg</span>
+<p>6 days TTD. Stealth was adequate. Came in blister packs with prescription writing and expiration dates on it. Def legit, expires 2021. Product is exactly as ordered. Excellent shipping speeds. Would use vendor again for sure! THX!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-09-23</span>
+<span class="smtext rating_date">0.00360000 BTC</span>
+<span class="smtext rating_date">k***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">PREDNISOLONE Wysolone 20mg</span>
+<p>12 DD to EU (+3 from read to shipped), all in blisters. Product as advertisted and does what it is supposed to.
+<br/>Stealth was non existent, just the blisters wrapped in paper, so that might use some work.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-09-19</span>
+<span class="smtext rating_date">0.00370000 BTC</span>
+<span class="smtext rating_date">p***r</span>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan="5">
+<a href="/user/TheBodyShop/1#feedback">&lt;&lt;</a>
+<span>2 of 2</span>
+<span>&gt;&gt;</span>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8223.00 EUR = 9168.42 USD = 7084.66 GBP = 149.31992241 XMR = 13267.87 AUD = 12064.18 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

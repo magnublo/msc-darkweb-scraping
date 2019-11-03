@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - martell Profile</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-03 16:29 | 
+Logged in as <a class="controlbox_link" href="/user/usingpython3">usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width: 195px; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="pgp"></a>
+<a class="noanchor" id="feedback"></a>
+<h2><span class="icono-user"></span> martell<span class="lgtext"> (140)</span>
+ <span class="verified">LEVEL 1</span> <span class="verified">VERIFIED</span></h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/products/martell"><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class="toolbar_link" href="/messages/new/martell"><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class="toolbar_link" href="/messages/new/support/Reporting+martell"><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class="inline_div">
+<img class="picture" src="/image/242131"/>
+</div>
+<div class="inline_div">
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: green;">100.00%</span>
+</div>
+<div>
+<label>Disputes <span class="smtext">(won/lost)</span>:</label>
+<span class="good"><span style="fong-weight: bold;">0</span></span>/<span class="bad">0</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Dream: 1000 deals, 4.94/5</span>
+<span class="verified">Wallstreet: 1084 deals, 4.68/5</span>
+<span class="verified">Alphabay: 168/3/0</span>
+<span class="verified">Hansa: 1000 deals, 4.94/5</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.15362283 BTC (<b>1409.90 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> United Kingdom</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>United Kingdom</span>
+</div>
+<div>
+<label>XMPP/Jabber ID:</label>
+<span>martell@jabber.ccc.de</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>Yes</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-04-21 12:25:03</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 24 hours</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div class="tab" id="generaltab"><a class="tablink" href="/user/martell#general">Profile</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="/user/martell#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="pgptab"><a class="tablink" href="/user/martell#pgp">PGP</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="/user/martell#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<p>Welcome to Martell!</p>
+<p>Before you purchase, please be sure to read my entire profile.</p>
+<p>———————–Contact Information———————–</p>
+<p>Email: martell [at] safe-mail.net
+Backup email: martell-vendor [at] protonmail.ch
+**Emails are only checked twice a week, please use another form of contact for any urgent queries</p>
+<p>Jabber: martell [at] jabber.ccc.de
+ICQ:  7 0 9 1 7 0 5 8 7    **Remove spaces</p>
+<p>Wickr: <strong>Message or email us for Wickr
+Telegram: </strong>Message or email us for Telegram</p>
+<p>————————-Who are we?————————-</p>
+<p>We are a team striving to provide the best quality products in the UK and around the world. Our aim is to deliver the most competitively priced products whilst still maintaining the highest of qualities.</p>
+<p>AlphaBay: 300+ Sales
+Dream Market: 780+ Sales
+HANSA Market: 140 Sales
+TradeRoute: 120+ Sales
+Wall Street Market: 4+ Sales</p>
+<p>————————-Stealth————————-</p>
+<p>We double seal all our products (drugs) in plastic and mylar bags to ensure a complete airtight seal. The product is then packaged in a professional envelope small enough to fit any mail box to ensure complete discreteness.</p>
+<hr/>
+<p><strong><strong>For further information or if you have any questions please do not hesitate to contact us</strong></strong></p>
+<hr/>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>REFUNDS AND RESHIPS ARE COMPLETELY DISCRETIONARY.</p>
+<p>Building strong and lasting relationships with our customers is important to us. Sometimes things can go wrong and when this happens we encourage customers to contact us about it so we can aim to put things right.</p>
+<p>We have a 99% delivery success rate domestically and 98% internationally, so it is very unlikely that your order will go missing but problems due occur so we have a firm but fair refund/reship policy.</p>
+<p>We do aim for next day delivery (domestically) but if you have not received your order within 5 working days, message us and we will try our best to resolve the situation.</p>
+<p>When issuing a refund or reship we will take into account the country, time frame, conversations, user behaviour, and prior buying history in making a fair judgement. When issuing a reshipment, the order must be finalised before we mail out the parcel/letter. Reships are usually 75%. Refunds arranged will range between 30% to 60%. On some listings, we cannot provide a refund, only a reship and vice versa. Users with no buying stats are not eligible for reships or refunds, unless we can personally recollect their username on a previous site.</p>
+<p>The final decision in refund/reship will always be ours and we ask our customers to respect that and we will in turn bring you great products at affordable prices.</p>
+</div>
+</div>
+<div class="target_content" id="pgp_div">
+<textarea class="ascii_armour_textarea" readonly="">-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1
+
+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
+=Lyf0
+-----END PGP PUBLIC KEY BLOCK-----</textarea>
+</div>
+<div class="target_content" id="feedback_div">
+<div class="content_div">
+<div class="mainbox">
+<table style="width: 100%">
+<tr class="gridhdr">
+<td class="gridhdr rating_good"> </td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user"> </td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">3.5g OG Kush | AAA Medical | FREE NDD</span>
+<p>8DD, thought this wasn't going to come but eventually did - nice green!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-01</span>
+<span class="smtext rating_date">0.00470000 BTC</span>
+<span class="smtext rating_date">u***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">2G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>8DD, thought this wasn't going to come but eventually did - strong stuff this!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-01</span>
+<span class="smtext rating_date">0.01650000 BTC</span>
+<span class="smtext rating_date">u***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>VERY good for UK when going out.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-01</span>
+<span class="smtext rating_date">1.59030000 XMR</span>
+<span class="smtext rating_date">s***6</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.02230000 BTC</span>
+<span class="smtext rating_date">T***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">0.5G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>Excellent stuff - extremely high quality. Took a while to arrive but that's royal mail for you. Thanks</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00500000 BTC</span>
+<span class="smtext rating_date">A***5</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">2g Amnesia Haze | AAA Medical | FREE NDD</span>
+<p>Great stuff</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.43080000 XMR</span>
+<span class="smtext rating_date">W***u</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">0.2G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>A+++</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00220000 BTC</span>
+<span class="smtext rating_date">m***x</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">0.5G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>good shit</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-31</span>
+<span class="smtext rating_date">0.00560000 BTC</span>
+<span class="smtext rating_date">e***d</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>Thank you. All good. Took a little while to arrive but arrive it did. Happy customer.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.01030000 BTC</span>
+<span class="smtext rating_date">r***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">14g Amnesia Haze | AAA Medical | FREE NDD</span>
+<p>All good....and a lovely smoke.
+<br/>Defo be back. Recommended </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.01880000 BTC</span>
+<span class="smtext rating_date">s***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">0.5G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>Bit of a hiccup but the vendor sorted it, good blow its not the strongest but its very nice buzz compared to others </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00510000 BTC</span>
+<span class="smtext rating_date">g***m</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>Quick delivery. The product itself is not the best I've tried - runny nose and headache. </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00880000 BTC</span>
+<span class="smtext rating_date">c***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">2G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>2DD after reship. Great stealth. Gear is absolutely spot on. Would definitely order again. Great communication with this vendor after slight mishap with original order (Royal Mail). </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.01640000 BTC</span>
+<span class="smtext rating_date">C***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">0.2G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>4DD packed well, looks and smells very good</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-30</span>
+<span class="smtext rating_date">0.00200000 BTC</span>
+<span class="smtext rating_date">a***7</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">3.5g OG Kush | AAA Medical | FREE NDD</span>
+<p>Great stealth and OG kush</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00500000 BTC</span>
+<span class="smtext rating_date">Z***o</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>good delivery time, great product</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.01130000 BTC</span>
+<span class="smtext rating_date">m***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">7g OG Kush | AAA Medical | FREE NDD</span>
+<p>Nice quality buds and good stealth</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00980000 BTC</span>
+<span class="smtext rating_date">s***z</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">2G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>Original package did not arrive. Contacted vendor and they agreed an immediate reship which arrived next day. Top quality product, bang on weight, superb customer service.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.01710000 BTC</span>
+<span class="smtext rating_date">M***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">0.5G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>didnt arvive after 7 days, messeged vendor who was quick to respond and reshiped. all good!!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.00500000 BTC</span>
+<span class="smtext rating_date">k***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g Amnesia Haze | AAA Medical | FREE NDD</span>
+<p>Top vendor,great bud 10/10 quality,good stealth.I strongly recommend!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00180000 BTC</span>
+<span class="smtext rating_date">r***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">0.2G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00220000 BTC</span>
+<span class="smtext rating_date">k***6</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">3.5G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>All good. I'll order again.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-24</span>
+<span class="smtext rating_date">0.03110000 BTC</span>
+<span class="smtext rating_date">v***5</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">0.2G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-23</span>
+<span class="smtext rating_date">0.00210000 BTC</span>
+<span class="smtext rating_date">A***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">7G PURE BOLIVIAN 89% FISHSCALE COCAINE | ★ SALE ★</span>
+<p>Thanks for really fast service... </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-22</span>
+<span class="smtext rating_date">0.06120000 BTC</span>
+<span class="smtext rating_date">m***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">7g OG Kush | AAA Medical | FREE NDD</span>
+<p>NDD. Great smoke; great stealth. Many thanks </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-22</span>
+<span class="smtext rating_date">0.01030000 BTC</span>
+<span class="smtext rating_date">T***l</span>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan="5">
+<span>&lt;&lt;</span>
+<span>1 of 5</span>
+<a href="/user/martell/2#feedback">&gt;&gt;</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8231.13 EUR = 9177.67 USD = 7094.71 GBP = 146.60993839 XMR = 13283.74 AUD = 12077.29 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

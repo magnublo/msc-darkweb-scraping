@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - vendorPython1 Profile</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products/mine><span class="icono-gear smicon"></span>My Store</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-30 12:05&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/vendorPython1>vendorPython1</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width: 195px; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=pgp></a>
+<a class=noanchor id=feedback></a>
+<h2><span class="icono-user"></span>&nbsp;vendorPython1<span class=lgtext>&nbsp;(0)</span>
+&nbsp;<span class="verified btnwarn">LEVEL 0</span></h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/products/vendorPython1><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class=toolbar_link href=/messages/new/vendorPython1><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class=toolbar_link href=/messages/new/support/Reporting+vendorPython1><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class=inline_div>
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: black;">0.00%</span>
+</div>
+<div>
+<label>Disputes <span class=smtext>(won/lost)</span>:</label>
+<span class=good><span style="fong-weight: bold;">0</span></span>/<span class=bad>0</span>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.00000000 BTC&nbsp;(<b>0.00 USD</b>)</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Worldwide</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-10-28 12:43:10</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 24 hours</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div id=generaltab class=tab><a class=tablink href=/user/vendorPython1#general>Profile</a></div>
+<div id=termstab class=tab><a class=tablink href=/user/vendorPython1#terms>Terms &amp; Conditions</a></div>
+<div id=pgptab class=tab><a class=tablink href=/user/vendorPython1#pgp>PGP</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=/user/vendorPython1#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<p>This user has not setup his/her profile yet. This is a new feature so please be patient.</p>
+</div>
+<div id=terms_div class=target_content>
+<p>This vendor has not setup his terms and conditions yet.</p>
+</div>
+<div id=pgp_div class=target_content>
+<p>This user has not uploaded a PGP key!</p>
+</div>
+<div id=feedback_div class=target_content>
+<p>This vendor has no feedback yet.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8191.34 EUR = 9093.38 USD = 7052.18 GBP = 157.58007431 XMR = 13231.01 AUD = 11894.84 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

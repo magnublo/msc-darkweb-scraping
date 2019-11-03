@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Product Details</title>
+<link rel=stylesheet href=/css-5>
+<link rel=stylesheet href=/css-icons>
+</head>
+<body>
+<div id=container>
+<div id=header>
+<div class=titlebox>
+<h1><a class=hlink href="/">CRYPTONIA MARKET</a></h1>
+<span class=subt>Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class=controlbox>
+<div>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/products><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages><div class="icono-mail smicon"></div>Mail</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/orders><span class="icono-cart smicon"></span>Orders</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href=/messages/new/support><span class="icono-support smicon"></span>Support</a>
+<span>&nbsp;</span>
+<a class=controlbox_link href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-10-27 17:04&nbsp;|&nbsp;
+Logged in as <a class=controlbox_link href=/user/usingpython3>usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id=body>
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class=mainarea>
+<div class=mainarea_inner>
+<h2>PASSPORT COPY (USA) SCAN &#38 PHOTO ANY DETAILS YOU NEED. AML/KY</h2>
+<div class=toolbar>
+<div class=toolbar_menu>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+<div class=toolbar_spacer></div>
+<div class=toolbar_layer></div>
+</div>
+<div class=toolbar_dropdown>
+<a class=toolbar_link href=/messages/new/support/Reporting+product+%2313265943><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class=toolbar_link href=/products/><span class="icono-leftArrow smicon"></span>&nbsp;Back to Products</a>
+</div>
+</div>
+<a class=noanchor id=general></a>
+<a class=noanchor id=terms></a>
+<a class=noanchor id=shipping></a>
+<a class=noanchor id=countries></a>
+<a class=noanchor id=feedback></a>
+<a class=noanchor id=pricing></a>
+<a class=noanchor id=autofill></a>
+<div class=content_div>
+<div class=top_part>
+<a title="Click to view full resolution image." href=/image/13266833 target=_blank><img class=picture src=/image/13266833></a>
+<div class=product_details>
+<div class=product_data>
+<label>Sold by:</label>
+<a href=/user/AccountVerified>AccountVerified</a>
+<span class=verified>LEVEL 1</span>
+<span class=lgtext style="font-weight: bold"><span title="Total sales">(0)</span>&nbsp;<span title="Positive Feedback Percentage" style="color: black;">0.00%</span></span>
+<a title="Click to contact this vendor." class=smlink href=/messages/new/AccountVerified/PASSPORT+COPY+%28USA%29+SCAN+%26%2338+PHOTO+ANY+DETAILS+YOU+NEED%2E+AML%2FKY+%28Product+%2313265943%29><span class=icono-mail></span></a>
+</div>
+<div class=product_data>
+<label>Category:</label>
+<span>Fake IDs</span>
+</div>
+<div class=product_data>
+<label>Listing Type:</label>
+<span>Digital Listing (Manual Fulfillment)</span>
+</div>
+<div class=product_data>
+<label>Price:</label>
+<span class="lgtext">97.00 USD/item</span>
+<span>(0.01000943 BTC/item)</span>
+</div>
+<div class=product_data>
+<label>FE or Escrow:</label>
+<span class=verified>ESCROW</span>
+</div>
+<div class=product_data>
+<label>In stock:</label>
+<span>9 item</span>
+</div>
+<div class=product_data>
+<label>Accepted Payments:</label>
+<span><img style="height: 18px; max-width: 200px" src=/image/btc_nm.png alt="Bitcoin (BTC)"> <img style="height: 18px; max-width: 200px" src=/image/xmr_nm.png alt="Monero (XMR)"></span>
+</div>
+</div>
+</div>
+</div>
+<form method=post>
+<div class=buydiv>
+<label class="buttonlink buynow">BUY NOW>></label><select class=shipselect name=shipping_method>
+<option value=0>--Select Shipping Method--</option>
+<option value=13265953>DIGITAL DELIVERY&nbsp;(0.00 USD)</option>
+</select><input type=number name=qty class=qty value="1"><input type=submit name=submit class=clickbuy value="PLACE ORDER">
+</div>
+<div style="height: 10px"></div>
+</form>
+<div id=generaltab class=tab><a class=tablink href=#general>Description</a></div>
+<div id=termstab class=tab><a class=tablink href=#terms>Terms &amp; Conditions</a></div>
+<div id=feedbacktab class=tab><a class=tablink href=#feedback>Feedback</a></div>
+<div id=tabview1 class=tabview>
+<div id=general_div class=target_content>
+<div class=content_div>
+<p>YOUR ACCOUNT IS VERIFIED.</p>
+
+<p>That&rsquo;s what you need to hear when playing in any part of this game, whether obtaining coins for this weekends fun, or moving your hard earned coins into the real world. &ldquo;Account Verified&rdquo; is the notification you need to see and knowing for sure it cannot lead back to you.</p>
+
+<p>Account Verified is a new vendor to this game, set up solely to answer this problem with the help/expertise of the Old Guard veterans. We have procured all the experience, skills, techniques, templates and &ldquo;know how&rdquo; to ensure we can offer the best in in AML/KYC verification needs.</p>
+
+<p>We offer the full range of AML/KYC documents from Passport Scans, PHOTOS/SELFIES, Utilities, Bank Statements as well as invoices, credit card statements and even notarized documents.</p>
+
+<p>This listing is for a High Quality 300DPI [USA] Passport scan in ANY details you want. Included in the price is using your own picture of choice.
+Using one of our many High Quality 100% Unique passport pictures to match the description you give is also an option at only $50.</p>
+
+<p>Your package will include 1 x HQ 300DPI A4 Color Scan of your chosen passport with your chosen details.
+Plus 1 x Full Color PHOTO of the same passport with your chosen details.</p>
+
+<p>Having placed your order, you need to send us the following:</p>
+
+<p>1) Passport Quality Pic. (Unique High Quality Passport Pictures can be provided at $50 extra see Passport Pic in our other listings)
+2) Full Name Including Middle Name ( if you have one or wish to use one )
+3) Place Of Birth
+4) Date Of Birth</p>
+
+<p>Unique Matching Passport Photo If You Do Not Have Your Own To Provide:
+verified empire link.onion/product/98539/17/484466</p>
+
+<p>PRO TIP: Always submit A4 Color Scan first !.
+Any questions or issues then you submit the photo as &ldquo;proof&rdquo;.
+Same for Utility/Bank Statement or any other documents you submit.</p>
+
+<p>&ldquo;AccountVerified&rdquo; always offer both SCAN &amp; PHOTO included in the price.</p>
+
+<p>Your documents/accounts will be ready within 5-7 days of your order being made (Unless otherwise stated/agreed).
+We offer full escrow during all sales periods (Unless otherwise stated/agreed).
+Please be sure to double check your documents match the info you gave, then please release escrow.
+Any issues get in touch with us before getting all mad and leaving shitty feedback.
+We will work to resolve any and ALL genuine issues so please get in touch and give us chance to resolve and earn your positive feedback.
+We all run ever increasing risks with escrow these days however, we wish to continue offering all customers the security escrow does. (when markets do not vanish).
+We reserve the right to cancel any order.</p>
+
+<p>NOTE: These are Digital copies of custom documents and NOT hard copy passports etc. Please do NOT buy if want/need Hard Copies.</p>
+
+<p>We cannot offer any guarantee of successfully passing verification as so much of this process entirely depends on you and your techniques. Fails can be caused by 101 various factors that are entirely independent of our document quality.
+However, if wanting us to set up account account for you. i.e. coinmama, LBC etc. Then we 100% guarantee that verification is done as we handle that ourselves and you are then only paying for a fully verified account. Simply log in, change all passwords and its yours.</p>
+
+<p>Obviously once again, we can make no guarantees after of account longevity after your purchase. How you manage the account is beyond our control and in today&rsquo;s world of easily triggered AML/KYC monkeys, tread carefully.</p>
+
+<p>However, any issues arising from re-verification on any accounts or documents from us, get in touch and we will do ALL we can to help where possible.</p>
+
+<p>We also offer 72 hour and 48 hour Emergency Document Service (Usually 24 hours but please allow 48). Double time is double money, treble time is treble money. All options in Delivery Options.</p>
+
+<p>The standard delivery time for this listing is 5-7 days, if you need documents faster then please select your option.</p>
+</div>
+</div>
+<div id=terms_div class=target_content>
+<div class=content_div>
+<p>Your documents/accounts will be ready within 5-7 days of your order being made (Unless otherwise stated/agreed).
+We offer full escrow during all sales periods (Unless otherwise stated/agreed).
+Please be sure to double check your documents match the info you gave, then please release escrow.
+Any issues get in touch with us before getting all mad and leaving shitty feedback.
+We will work to resolve any and ALL genuine issues so please get in touch and give us chance to resolve and earn your positive feedback.
+We all run ever increasing risks with escrow these days however, we wish to continue offering all customers the security escrow does. (when markets do not vanish).
+We reserve the right to cancel any order.</p>
+
+<p>NOTE: These are Digital copies of custom documents and NOT hard copy passports etc. Please do NOT buy if want/need Hard Copies.</p>
+
+<p>We cannot offer any guarantee of successfully passing verification as so much of this process entirely depends on you and your techniques. Fails can be caused by 101 various factors that are entirely independent of our document quality.
+However, if wanting us to set up account account for you. i.e. coinmama, LBC etc. Then we 100% guarantee that verification is done as we handle that ourselves and you are then only paying for a fully verified account. Simply log in, change all passwords and its yours.</p>
+
+<p>Obviously once again, we can make no guarantees after of account longevity after your purchase. How you manage the account is beyond our control and in today&rsquo;s world of easily triggered AML/KYC monkeys, tread carefully.</p>
+
+<p>However, any issues arising from &ldquo;re-verification&rdquo; on any accounts or documents from us, get in touch and we will do ALL we can to help where possible.</p>
+
+<p>We also offer 72 hour and 48 hour Emergency Document Service (Usually 24 hours but please allow 48). Double time is double money, treble time is treble money. All options in Delivery Options.</p>
+
+<p>The standard delivery time for this listing is 5-7 days, if you need documents faster then please select your option.</p>
+</div>
+</div>
+<div id=feedback_div class=target_content>
+<p>This vendor has no feedback yet.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=footer>
+<div class=copy_div>
+<a class=controlbox_link href=/manifesto>Manifesto</a>
+<span>|</span>
+<a class=controlbox_link href=/faq>FAQ</a>
+<span>|</span>
+<a class=controlbox_link href=/dd>Direct Deposits Info</a>
+<span>|</span>
+<a class=controlbox_link href=/multisig>Multisig Info</a>
+<span>|</span>
+<a class=controlbox_link href=http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion>Forums</a>
+</div>
+<div class=rate_div>
+<span class=smtext>1 BTC = 8719.91 EUR = 9690.86 USD = 7554.58 GBP = 159.30999654 XMR = 14204.54 AUD = 12656.62 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

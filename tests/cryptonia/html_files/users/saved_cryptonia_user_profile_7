@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - cindicator Profile</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-02 23:32 | 
+Logged in as <a class="controlbox_link" href="/user/usingpython3">usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width: 195px; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="pgp"></a>
+<a class="noanchor" id="feedback"></a>
+<h2><span class="icono-user"></span> cindicator<span class="lgtext"> (8)</span>
+ <span class="verified">LEVEL 2</span> <span class="verified">VERIFIED</span></h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/products/cindicator"><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class="toolbar_link" href="/messages/new/cindicator"><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class="toolbar_link" href="/messages/new/support/Reporting+cindicator"><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class="inline_div">
+<img class="picture" src="/image/2331223"/>
+</div>
+<div class="inline_div">
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: black;">75.00%</span>
+</div>
+<div>
+<label>Disputes <span class="smtext">(won/lost)</span>:</label>
+<span class="good"><span style="fong-weight: bold;">2</span></span>/<span class="bad">1</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Empire: 58 deals, 96.67/100%</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.09664320 BTC (<b>900.01 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> China</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Worldwide</span>
+</div>
+<div>
+<label>XMPP/Jabber ID:</label>
+<span>cindicator@xmpp.jp</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-05-21 09:11:42</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 3 days</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div class="tab" id="generaltab"><a class="tablink" href="/user/cindicator#general">Profile</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="/user/cindicator#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="pgptab"><a class="tablink" href="/user/cindicator#pgp">PGP</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="/user/cindicator#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<p>We have GREAT SHIPPING SUCCESS RATE to EU, US, AUS, NZ ,Canada and Russia.</p>
+<p>THE TRACK WILL BE SHOLD 72h. AFTER ACCEPT THE ORDER.</p>
+<p>Shipping from China with track / not signature</p>
+<p>RESHIP RULES</p>
+<p>IF ANY LOST BY CUSTOMS, WE RESHIP 100% ALWAYS.</p>
+<p>I can guarantee the past of Customs ONLY!</p>
+<p>The local post rules of each country, or tax issues are out of my control.</p>
+<p>IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.</p>
+<p>IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .</p>
+<p>We offer reship only!</p>
+<p>Not accepted any returns!</p>
+<p>We will reship after the track is stuck by customs 7 days, not before.</p>
+<p>We not offer reshipment if the Tracking NO. shows:,,Delivered,, or ,,Available for pick up,,</p>
+<p>NO reshipment if the parcel is undeliverable or lost becasue of address problems or Fake address!</p>
+<p>If the reship parcel is also held by the customs, we will not supply reship again.</p>
+<p>If you make an order, it means that you AGREE to our Terms and Conditions.</p>
+<p>ADRESS FORMAT</p>
+<p>Please send a valid and detailed addrss with real receiver name to us according to the following format:</p>
+<p>Name and Last name
+street name, numb.(full address)
+Zip-Code City
+Country</p>
+<p>Donât send fake names or empty house addresses, please!</p>
+<p>Use PGP for shipping address and sensititive messages only.</p>
+<p>All parcels would be shipped in 2 or 3 business days. And every parcel is supplied a solid Tracking NO.</p>
+<p>STEALTH POLICY</p>
+<p>The products that we sent will be sent securely and as safely as possible. All products are professional packaged and have a almost zero % to be busted.</p>
+<p>The product will go trough a well practiced stealth procedure that includes vacuum sealing, mylar bags and bad odor removal by washing, also Decoy.</p>
+<p>Average delivery time</p>
+<p>EU - 5/8 days
+USA - 6/9 days
+Australia, New Zeland - 10/11 days.</p>
+<p>To check any Feedbacks, I’m also selling in the folowing markets</p>
+<p>Apollon</p>
+<p>Empire</p>
+<p>Berlusconi</p>
+<p>I’m an experienced seller with some years of experience in all this. I offer grams and kilograms of</p>
+<p>RESEARCH CHEMICALS</p>
+<p>PHARMACEUTICAL INTERMEDIATES</p>
+<p>SINTHETIC CANNABINOIDS</p>
+<p>PRECURSORS</p>
+<p>We offer HUGE DISCOUNT for bulk orders!</p>
+<p>Feel to ask for custom lists!</p>
+<p>Shipping from China with track / SIGNATURE NOT REQUIRED</p>
+<p>ADRESS FORMAT</p>
+<p>Please send a valid and detailed addrss with real receiver name to us according to the following format:</p>
+<p>Name and Last name</p>
+<p>street name, numb.(full address)</p>
+<p>Zip-Code City</p>
+<p>Country</p>
+<p>Don’t send fake names or empty house addresses, please!</p>
+<p>Use PGP for shipping address and sensititive messages only.</p>
+<p>All parcels would be shipped in 2 or 3 business days. And every parcel is supplied a solid Tracking NO.</p>
+<p>We will be choose the best delivery way according to the destination countries. You could also communicate it with us if you prefer to using some specific delivery ways. And just wait with patience for Tracking NO. The track will be provided 72h after the accept of the order.</p>
+<p>STOCK INVENTORY</p>
+<p>METHYLONE / MDMA</p>
+<p>BMDP crystal (analog bk-ebdp, Methylone, MDMA, MOLLY)</p>
+<p>1kg. 1300$</p>
+<p>1,5kg. 2000$</p>
+<p>2kg. 2400$</p>
+<p>5kg. 6300$</p>
+<p>Eutylone BK-EBDB (analog Ephylone, MDMA, MOLLY)</p>
+<p>1kg. 1300$</p>
+<p>1,5kg. 2000$</p>
+<p>2kg. 2400$</p>
+<p>5kg. 6300$</p>
+<p>STIMULANTS</p>
+<p>NEP crystal (similar as MDPV or A-PVP)</p>
+<p>NEP its good for IV use and smoked</p>
+<p>If you are searching a product, as original MDPV or A-PVP NEP is similar, but less potent. That you could multiply 1 to 5g and still will give three good doses from 0,1g. Also it must be able to use IV and smoked.</p>
+<p>HEP crystal</p>
+<p>NDH powder appreance , have not crystal</p>
+<p>DMC (Dimethocaine) SINTETIC COCAINE
+RESHIP / REFUND</p>
+<p>IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.</p>
+<p>IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .</p>
+<p>We offer reship only!
+3F-A-PVP (A-PVP, analog)</p>
+<p>4-CDC(analog 4-CEC)</p>
+<p>4F-PHP</p>
+<p>DISSOACTIVES</p>
+<p>2F-DCK (analogue Deschloroketamine)</p>
+<p>Diphenidine (Replacement of MXE,MXP)</p>
+<p>BENZODIAZEPINES / Pharmaceutical Intermediates</p>
+<p>Etizolam</p>
+<p>Diclazepam</p>
+<p>Flualprazolam (Alprazolam analogue) CAS â 28910-91-0</p>
+<p>Pregabalin CAS â 148553-50-8</p>
+<p>Others/Pharmaceutical Intermediates</p>
+<p>Tianeptine sodium salt CAS â 30123-17-2</p>
+<p>Zopiclone (Zimovane / Imovane)CAS â 43200-80-2</p>
+<p>Pentobarbital sodium (Nembutal)</p>
+<p>CANNABINOIDS</p>
+<p>CANNABIDIOLï¼cbdï¼CAS â 13956-29-1</p>
+<p>5F-MDMA-2201</p>
+<p>5F-MDMB2201</p>
+<p>4F-ADB</p>
+<p>MMB2201</p>
+<p>MMB022</p>
+<p>FUBBMB</p>
+<p>ACB48CH</p>
+<p>PRECURSORS</p>
+<p>Dimethylformamide DMF</p>
+<p>Methylamine CAS 593-51-1</p>
+<p>4-Amino-3-phenylbutanoic acid CAS 1078-21-3</p>
+<p>1-Phenyl-2-nitropropene CAS 705-60-2</p>
+<p>Benzeneacetic acid, a-acetyl-, methyl ester (BMK Intermediate) CAS 16648-44-5</p>
+<p>BMK CAS 4433-77-6</p>
+<p>PMK CAS 13605-48-6</p>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>RESHIP / REFUND</p>
+<p>THE TRACK WILL BE SHOLD 72h. AFTER ACCEPT THE ORDER.</p>
+<p>Shipping from China with track / not signature</p>
+<p>IF ANY LOST BY CUSTOMS, WE RESHIP 100% ALWAYS.</p>
+<p>IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.</p>
+<p>IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .</p>
+<p>We will reship after the track is stuck by customs 7 days, not before.</p>
+<p>We not offer reshipment if the Tracking NO. shows:,,Delivered,, or ,,Available for pick up,,</p>
+<p>NO reshipment if the parcel is undeliverable or lost becasue of address problems or Fake address!</p>
+<p>If the reship parcel is also held by the customs, we will not supply reship again.</p>
+<p>If you make an order, it means that you AGREE to our Terms and Conditions.</p>
+</div>
+</div>
+<div class="target_content" id="pgp_div">
+<textarea class="ascii_armour_textarea" readonly="">-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+KUXgIeFTOia0YT/o0k+WZE/H6YR6bA==
+=DVC2
+-----END PGP PUBLIC KEY BLOCK-----
+</textarea>
+</div>
+<div class="target_content" id="feedback_div">
+<div class="content_div">
+<div class="mainbox">
+<table style="width: 100%">
+<tr class="gridhdr">
+<td class="gridhdr rating_good"> </td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user"> </td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message">
+<span class="rating_product">Diphenidine (MXE, MXP replacement)</span>
+<p>vendor sent the wrong product, and will not respond to any of my messages. I would like a reship. Whatever I got is the right weight for the order, but I can't figure out wtf it is that I received.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-21</span>
+<span class="smtext rating_date">0.01850000 BTC</span>
+<span class="smtext rating_date">h***m</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Eutylone BK-EBDB (analog Ephylone, MDMA, MOLLY)</span>
+<p>All 5/5* Very professional, stealth and shipping time 100%
+<br/>Successful to HIGH RISK Country with 500g Shipment
+<br/>Recommend this vendor to all bulk buyers/resellers, he is legit unlike 90% of other BULK vendors
+<br/>HIGHLY RECOMMEND </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-09-25</span>
+<span class="smtext rating_date">0.08350000 BTC</span>
+<span class="smtext rating_date">C***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Dimethocaine (DMC) synthetic cocaine</span>
+<p>Vendor kindly allowed my lab 24 hours to test the chemical.  It was such a high quality + purity that my lab actually had to test the chemical to confirm it was right.  A+++!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-09-15</span>
+<span class="smtext rating_date">0.04260000 BTC</span>
+<span class="smtext rating_date">k***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">FREE SAMPLE OFFER 1gr. Eutylone BK-EBDB (analog Ephylone, MDMA)</span>
+<p>VERY high quality product, used to get bulk dutch import 84% but this is better, packaging, delivery time and stealth all 5/5*
+<br/>very professional, we are going to make a lot of money together</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-08-02</span>
+<span class="smtext rating_date">0.00030000 BTC</span>
+<span class="smtext rating_date">C***s</span>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan="5">
+<span>&lt;&lt;</span>
+<span>1 of 1</span>
+<span>&gt;&gt;</span>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8340.97 EUR = 9312.72 USD = 7195.79 GBP = 149.88009592 XMR = 13478.90 AUD = 12253.40 CAD</span></div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+[_scrape_seller()]description: We have GREAT SHIPPING SUCCESS RATE to EU, US, AUS, NZ ,Canada and Russia.
+THE TRACK WILL BE SHOLD 72h. AFTER ACCEPT THE ORDER.
+Shipping from China with track / not signature
+RESHIP RULES
+IF ANY LOST BY CUSTOMS, WE RESHIP 100% ALWAYS.
+I can guarantee the past of Customs ONLY!
+The local post rules of each country, or tax issues are out of my control.
+IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.
+IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .
+We offer reship only!
+Not accepted any returns!
+We will reship after the track is stuck by customs 7 days, not before.
+We not offer reshipment if the Tracking NO. shows:,,Delivered,, or ,,Available for pick up,,
+NO reshipment if the parcel is undeliverable or lost becasue of address problems or Fake address!
+If the reship parcel is also held by the customs, we will not supply reship again.
+If you make an order, it means that you AGREE to our Terms and Conditions.
+ADRESS FORMAT
+Please send a valid and detailed addrss with real receiver name to us according to the following format:
+Name and Last name
+street name, numb.(full address)
+Zip-Code City
+Country
+Donât send fake names or empty house addresses, please!
+Use PGP for shipping address and sensititive messages only.
+All parcels would be shipped in 2 or 3 business days. And every parcel is supplied a solid Tracking NO.
+STEALTH POLICY
+The products that we sent will be sent securely and as safely as possible. All products are professional packaged and have a almost zero % to be busted.
+The product will go trough a well practiced stealth procedure that includes vacuum sealing, mylar bags and bad odor removal by washing, also Decoy.
+Average delivery time
+EU - 5/8 days
+USA - 6/9 days
+Australia, New Zeland - 10/11 days.
+To check any Feedbacks, I’m also selling in the folowing markets
+Apollon
+Empire
+Berlusconi
+I’m an experienced seller with some years of experience in all this. I offer grams and kilograms of
+RESEARCH CHEMICALS
+PHARMACEUTICAL INTERMEDIATES
+SINTHETIC CANNABINOIDS
+PRECURSORS
+We offer HUGE DISCOUNT for bulk orders!
+Feel to ask for custom lists!
+Shipping from China with track / SIGNATURE NOT REQUIRED
+ADRESS FORMAT
+Please send a valid and detailed addrss with real receiver name to us according to the following format:
+Name and Last name
+street name, numb.(full address)
+Zip-Code City
+Country
+Don’t send fake names or empty house addresses, please!
+Use PGP for shipping address and sensititive messages only.
+All parcels would be shipped in 2 or 3 business days. And every parcel is supplied a solid Tracking NO.
+We will be choose the best delivery way according to the destination countries. You could also communicate it with us if you prefer to using some specific delivery ways. And just wait with patience for Tracking NO. The track will be provided 72h after the accept of the order.
+STOCK INVENTORY
+METHYLONE / MDMA
+BMDP crystal (analog bk-ebdp, Methylone, MDMA, MOLLY)
+1kg. 1300$
+1,5kg. 2000$
+2kg. 2400$
+5kg. 6300$
+Eutylone BK-EBDB (analog Ephylone, MDMA, MOLLY)
+1kg. 1300$
+1,5kg. 2000$
+2kg. 2400$
+5kg. 6300$
+STIMULANTS
+NEP crystal (similar as MDPV or A-PVP)
+NEP its good for IV use and smoked
+If you are searching a product, as original MDPV or A-PVP NEP is similar, but less potent. That you could multiply 1 to 5g and still will give three good doses from 0,1g. Also it must be able to use IV and smoked.
+HEP crystal
+NDH powder appreance , have not crystal
+DMC (Dimethocaine) SINTETIC COCAINE
+RESHIP / REFUND
+IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.
+IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .
+We offer reship only!
+3F-A-PVP (A-PVP, analog)
+4-CDC(analog 4-CEC)
+4F-PHP
+DISSOACTIVES
+2F-DCK (analogue Deschloroketamine)
+Diphenidine (Replacement of MXE,MXP)
+BENZODIAZEPINES / Pharmaceutical Intermediates
+Etizolam
+Diclazepam
+Flualprazolam (Alprazolam analogue) CAS â 28910-91-0
+Pregabalin CAS â 148553-50-8
+Others/Pharmaceutical Intermediates
+Tianeptine sodium salt CAS â 30123-17-2
+Zopiclone (Zimovane / Imovane)CAS â 43200-80-2
+Pentobarbital sodium (Nembutal)
+CANNABINOIDS
+CANNABIDIOLï¼cbdï¼CAS â 13956-29-1
+5F-MDMA-2201
+5F-MDMB2201
+4F-ADB
+MMB2201
+MMB022
+FUBBMB
+ACB48CH
+PRECURSORS
+Dimethylformamide DMF
+Methylamine CAS 593-51-1
+4-Amino-3-phenylbutanoic acid CAS 1078-21-3
+1-Phenyl-2-nitropropene CAS 705-60-2
+Benzeneacetic acid, a-acetyl-, methyl ester (BMK Intermediate) CAS 16648-44-5
+BMK CAS 4433-77-6
+PMK CAS 13605-48-6
+
+
+[get_seller_info()]soup_html: <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - cindicator Profile</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-02 23:32 | 
+Logged in as <a class="controlbox_link" href="/user/usingpython3">usingpython3</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width: 195px; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="pgp"></a>
+<a class="noanchor" id="feedback"></a>
+<h2><span class="icono-user"></span> cindicator<span class="lgtext"> (8)</span>
+ <span class="verified">LEVEL 2</span> <span class="verified">VERIFIED</span></h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/products/cindicator"><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class="toolbar_link" href="/messages/new/cindicator"><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class="toolbar_link" href="/messages/new/support/Reporting+cindicator"><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class="inline_div">
+<img class="picture" src="/image/2331223"/>
+</div>
+<div class="inline_div">
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: black;">75.00%</span>
+</div>
+<div>
+<label>Disputes <span class="smtext">(won/lost)</span>:</label>
+<span class="good"><span style="fong-weight: bold;">2</span></span>/<span class="bad">1</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Empire: 58 deals, 96.67/100%</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.09664320 BTC (<b>900.01 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> China</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Worldwide</span>
+</div>
+<div>
+<label>XMPP/Jabber ID:</label>
+<span>cindicator@xmpp.jp</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-05-21 09:11:42</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 3 days</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div class="tab" id="generaltab"><a class="tablink" href="/user/cindicator#general">Profile</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="/user/cindicator#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="pgptab"><a class="tablink" href="/user/cindicator#pgp">PGP</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="/user/cindicator#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<p>We have GREAT SHIPPING SUCCESS RATE to EU, US, AUS, NZ ,Canada and Russia.</p>
+<p>THE TRACK WILL BE SHOLD 72h. AFTER ACCEPT THE ORDER.</p>
+<p>Shipping from China with track / not signature</p>
+<p>RESHIP RULES</p>
+<p>IF ANY LOST BY CUSTOMS, WE RESHIP 100% ALWAYS.</p>
+<p>I can guarantee the past of Customs ONLY!</p>
+<p>The local post rules of each country, or tax issues are out of my control.</p>
+<p>IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.</p>
+<p>IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .</p>
+<p>We offer reship only!</p>
+<p>Not accepted any returns!</p>
+<p>We will reship after the track is stuck by customs 7 days, not before.</p>
+<p>We not offer reshipment if the Tracking NO. shows:,,Delivered,, or ,,Available for pick up,,</p>
+<p>NO reshipment if the parcel is undeliverable or lost becasue of address problems or Fake address!</p>
+<p>If the reship parcel is also held by the customs, we will not supply reship again.</p>
+<p>If you make an order, it means that you AGREE to our Terms and Conditions.</p>
+<p>ADRESS FORMAT</p>
+<p>Please send a valid and detailed addrss with real receiver name to us according to the following format:</p>
+<p>Name and Last name
+street name, numb.(full address)
+Zip-Code City
+Country</p>
+<p>Donât send fake names or empty house addresses, please!</p>
+<p>Use PGP for shipping address and sensititive messages only.</p>
+<p>All parcels would be shipped in 2 or 3 business days. And every parcel is supplied a solid Tracking NO.</p>
+<p>STEALTH POLICY</p>
+<p>The products that we sent will be sent securely and as safely as possible. All products are professional packaged and have a almost zero % to be busted.</p>
+<p>The product will go trough a well practiced stealth procedure that includes vacuum sealing, mylar bags and bad odor removal by washing, also Decoy.</p>
+<p>Average delivery time</p>
+<p>EU - 5/8 days
+USA - 6/9 days
+Australia, New Zeland - 10/11 days.</p>
+<p>To check any Feedbacks, I’m also selling in the folowing markets</p>
+<p>Apollon</p>
+<p>Empire</p>
+<p>Berlusconi</p>
+<p>I’m an experienced seller with some years of experience in all this. I offer grams and kilograms of</p>
+<p>RESEARCH CHEMICALS</p>
+<p>PHARMACEUTICAL INTERMEDIATES</p>
+<p>SINTHETIC CANNABINOIDS</p>
+<p>PRECURSORS</p>
+<p>We offer HUGE DISCOUNT for bulk orders!</p>
+<p>Feel to ask for custom lists!</p>
+<p>Shipping from China with track / SIGNATURE NOT REQUIRED</p>
+<p>ADRESS FORMAT</p>
+<p>Please send a valid and detailed addrss with real receiver name to us according to the following format:</p>
+<p>Name and Last name</p>
+<p>street name, numb.(full address)</p>
+<p>Zip-Code City</p>
+<p>Country</p>
+<p>Don’t send fake names or empty house addresses, please!</p>
+<p>Use PGP for shipping address and sensititive messages only.</p>
+<p>All parcels would be shipped in 2 or 3 business days. And every parcel is supplied a solid Tracking NO.</p>
+<p>We will be choose the best delivery way according to the destination countries. You could also communicate it with us if you prefer to using some specific delivery ways. And just wait with patience for Tracking NO. The track will be provided 72h after the accept of the order.</p>
+<p>STOCK INVENTORY</p>
+<p>METHYLONE / MDMA</p>
+<p>BMDP crystal (analog bk-ebdp, Methylone, MDMA, MOLLY)</p>
+<p>1kg. 1300$</p>
+<p>1,5kg. 2000$</p>
+<p>2kg. 2400$</p>
+<p>5kg. 6300$</p>
+<p>Eutylone BK-EBDB (analog Ephylone, MDMA, MOLLY)</p>
+<p>1kg. 1300$</p>
+<p>1,5kg. 2000$</p>
+<p>2kg. 2400$</p>
+<p>5kg. 6300$</p>
+<p>STIMULANTS</p>
+<p>NEP crystal (similar as MDPV or A-PVP)</p>
+<p>NEP its good for IV use and smoked</p>
+<p>If you are searching a product, as original MDPV or A-PVP NEP is similar, but less potent. That you could multiply 1 to 5g and still will give three good doses from 0,1g. Also it must be able to use IV and smoked.</p>
+<p>HEP crystal</p>
+<p>NDH powder appreance , have not crystal</p>
+<p>DMC (Dimethocaine) SINTETIC COCAINE
+RESHIP / REFUND</p>
+<p>IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.</p>
+<p>IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .</p>
+<p>We offer reship only!
+3F-A-PVP (A-PVP, analog)</p>
+<p>4-CDC(analog 4-CEC)</p>
+<p>4F-PHP</p>
+<p>DISSOACTIVES</p>
+<p>2F-DCK (analogue Deschloroketamine)</p>
+<p>Diphenidine (Replacement of MXE,MXP)</p>
+<p>BENZODIAZEPINES / Pharmaceutical Intermediates</p>
+<p>Etizolam</p>
+<p>Diclazepam</p>
+<p>Flualprazolam (Alprazolam analogue) CAS â 28910-91-0</p>
+<p>Pregabalin CAS â 148553-50-8</p>
+<p>Others/Pharmaceutical Intermediates</p>
+<p>Tianeptine sodium salt CAS â 30123-17-2</p>
+<p>Zopiclone (Zimovane / Imovane)CAS â 43200-80-2</p>
+<p>Pentobarbital sodium (Nembutal)</p>
+<p>CANNABINOIDS</p>
+<p>CANNABIDIOLï¼cbdï¼CAS â 13956-29-1</p>
+<p>5F-MDMA-2201</p>
+<p>5F-MDMB2201</p>
+<p>4F-ADB</p>
+<p>MMB2201</p>
+<p>MMB022</p>
+<p>FUBBMB</p>
+<p>ACB48CH</p>
+<p>PRECURSORS</p>
+<p>Dimethylformamide DMF</p>
+<p>Methylamine CAS 593-51-1</p>
+<p>4-Amino-3-phenylbutanoic acid CAS 1078-21-3</p>
+<p>1-Phenyl-2-nitropropene CAS 705-60-2</p>
+<p>Benzeneacetic acid, a-acetyl-, methyl ester (BMK Intermediate) CAS 16648-44-5</p>
+<p>BMK CAS 4433-77-6</p>
+<p>PMK CAS 13605-48-6</p>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>RESHIP / REFUND</p>
+<p>THE TRACK WILL BE SHOLD 72h. AFTER ACCEPT THE ORDER.</p>
+<p>Shipping from China with track / not signature</p>
+<p>IF ANY LOST BY CUSTOMS, WE RESHIP 100% ALWAYS.</p>
+<p>IF THERE IS EVER A PROBLEM PLEASE MESSAGE US AND WE WILL SORT IT OUT FOR YOU.</p>
+<p>IF YOU LEAVE A NEGATIVE FEEDBACK BEFORE CONTACTING US WE WILL OFFER NO RESOLUTION .</p>
+<p>We will reship after the track is stuck by customs 7 days, not before.</p>
+<p>We not offer reshipment if the Tracking NO. shows:,,Delivered,, or ,,Available for pick up,,</p>
+<p>NO reshipment if the parcel is undeliverable or lost becasue of address problems or Fake address!</p>
+<p>If the reship parcel is also held by the customs, we will not supply reship again.</p>
+<p>If you make an order, it means that you AGREE to our Terms and Conditions.</p>
+</div>
+</div>
+<div class="target_content" id="pgp_div">
+<textarea class="ascii_armour_textarea" readonly="">-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+KUXgIeFTOia0YT/o0k+WZE/H6YR6bA==
+=DVC2
+-----END PGP PUBLIC KEY BLOCK-----
+</textarea>
+</div>
+<div class="target_content" id="feedback_div">
+<div class="content_div">
+<div class="mainbox">
+<table style="width: 100%">
+<tr class="gridhdr">
+<td class="gridhdr rating_good"> </td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user"> </td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-crossCircle" style="color: red"></span></td>
+<td class="rating_message">
+<span class="rating_product">Diphenidine (MXE, MXP replacement)</span>
+<p>vendor sent the wrong product, and will not respond to any of my messages. I would like a reship. Whatever I got is the right weight for the order, but I can't figure out wtf it is that I received.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-21</span>
+<span class="smtext rating_date">0.01850000 BTC</span>
+<span class="smtext rating_date">h***m</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Eutylone BK-EBDB (analog Ephylone, MDMA, MOLLY)</span>
+<p>All 5/5* Very professional, stealth and shipping time 100%
+<br/>Successful to HIGH RISK Country with 500g Shipment
+<br/>Recommend this vendor to all bulk buyers/resellers, he is legit unlike 90% of other BULK vendors
+<br/>HIGHLY RECOMMEND </p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-09-25</span>
+<span class="smtext rating_date">0.08350000 BTC</span>
+<span class="smtext rating_date">C***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Dimethocaine (DMC) synthetic cocaine</span>
+<p>Vendor kindly allowed my lab 24 hours to test the chemical.  It was such a high quality + purity that my lab actually had to test the chemical to confirm it was right.  A+++!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-09-15</span>
+<span class="smtext rating_date">0.04260000 BTC</span>
+<span class="smtext rating_date">k***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">FREE SAMPLE OFFER 1gr. Eutylone BK-EBDB (analog Ephylone, MDMA)</span>
+<p>VERY high quality product, used to get bulk dutch import 84% but this is better, packaging, delivery time and stealth all 5/5*
+<br/>very professional, we are going to make a lot of money together</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-08-02</span>
+<span class="smtext rating_date">0.00030000 BTC</span>
+<span class="smtext rating_date">C***s</span>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan="5">
+<span>&lt;&lt;</span>
+<span>1 of 1</span>
+<span>&gt;&gt;</span>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8340.97 EUR = 9312.72 USD = 7195.79 GBP = 149.88009592 XMR = 13478.90 AUD = 12253.40 CAD</span></div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+[get_seller_info()]res: [75.0, (2, 2), [], ('BTC', 0.0966432, 'USD', 900.01), 'China', ['Worldwide'], 'cindicator@xmpp.jp', False, datetime.datetime(2019, 5, 21, 9, 11, 42)]
+
+
+[get_seller_info()]expected_labels_and_parsing_funcs: [[<function _parse_last_online at 0x7fd920492620>, 'Last online:']]
+
+
+[get_seller_info()]inline_divs: [<div class="inline_div">
+<img class="picture" src="/image/2331223"/>
+</div>, <div class="inline_div">
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: black;">75.00%</span>
+</div>
+<div>
+<label>Disputes <span class="smtext">(won/lost)</span>:</label>
+<span class="good"><span style="fong-weight: bold;">2</span></span>/<span class="bad">1</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Empire: 58 deals, 96.67/100%</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.09664320 BTC (<b>900.01 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> China</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Worldwide</span>
+</div>
+<div>
+<label>XMPP/Jabber ID:</label>
+<span>cindicator@xmpp.jp</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-05-21 09:11:42</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 3 days</span>
+</div>
+</div>]
+
+
+[get_seller_info()]seller_info_div: <div class="inline_div">
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: black;">75.00%</span>
+</div>
+<div>
+<label>Disputes <span class="smtext">(won/lost)</span>:</label>
+<span class="good"><span style="fong-weight: bold;">2</span></span>/<span class="bad">1</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Empire: 58 deals, 96.67/100%</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.09664320 BTC (<b>900.01 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> China</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Worldwide</span>
+</div>
+<div>
+<label>XMPP/Jabber ID:</label>
+<span>cindicator@xmpp.jp</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-05-21 09:11:42</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 3 days</span>
+</div>
+</div>
