@@ -170,7 +170,7 @@ class EmpireScrapingFunctions(BaseFunctions):
             a_tags = [a_tag for a_tag in h3.findAll('a', href=True)]
             if len(a_tags) == 1:
                 if a_tags[0]["href"].find(f"{mirror_base_url}/category/") != -1:
-                    category = a_tags[0].text
+                    category = a_tags[0].text.strip()
                     url = str(a_tags[0]['href'])
                     url_fragments = url.split("/")
                     category_id = int(url_fragments[-2])

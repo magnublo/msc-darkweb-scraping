@@ -120,9 +120,6 @@ def queue_is_empty(queue) -> bool:
     return queue.empty() and is_empty
 
 
-# TODO: Rework method. Let it accept str, not requests.Response. Implement integration tests so that
-# TODO: self.get_logged_in_web_response is mocked with a method that returns file content based on url argument.
-# TODO: Remove working_dir argument. Let method be proxied by BaseScraper method which passes working_dir.
 def get_page_as_soup_html(web_response_text: str) -> BeautifulSoup:
     return BeautifulSoup(web_response_text, features=BEAUTIFUL_SOUP_HTML_PARSER)
 

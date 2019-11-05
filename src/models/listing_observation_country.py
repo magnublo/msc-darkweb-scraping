@@ -8,10 +8,12 @@ TABLE_NAME = 'listing_observation_country'
 LISTING_OBSERVATION_ID_NAME = 'listing_observation_id'
 COUNTRY_ID_NAME = 'country_id'
 
+
 class ListingObservationCountry(Base):
-    #TODO: add logic to add appropriate junctions for terms such as "Europe" or "Worldwide"
+    # TODO: add logic to add appropriate junctions for terms such as "Europe" or "Worldwide"
     __tablename__ = TABLE_NAME
 
     listing_observation_id = Column(LISTING_OBSERVATION_ID_NAME, Integer,
-                                    ForeignKey(listing_observation.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE), primary_key=True)
-    country_id = Column(COUNTRY_ID_NAME, CHAR(COUNTRY_NAME_COLUMN_LENGTH), ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY), primary_key=True)
+                                    ForeignKey(listing_observation.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE),
+                                    primary_key=True)
+    country_id = Column(COUNTRY_ID_NAME, Integer, ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY), primary_key=True)

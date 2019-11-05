@@ -1,4 +1,4 @@
-from sqlalchemy import Column, CHAR
+from sqlalchemy import Column, CHAR, Integer, UniqueConstraint
 
 from definitions import COUNTRY_NAME_COLUMN_LENGTH, Base
 
@@ -10,4 +10,7 @@ class Country(Base):
 
     __tablename__ = TABLE_NAME
     # TODO: Make __init__ that converts id to standardized name
-    id = Column(PRIMARY_KEY, CHAR(COUNTRY_NAME_COLUMN_LENGTH), primary_key=True)
+    id = Column(PRIMARY_KEY, Integer, primary_key=True)
+    name = Column(CHAR(COUNTRY_NAME_COLUMN_LENGTH))
+
+    UniqueConstraint(name)

@@ -186,7 +186,7 @@ class MirrorManager:
         final_page_soup_html: BeautifulSoup = get_page_as_soup_html(final_page_web_response_text)
 
         if self.scraper.scraping_funcs.captcha_solution_was_wrong(final_page_soup_html):
-            self.scraper.logger.warn("Wrong captcha solution. Retrying.")  # TODO: save even wrong captchas
+            self.scraper.logger.warn("Wrong captcha solution. Retrying.")
             self.scraper.anti_captcha_control.complaint_on_result(int(solution_response["taskId"]), "image")
             self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=False, website="DARKFAIL")
             return self._get_final_page_mirror_status_dict(sub_page_url)

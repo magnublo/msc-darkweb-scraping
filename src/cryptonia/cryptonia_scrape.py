@@ -166,7 +166,9 @@ class CryptoniaScrapingSession(BaseScraper):
             id=origin_country
         ))
 
-        self._add_country_junctions(destination_countries, listing_observation.id)
+        country_ids: Tuple[int] = self._add_countries([origin_country]+destination_countries)
+        destination_country_ids = country_ids[1:]
+        self._add_country_junctions(destination_country_ids, listing_observation.id)
 
         listing_observation.listing_text_id = listing_text_id
         listing_observation.btc = accepts_BTC

@@ -1,4 +1,5 @@
 import hashlib
+from datetime import datetime
 from math import ceil
 from multiprocessing import Queue
 from random import shuffle
@@ -6,6 +7,7 @@ from threading import RLock
 from typing import List, Tuple, Type
 
 import requests
+from bs4 import BeautifulSoup
 from sqlalchemy import func
 
 from definitions import EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
@@ -19,6 +21,7 @@ from src.db_utils import get_column_name
 from src.empire.empire_functions import EmpireScrapingFunctions
 from src.models.country import Country
 from src.models.feedback import Feedback
+from src.models.listing_observation import ListingObservation
 from src.models.listing_text import ListingText
 from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
@@ -91,6 +94,28 @@ class EmpireScrapingSession(BaseScraper):
 
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate):
+        seller: Seller
+        is_new_seller: bool
+        listing_observation: ListingObservation
+        is_new_listing_observation: bool
+        is_new_seller_observation: bool
+        web_response: requests.Response
+        soup_html: BeautifulSoup
+        listing_text: str
+        listing_text_id: str
+        categories: List[str]
+        website_category_ids: List[int]
+        accepts_BTC: bool
+        accepts_LTC: bool
+        accepts_XMR: bool
+        nr_sold: int
+        nr_sold_since_date: datetime
+        fiat_currency: str
+        price: float
+        origin_country: str
+        destination_countries: List[str]
+        escrow: str #TODO: Fix this
+
 
         # TODO: Scrape shipping methods, accepts_multisig, in_stock, listing_type(with parenthesis field), ends_in, bulk price
 
@@ -131,11 +156,10 @@ class EmpireScrapingSession(BaseScraper):
             text=listing_text
         ))
 
-        self.db_session.merge(Country(
-            id=origin_country
-        ))
 
-        self._add_country_junctions(destination_countries, listing_observation.id)
+        country_ids: Tuple[int] = self._add_countries([origin_country]+destination_countries)
+        destination_country_ids = country_ids[1:]
+        self._add_country_junctions(destination_country_ids, listing_observation.id)
 
         listing_observation.listing_text_id = listing_text_id
         listing_observation.btc = accepts_BTC

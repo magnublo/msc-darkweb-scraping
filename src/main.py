@@ -23,8 +23,6 @@ def run():
     if not demoji.last_downloaded_timestamp():
         demoji.download_codes()
 
-    # TODO: Impement logic to check that Tor server has one port per thread
-
     thread_counts = tuple(usr_input[0] for usr_input in user_input)
     total_nr_of_threads = sum(thread_counts)
 

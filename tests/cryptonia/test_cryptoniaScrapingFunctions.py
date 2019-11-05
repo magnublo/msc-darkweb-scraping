@@ -733,7 +733,7 @@ class TestGetSellerInfo(CryptoniaBaseTest):
         soup_html = self._get_page_as_soup_html('users/saved_cryptonia_user_profile_0')
         percent_positive_rating, disputes, external_market_ratings, amount_on_escrow, ships_from, ships_to, \
         jabber_id, fe_enabled, member_since, last_online = scrapingFunctions.get_seller_info(
-            soup_html)  # TODO: Check vendorPython2 for value on login more than x days ago
+            soup_html)
 
         self.assertEqual(96.87, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)

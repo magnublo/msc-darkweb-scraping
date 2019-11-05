@@ -247,18 +247,26 @@ class BaseScraper(BaseClassWithLogger):
 
         self.db_session.flush()
 
-    def _add_country_junctions(self, destination_countries: List[str], listing_observation_id: int) -> None:
-        for destination_country in destination_countries:
-            self.db_session.merge(Country(
-                id=destination_country
-            ))
-        self.db_session.flush()
-        for destination_country in destination_countries:
+    def _add_country_junctions(self, destination_country_ids: Tuple[int], listing_observation_id: int) -> None:
+        for country_id in destination_country_ids:
             self.db_session.add(ListingObservationCountry(
                 listing_observation_id=listing_observation_id,
-                country_id=destination_country
+                country_id=country_id
             ))
         self.db_session.flush()
+
+    def _add_countries(self, countries: List[str]) -> Tuple[int]:
+        country_ids: List[int] = []
+        for country_name in countries:
+            existing_country = self.db_session.query(Country).filter(Country.name == country_name).first()
+            if existing_country:
+                country_ids.append(existing_country.id)
+            else:
+                new_country = self.db_session.add(Country(name=country_name))
+                self.db_session.flush()
+                country_ids.append(new_country.id)
+        assert len(country_ids) == len(countries)
+        return tuple(country_ids)
 
     def _add_shipping_methods(self, listing_observation_id: int, shipping_descriptions: List[str],
                               shipping_days: List[int],

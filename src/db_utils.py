@@ -129,7 +129,7 @@ def _get_scraping_sessions_with_no_children(db_session: Session, market_id: str)
     return db_session.query(ScrapingSession).filter(ScrapingSession.id.in_(ids_scraping_sessions_with_no_children))
 
 
-def _get_prompt_str(broken_sellers: List[Seller], broken_listings: List[ListingObservation]) -> str:
+def _get_prompt_str(broken_sellers: List[Seller], broken_listings: List[ListingObservation], market_id: str) -> str:
     if len(broken_sellers) > 0:
         seller_ids_str = "Broken seller ids: \n\n" + "\n".join([str(seller.id) for seller in broken_sellers])
     else:
@@ -140,7 +140,7 @@ def _get_prompt_str(broken_sellers: List[Seller], broken_listings: List[ListingO
     else:
         listing_ids_str = ""
 
-    prompt_str = f"""{len(broken_sellers)} broken sellers and {len(broken_listings)} broken listings to be deleted.
+    prompt_str = f"""{market_id}\n\n{len(broken_sellers)} broken sellers and {len(broken_listings)} broken listings to be deleted.
     
 {seller_ids_str}
 
@@ -171,7 +171,7 @@ def fix_integrity_of_database(db_session: Session, market_id: str):
     broken_listings = _get_broken_listings(db_session, market_id)
 
     if len(broken_sellers.all() + broken_listings.all()) > 0:
-        prompt_str = _get_prompt_str(broken_sellers.all(), broken_listings.all())
+        prompt_str = _get_prompt_str(broken_sellers.all(), broken_listings.all(), market_id)
 
         ans = input(prompt_str)
         if ans == "Y":

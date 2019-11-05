@@ -24,7 +24,7 @@ class ListingObservation(Base):
     session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     listing_text_id = Column(CHAR(32), ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY))
 
-    title = Column(CHAR(PRODUCT_TITLE_COLUMN_LENGTH)) # max 64 characters cryptonia #TODO: investigate if this is actually max
+    title = Column(CHAR(PRODUCT_TITLE_COLUMN_LENGTH)) # max 64 characters cryptonia
     url = Column(String(URL_COLUMN_LENGTH))
 
     btc = Column(Boolean)
@@ -34,7 +34,7 @@ class ListingObservation(Base):
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     price = Column(Float)
     fiat_currency = Column(CHAR(CURRENCY_COLUMN_LENGTH))
-    origin_country = Column(CHAR(COUNTRY_NAME_COLUMN_LENGTH), ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY))
+    origin_country = Column(Integer, ForeignKey(country.TABLE_NAME_AND_PRIMARY_KEY))
     # destination_country is represented in junction table
 
     btc_rate = Column(Float)
