@@ -238,7 +238,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return int(wait_interval), redirect_url.strip()
 
     @staticmethod
-    def get_captcha_image_url(soup_html: BeautifulSoup) -> str:
+    def get_captcha_image_url_from_market_page(soup_html: BeautifulSoup) -> str:
         imgs = [img for img in soup_html.select('.login_captcha')]
         assert len(imgs) == 1
         return imgs[0]["src"]

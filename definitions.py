@@ -1,6 +1,10 @@
 import os
+from _mysql_connector import MySQLError
 from typing import Tuple, List
 
+import requests
+import urllib3
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.declarative import declarative_base
 
 from environment_settings import MYSQL_ECHO_DEBUG
@@ -13,7 +17,7 @@ ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 ROOT_SRC_DIR = ROOT_DIR + "src/"
 WORKING_DIR = os.getcwd() + "/"
 
-RECOMMENDED_NR_OF_THREADS_PER_TOR_PROXY = 4
+MAX_MARKET_THREADS_PER_PROXY = 4
 TOR_PROJECT_URL_FOR_CONFIGURATION_CHECK = "https://check.torproject.org/"
 TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE = "Congratulations. This browser is configured to use Tor."
 
@@ -34,7 +38,6 @@ SQLALCHEMY_CREATE_ENGINE_KWARGS = {'encoding': PYTHON_SIDE_DB_ENCODING,
                                    'connect_args': MYSQL_CONNECT_ARGS}
 
 MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD = 20
-DEAD_MIRROR_TIMEOUT = 1200
 DBMS_DISCONNECT_RETRY_INTERVALS = [5, 5, 5, 5, 5, 5, 5, 100]
 
 MD5_HASH_STRING_ENCODING = "utf-8"
@@ -73,6 +76,7 @@ AGORA_MARKET_ID = "AGORA_MARKET"
 BLACK_MARKET_RELOADED_ID = "BLACK_MARKET_RELOADED"
 ABRAXAS_MARKET_ID = "ABRAXAS_MARKET"
 MIDDLE_EARTH_MARKET_ID = "MIDDLE_EARTH_MARKET"
+SAMSARA_MARKET_ID = "SAMSARA_MARKET"
 
 #EMPIRE MARKET
 EMPIRE_MARKET_URL = "empiremktxgjovhm.onion"
@@ -90,10 +94,9 @@ EMPIRE_MARKET_CREDENTIALS = [["using_python3", "Password123!"],
                              ["using_python14", "Password123!"]]
 
 RESCRAPE_PGP_KEY_INTERVAL = ONE_WEEK
-EMPIRE_MARKET_LOGIN_URL = "http://" + EMPIRE_MARKET_URL + "/index/login"
-EMPIRE_MARKET_HOME_URL = "http://" + EMPIRE_MARKET_URL + "/home"
-EMPIRE_BASE_CATEGORY_URL = "http://" + EMPIRE_MARKET_URL + "/category/"
+EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH = "/home"
 EMPIRE_MARKET_ID = "EMPIRE_MARKET"
+EMPIRE_MIN_CREDENTIALS_PER_THREAD = 1
 EMPIRE_SRC_DIR = ROOT_SRC_DIR + "empire/"
 EMPIRE_HTTP_HEADERS = {
             "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0",
@@ -115,7 +118,7 @@ EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
 
 #CRYPTONIA MARKET
 CRYPTONIA_MARKET_ID = "CRYPTONIA_MARKET"
-CRYPTONIA_MARKET_BASE_URL = "http://bntee6mf5w2okbpxdxheq7bk36yfmwithltxubliyvum6wlrrxzn72id.onion"
+CRYPTONIA_MIN_CREDENTIALS_PER_THREAD = 4
 CRYPTONIA_MARKET_CATEGORY_INDEX_URL_PATH = "/products"
 CRYPTONIA_MARKET_CREDENTIALS = [["usingPython3", "Password123!"]]
 CRYPTONIA_DIR = ROOT_DIR + "src/cryptonia/"
@@ -141,6 +144,28 @@ CRYPTONIA_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (MIDDLE_EARTH_MARKET_ID, "Middle Earth:")
 ]
 
+DEAD_MIRROR_TIMEOUT = 1200
+MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR = 1800.0
+REFRESH_MIRROR_DB_LIMIT = 2700
+MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH = 1800
+DARKFAIL_OFFLINE_STATUS_TIME_PENALTY = 1800.0
+DARKFAIL_URL = "dark.fail"
+DARKFAIL_MARKET_STRINGS = {
+    EMPIRE_MARKET_ID: "Empire Market",
+    CRYPTONIA_MARKET_ID: "Cryptonia Market",
+    SAMSARA_MARKET_ID: "Samsara Market",
+}
+DARKFAIL_MARKET_SUBURLS = {
+    EMPIRE_MARKET_ID: "empire",
+    CRYPTONIA_MARKET_ID: "cryptonia",
+    SAMSARA_MARKET_ID: "samsara",
+}
 
 Base = declarative_base()
 MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID)
+WEB_EXCEPTIONS_TUPLE = (requests.HTTPError, urllib3.exceptions.HTTPError, requests.RequestException)
+DB_EXCEPTIONS_TUPLE = (SQLAlchemyError, MySQLError, AttributeError, SystemError)
+
+for market_id in MARKET_IDS:
+    assert market_id in DARKFAIL_MARKET_STRINGS.keys()
+    assert market_id in DARKFAIL_MARKET_SUBURLS.keys()

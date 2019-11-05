@@ -1,11 +1,10 @@
 from datetime import datetime
-
-import dateparser as dateparser
 from typing import List, Tuple
 
+import dateparser as dateparser
 from bs4 import BeautifulSoup
 
-from definitions import EMPIRE_BASE_CATEGORY_URL, EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS
+from definitions import EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS
 from src.base_functions import BaseFunctions
 from src.db_utils import shorten_and_sanitize_for_text_column
 
@@ -161,7 +160,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert False
 
     @staticmethod
-    def get_categories_and_ids(soup_html: BeautifulSoup) -> Tuple[List[str], List[int]]:
+    def get_categories_and_ids(soup_html: BeautifulSoup, mirror_base_url: str) -> Tuple[List[str], List[int]]:
         h3s = [div for div in soup_html.findAll('h3')]
 
         categories = []
@@ -170,7 +169,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         for h3 in h3s:
             a_tags = [a_tag for a_tag in h3.findAll('a', href=True)]
             if len(a_tags) == 1:
-                if a_tags[0]["href"].find(EMPIRE_BASE_CATEGORY_URL) != -1:
+                if a_tags[0]["href"].find(f"{mirror_base_url}/category/") != -1:
                     category = a_tags[0].text
                     url = str(a_tags[0]['href'])
                     url_fragments = url.split("/")
@@ -208,7 +207,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return titles, sellers, seller_urls
 
     @staticmethod
-    def get_captcha_image_url(soup_html):
+    def get_captcha_image_url_from_market_page(soup_html):
         image_divs = [div for div in soup_html.findAll('div', attrs={'class': 'image'})]
         assert len(image_divs) == 1
         img_tags = [img for img in image_divs[0].findAll('img')]

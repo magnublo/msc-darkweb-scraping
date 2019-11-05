@@ -11,7 +11,7 @@ from sty import fg
 from tabulate import tabulate
 
 from definitions import TOR_PROJECT_URL_FOR_CONFIGURATION_CHECK, TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE, \
-    RECOMMENDED_NR_OF_THREADS_PER_TOR_PROXY
+    MAX_MARKET_THREADS_PER_PROXY
 from environment_settings import LOWEST_TOR_PORT, TOR_PROXY_SERVER_ADDRESS
 
 TERMINAL = Terminal()
@@ -96,7 +96,7 @@ def check_proxy(line_nr: int, proxy_port: int, lock: RLock, total_lines: int, re
     result_queue.put((proxy_port, proxy_status.value))
 
 def get_recommended_nr_of_tor_proxies(total_nr_of_threads: int) -> int:
-    return math.ceil(total_nr_of_threads / RECOMMENDED_NR_OF_THREADS_PER_TOR_PROXY)
+    return math.ceil(total_nr_of_threads / MAX_MARKET_THREADS_PER_PROXY)
 
 def get_available_tor_proxies(total_nr_of_threads: int) -> List[int]:
     recommended_nr_of_tor_proxies = get_recommended_nr_of_tor_proxies(total_nr_of_threads)

@@ -1,16 +1,12 @@
-import re
 from multiprocessing import Queue
 from random import shuffle
 from typing import List, Tuple
 from unittest import TestCase
 from unittest.mock import patch, Mock
 
-from requests import Response
-
 import src.main
-from definitions import EMPIRE_MARKET_ID, EMPIRE_MARKET_CREDENTIALS, CRYPTONIA_MARKET_CREDENTIALS, \
-    CRYPTONIA_MARKET_ID, \
-    ROOT_DIR
+from definitions import EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, \
+    ROOT_DIR, EMPIRE_MIN_CREDENTIALS_PER_THREAD, CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
 from src.base_scraper import BaseScraper
 from src.base_scraping_manager import ScrapingManager
 from src.cryptonia.cryptonia_scrape import CryptoniaScrapingSession
@@ -24,14 +20,13 @@ HTML_DIR = TESTS_DIR + "html_files/"
 def mocked_get_user_input():
     return ((0, None, True), (1, None, True))
 
+def mocked_get_available_tor_proxies(total_nr_of_threads: int) -> Tuple[int]:
+    if total_nr_of_threads != 1:
+        raise BaseException
+    else:
+        return 9050,
 
 class MockedScrapingManager(ScrapingManager):
-
-    def _retrieve_working_mirrors(self, market_id: str) -> List[str]:
-        return ["bntee6mf5w2okbpxdxheq7bk36yfmwithltxubliyvum6wlrrxzn72id.onion"]
-
-    def _insert_working_mirrors(self, mirrors: List[str], market_id: str) -> None:
-        pass
 
     def _populate_queue_and_sleep(self, scraping_session: BaseScraper):
         scraping_session.populate_queue()
@@ -39,9 +34,9 @@ class MockedScrapingManager(ScrapingManager):
 
 class MockedCryptoniaScrapingSession(CryptoniaScrapingSession):
 
-    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int, proxy: dict,
-             session_id: int, mirror_base_url: str):
-        super().__init__(queue, username, password, nr_of_threads, thread_id, proxy, session_id, mirror_base_url=mirror_base_url)
+    def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict,
+             session_id: int):
+        super().__init__(queue, nr_of_threads, thread_id, proxy, session_id)
 
     def populate_queue(self) -> None:
         tasks = TASK_LIST
@@ -68,8 +63,8 @@ class MockedCryptoniaScrapingSession(CryptoniaScrapingSession):
 
 
 MOCKED_WEBSITES_TO_BE_SCRAPED: Tuple[Tuple[str], ...] = [
-    (EMPIRE_MARKET_ID, EMPIRE_MARKET_CREDENTIALS, EmpireScrapingSession),
-    (CRYPTONIA_MARKET_ID, CRYPTONIA_MARKET_CREDENTIALS, MockedCryptoniaScrapingSession)
+    (EMPIRE_MARKET_ID, EMPIRE_MIN_CREDENTIALS_PER_THREAD, EmpireScrapingSession),
+    (CRYPTONIA_MARKET_ID, CRYPTONIA_MIN_CREDENTIALS_PER_THREAD, MockedCryptoniaScrapingSession)
 ]
 
 
@@ -77,9 +72,8 @@ class TestMain(TestCase):
 
     @patch('src.main.get_user_input', side_effect=mocked_get_user_input)
     @patch('src.main.faulthandler')
-    @patch('src.main.get_available_tor_proxies', return_value=list((9050,)))
-    @patch('src.main.get_proxies',
-           return_value=((), ({'http': 'socks5h://localhost:9050', 'https': 'socks5h://localhost:9050'},)))
+    @patch('src.main.get_available_tor_proxies', side_effect=mocked_get_available_tor_proxies)
+    @patch('src.main.get_proxies', return_value=((), ({'http': 'socks5h://localhost:9050', 'https': 'socks5h://localhost:9050'},)))
     @patch('src.main.WEBSITES_TO_BE_SCRAPED', MOCKED_WEBSITES_TO_BE_SCRAPED)
     def test_main(self, mocked_get_user_input: Mock, mocked_fault_handler: Mock, mocked_get_available_tor_proxies: Mock,
                   mocked_get_proxies: Mock):

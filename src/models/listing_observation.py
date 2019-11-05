@@ -24,7 +24,7 @@ class ListingObservation(Base):
     session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
     listing_text_id = Column(CHAR(32), ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY))
 
-    title = Column(CHAR(PRODUCT_TITLE_COLUMN_LENGTH)) # max 64 characters cryptonia
+    title = Column(CHAR(PRODUCT_TITLE_COLUMN_LENGTH)) # max 64 characters cryptonia #TODO: investigate if this is actually max
     url = Column(String(URL_COLUMN_LENGTH))
 
     btc = Column(Boolean)
@@ -41,7 +41,8 @@ class ListingObservation(Base):
     xmr_rate = Column(Float)
     escrow = Column(Boolean)
     listing_type = Column(String(128)) #cryptonia: Physical, Digital, Autoshop (Digital Listing (Manual Fulfillment))
-
+                                        #empire: Physical Package, Digital,
+    quantity_in_stock = Column(Integer)
     # bulk discounts in junction table
 
     # empire
@@ -53,7 +54,6 @@ class ListingObservation(Base):
     # ends in (Date / String)
 
     # cryptonia
-    quantity_in_stock = Column(Integer)
     minimum_order_unit_amount = Column(Integer, default=1)
     unit_type = Column(CHAR(8))
 

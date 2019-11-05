@@ -1,6 +1,7 @@
 import hashlib
 from multiprocessing import Queue
 from random import shuffle
+from threading import RLock
 from typing import List, Tuple, Type
 from urllib import parse
 
@@ -11,7 +12,8 @@ from requests import Response
 
 from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX_URL_PATH, CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, \
     MD5_HASH_STRING_ENCODING, CRYPTONIA_MARKET_LOGIN_PHRASE, \
-    CRYPTONIA_SRC_DIR, CRYPTONIA_MARKET_ID, CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE
+    CRYPTONIA_SRC_DIR, CRYPTONIA_MARKET_ID, CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE, \
+    CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
 from src.base_functions import BaseFunctions
 from src.base_scraper import BaseScraper
 from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions, \
@@ -35,13 +37,22 @@ def _unit_types_are_equal(unit_type: str, second_unit_type: str) -> bool:
 
 
 class CryptoniaScrapingSession(BaseScraper):
+    __refresh_mirror_db_lock__ = RLock()
+    __user_credentials_db_lock__ = RLock()
 
-    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int, proxy: dict,
-                 session_id: int, mirror_base_url: str):
-        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, proxy=proxy,
-                         session_id=session_id, mirror_base_url=mirror_base_url)
+    def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict, session_id: int):
+        super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
 
-    def _get_web_session(self) -> requests.Session:
+    def _get_min_credentials_per_thread(self) -> int:
+        return CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
+
+    def _get_mirror_db_lock(self) -> RLock:
+        return self.__refresh_mirror_db_lock__
+
+    def _get_user_credentials_db_lock(self) -> RLock:
+        return self.__user_credentials_db_lock__
+
+    def _get_web_session_object(self) -> requests.Session:
         return cfscrape.Session()
 
     def populate_queue(self) -> None:
@@ -122,7 +133,7 @@ class CryptoniaScrapingSession(BaseScraper):
         fiat_currency, price, unit_type = scrapingFunctions.get_fiat_currency_and_price_and_unit_type(soup_html)
         quantity_in_stock, second_unit_type, minimum_order_unit_amount = \
             scrapingFunctions.get_quantity_in_stock_unit_type_and_minimum_order_unit_amount(
-            soup_html)
+                soup_html)
 
         if not _unit_types_are_equal(unit_type, second_unit_type):
             raise AssertionError("Unit types are not consistent across listing.")
@@ -238,7 +249,6 @@ class CryptoniaScrapingSession(BaseScraper):
 
     def _get_headers(self) -> dict:
         return {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0",
-                "Host": self.mirror_base_url,
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                 "Accept-Language": "en-US,en;q=0.5",
                 "Accept-Encoding": "gzip, deflate",

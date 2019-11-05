@@ -1,7 +1,7 @@
 from typing import List, Tuple, Type
 
-from definitions import EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, MARKET_IDS, EMPIRE_MARKET_CREDENTIALS, \
-    CRYPTONIA_MARKET_CREDENTIALS
+from definitions import EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, MARKET_IDS, EMPIRE_MIN_CREDENTIALS_PER_THREAD, \
+    CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
 from src.base_logger import BaseClassWithLogger
 from src.base_scraper import BaseScraper
 from src.base_scraping_manager import ScrapingManager
@@ -115,9 +115,9 @@ SCRAPER_CLASSES: Tuple[object, ...] = (EmpireScrapingSession, CryptoniaScrapingS
 
 assert len(MARKET_IDS) == len(SCRAPER_CLASSES)
 
-WEBSITES_TO_BE_SCRAPED: Tuple[Tuple[str, Tuple[Tuple[str, str]], Type[BaseScraper]], ...] = (
-    (EMPIRE_MARKET_ID, EMPIRE_MARKET_CREDENTIALS, EmpireScrapingSession),
-    (CRYPTONIA_MARKET_ID, CRYPTONIA_MARKET_CREDENTIALS, CryptoniaScrapingSession)
+WEBSITES_TO_BE_SCRAPED: Tuple[Tuple[str, int, Type[BaseScraper]], ...] = (
+    (EMPIRE_MARKET_ID, EMPIRE_MIN_CREDENTIALS_PER_THREAD, EmpireScrapingSession),
+    (CRYPTONIA_MARKET_ID, CRYPTONIA_MIN_CREDENTIALS_PER_THREAD, CryptoniaScrapingSession)
 )
 
 assert len(MARKET_IDS) == len(WEBSITES_TO_BE_SCRAPED)

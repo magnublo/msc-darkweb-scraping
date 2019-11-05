@@ -8,6 +8,7 @@ TABLE_NAME = 'captcha_solution'
 PRIMARY_KEY = 'id'
 TABLE_NAME_AND_PRIMARY_KEY = TABLE_NAME+"."+PRIMARY_KEY
 
+
 class CaptchaSolution(Base):
 
     __tablename__ = TABLE_NAME
@@ -16,6 +17,7 @@ class CaptchaSolution(Base):
 
     image = Column(Text)
     solution = Column(String(MYSQL_VARCHAR_DEFAULT_LENGTH))
-    market_id = Column(CHAR(MARKET_NAME_COLUMN_LENGTH))
+    website = Column(CHAR(MARKET_NAME_COLUMN_LENGTH))
     numbers = Column(Boolean)
     letters = Column(Boolean)
+    solved_correctly = Column(Boolean)

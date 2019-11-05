@@ -2,15 +2,14 @@ import inspect
 import re
 from datetime import datetime, timedelta
 from time import time, sleep
-from typing import Tuple, List
+from typing import Tuple, List, Dict
 
+import brotli
 import requests
 from bs4 import BeautifulSoup
-from regex.regex import Match
 from urllib3.exceptions import HTTPError
 
-from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS
-from environment_settings import DEBUG_MODE
+from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, WEB_EXCEPTIONS_TUPLE, MAX_MARKET_THREADS_PER_PROXY
 from src.tor_proxy_check import get_proxy_dict
 
 
@@ -196,3 +195,41 @@ def _parse_float(unparsed_float: str) -> float:
 
 def _parse_int(unparsed_float: str) -> int:
     return int(re.sub(r'[^\d.]+', '', unparsed_float))
+
+
+def get_proxy_port(proxy_dict: dict) -> int:
+    port = int(proxy_dict["http"].split(":")[-1])
+    return port
+
+
+def get_schemaed_url(unschemaed_url: str, schema: str) -> str:
+    return f"{schema}://{unschemaed_url}"
+
+
+def test_mirror(url: str, headers: dict, proxy: dict) -> bool:
+    schemaed_url = get_schemaed_url(url, schema="http")
+    for _ in range(5):
+        try:
+            requests.get(schemaed_url, headers=headers, proxies=proxy)
+            return True
+        except WEB_EXCEPTIONS_TUPLE as e:
+            a = 1
+    return False
+
+
+def do_parameter_sanity_check(proxy_dict_tuples: Tuple[Tuple[Dict], ...], available_ports: List[int],
+                              thread_counts: Tuple[int]) -> None:
+    from dynamic_config import WEBSITES_TO_BE_SCRAPED
+    assert len(proxy_dict_tuples) == len(WEBSITES_TO_BE_SCRAPED)
+    for proxy_dicts, thread_count, (market_id, _, _) in zip(proxy_dict_tuples, thread_counts, WEBSITES_TO_BE_SCRAPED):
+        if thread_count > len(available_ports)*MAX_MARKET_THREADS_PER_PROXY:
+            print(f"{market_id} has {thread_count} threads and needs {thread_count*MAX_MARKET_THREADS_PER_PROXY} proxies, but only has {len(available_ports)}. Exiting... ")
+            exit()
+    print("Sanity check complete.")
+
+
+def get_response_text(response: requests.Response) -> str:
+    if response.headers.get('content-encoding') == 'br':
+        return brotli.decompress(response.content)
+    else:
+        return response.text

@@ -3,28 +3,29 @@ import hashlib
 import pickle
 import sys
 import traceback
-from _mysql_connector import MySQLError
 from abc import abstractmethod
 from datetime import datetime
 from multiprocessing import Queue
+from threading import RLock
 from time import sleep
 from time import time
-from typing import Callable, List, Tuple, Union, Type
+from typing import Callable, List, Tuple, Union, Type, Any, Dict
 
 import requests
 from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
 from requests import Response
 from requests.cookies import RequestsCookieJar
-from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
-from urllib3.exceptions import HTTPError
+from sqlalchemy.exc import ProgrammingError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
-    RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT
+    RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, WEB_EXCEPTIONS_TUPLE, \
+    DB_EXCEPTIONS_TUPLE
 from src.base_functions import BaseFunctions
 from src.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
     get_column_name
+from src.mirror_manager import MirrorManager
 from src.models.bulk_price import BulkPrice
 from src.models.captcha_solution import CaptchaSolution
 from src.models.country import Country
@@ -39,28 +40,30 @@ from src.models.seller import Seller
 from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
 from src.models.shipping_method import ShippingMethod
+from src.models.user_credential import UserCredential
 from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, is_internal_server_error, \
     InternalServerErrorException, is_bad_gateway, BadGatewayException, error_is_sqlalchemy_error, \
-    GenericException, get_seconds_until_midnight, get_page_as_soup_html
+    GenericException, get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url
 
 
 class BaseScraper(BaseClassWithLogger):
 
-    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int,
-                 proxy: dict, session_id: int, mirror_base_url: str):
+    def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
+                 proxy: dict, session_id: int):
         super().__init__()
         engine = get_engine()
+        self.pages_counter = 0
+        self.mirror_db_lock: RLock = self._get_mirror_db_lock()
+        self.user_credentials_db_lock: RLock = self._get_user_credentials_db_lock()
+        self.proxy_port: int = get_proxy_port(proxy)
+        self.time_last_refreshed_mirror_db = 0.0
         self.scraping_funcs = self._get_scraping_funcs()
-        self.mirror_base_url = mirror_base_url
         self.login_url = self._get_login_url()
         self.is_logged_out_phrase = self._get_is_logged_out_phrase()
         self.working_dir = self._get_working_dir()
         self.proxy = proxy
-        self.logged_out_exceptions = 0
         self.db_session = get_db_session(engine)
-        self.username = username  # TODO: Make username and password Lists, and let BaseScraper use a pool of them
-        self.password = password
         self.thread_id = thread_id
         self.nr_of_threads = nr_of_threads
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
@@ -69,25 +72,14 @@ class BaseScraper(BaseClassWithLogger):
         self.market_id = self._get_market_id()
         self.start_time = time()
         self.duplicates_this_session = 0
-        self.web_session: requests.Session = self._instantiate_web_session()
-        self.cookie_string = self._get_cookie_string()
+        self.web_sessions: Tuple[requests.Session] = self._get_web_sessions()
         self.initial_queue_size = self.queue.qsize()
-        self.time_last_received_response = 0
-
-        if session_id:
-            while True:
-                try:
-                    self.db_session.rollback()
-                    scraping_session = self.db_session.query(ScrapingSession).filter_by(
-                        id=session_id).first()
-                    self.session_id = scraping_session.id
-                    self.db_session.expunge(scraping_session)
-                    break
-                except (SQLAlchemyError, MySQLError, AttributeError, SystemError):
-                    print("Thread nr. " + str(self.thread_id) + " has problem querying session id in DB. Retrying...")
-                    sleep(5)
-        else:
-            self.session_id = self._initiate_session()
+        self.time_last_received_response = 0.0
+        self.session_id = session_id or self._initiate_session()
+        self.mirror_manager = MirrorManager(self)
+        self.mirror_base_url: str = self.mirror_manager.get_new_mirror()
+        self._set_saved_cookie_on_web_sessions()
+        self.web_session = self._rotate_web_session()
 
     def scrape(self):
         while not self.queue.empty():
@@ -169,9 +161,9 @@ class BaseScraper(BaseClassWithLogger):
         self.db_session.expunge_all()
         self.db_session.close()
 
-    def _get_cookie_string(self) -> str:
-        request_as_string = pretty_print_GET(self.web_session.prepare_request(
-            requests.Request('GET', url="http://" + self.headers["Host"], headers=self.headers)))
+    def _get_cookie_string(self, web_session: requests.Session) -> str:
+        request_as_string = pretty_print_GET(web_session.prepare_request(
+            requests.Request('GET', self._get_schemaed_url_from_path("/"), headers=self.headers)))
         lines = request_as_string.split("\n")
         for line in lines:
             if line[0:7].lower() == "cookie:":
@@ -327,7 +319,7 @@ class BaseScraper(BaseClassWithLogger):
     def _add_pgp_key(self, seller: Seller, pgp_key_content: str) -> None:
         key_hash: str = hashlib.md5(pgp_key_content.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
         existing_pgp_key = self.db_session.query(PGPKey).filter(PGPKey.seller_id == seller.id,
-                                                                PGPKey.key_hash == key_hash)
+                                                                PGPKey.key_hash == key_hash).first()
         if not existing_pgp_key:
             self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content, key_hash=key_hash))
             self.db_session.flush()
@@ -351,7 +343,6 @@ class BaseScraper(BaseClassWithLogger):
 
         else:
             self.logger.info("Trying to fetch URL: " + url)
-        self.logger.info(f"Web session {self.cookie_string}")
         self.logger.info(f"Crawling page nr. {self.initial_queue_size - queue_size} this session.")
         self.logger.info(f"Pages left, approximate: {queue_size}.")
         if percent_crawled >= percent_time_spent:
@@ -359,60 +350,57 @@ class BaseScraper(BaseClassWithLogger):
         else:
             self.logger.warn(f"{progress_msg}\n")
 
-    def _get_logged_in_web_response(self, url_path: str, post_data: dict = None) -> Response:
+    def _get_logged_in_web_response(self, url_path: str, post_data: dict = None,
+                                    web_session: requests.Session = None) -> Response:
+        web_session = web_session if web_session else self.web_session
         url = self._get_schemaed_url_from_path(url_path)
         http_verb = 'POST' if post_data else 'GET'
 
-        response = self._get_web_response_with_error_catch(http_verb, url, proxies=self.proxy,
-                                                headers=self.headers, data=post_data)
+        response = self._get_web_response_with_error_catch(web_session, http_verb, url, proxies=self.proxy,
+                                                           headers=self.headers, data=post_data)
 
         if self._is_logged_out(response, self.login_url, self.is_logged_out_phrase):
-            self.web_session.cookies.clear()
-            self._login_and_set_cookie(response)
-            return self._get_logged_in_web_response(url_path)
+            self._login_and_set_cookie(web_session, response)
+            return self._get_logged_in_web_response(url_path, web_session=web_session)
         else:
             if is_internal_server_error(response):
                 raise InternalServerErrorException(response.text)
             elif is_bad_gateway(response):
                 raise BadGatewayException(response.text)
             else:
+                self.pages_counter += 1
+                self.web_session = self._rotate_web_session()
                 return response
 
-    def _login_and_set_cookie(self, web_response: Response):
-
+    def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response):
+        self.web_session.cookies.clear()
         soup_html = get_page_as_soup_html(web_response.text)
-        image_url = self.scraping_funcs.get_captcha_image_url(soup_html)
-
-        image_response = self._get_logged_in_web_response(image_url).content
+        image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
+        image_response = self._get_logged_in_web_response(image_url, web_session=web_session).content
         base64_image = base64.b64encode(image_response).decode("utf-8")
+        captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
+            base64_image)
 
-        time_before_requesting_captcha_solve = time()
-        anti_captcha_kwargs = self._get_anti_captcha_kwargs()
-        self.logger.info("Sending image to anti-catpcha.com API...")
-        captcha_solution_response = ImageToTextTask.ImageToTextTask(
-            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
-        ).captcha_handler(captcha_base64=base64_image)
+        login_payload = self.scraping_funcs.get_login_payload(soup_html, self.web_session.username,
+                                                              self.web_session.password, captcha_solution)
 
-        captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
-                                                             func=lambda d: d["solution"]["text"])
-
-        self.logger.info(f"Captcha solved. Took {time() - time_before_requesting_captcha_solve} seconds.")
-
-        login_payload = self.scraping_funcs.get_login_payload(soup_html, self.username, self.password, captcha_solution)
-
-        web_response = BaseScraper._get_logged_in_web_response(self, self._get_login_url(), post_data=login_payload)
+        web_response = self._get_logged_in_web_response(self._get_login_url(), post_data=login_payload,
+                                                        web_session=web_session)
 
         if self._is_logged_out(web_response, self.login_url, self.is_logged_out_phrase):
             self.logger.warn("INCORRECTLY SOLVED CAPTCHA, TRYING AGAIN...")
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
-            self._login_and_set_cookie(web_response)
+            self._add_captcha_solution(base64_image, captcha_solution, correct=False)
+            self._login_and_set_cookie(web_session, web_response)
         else:
-            self._add_captcha_solution(base64_image, captcha_solution)
+            web_session.finger_print = hashlib.md5(
+                self._get_cookie_string(web_session).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[0:3]
+            self._add_captcha_solution(base64_image, captcha_solution, correct=True)
             self._add_web_session_cookie_to_db(self.web_session.cookies)
             self.db_session.commit()
-            self.cookie_string = self._get_cookie_string()
 
-    def _add_captcha_solution(self, image: str, solution: str):
+    def _add_captcha_solution(self, image: str, solution: str, correct: bool, website: str = None):
+        website = website if website else self.market_id
         contains_numbers = False
         contains_letters = False
         for l in solution:
@@ -420,14 +408,15 @@ class BaseScraper(BaseClassWithLogger):
             contains_letters = contains_letters or l.isalpha()
         assert contains_numbers or contains_letters
         self.db_session.add(
-            CaptchaSolution(image=image, solution=solution, market_id=self.market_id, numbers=contains_numbers,
-                            letters=contains_letters))
+            CaptchaSolution(image=image, solution=solution, website=website, numbers=contains_numbers,
+                            letters=contains_letters, solved_correctly=correct))
 
     def _add_web_session_cookie_to_db(self, cookie_jar: RequestsCookieJar) -> None:
         cookie_object_base64 = base64.b64encode(pickle.dumps(dict(cookie_jar))).decode("utf-8")
+        username = self.web_session.username
 
         existing_cookie: WebSessionCookie = self.db_session.query(WebSessionCookie).filter(
-            WebSessionCookie.username == self.username,
+            WebSessionCookie.username == username,
             WebSessionCookie.mirror_url == self.mirror_base_url).first()
 
         if existing_cookie:
@@ -435,20 +424,29 @@ class BaseScraper(BaseClassWithLogger):
             existing_cookie.python_object = cookie_object_base64
         else:
             self.db_session.add(
-                WebSessionCookie(thread_id=self.thread_id, session_id=self.session_id, username=self.username,
+                WebSessionCookie(thread_id=self.thread_id, session_id=self.session_id, username=username,
                                  mirror_url=self.mirror_base_url, python_object=cookie_object_base64)
             )
 
         self.db_session.flush()
 
-    def _get_cookie_from_db(self) -> Union[dict, None]:
+    def _set_saved_cookie_on_web_sessions(self) -> None:
+        for web_session in self.web_sessions:
+            cookie_dict_from_db: dict = self._get_cookie_from_db(web_session.username, web_session.password)
+            if cookie_dict_from_db:
+                web_session.cookies.update(cookie_dict_from_db)
+                web_session.finger_print = hashlib.md5(
+                    self._get_cookie_string(web_session).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[0:3]
+            else:
+                web_session.finger_print = ""
+
+    def _get_cookie_from_db(self, username: str, password: str) -> Union[dict, None]:
         web_session_cookie: WebSessionCookie = self.db_session.query(WebSessionCookie).filter(
-            WebSessionCookie.username == self.username,
-            WebSessionCookie.mirror_url == self.mirror_base_url).first()
+            WebSessionCookie.username == username,
+            WebSessionCookie.mirror_url == password).first()
 
-        base64_cookie_dict_binary = web_session_cookie.python_object
-
-        if base64_cookie_dict_binary:
+        if web_session_cookie:
+            base64_cookie_dict_binary = web_session_cookie.python_object
             cookie_dict_binary = base64.b64decode(base64_cookie_dict_binary.encode("utf8"))
             return dict(pickle.loads(cookie_dict_binary))
         else:
@@ -461,38 +459,43 @@ class BaseScraper(BaseClassWithLogger):
         self._wrap_up_session()
         raise e
 
-    def _get_web_response_with_error_catch(self, *args, **kwargs) -> Response:
+    def _get_web_response_with_error_catch(self, web_session, http_verb, url, *args, **kwargs) -> Response:
         while True:
             try:
-                web_response = self.web_session.request(*args, **kwargs)
+                web_response = web_session.request(http_verb, url, *args, **kwargs)
                 self.time_last_received_response = time()
                 if self._is_meta_refresh(web_response.text):
-                    redir_url = self._get_schemaed_url_from_path(self._wait_out_meta_refresh_and_get_redirect_url(web_response))
-                    return self.web_session.get(redir_url, headers=self.headers, proxies=self.proxy)
+                    redir_url = self._get_schemaed_url_from_path(
+                        self._wait_out_meta_refresh_and_get_redirect_url(web_response))
+                    return web_session.get(redir_url, headers=self.headers, proxies=self.proxy)
                 else:
                     return web_response
             except (KeyboardInterrupt, SystemExit, AttributeError) as e:
                 self._log_and_print_error(e, traceback.format_exc())
                 self._wrap_up_session()
                 raise e
-            except (HTTPError, BaseException) as e:
+            except WEB_EXCEPTIONS_TUPLE as e:
                 self._log_and_print_error(e, traceback.format_exc(), print_error=False)
                 self.logger.warn(type(e))
                 if time() - self.time_last_received_response > DEAD_MIRROR_TIMEOUT:
-                    self.mirror_base_url = self._get_new_mirror()
+                    self.mirror_base_url = self._db_error_catch_wrapper(func=self.mirror_manager.get_new_mirror,
+                                                                        rollback=False)
 
-    def _db_error_catch_wrapper(self, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None):
+    def _db_error_catch_wrapper(self, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None,
+                                rollback: bool = True) -> Any:
         if not error_data:
             error_data = []
 
         try:
-            self.db_session.rollback()
-            func(*args)
+            if rollback:
+                self.db_session.rollback()
+            res = func(*args)
             self.db_session.commit()
             for error_object, error_string, timestamp in error_data:
                 self._log_and_print_error(error_object, error_string, updated_date=timestamp, print_error=False)
+            return res
 
-        except (SQLAlchemyError, MySQLError, AttributeError, SystemError) as error:
+        except DB_EXCEPTIONS_TUPLE as error:
             error_string = traceback.format_exc()
             if type(error) == AttributeError:
                 if not error_is_sqlalchemy_error(error_string):
@@ -505,7 +508,7 @@ class BaseScraper(BaseClassWithLogger):
                 f"Problem with DBMS connection. Retrying in "
                 f"{seconds_until_next_try} seconds...")
             sleep(seconds_until_next_try)
-            func(*args, func=func, error_data=error_data)
+            return self._db_error_catch_wrapper(*args, func=func, error_data=error_data, rollback=rollback)
 
     def _generic_error_catch_wrapper(self, *args, func: Callable) -> any:
         try:
@@ -517,7 +520,10 @@ class BaseScraper(BaseClassWithLogger):
             self._process_generic_error(e)
 
     def _format_logger_message(self, msg: str) -> str:
-        return f"[t-ID {self.thread_id}] {msg}"
+        if hasattr(self, 'web_session'):
+            return f"[t-ID {self.thread_id} prx {self.proxy_port} cok {self.web_session.finger_print}] {msg}"
+        else:
+            return f"[t-ID {self.thread_id} prx {self.proxy_port} cok xxx] {msg}"
 
     def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
         if self._has_successful_login_phrase():
@@ -558,7 +564,7 @@ class BaseScraper(BaseClassWithLogger):
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_web_session(self) -> requests.Session:
+    def _get_web_session_object(self) -> requests.Session:
         raise NotImplementedError('')
 
     @abstractmethod
@@ -573,15 +579,8 @@ class BaseScraper(BaseClassWithLogger):
     def _get_anti_captcha_kwargs(self):
         raise NotImplementedError('')
 
-    def _instantiate_web_session(self) -> requests.Session:
-        web_session: requests.Session = self._get_web_session()
-        cookie_dict_from_db: dict = self._get_cookie_from_db()
-        if cookie_dict_from_db:
-            web_session.cookies.update(cookie_dict_from_db)
-        return web_session
-
-    def _get_schemaed_url_from_path(self, url_path: str, schema: str = "http") -> str:
-        return f"{schema}://{self.mirror_base_url}{url_path}"
+    def _get_schemaed_url_from_path(self, url_path: str) -> str:
+        return f"{get_schemaed_url(self.mirror_base_url, schema='http')}{url_path}"
 
     @staticmethod
     def _is_meta_refresh(text) -> bool:
@@ -603,17 +602,59 @@ class BaseScraper(BaseClassWithLogger):
     def _get_successful_login_phrase(self) -> str:
         raise NotImplementedError('')
 
+    @abstractmethod
+    def _get_min_credentials_per_thread(self) -> int:
+        raise NotImplementedError('')
+
     @staticmethod
     def _is_successful_login_response(response: Response) -> bool:
         return False
 
-    def _get_new_mirror(self) -> str:
-        #set failure time for current mirror
-        #get mirror with oldest failure time
-        #if no mirror with old failure time
-            #if db not refreshed last 30 min
-                #refresh mirror db
-                #recurse
-        #test mirror
-        #if test failed, recurse
-        pass
+    @abstractmethod
+    def _get_mirror_db_lock(self) -> RLock:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_user_credentials_db_lock(self) -> RLock:
+        raise NotImplementedError('')
+
+    def _get_captcha_solution_from_base64_image(self, base64_image: str, anti_captcha_kwargs: Dict[str, int] = None) \
+            -> Tuple[str, dict]:
+        time_before_requesting_captcha_solve = time()
+        anti_captcha_kwargs = anti_captcha_kwargs if anti_captcha_kwargs else self._get_anti_captcha_kwargs()
+        self.logger.info("Sending image to anti-catpcha.com API...")
+        captcha_solution_response = ImageToTextTask.ImageToTextTask(
+            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
+        ).captcha_handler(captcha_base64=base64_image)
+
+        captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
+                                                             func=lambda d: d["solution"]["text"])
+
+        self.logger.info(f"Captcha solved. Took {time() - time_before_requesting_captcha_solve} seconds.")
+
+        return captcha_solution, captcha_solution_response
+
+    def _get_web_session(self) -> requests.Session:
+        with self.user_credentials_db_lock:
+            web_session: requests.Session = self._get_web_session_object()
+
+            user_crendentials: UserCredential = self.db_session.query(UserCredential).filter(
+                UserCredential.market_id == self.market_id, UserCredential.thread_id == -1).first()
+
+            assert user_crendentials is not None
+            user_crendentials.thread_id = self.thread_id
+            web_session.username = user_crendentials.username
+            web_session.password = user_crendentials.password
+            self.logger.info(f"Loaded username {user_crendentials.username}")
+            self.db_session.commit()
+            return web_session
+
+    def _get_web_sessions(self) -> Tuple[requests.Session]:
+        nr_of_web_sessions = self._get_min_credentials_per_thread()
+        web_sessions: List[requests.Session] = []
+        for _ in range(nr_of_web_sessions):
+            web_sessions.append(self._get_web_session())
+        return tuple(web_sessions)
+
+    def _rotate_web_session(self) -> requests.Session:
+        return self.web_sessions[self.pages_counter % len(self.web_sessions)]

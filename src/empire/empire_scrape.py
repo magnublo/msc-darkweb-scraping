@@ -2,16 +2,16 @@ import hashlib
 from math import ceil
 from multiprocessing import Queue
 from random import shuffle
+from threading import RLock
 from typing import List, Tuple, Type
 
 import requests
-from requests.cookies import create_cookie
 from sqlalchemy import func
 
-from definitions import EMPIRE_MARKET_URL, EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
-    EMPIRE_MARKET_LOGIN_URL, EMPIRE_MARKET_HOME_URL, EMPIRE_HTTP_HEADERS, \
+from definitions import EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
+    EMPIRE_HTTP_HEADERS, \
     FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
-    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, MD5_HASH_STRING_ENCODING
+    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, MD5_HASH_STRING_ENCODING, EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH
 from environment_settings import DEBUG_MODE
 from src.base_functions import BaseFunctions
 from src.base_scraper import BaseScraper
@@ -29,13 +29,15 @@ from src.utils import get_page_as_soup_html
 
 class EmpireScrapingSession(BaseScraper):
 
+    __refresh_mirror_db_lock__ = RLock()
+
     def _get_anti_captcha_kwargs(self) -> dict:
         return {'numeric': 1}
 
-    def __init__(self, queue: Queue, username: str, password: str, nr_of_threads: int, thread_id: int, proxy: dict,
-                 session_id: int, mirror_base_url: str):
-        super().__init__(queue, username, password, nr_of_threads, thread_id=thread_id, proxy=proxy,
-                         session_id=session_id, mirror_base_url=mirror_base_url)
+    def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict,
+                 session_id: int):
+        super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
+                         session_id=session_id)
 
     def get_base_url(self) -> str:
         raise NotImplementedError('')
@@ -43,55 +45,29 @@ class EmpireScrapingSession(BaseScraper):
     def _get_scraping_funcs(self) -> Type[BaseFunctions]:
         return EmpireScrapingFunctions
 
-    def _get_web_session(self) -> requests.Session:
+    def _get_web_session_object(self) -> requests.Session:
         return requests.Session()
 
     def _get_working_dir(self) -> str:
         return EMPIRE_SRC_DIR
 
     def _get_login_url(self) -> str:
-        return EMPIRE_MARKET_LOGIN_URL
+        return "/index/login"
 
     def _get_is_logged_out_phrase(self) -> str:
         return EMPIRE_MARKET_LOGIN_PHRASE
-
-    def _set_cookies(self):
-
-        cookie = create_cookie(
-            domain=EMPIRE_MARKET_URL,
-            name='ab',
-            value='1cc735432450e28fa3333f2904cd5ae3')
-
-        self.web_session.cookies.set_cookie(
-            cookie
-        )
-
-        cookie = create_cookie(
-            domain=EMPIRE_MARKET_URL,
-            name='shop',
-            value='ske8ud8vnlrsq18vi6r7rhss4vbnukv0')
-
-        self.web_session.cookies.set_cookie(
-            cookie
-        )
-
-        self.cookie = self._get_cookie_string()
-
-    def _get_market_URL(self) -> str:
-        return EMPIRE_MARKET_URL
 
     def _get_market_id(self) -> str:
         return EMPIRE_MARKET_ID
 
     def _get_headers(self) -> dict:
         headers = EMPIRE_HTTP_HEADERS
-        headers["Host"] = self._get_market_URL()
-        headers["Referer"] = "http://" + self._get_market_URL() + "/login"
+        headers["Referer"] = "http://" + self.mirror_base_url + "/login"
         return headers
 
     def populate_queue(self):
-        web_response = self._get_logged_in_web_response(EMPIRE_MARKET_HOME_URL)
-        soup_html = get_page_as_soup_html(web_response)
+        web_response = self._get_logged_in_web_response(EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH)
+        soup_html = get_page_as_soup_html(web_response.text)
         pairs_of_category_base_urls_and_nr_of_listings = self.scraping_funcs.get_category_urls_and_nr_of_listings(
             soup_html)
         task_list = []
@@ -116,7 +92,7 @@ class EmpireScrapingSession(BaseScraper):
     def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
                         btc_rate, ltc_rate, xmr_rate):
 
-        # TODO: Scrape shipping methods, accepts_multisig, in_stock, product_type, ends_in, bulk price
+        # TODO: Scrape shipping methods, accepts_multisig, in_stock, listing_type(with parenthesis field), ends_in, bulk price
 
         seller, is_new_seller = self._get_seller(seller_name)
 
@@ -140,7 +116,7 @@ class EmpireScrapingSession(BaseScraper):
 
         listing_text = self.scraping_funcs.get_description(soup_html)
         listing_text_id = hashlib.md5(listing_text.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
-        categories, website_category_ids = self.scraping_funcs.get_categories_and_ids(soup_html)
+        categories, website_category_ids = self.scraping_funcs.get_categories_and_ids(soup_html, self.mirror_base_url)
         accepts_BTC, accepts_LTC, accepts_XMR = self.scraping_funcs.accepts_currencies(soup_html)
         nr_sold, nr_sold_since_date = self.scraping_funcs.get_nr_sold_since_date(soup_html)
         fiat_currency, price = self.scraping_funcs.get_fiat_currency_and_price(soup_html)

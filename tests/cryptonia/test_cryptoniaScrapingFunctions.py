@@ -1242,7 +1242,7 @@ class TestGetCaptchaImageUrl(CryptoniaBaseTest):
 
     def test_get_captcha_image_url(self):
         soup_html = self._get_page_as_soup_html('login_page/saved_cryptonia_login_page')
-        image_url = scrapingFunctions.get_captcha_image_url(soup_html)
+        image_url = scrapingFunctions.get_captcha_image_url_from_market_page(soup_html)
         self.assertEqual("/captcha", image_url)
 
 

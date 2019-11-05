@@ -1,0 +1,988 @@
+
+<!doctype html>
+<html lang="en"><head><title>Dark.fail: PGP verified darknet .onion links</title><meta charset="UTF-8"><link rel="canonical" href="https://dark.fail">
+<link rel="alternate" hreflang="en" href="https://dark.fail">
+<link rel="alternate" hreflang="jp" href="https://dark.fail/jp">
+<link rel="alternate" hreflang="de" href="https://dark.fail/de">
+<link rel="alternate" hreflang="fr" href="https://dark.fail/fr">
+<link rel="alternate" hreflang="es" href="https://dark.fail/es">
+<link rel="alternate" hreflang="nl" href="https://dark.fail/nl">
+<link rel="alternate" hreflang="ko" href="https://dark.fail/ko">
+<link rel="alternate" hreflang="zh" href="https://dark.fail/zh">
+<link rel="alternate" hreflang="zh-hk" href="https://dark.fail/hk">
+<link rel="alternate" hreflang="x-default" href="https://dark.fail">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"><meta name="description" content="Learn how to use Tor hidden services safely. Check whether a darknet site is online, View the uptime history of popular darknet sites and their mirrors."><link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAMNn/AAKQsAAXiicABKnPAAKwLgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABISFAAAAAABQUFBQAAAABERERERAAAAQSEhISEAAAAUFBQUFAAAABERERERAAAAQSEhIUEAAAAUFBQUFAAAAAEREREQAAAAABFEEQAAAAAAATMQAAAAAABTMzUAAAAAAAMwMAAAAAAFMwMzUAAAAAADAwAAAAAAAFAAUAAAD4HwAA8A8AAOAHAADgBwAA4AcAAOAHAADgBwAA4AcAAPAPAAD4HwAA/D8AAPgfAAD8vwAA8Q8AAP1/AAD7vwAA" rel="icon" type="image/x-icon">
+<style>
+html{
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    color: #212529;
+    background-color:#FCFCFC;
+    padding-bottom: 75px;
+}
+code{
+    font-size:1.3em
+}
+.content {
+     margin-left: auto;
+     margin-right: auto;
+     padding-left: .2em;
+     padding-right: .2em;
+     max-width: 768px;
+}
+a {
+     text-decoration: none;
+     color: #6a9d00;
+}
+h3 {
+    padding-bottom: 25px;
+}
+h3 span {
+     margin-top: 5px;
+     font-size: 12px;
+     font-weight: normal;
+     float: right;
+     text-align: right;
+}
+h4 {
+    color: #444;
+}
+pre{
+    overflow:hidden;
+}
+ ul {
+    list-style: none;
+     padding: 0;
+     margin: 0;
+}
+ .last_seen {
+    font-size: 12px;
+    color: #999;
+}
+.offline li {
+    display: inline;
+     color: #bbb;
+     font-size: 8pt;
+}
+.online a {
+    font-size: 10pt;
+}
+.online li {
+    padding-left: 1em;
+     text-indent: -.7em;
+}
+.online li::before {
+    content: "•";
+    color: yellowgreen;
+     padding-right: .2em;
+}
+li.status2::before {
+     color: #eee;
+}
+ .offline h5 {
+     color: #bbb;
+     margin-bottom: 0px;
+     font-weight: normal;
+}
+.offline ul {
+     margin-top: -19px;
+     margin-left: 64px;
+     max-width: 265px;
+     max-height: 100px;
+     overflow: auto;
+}
+.offline li {
+    padding-right: 10px;
+}
+.more {
+  padding-top: 5px;
+  padding-left: 17px;
+}
+.more a {
+  color: #384a12;
+}
+h4 a {
+  color: #444;
+}
+h4 a:hover {
+  text-decoration: underline;
+  text-decoration-color: #cdcdcd;
+}
+.darkfailllnkf4vf\.onion .phishnotice { display: block !important; }
+.fud {
+  display: none;
+}
+</style></head><body>
+<div class="content">
+<h3>dark.fail: Is a darknet site online?<span>Updated Mon, 04 Nov 2019 19:43:30 UTC<br><a href="https://mastodon.social/@darkdotfail" noreferrer>Mastodon</a> | <a href="https://twitter.com/darkdotfail" noreferrer>Twitter</a></span></h3>
+<p><b>ADMINS:</b> Introducing the Onion Mirror Guidelines. <a href="https://dark.fail/spec/omg.txt">Implement the &quot;OMG&quot;</a> to remain listed on dark.fail.</p>
+<p>Tor is the uncensored internet. Install <a href="https://www.torproject.org">Tor Browser</a> to explore it. Set <code>darkfailllnkf4vf.onion</code> as your home page to save time. Links are PGP verified and unclickable for your safety. dark.fail's <a href="#philosophy">philosophy</a> and <a href="#donations">finances</a></p>
+<p><b>I do not vouch for any sites.</b> This is a compilation of confirmed official Tor links to serve only as an anti-phishing resource.</p>
+<h4><a href="/dread">Dread</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://dreadditevelidot.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/dna">Darknet Avengers Forum</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://avengersdutyk3xf.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/envoy">Envoy Forum</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://envoys5appps3bin.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/thehub">The Hub Forum</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://thehub7xbw4dc5r2.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/tmg">The Majestic Garden</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://nzlbyrcvvqtrkxiu.onion</code>
+</li>
+<li class="online status2">
+<code>http://2oywvwmtzdelmiei.onion</code>
+</li>
+<li class="online status2">
+<code>http://talismanrestz7mr.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/tmg">2 more...</a>
+</div>
+</div>
+<h4><a href="/empire">Empire Market</a></h4>
+<div class="fud">
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://facebookcorewwwi.onion</code>
+</li>
+</ul>
+</div>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://expyuzz4wqqyqhjn.onion</code>
+</li>
+</ul>
+</div>
+</div>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://6qxqsnzfdphifebg.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/empire">2 more...</a>
+</div>
+</div>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://2cx54d7ee2e3ip44.onion</code>
+</li>
+<li class="status0">
+<code>http://kbnj4upb5ky46qii.onion</code>
+</li>
+<li class="status0">
+<code>http://zi6ipzkeflrkd7be.onion</code>
+</li>
+<li class="status0">
+<code>http://qewmgxo7kib7yxhr.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/samsara">Samsara Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://amonelidbdizstxk.onion</code>
+</li>
+<li class="online status1">
+<code>http://znsomnia3qpgwone.onion</code>
+</li>
+<li class="online status1">
+<code>http://dutfguflye57uphq.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/samsara">1 more...</a>
+</div>
+</div>
+<h4><a href="/cryptonia">Cryptonia Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://vklgb5pmwpmr5xo5ehyqcbwvdte5eoyubrf5l2fd2peshiymvnlf73yd.onion</code>
+</li>
+<li class="online status1">
+<code>http://t5z2wsho6fo444qysa67k6a7yu6kykooyt5yraxjgqj7jyfnkiihqpyd.onion</code>
+</li>
+<li class="online status1">
+<code>http://smzcepj36goxvxrapx3fr6zj5ydacfw72fmgdmwwy5plgfdoj7z3v3yd.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/cryptonia">5 more...</a>
+</div>
+</div>
+<h4><a href="/hydra">Hydra</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://hydraruzxpnew4af.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/avaris">Avaris Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://qm5h7ns34xwjdw5eixekok3auwl3qqvyxf6whrxjhwuziibpy76ql7id.onion</code>
+</li>
+<li class="online status1">
+<code>http://37xiwsguvgz45vfzwkzlkwtfe2qiq63vhmrdubgp2xaiewl7py3ltoyd.onion</code>
+</li>
+<li class="online status1">
+<code>http://tu5pj5xj2zhfuwdmrxof7yelov4hw36ydvqgve26fmr3aea7h2bb7jad.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/avaris">1 more...</a>
+</div>
+</div>
+<h4><a href="/genesis">Genesis Market</a></h4>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://x5ylylnoftkolawu.onion</code>
+</li>
+<li class="status0">
+<code>http://32zvohcmpepdgg6l.onion</code>
+</li>
+<li class="status0">
+<code>http://3rmybxbtkb5txmqv.onion</code>
+</li>
+<li class="status0">
+<code>http://iurnxnnbn75fonho.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/cannazon">Cannazon Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://cannazon4gbjluus.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/apollon">Apollon Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://apollonxilywevef.onion</code>
+</li>
+<li class="online status1">
+<code>http://apollonwmwenxcwa.onion</code>
+</li>
+<li class="online status2">
+<code>http://apollon5e246vvhj.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/apollon">3 more...</a>
+</div>
+</div>
+<h4><a href="/exploit-in">Exploit.in Forum</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://exploitinqx4sjro.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/tochka-git">Tochka Git Repository</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://qxklmrhx7qkzais6.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/tochka">Tochka Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://pointgg344ghbo2s.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/torum">Torum</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://torum6uvof666pzw.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://gf2juatsqdph6x2h.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/verified">Verified Forum</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://verified2ebdpvms.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/berlusconi">Berlusconi Market</a></h4>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://3m2pyft7fyzjqymu.onion</code>
+</li>
+<li class="status0">
+<code>http://hky3mzk3jtmd4zt4.onion</code>
+</li>
+<li class="status0">
+<code>http://55j6kjwki4vjtmzp.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/darkbay">DarkBay</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://darkbayupenqdqvv.onion</code>
+</li>
+<li class="online status1">
+<code>http://oh33m3pka6lvc2sb.onion</code>
+</li>
+<li class="online status1">
+<code>http://zwcgtqtdviw7gkbn.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/darkbay">1 more...</a>
+</div>
+</div>
+<h4><a href="/darkmarket">DarkMarket</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://darkevuygggqkqhq.onion</code>
+</li>
+<li class="online status1">
+<code>http://darkmarkl7f5hz5f.onion</code>
+</li>
+<li class="online status1">
+<code>http://darkmarkmxukc633.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/darkmarket">1 more...</a>
+</div>
+</div>
+<h4><a href="/deutschland-im-deep-web">Deutschland im Deep Web Forum</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://germanyruvvy2tcw.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/greymarket">Grey Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://greymtqdzxqec5ox.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/monopoly">Monopoly Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://3v6xtcduey3noinwtfsqegvpqbm64s7bsixobihb5u7kbt7nh5sda4qd.onion</code>
+</li>
+<li class="online status1">
+<code>http://edjh5wb6j2rdxux57wnpzykklso4lo6nranzfcdgkg3maek4w5tqw3ad.onion</code>
+</li>
+<li class="online status2">
+<code>http://vslh4gfv3nbdsyjlz3oj7b4faccvujdott3wakasrnzjbatq6mtc3kid.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/uas-service-rdp">UAS Service RDP</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://2x4tmsirlqvqmwdz.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/wannabuy">Wannabuy RDP</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://wannabuyaynozvmz.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/whitehouse">White House Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://7yipwxdv5cfdjfpjztiz7sv2jlzzjuepmxy4mtlvuaojejwhg3zhliqd.onion</code>
+</li>
+<li class="online status2">
+<code>http://zefmozbmelwjc4elhoim2q3t3y4z3yoodczvqagtquvwzhx763f4jtyd.onion</code>
+</li>
+<li class="online status2">
+<code>http://auzbdiguv5qtp37xoma3n4xfch62duxtdiu4cfrrwbxgckipd4aktxid.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/whitehouse">1 more...</a>
+</div>
+</div>
+<h4><a href="/yellow-brick">Yellow Brick Market</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://ck73ugjvx5a4wkhsmrfvwhlrq7evceovbsb7tvaxilpahybdokbyqcqd.onion</code>
+</li>
+<li class="online status1">
+<code>http://ri6siamiq7rtsp3zj4nk4ypl72glmezwx2f5d6aairnmumjopbyrbnad.onion</code>
+</li>
+<li class="online status1">
+<code>http://a7vxrkx7p3hcqgqfqdekl4r3qzhmkxfc6s5q54svtvg45k6jpkzs2byd.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/yellow-brick">5 more...</a>
+</div>
+</div>
+<h4><a href="/wayaway">Wayaway</a></h4>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://wayawaytcl3k66fl.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/bbc">BBC</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://bbcnewsv2vjtpsuy.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/bm">Bitmessage Gateway</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://bitmailendavkbec.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/propublica">ProPublica</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://propub3r6espa33w.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/proton">Protonmail</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>https://protonirockerxow.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/riseup">Riseup</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://cwoiopiifrlzcuos.onion</code>
+</li>
+<li class="online status2">
+<code>http://j6uhdvbhz74oefxf.onion</code>
+</li>
+<li class="online status2">
+<code>http://nzh3fv6jc6jskki3.onion</code>
+</li>
+</ul>
+<div class="more">
+<a href="/riseup">1 more...</a>
+</div>
+</div>
+<h4><a href="/calyx">The Calyx Institute (Jabber)</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://ijeeynrc6x2uy5ob.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/nyt">The New York Times</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>https://nytimes3xbfgragh.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/torbox">TorBox Email</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://torbox3uiot6wchz.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/local-monero">LocalMonero.co</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://localmonerogt7be.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/tor">The Tor Project</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://expyuzz4wqqyqhjn.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/cryptostorm">Cryptostorm VPN</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://stormgm7blbk7odd.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/ipredator">IPredator VPN</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>https://fwtnuwekoeayj3s7.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/mullvad">Mullvad VPN</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://xcln5hkbriyklr6n.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/njalla">Njal.la</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://njalladnspotetti.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/archive-is">Archive.is</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://archivecaslytosk.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/duckduckgo">DuckDuckGo</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>https://3g2upl4pq6kufc4m.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/facebook">Facebook</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>https://facebookcorewwwi.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/keybase">Keybase</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://fncuwbiisyh6ak3i.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/8chan">8chan</a></h4>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://oxwugzccvk3dk6tj.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/endchan">Endchan</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://s6424n4x4bsmqs27.onion</code>
+</li>
+<li class="online status2">
+<code>http://enxx3byspwsdo446jujc52ucy2pf5urdbhqw3kbsfhlfjwmbpj5smdad.onion</code>
+</li>
+<li class="online status2">
+<code>http://endchan5doxvprs5.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/elude">Elude.in</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://eludemaillhqfkh5.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/secmail">Secmail</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://secmailw453j7piv.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/coinpayments">CoinPayments</a></h4>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>https://coinpaymtstgtibr.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/sks">SKS PGP Keyserver Pool</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://jirk5u4osbsr34t5.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/the-pirate-bay">The Pirate Bay</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://suprbayoubiexnmp.onion</code>
+</li>
+<li class="online status2">
+<code>http://uj3wazyk5u4hnvtk.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/torch">Torch Search</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://xmh57jrzrnw6insl.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/wikileaks">WikiLeaks</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://wlchatc3pjwpli5r.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/darknetlive">Darknet Live</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://darknet7rl4epe24.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/chronos">Chronos</a></h4>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://chronosu3ulk3o3a.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/tape">Tape</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://tapeigwlwxqqmvg3zycpu22f3v4joehdz6dwhq3cn3gsevp4li542cyd.onion</code>
+</li>
+<li class="online status2">
+<code>http://tapeucwutvne7l5o.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/netherlands-police">National Police of the Netherlands</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://politiepcvh42eav.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/cia">The CIA&#39;s Official Onion Site</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://ciadotgov4sjwlzihbbgxnqg3xiyrg7so2r2o3lt5wz5ypk4sxyjstad.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/fbi-ncide">The FBI&#39;s NCIDE Task Force</a></h4>
+<div class="online">
+<ul>
+<li class="online status2">
+<code>http://ncidetf3j26mdtvf.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<h4><a href="/dream-partner">Dream Market&#39;s Partner (announced during shutdown)</a></h4>
+<div class="offline">
+<h5>Offline</h5>
+<ul>
+<li class="status0">
+<code>http://weroidjkazxqds2l.onion</code>
+</li>
+</ul>
+</div>
+<h4><a href="/df">dark.fail</a></h4>
+<div class="online">
+<ul>
+<li class="online status1">
+<code>http://darkfailllnkf4vf.onion</code>
+</li>
+</ul>
+<div class="more">
+</div>
+</div>
+<a name="philosophy"></a>
+<h3>Philosophy</h3>
+<p>Always fast, one server request. No tracking ever, no javascript ever.</p>
+<p>Accurate URLs verified by PGP. No direct linking in order to protect against DNS leaks from accidental clicking in a clearnet browser.</p>
+<p>Knowledge of darknet site uptime is important to many cybersecurity researchers. This site is provided for information only. No endorsements are made or implied regarding any sites or organizations mentioned here.</p>
+<p>Want a link listed or removed here? Email hello -a-t- dark.fail</p>
+<p>Jabber: darkdotfail at jabber.calyxinstitute.org</p>
+<p>Defend your right to privacy: <a href="https://supporters.eff.org/">donate to the EFF.</a></p>
+<a name="donations"></a>
+<h5>Donations are Appreciated</h5>
+<p>dark.fail is supported by our users. No sites pay for placement or advertisements, no affiliate links have or will ever be used. If this resource has helped you please consider sending a contribution.</p>
+<p>Bitcoin: 1MeGeJXcTCMW6CLjQQiZcbaZ2FLYSKUMZS</p>
+<p>Monero (safer, lower fees): 83yNBMMhBK5fyosQ3g4qD1LS1RUXMUVuATVGAZ1assQwDfVDHDNDWEx9wnC1PqpK8SFTV5F4R8kPjc6Pt8hm7DhYJD8stNJ</p>
+<h5>PGP Key</h5>
+<pre>-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+qpBfe6I=
+=J6e1
+-----END PGP PUBLIC KEY BLOCK-----
+</pre><p>
+<a href="/pgp-sigs.txt">Key rotated on 2019-08-11</a>
+</p>
+<h4>Translations</h4>
+<p><a href="/ru">русский</a></p>
+<p><a href="/de">Deutsche</a></p>
+<p><a href="/fr">Français</a></p>
+<p><a href="/es">Español</a></p>
+<p><a href="/nl">Nederlands</a></p>
+<p><a href="/zh">中文</a></p>
+<p><a href="/jp">日本語</a></p>
+<p><a href="/ko">韓国語</a></p>
+</div>
+</body>
+<style>
+.phishnotice p {
+    position: fixed;
+    top: 0px;
+    background-color: white;
+    border: 1px solid red;
+    padding: 15px;
+}
+</style>
+<div class="phishnotice" style="display: none;"><p>WARNING: You might be on a phishing site. Check our official Twitter @DarkDotFail to see the real URL. Our site always has a dot between the words Dark and Fail.</p></div>
+</html>
