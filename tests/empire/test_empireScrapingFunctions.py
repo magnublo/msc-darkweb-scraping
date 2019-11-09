@@ -104,6 +104,10 @@ class TestGetShippingMethods(EmpireBaseTest):
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
         self.assertTupleEqual((('Free', 0.02, 'USD', 0.0, 'order', True),), shipping_methods)
 
+    def test_get_shipping_methods_eight(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_8')
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('free', 0.01, 'USD', 0.0, 'order', True),), shipping_methods)
 
 class TestGetBulkPrices(EmpireBaseTest):
 
