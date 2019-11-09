@@ -6,6 +6,7 @@ import traceback
 from abc import abstractmethod
 from datetime import datetime
 from multiprocessing import Queue
+from random import gauss
 from threading import RLock
 from time import sleep
 from time import time
@@ -15,6 +16,7 @@ import requests
 from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
 from requests import Response
 from requests.cookies import RequestsCookieJar
+from sqlalchemy import func
 from sqlalchemy.exc import ProgrammingError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
@@ -418,11 +420,16 @@ class BaseScraper(BaseClassWithLogger):
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
             self._add_captcha_solution(base64_image, captcha_solution, correct=False, username=web_session.username)
             if self.failed_captcha_counter % FAILED_CAPTCHAS_PER_PAUSE == 0:
+                waiting_interval = gauss(TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL,
+                                         TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL / 10)
                 self.logger.critical(
-                    f"Failed {FAILED_CAPTCHAS_PER_PAUSE} captchas, waiting {TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL} "
+                    f"Failed {FAILED_CAPTCHAS_PER_PAUSE} captchas, waiting {waiting_interval} "
                     f"seconds.")
                 web_session.cookies.clear()
-                sleep(TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL)
+                sleep(waiting_interval)
+            if self.failed_captcha_counter % (TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL * 3) == 0:
+                self._release_user_credentials()
+                self.web_sessions = self._get_web_sessions(order_rand=True)
             self._login_and_set_cookie(web_session, web_response)
         else:
             web_session.finger_print = hashlib.md5(
@@ -683,7 +690,8 @@ class BaseScraper(BaseClassWithLogger):
 
         return captcha_solution, captcha_solution_response
 
-    def _get_web_session(self) -> requests.Session:
+    def _get_web_session(self, order_rand: bool) -> requests.Session:
+        order_criterium = func.rand() if order_rand else WebSessionCookie.updated_date.desc()
         with self.user_credentials_db_lock:
             web_session: requests.Session = self._get_web_session_object()
 
@@ -691,8 +699,7 @@ class BaseScraper(BaseClassWithLogger):
                 UserCredential.market_id == self.market_id, UserCredential.thread_id == -1,
                 UserCredential.is_registered == 1).join(WebSessionCookie,
                                                         WebSessionCookie.username == UserCredential.username,
-                                                        isouter=True).order_by(
-                WebSessionCookie.updated_date.desc()).first()
+                                                        isouter=True).order_by(order_criterium).first()
 
             assert user_credential is not None
             assert user_credential.thread_id == -1
@@ -703,11 +710,11 @@ class BaseScraper(BaseClassWithLogger):
             self.db_session.commit()
             return web_session
 
-    def _get_web_sessions(self) -> Tuple[requests.Session]:
+    def _get_web_sessions(self, order_rand: bool = False) -> Tuple[requests.Session]:
         nr_of_web_sessions = self._get_min_credentials_per_thread()
         web_sessions: List[requests.Session] = []
         for _ in range(nr_of_web_sessions):
-            web_sessions.append(self._get_web_session())
+            web_sessions.append(self._get_web_session(order_rand))
         return tuple(web_sessions)
 
     def _rotate_web_session(self) -> requests.Session:
@@ -731,3 +738,11 @@ class BaseScraper(BaseClassWithLogger):
             self.db_session.add(country)
             self.db_session.flush()
         return country.id
+
+    def _release_user_credentials(self):
+        with self.user_credentials_db_lock:
+            for web_session in self.web_sessions:
+                user_credential = self.db_session.query(UserCredential).filter(
+                    UserCredential.username == web_session.username, UserCredential.market_id == self.market_id).first()
+                user_credential.thread_id = -1
+            self.db_session.commit()

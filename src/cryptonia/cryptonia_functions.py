@@ -46,7 +46,7 @@ def _parse_disputes(label_div: BeautifulSoup) -> Tuple[int, int]:
 def _get_sales_rating_max_rating_from_external_rating(info_string: str) -> Tuple[
     int, Union[float, Any], Optional[Any], None, None, None, Optional[str]]:
     unparsed_nr_of_sales_and_rating_string = info_string.split(" deals")
-    if len(unparsed_nr_of_sales_and_rating_string) == 1: #doesn't contain very common keyword "deals"
+    if len(unparsed_nr_of_sales_and_rating_string) == 1:  # doesn't contain very common keyword "deals"
         unparsed_nr_of_sales, rating_string = info_string.split()
     elif len(unparsed_nr_of_sales_and_rating_string) == 2:
         unparsed_nr_of_sales, rating_string = unparsed_nr_of_sales_and_rating_string
@@ -79,10 +79,13 @@ def _get_good_neutral_bad_reviews_from_external_rating(info_string: str) -> Tupl
     return sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
 
 
-def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[str, int, float, float, int, int, int, str]:
+def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
+    str, Optional[int], Optional[float], Optional[float], Optional[int], Optional[int], Optional[int], Optional[str]]:
     if market_id in [EMPIRE_MARKET_ID, DREAM_MARKET_ID, AGORA_MARKET_ID, WALL_STREET_MARKET_ID, NUCLEUS_MARKET_ID,
                      ABRAXAS_MARKET_ID,
                      MIDDLE_EARTH_MARKET_ID, CGMC_MARKET_ID]:
+        if info_string.strip() == "":
+            return market_id, None, None, None, None, None, None, "No seller stats associated with this verification."
         res = _get_sales_rating_max_rating_from_external_rating(info_string)
     elif market_id in [ALPHA_BAY_MARKET_ID, BLACK_BANK_MARKET_ID, BLACK_MARKET_RELOADED_ID]:
         res = _get_good_neutral_bad_reviews_from_external_rating(info_string)
@@ -428,7 +431,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         assert len(lg_spans) == 1
         lg_span = lg_spans[0]
         price, currency_slash_unit = lg_span.text.split(" ")
-        currency, unit = currency_slash_unit.split("/", maxsplit=1) #name of unit can contain slash, e.g. "1/4 pound"
+        currency, unit = currency_slash_unit.split("/", maxsplit=1)  # name of unit can contain slash, e.g. "1/4 pound"
         return currency, float(price), unit
 
     @staticmethod
@@ -492,7 +495,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return span.text
 
     @staticmethod
-    def get_shipping_methods(soup_html) -> Tuple[Tuple[str, Optional[float], str, float, Optional[str], Optional[bool]]]:
+    def get_shipping_methods(soup_html) -> Tuple[
+        Tuple[str, Optional[float], str, float, Optional[str], Optional[bool]]]:
 
         shipselects = [select for select in
                        soup_html.findAll('select', attrs={'class': 'shipselect', 'name': 'shipping_method'})]

@@ -950,6 +950,21 @@ class TestGetSellerInfo(CryptoniaBaseTest):
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-21 01:42:36"), member_since)
 
+    def test_get_seller_info_eighteen(self):
+        soup_html = self._get_page_as_soup_html('users/saved_cryptonia_user_profile_18')
+        percent_positive_rating, disputes, external_market_ratings, amount_on_escrow, ships_from, ships_to, \
+        jabber_id, fe_enabled, member_since, last_online = scrapingFunctions.get_seller_info(
+            soup_html)
+
+        self.assertEqual(87.5, percent_positive_rating)
+        self.assertTupleEqual((0, 0), disputes)
+        self.assertEqual((('DREAM_MARKET', 360, 4.95, 5.0, None, None, None, None), ('EMPIRE_MARKET', None, None, None, None, None, None, 'No seller stats associated with this verification.')), external_market_ratings)
+        self.assertEqual(('BTC', 0.0356434, 'USD', 312.93), amount_on_escrow)
+        self.assertEqual('United Kingdom', ships_from)
+        self.assertTupleEqual(('United Kingdom',), ships_to)
+        self.assertEqual(None, jabber_id)
+        self.assertEqual(False, fe_enabled)
+        self.assertEqual(datetime.fromisoformat("2019-08-25 11:11:46"), member_since)
 
 class TestGetParenthesisNumberAndVendorLevel(CryptoniaBaseTest):
 
