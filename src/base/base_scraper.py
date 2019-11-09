@@ -79,7 +79,7 @@ class BaseScraper(BaseClassWithLogger):
         self.mirror_manager = MirrorManager(self)
         self.mirror_base_url: str = self.mirror_manager.get_new_mirror()
         self.headers = self._get_headers()
-        self._set_saved_cookie_on_web_sessions()
+        self._set_cookie_on_web_sessions()
         self.web_session = self._rotate_web_session()
 
     def scrape(self):
@@ -431,7 +431,7 @@ class BaseScraper(BaseClassWithLogger):
                             letters=contains_letters, solved_correctly=correct))
 
     def _add_web_session_cookie_to_db(self, cookie_jar: RequestsCookieJar) -> None:
-        cookie_object_base64 = base64.b64encode(pickle.dumps(dict(cookie_jar))).decode("utf-8")
+        cookie_object_base64 = base64.b64encode(pickle.dumps(cookie_jar)).decode("utf-8")
         username = self.web_session.username
 
         existing_cookie: WebSessionCookie = self.db_session.query(WebSessionCookie).filter(
@@ -451,14 +451,14 @@ class BaseScraper(BaseClassWithLogger):
                                                                          username, f"{self.mirror_base_url[0:5]}..."))
         self.db_session.commit()
 
-    def _set_saved_cookie_on_web_sessions(self) -> None:
+    def _set_cookie_on_web_sessions(self) -> None:
         for web_session in self.web_sessions:
-            cookie_dict_from_db: dict = self._get_cookie_from_db(web_session.username)
-            if cookie_dict_from_db:
+            cookie_jar_from_db: RequestsCookieJar = self._get_cookie_from_db(web_session.username)
+            if cookie_jar_from_db:
                 self.logger.info(
-                    "Loaded cookie {0} from db for user {1}".format(''.join(str(cookie_dict_from_db).split('\n')),
+                    "Loaded cookie {0} from db for user {1}".format(''.join(str(cookie_jar_from_db).split('\n')),
                                                                     web_session.username))
-                web_session.cookies.update(cookie_dict_from_db)
+                web_session.cookies.update(cookie_jar_from_db)
                 web_session.finger_print = hashlib.md5(
                     self._get_cookie_string(web_session).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[0:3]
             else:
@@ -472,8 +472,9 @@ class BaseScraper(BaseClassWithLogger):
 
         if web_session_cookie:
             base64_cookie_dict_binary = web_session_cookie.python_object
-            cookie_dict_binary = base64.b64decode(base64_cookie_dict_binary.encode("utf8"))
-            return dict(pickle.loads(cookie_dict_binary))
+            cookie_jar_binary = base64.b64decode(base64_cookie_dict_binary.encode("utf8"))
+            cookie_jar = pickle.loads(cookie_jar_binary)
+            return cookie_jar
         else:
             return None
 

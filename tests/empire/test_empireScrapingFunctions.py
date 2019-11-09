@@ -1,3 +1,5 @@
+from unittest import TestCase
+
 from src.empire.empire_functions import EmpireScrapingFunctions as scrapingFunctions
 from tests.empire.empire_base_test import EmpireBaseTest
 
@@ -77,7 +79,8 @@ class TestGetShippingMethods(EmpireBaseTest):
     def test_get_shipping_methods_two(self):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_2')
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
-        self.assertTupleEqual((('UK', 1, 'USD', 0.0, 'order', True), ('EU', 5, 'USD', 0.0, 'order', True), ('WW', 14, 'USD', 0.0, 'order', True)), shipping_methods)
+        self.assertTupleEqual((('UK', 1, 'USD', 0.0, 'order', True), ('EU', 5, 'USD', 0.0, 'order', True),
+                               ('WW', 14, 'USD', 0.0, 'order', True)), shipping_methods)
 
     def test_get_shipping_methods_three(self):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_3')
@@ -108,6 +111,7 @@ class TestGetShippingMethods(EmpireBaseTest):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_8')
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
         self.assertTupleEqual((('free', 0.01, 'USD', 0.0, 'order', True),), shipping_methods)
+
 
 class TestGetBulkPrices(EmpireBaseTest):
 
@@ -258,3 +262,11 @@ class TestGetListingCategories(EmpireBaseTest):
             listing_categories)
         for category in listing_categories:
             self.assertEqual(category[3], listing_categories.index(category))
+
+
+class TestGetLoginPayload(EmpireBaseTest):
+
+    def test_get_login_payload(self):
+        soup_html = self._get_page_as_soup_html('login_page/saved_empire_login_page_0')
+        login_payload: dict = scrapingFunctions.get_login_payload(soup_html, 'using_python1', 'Password123!', "012371")
+        a = 1

@@ -131,6 +131,7 @@ def mocked_get_logger_config() -> dict:
     config = BASE_LOGGER_CONFIG
     config['loggers'].update(CLASS_LOGGER_CONFIGS)
     config['handlers'].update(CLASS_HANDLER_CONFIGS)
+    config['handlers'][get_logger_name(MockedEmpireScrapingSession)]['level'] = 'DEBUG'
     config['formatters'].update(CLASS_FORMATTER_CONFIGS)
     return config
 
