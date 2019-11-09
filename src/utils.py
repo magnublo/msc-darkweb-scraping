@@ -82,8 +82,8 @@ def error_is_sqlalchemy_error(error_string) -> bool:
            or error_string.find("MySQL") != -1
 
 
-def print_error_to_file(thread_id, error_string, file_postfix=None) -> None:
-    file_name = f"thread_{thread_id}_error"
+def print_error_to_file(market_id: str, thread_id: int, error_string: str, file_postfix=None) -> None:
+    file_name = f"{market_id}_thread_{thread_id}_error"
     if file_postfix:
         file_name = f"{file_name}_{file_postfix}"
     file = open(file_name, "w")

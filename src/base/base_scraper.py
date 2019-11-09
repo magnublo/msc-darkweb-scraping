@@ -140,7 +140,7 @@ class BaseScraper(BaseClassWithLogger):
             self.db_session.commit()
         except ProgrammingError:
             meta_error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
-            print_error_to_file(self.thread_id, meta_error_string, "meta")
+            print_error_to_file(self.market_id, self.thread_id, meta_error_string, "meta")
         sleep(2)
 
     def _wrap_up_session(self) -> None:
@@ -479,7 +479,7 @@ class BaseScraper(BaseClassWithLogger):
 
     def _process_generic_error(self, e: BaseException) -> None:
         error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
-        print_error_to_file(self.thread_id, error_string)
+        print_error_to_file(self.market_id, self.thread_id, error_string)
         self._log_and_print_error(e, error_string, print_error=False)
         self._wrap_up_session()
         raise e
