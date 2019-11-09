@@ -17,13 +17,13 @@ from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
 from requests import Response
 from requests.cookies import RequestsCookieJar
 from sqlalchemy import func
-from sqlalchemy.exc import ProgrammingError
+from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
-    RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, WEB_EXCEPTIONS_TUPLE, \
-    DB_EXCEPTIONS_TUPLE, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, FAILED_CAPTCHAS_PER_PAUSE, \
+    RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, FAILED_CAPTCHAS_PER_PAUSE, \
     TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL
+from dynamic_config import WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
@@ -48,7 +48,8 @@ from src.models.user_credential import UserCredential
 from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     GenericException, get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
-    get_temporary_server_error, pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string
+    get_temporary_server_error, pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string, \
+    DeadMirrorException
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -534,6 +535,7 @@ class BaseScraper(BaseClassWithLogger):
                     self.mirror_base_url = self._db_error_catch_wrapper(func=self.mirror_manager.get_new_mirror,
                                                                         rollback=False)
                     self.headers = self._get_headers()
+                    raise DeadMirrorException
 
     def _db_error_catch_wrapper(self, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None,
                                 rollback: bool = True) -> Any:

@@ -10,7 +10,8 @@ from sqlalchemy import func
 
 from definitions import REFRESH_MIRROR_DB_LIMIT, MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH, DARKFAIL_URL, \
     DARKFAIL_MARKET_STRINGS, MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR, \
-    WEB_EXCEPTIONS_TUPLE, DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE
+    DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE
+from dynamic_config import WEB_EXCEPTIONS_TUPLE
 from src.base.base_functions import BaseFunctions
 from src.models.listing_observation import ListingObservation
 from src.models.market_mirror import MarketMirror
@@ -36,7 +37,7 @@ class MirrorManager:
         # recurse
         # test mirror
         # if test failed, recurse
-
+        self.scraper.db_session.rollback()
         self._set_failure_time_current_mirror()
 
         # The candidate mirror is the most recently online mirror that has not failed within the last

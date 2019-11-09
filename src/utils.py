@@ -12,8 +12,9 @@ from bs4 import BeautifulSoup
 from text2digits import text2digits
 from urllib3.exceptions import HTTPError
 
-from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, WEB_EXCEPTIONS_TUPLE, MAX_MARKET_THREADS_PER_PROXY, \
+from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, MAX_MARKET_THREADS_PER_PROXY, \
     ONE_DAY, ONE_WEEK, ONE_HOUR
+from dynamic_config import WEB_EXCEPTIONS_TUPLE
 from src.data.continent_dict import CONTINENT_DICTIONARY
 from src.data.country_dict import COUNTRY_DICT
 from src.tor_proxy_check import get_proxy_dict
@@ -23,6 +24,12 @@ class ListingType(Enum):
     PHYSICAL = 1,
     AUTO_DIGITAL = 2,
     MANUAL_DIGITAL = 3
+
+
+class DeadMirrorException(Exception):
+
+    def __init__(self):
+        super().__init__("Dead mirror, throwing exception and restarting scrape of queue item.")
 
 
 class LoggedOutException(Exception):
