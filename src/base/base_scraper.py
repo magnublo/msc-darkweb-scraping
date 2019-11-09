@@ -413,7 +413,7 @@ class BaseScraper(BaseClassWithLogger):
                                                         web_session=web_session)
 
         if self._is_logged_out(web_response, self.login_url, self.is_logged_out_phrase):
-            self.logger.warn("INCORRECTLY SOLVED CAPTCHA, TRYING AGAIN...")
+            self.logger.warn(f"INCORRECTLY SOLVED CAPTCHA FOR USER {self.web_session.username}, TRYING AGAIN...")
             self.failed_captcha_counter += 1
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
             self._add_captcha_solution(base64_image, captcha_solution, correct=False)
