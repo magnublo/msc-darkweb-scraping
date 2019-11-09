@@ -63,8 +63,8 @@ class MirrorManager:
 
         if not candidate_mirror:
             candidate_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
-                MarketMirror.last_online_timestamp == self.scraper.db_session.query(
-                    func.max(MarketMirror.last_online_timestamp)) \
+                MarketMirror.last_offline_timestamp == self.scraper.db_session.query(
+                    func.min(MarketMirror.last_offline_timestamp)) \
                 .filter(MarketMirror.market_id == self.scraper.market_id) \
                 .subquery().as_scalar()).first()
             if not candidate_mirror:
