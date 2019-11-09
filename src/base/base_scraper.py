@@ -21,9 +21,9 @@ from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
-    RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, FAILED_CAPTCHAS_PER_PAUSE, \
-    TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL
-from dynamic_config import WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE
+    RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, \
+    FAILED_CAPTCHAS_PER_PAUSE, \
+    TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
@@ -47,9 +47,9 @@ from src.models.shipping_method import ShippingMethod
 from src.models.user_credential import UserCredential
 from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
-    GenericException, get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
-    get_temporary_server_error, pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string, \
-    DeadMirrorException
+    get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
+    get_temporary_server_error, pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string
+from src.exceptions import DeadMirrorException, GenericException
 
 
 class BaseScraper(BaseClassWithLogger):

@@ -1,10 +1,16 @@
 import os
+from _mysql_connector import MySQLError
 
 from typing import Tuple, List
+
+import requests
+import urllib3
+from sqlalchemy.exc import SQLAlchemyError, DatabaseError
 
 from sqlalchemy.ext.declarative import declarative_base
 
 from environment_settings import MYSQL_ECHO_DEBUG
+from src.exceptions import DeadMirrorException
 
 ONE_WEEK = 3600*24*7
 ONE_DAY = 3600*24
@@ -171,3 +177,5 @@ MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID)
 for market_id in MARKET_IDS:
     assert market_id in DARKFAIL_MARKET_STRINGS.keys()
     assert market_id in DARKFAIL_MARKET_SUBURLS.keys()
+WEB_EXCEPTIONS_TUPLE = (requests.HTTPError, urllib3.exceptions.HTTPError, requests.RequestException)
+DB_EXCEPTIONS_TUPLE = (SQLAlchemyError, MySQLError, AttributeError, SystemError, DatabaseError, DeadMirrorException)

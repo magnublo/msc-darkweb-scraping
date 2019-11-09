@@ -1,9 +1,4 @@
-from _mysql_connector import MySQLError
 from typing import List, Tuple, Type
-
-import requests
-import urllib3
-from sqlalchemy.exc import SQLAlchemyError, DatabaseError
 
 from definitions import EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, MARKET_IDS, EMPIRE_MIN_CREDENTIALS_PER_THREAD, \
     CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
@@ -12,7 +7,7 @@ from src.base.base_scraper import BaseScraper
 from src.base.base_scraping_manager import ScrapingManager
 from src.cryptonia.cryptonia_scrape import CryptoniaScrapingSession
 from src.empire.empire_scrape import EmpireScrapingSession
-from src.utils import get_logger_name, DeadMirrorException
+from src.utils import get_logger_name
 
 grey = "\x1b[38;21m"
 yellow = "\x1b[33;21m"
@@ -126,7 +121,3 @@ def get_logger_config() -> dict:
     config['handlers'].update(CLASS_HANDLER_CONFIGS)
     config['formatters'].update(CLASS_FORMATTER_CONFIGS)
     return config
-
-
-WEB_EXCEPTIONS_TUPLE = (requests.HTTPError, urllib3.exceptions.HTTPError, requests.RequestException)
-DB_EXCEPTIONS_TUPLE = (SQLAlchemyError, MySQLError, AttributeError, SystemError, DatabaseError, DeadMirrorException)
