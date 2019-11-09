@@ -18,6 +18,8 @@ class CaptchaSolution(Base):
     image = Column(Text)
     solution = Column(String(MYSQL_VARCHAR_DEFAULT_LENGTH))
     website = Column(CHAR(MARKET_NAME_COLUMN_LENGTH))
+    thread_id = Column(Integer)
+    username = Column(String(MYSQL_VARCHAR_DEFAULT_LENGTH))
     numbers = Column(Boolean)
     letters = Column(Boolean)
     solved_correctly = Column(Boolean)

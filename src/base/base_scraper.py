@@ -413,22 +413,26 @@ class BaseScraper(BaseClassWithLogger):
                                                         web_session=web_session)
 
         if self._is_logged_out(web_response, self.login_url, self.is_logged_out_phrase):
-            self.logger.warn(f"INCORRECTLY SOLVED CAPTCHA FOR USER {self.web_session.username}, TRYING AGAIN...")
+            self.logger.warn(f"INCORRECTLY SOLVED CAPTCHA FOR USER {web_session.username}, TRYING AGAIN...")
             self.failed_captcha_counter += 1
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
-            self._add_captcha_solution(base64_image, captcha_solution, correct=False)
+            self._add_captcha_solution(base64_image, captcha_solution, correct=False, username=web_session.username)
             if self.failed_captcha_counter % FAILED_CAPTCHAS_PER_PAUSE == 0:
-                self.logger.critical(f"Failed {FAILED_CAPTCHAS_PER_PAUSE} captchas, waiting {TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL} seconds.")
+                self.logger.critical(
+                    f"Failed {FAILED_CAPTCHAS_PER_PAUSE} captchas, waiting {TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL} "
+                    f"seconds.")
+                web_session.cookies.clear()
                 sleep(TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL)
             self._login_and_set_cookie(web_session, web_response)
         else:
             web_session.finger_print = hashlib.md5(
                 self._get_cookie_string(web_session).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[0:3]
-            self._add_captcha_solution(base64_image, captcha_solution, correct=True)
+            self._add_captcha_solution(base64_image, captcha_solution, correct=True, username=web_session.username)
             self._add_web_session_cookie_to_db(self.web_session.cookies)
             self.db_session.commit()
 
-    def _add_captcha_solution(self, image: str, solution: str, correct: bool, website: str = None):
+    def _add_captcha_solution(self, image: str, solution: str, correct: bool, website: str = None,
+                              username: str = None):
         website = website if website else self.market_id
         contains_numbers = False
         contains_letters = False
@@ -438,7 +442,8 @@ class BaseScraper(BaseClassWithLogger):
         assert contains_numbers or contains_letters
         self.db_session.add(
             CaptchaSolution(image=image, solution=solution, website=website, numbers=contains_numbers,
-                            letters=contains_letters, solved_correctly=correct))
+                            thread_id=self.thread_id, username=username, letters=contains_letters,
+                            solved_correctly=correct))
 
     def _add_web_session_cookie_to_db(self, cookie_jar: RequestsCookieJar) -> None:
         cookie_object_base64 = base64.b64encode(pickle.dumps(cookie_jar)).decode("utf-8")

@@ -199,11 +199,11 @@ class MirrorManager:
             self.scraper.logger.warn("Wrong captcha solution. Retrying.")
             self.scraper.anti_captcha_control.complaint_on_result(int(solution_response["taskId"]), "image")
             self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=False,
-                                               website="DARKFAIL")
+                                               website="DARKFAIL", username="DARKFAIL")
             return self._get_final_page_mirror_status_dict(sub_page_url)
         else:
             self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=True,
-                                               website="DARKFAIL")
+                                               website="DARKFAIL", username="DARKFAIL")
             return self.scraper.scraping_funcs.get_market_mirrors_from_final_page(final_page_soup_html)
 
     def _get_captcha_page_url(self, sub_page_url: str) -> str:
