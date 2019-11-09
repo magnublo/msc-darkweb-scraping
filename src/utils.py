@@ -345,3 +345,20 @@ def determine_real_country(country_name: str) -> Tuple[str, Optional[str], Optio
                 name_components = name_components[:-1]
 
         return country_name, None, None, False
+
+
+def get_estimated_finish_time_as_readable_string(start_time: float, initial_queue_size: int, queue_size: int) -> str:
+    pages_left = queue_size
+    pages_scraped = initial_queue_size-queue_size
+    time_spent = time() - start_time
+    time_left = (pages_left / pages_scraped) * time_spent
+
+    days = time_left // 86400
+    hours = (time_left - days * 86400) // 3600
+    minutes = (time_left - days * 86400 - hours * 3600) // 60
+    seconds = time_left - days * 86400 - hours * 3600 - minutes * 60
+    result: str = ("{0} day{1}, ".format(days, "s" if days != 1 else "") if days else "") + \
+             ("{0} hour{1}, ".format(hours, "s" if hours != 1 else "") if hours else "") + \
+             ("{0} minute{1}, ".format(minutes, "s" if minutes != 1 else "") if minutes else "") + \
+             ("{0} second{1}, ".format(seconds, "s" if seconds != 1 else "") if seconds else "")
+    return result

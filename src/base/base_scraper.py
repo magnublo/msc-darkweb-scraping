@@ -20,7 +20,7 @@ from sqlalchemy.exc import ProgrammingError
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
     RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, WEB_EXCEPTIONS_TUPLE, \
-    DB_EXCEPTIONS_TUPLE
+    DB_EXCEPTIONS_TUPLE, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
@@ -45,7 +45,7 @@ from src.models.user_credential import UserCredential
 from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     GenericException, get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
-    get_temporary_server_error, pretty_print_POST, determine_real_country
+    get_temporary_server_error, pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -70,7 +70,6 @@ class BaseScraper(BaseClassWithLogger):
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
         self.queue = queue
         self.market_id = self._get_market_id()
-        self.start_time = time()
         self.duplicates_this_session = 0
         self.web_sessions: Tuple[requests.Session] = self._get_web_sessions()
         self.initial_queue_size = self.queue.qsize()
@@ -81,6 +80,7 @@ class BaseScraper(BaseClassWithLogger):
         self.headers = self._get_headers()
         self._set_cookie_on_web_sessions()
         self.web_session = self._rotate_web_session()
+        self.START_TIME = time()
 
     def scrape(self):
         while not self.queue.empty():
@@ -372,6 +372,10 @@ class BaseScraper(BaseClassWithLogger):
             self.logger.info(f"{progress_msg}\n")
         else:
             self.logger.warn(f"{progress_msg}\n")
+        if self.pages_counter % NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT == 0:
+            estimated_finish_time = get_estimated_finish_time_as_readable_string(self.START_TIME,
+                                                                                 self.initial_queue_size, queue_size)
+            self.logger.info(f"At current rate, scraping will be completed in {estimated_finish_time}")
 
     def _get_logged_in_web_response(self, url_path: str, post_data: dict = None,
                                     web_session: requests.Session = None) -> Response:

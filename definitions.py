@@ -148,6 +148,9 @@ CRYPTONIA_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (MIDDLE_EARTH_MARKET_ID, "Middle Earth:")
 ]
 
+
+NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT = 10
+
 DEAD_MIRROR_TIMEOUT = 1200 # if mirror has not responded in this many seconds, rotate mirror
 MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR = 1800  # a mirror will not be rechecked if it has failed within this many seconds
 REFRESH_MIRROR_DB_LIMIT = 2700  # if best candidate mirror has failed within last 2700 seconds, it warrants a db refresh
