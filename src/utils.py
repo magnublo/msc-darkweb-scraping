@@ -144,7 +144,7 @@ def response_history_contains_code(response: requests.Response, response_code: i
 
 
 def is_empty_response(response: requests.Response) -> bool:
-    return response.status_code == 200 and response.text.strip() == ""
+    return response.request.method == 'GET' and response.status_code == 200 and response.text.strip() == ""
 
 
 def is_gateway_timed_out(response) -> bool:
