@@ -456,7 +456,7 @@ class BaseScraper(BaseClassWithLogger):
             cookie_dict_from_db: dict = self._get_cookie_from_db(web_session.username)
             if cookie_dict_from_db:
                 self.logger.info(
-                    "Loaded cookie {0} from db for user {1]".format(''.join(str(cookie_dict_from_db).split('\n')),
+                    "Loaded cookie {0} from db for user {1}".format(''.join(str(cookie_dict_from_db).split('\n')),
                                                                     web_session.username))
                 web_session.cookies.update(cookie_dict_from_db)
                 web_session.finger_print = hashlib.md5(
