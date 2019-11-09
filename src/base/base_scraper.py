@@ -709,8 +709,8 @@ class BaseScraper(BaseClassWithLogger):
     def _create_or_fetch_country(self, legit_country_name: str, alpha_2: str, alpha_3: str, is_continent: bool) -> int:
         country: Country = self.db_session.query(Country).filter(Country.name == legit_country_name).first()
         if not country:
-            country = self.db_session.add(
-                Country(name=legit_country_name, iso_alpha2_code=alpha_2, iso_alpha3_code=alpha_3,
-                        is_continent=is_continent))
+            country = Country(name=legit_country_name, iso_alpha2_code=alpha_2, iso_alpha3_code=alpha_3,
+                              is_continent=is_continent)
+            self.db_session.add(country)
             self.db_session.flush()
         return country.id
