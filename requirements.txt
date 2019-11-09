@@ -14,3 +14,4 @@ sty==1.0.0b12
 blessings==1.7
 text2digits==0.0.5
 pycountry==19.8.18
+brotli==1.0.7
