@@ -265,7 +265,7 @@ class BaseScraper(BaseClassWithLogger):
         self.db_session.flush()
 
     def _add_country_junctions(self, destination_country_ids: Tuple[int], listing_observation_id: int) -> None:
-        for country_id in destination_country_ids:
+        for country_id in set(destination_country_ids):
             self.db_session.add(ListingObservationCountry(
                 listing_observation_id=listing_observation_id,
                 country_id=country_id

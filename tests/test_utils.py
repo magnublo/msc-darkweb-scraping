@@ -20,3 +20,36 @@ class TestGetProxyPort(TestCase):
         }
         proxy_port = utils.get_proxy_port(PROXIES)
         self.assertEqual(9050, proxy_port)
+
+
+class TestDetermineRealCoutry(TestCase):
+
+    def test_determine_real_country(self):
+        res = []
+        names = ('France', 'India', 'Belgium', 'Brazil', 'Thailand', 'Turkey', 'Worldwide', 'Åland Islands', 'Austria',
+                 'Anguilla', 'Albania', 'Aruba', 'Egypt', 'China', 'Bangladesh', 'Bolivia', 'Plurinational State of',
+                 'Azerbaijan', 'United Arab Emirates')
+        for name in names:
+            res.append(utils.determine_real_country(name))
+
+        b = len(names) == len(set(res))
+        a = 1
+
+    def test_determine_real_country_one(self):
+        names = (
+        'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'France',
+        'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'Poland',
+        'Portugal', 'Romania', 'Slovakia', 'Slovenia', 'Spain', 'United Kingdom', 'Ireland', 'Switzerland',
+        'Liechtenstein', 'Andorra', 'Monaco', 'Finland', 'Iceland', 'Norway', 'Sweden', 'Serbia', 'San Marino',
+        'Montenegro', 'Macedonia', 'the Former Yugoslav Republic of', 'Bosnia and Herzegovina', 'Albania', 'Ukraine',
+        'Moldova', 'Republic of', 'Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'European Union', 'Suriname',
+        'Peru')
+        res = []
+        names = ('France', 'India', 'Belgium', 'Brazil', 'Thailand', 'Turkey', 'Worldwide', 'Åland Islands', 'Austria',
+                 'Anguilla', 'Albania', 'Aruba', 'Egypt', 'China', 'Bangladesh', 'Bolivia', 'Plurinational State of',
+                 'Azerbaijan', 'United Arab Emirates')
+        for name in names:
+            res.append(utils.determine_real_country(name))
+
+        b = len(names) == len(set(res))
+        a = 1
