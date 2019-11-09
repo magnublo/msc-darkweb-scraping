@@ -45,7 +45,7 @@ from src.models.user_credential import UserCredential
 from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     GenericException, get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
-    temporary_server_error, pretty_print_POST, determine_real_country
+    get_temporary_server_error, pretty_print_POST, determine_real_country
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -490,8 +490,9 @@ class BaseScraper(BaseClassWithLogger):
             self._log_web_request(web_session, http_verb, url, *args, **kwargs)
             try:
                 web_response = web_session.request(http_verb, url, *args, **kwargs)
-                if temporary_server_error(web_response):
-                    raise temporary_server_error(web_response)
+                temporary_server_error = get_temporary_server_error(web_response)
+                if temporary_server_error:
+                    raise temporary_server_error
                 self.time_last_received_response = time()
                 if self._is_meta_refresh(web_response.text):
                     redir_url = self._get_schemaed_url_from_path(

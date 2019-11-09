@@ -32,6 +32,13 @@ class LoggedOutException(Exception):
         super().__init__(text)
 
 
+class EmptyResponseException(HTTPError):
+    DEFAULT_TEXT = "200 response has no content."
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
+
+
 class BadGatewayException(HTTPError):
     DEFAULT_TEXT = "Received response code 502."
 
@@ -111,13 +118,16 @@ def get_error_string(scraping_object, error_traceback, sys_exec_info) -> str:
     return "\n\n\n".join([time_of_error] + [error_traceback] + local_variable_strings + object_variable_strings)
 
 
-def temporary_server_error(response) -> Optional[HTTPError]:
+
+def get_temporary_server_error(response) -> Optional[HTTPError]:
     if is_internal_server_error(response):
         return InternalServerErrorException(response.text)
     elif is_bad_gateway(response):
         return BadGatewayException(response.text)
     elif is_gateway_timed_out(response):
         return GatewayTimeoutException(response.text)
+    elif is_empty_response(response):
+        return EmptyResponseException()
     else:
         return None
 
@@ -133,7 +143,11 @@ def response_history_contains_code(response: requests.Response, response_code: i
     return False
 
 
-def is_gateway_timed_out(response):
+def is_empty_response(response: requests.Response) -> bool:
+    return response.status_code == 200 and response.text.strip() == ""
+
+
+def is_gateway_timed_out(response) -> bool:
     return response_history_contains_code(response, 504)
 
 
