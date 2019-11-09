@@ -29,7 +29,7 @@ class TestGetMarketMirrorsFromFinalPage(BaseTest):
         soup_html = self._get_page_as_soup_html("saved_darkfail_final_page", html_dir=HTML_DIR)
         market_mirrors = scrapingFunctions.get_market_mirrors_from_final_page(soup_html)
         self.assertEqual(datetime.fromisoformat("2019-11-02 17:48:45"),
-                         datetime.utcfromtimestamp(market_mirrors['http://apai6fp3b6n3n3pa.onion']))
+                         datetime.utcfromtimestamp(market_mirrors['apai6fp3b6n3n3pa.onion']))
 
 
 class TestGetMarketMirrorsFromMainPage(BaseTest):

@@ -486,7 +486,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return span.text
 
     @staticmethod
-    def get_shipping_methods(soup_html) -> Tuple[Tuple[str, Optional[int], str, float, Optional[str], Optional[bool]]]:
+    def get_shipping_methods(soup_html) -> Tuple[Tuple[str, Optional[float], str, float, Optional[str], Optional[bool]]]:
 
         shipselects = [select for select in
                        soup_html.findAll('select', attrs={'class': 'shipselect', 'name': 'shipping_method'})]
@@ -497,7 +497,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         options = [option for option in shipselect.findAll('option')]
         assert len(options) >= 2
 
-        shipping_methods: List[Tuple[str, Optional[int], str, float, Optional[str], Optional[bool]]] = []
+        shipping_methods: List[Tuple[str, Optional[float], str, float, Optional[str], Optional[bool]]] = []
 
         for option in options[1:]:
             description = "(".join(option.text.split("(")[:-1])[:-1]

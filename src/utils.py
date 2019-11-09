@@ -12,7 +12,8 @@ from bs4 import BeautifulSoup
 from text2digits import text2digits
 from urllib3.exceptions import HTTPError
 
-from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, WEB_EXCEPTIONS_TUPLE, MAX_MARKET_THREADS_PER_PROXY
+from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, WEB_EXCEPTIONS_TUPLE, MAX_MARKET_THREADS_PER_PROXY, \
+    ONE_DAY, ONE_WEEK, ONE_HOUR
 from src.data.continent_dict import CONTINENT_DICTIONARY
 from src.data.country_dict import COUNTRY_DICT
 from src.tor_proxy_check import get_proxy_dict
@@ -277,24 +278,34 @@ def get_standardized_listing_type(non_standardized_listing_type: str) -> str:
     return conversion_dict[non_standardized_listing_type].name
 
 
-def parse_time_delta_from_string(time_string: str) -> timedelta:
+def parse_unit_amount_and_unit_type_from_string(time_string: str) -> Tuple[float, str]:
     unit_amount_and_unit_type = time_string.split()
     if len(unit_amount_and_unit_type) == 2:
         unparsed_unit_amount, unit_type = unit_amount_and_unit_type
     elif len(unit_amount_and_unit_type) == 1:
-        unparsed_unit_amount, unit_type = (1, unit_amount_and_unit_type[0])
+        return 1.0, unit_amount_and_unit_type[0]
     else:
         raise AssertionError(f"Could not parse time unit and time amount in {unit_amount_and_unit_type}")
 
-    unit_amount = unparsed_unit_amount if type(unparsed_unit_amount) == int else int(
-        text2digits.Text2Digits().convert_to_digits(str(unparsed_unit_amount)))
+    if unparsed_unit_amount.find(".") != -1:
+        # the unit amount seems to be a float
+        unit_amount: float = float(unparsed_unit_amount)
+    else:
+        # assuming the unit amount is an integer
+        unit_amount = float(text2digits.Text2Digits().convert_to_digits(str(unparsed_unit_amount)))
+
+    return unit_amount, unit_type
+
+
+def parse_time_delta_from_string(time_string: str) -> timedelta:
+    unit_amount, unit_type = parse_unit_amount_and_unit_type_from_string(time_string)
 
     if unit_type[:3] == "day":
-        return timedelta(days=int(unit_amount))
+        return timedelta(seconds=unit_amount*ONE_DAY)
     elif unit_type[:4] == "week":
-        return timedelta(days=int(unit_amount) * 7)
+        return timedelta(seconds=unit_amount*ONE_WEEK)
     elif unit_type == "hours":
-        return timedelta(hours=int(unit_amount))
+        return timedelta(seconds=unit_amount*ONE_HOUR)
     else:
         raise AssertionError(f'Unknown unit type {unit_type}')
 

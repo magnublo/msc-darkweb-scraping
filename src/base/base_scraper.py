@@ -295,7 +295,7 @@ class BaseScraper(BaseClassWithLogger):
         return tuple(country_ids)
 
     def _add_shipping_methods(self, listing_observation_id: int, shipping_methods: Tuple[
-        Tuple[str, Optional[int], str, float, Optional[str], Optional[bool]]]) -> None:
+        Tuple[str, Optional[float], str, float, Optional[str], Optional[bool]]]) -> None:
 
         for description, days, currency, price, unit_name, price_is_per_unit in shipping_methods:
             self.db_session.add(

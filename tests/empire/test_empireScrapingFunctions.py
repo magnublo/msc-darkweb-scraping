@@ -27,13 +27,18 @@ class TestHasUnlimitedDispatch(EmpireBaseTest):
 
     def test_has_unlimited_dispatch_zero(self):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_0')
-        has_unlimited_dispatch = scrapingFunctions.has_unlimited_dispatch(soup_html)
-        self.assertEqual(True, has_unlimited_dispatch)
+        has_unlimited_dispatch = scrapingFunctions.has_unlimited_dispatch_and_quantity_in_stock(soup_html)
+        self.assertEqual((True, None), has_unlimited_dispatch)
 
     def test_has_unlimited_dispatch_one(self):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_1')
-        has_unlimited_dispatch = scrapingFunctions.has_unlimited_dispatch(soup_html)
-        self.assertEqual(False, has_unlimited_dispatch)
+        has_unlimited_dispatch = scrapingFunctions.has_unlimited_dispatch_and_quantity_in_stock(soup_html)
+        self.assertEqual((False, None), has_unlimited_dispatch)
+
+    def test_has_unlimited_dispatch_six(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_6')
+        has_unlimited_dispatch = scrapingFunctions.has_unlimited_dispatch_and_quantity_in_stock(soup_html)
+        self.assertEqual((True, 12), has_unlimited_dispatch)
 
 
 class TestGetDescription(EmpireBaseTest):
@@ -78,6 +83,26 @@ class TestGetShippingMethods(EmpireBaseTest):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_3')
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
         self.assertTupleEqual((('priority', 3, 'USD', 8.0, 'order', True),), shipping_methods)
+
+    def test_get_shipping_methods_four(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_4')
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('priority', 3.0, 'USD', 20.0, 'order', True),), shipping_methods)
+
+    def test_get_shipping_methods_five(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_5')
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('USPS 2 DAY PRIORITY', 2.0, 'USD', 15.0, 'order', True),), shipping_methods)
+
+    def test_get_shipping_methods_six(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_6')
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('default', 1.0, 'USD', 0.0, None, False),), shipping_methods)
+
+    def test_get_shipping_methods_seven(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_7')
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('Free', 0.02, 'USD', 0.0, 'order', True),), shipping_methods)
 
 
 class TestGetBulkPrices(EmpireBaseTest):

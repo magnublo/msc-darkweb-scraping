@@ -24,6 +24,6 @@ class ShippingMethod(Base):
     fiat_currency = Column(CHAR(CURRENCY_COLUMN_LENGTH))
 
     #empire
-    days_shipping_time = Column(Integer)
+    days_shipping_time = Column(Float)  # fractional number of days do appear in listings
     quantity_unit_name = Column(CHAR(6))
     price_is_per_unit = Column(Boolean)

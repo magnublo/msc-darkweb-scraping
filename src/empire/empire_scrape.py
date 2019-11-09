@@ -40,6 +40,16 @@ def _parse_payment_type(payment_type: str) -> Tuple[bool, bool]:
         raise AssertionError('Unknown listing field content in "Payment".')
 
 
+def _get_final_quantity_in_stock(first_quantity_in_stock: Optional[int], second_quantity_in_stock: Optional[int]) -> \
+Optional[int]:
+    #both are None
+    if first_quantity_in_stock is None and second_quantity_in_stock is None:
+        return None
+
+    #return lowest of those quantities which are not None
+    return min([i for i in [first_quantity_in_stock, second_quantity_in_stock] if i is not None])
+
+
 class EmpireScrapingSession(BaseScraper):
     __refresh_mirror_db_lock__ = RLock()
     __user_credentials_db_lock__ = RLock()
@@ -143,8 +153,10 @@ class EmpireScrapingSession(BaseScraper):
         accepts_BTC_multisig: bool
         escrow: bool
         non_standardized_listing_type: str
-        quantity_in_stock: int
+        first_quantity_in_stock: int
+        second_quantity_in_stock: int
         ends_in: str
+        is_auto_dispatch: bool
         self.scraping_funcs: EmpireScrapingFunctions
         shipping_methods: Tuple[Tuple[str, int, str, float, Optional[str], bool]]
 
@@ -179,13 +191,16 @@ class EmpireScrapingSession(BaseScraper):
 
         accepts_BTC_multisig, escrow = _parse_payment_type(payment_type)
 
-        non_standardized_listing_type, quantity_in_stock, ends_in = \
+        non_standardized_listing_type, first_quantity_in_stock, ends_in = \
             self.scraping_funcs.get_product_class_quantity_left_and_ends_in(
                 soup_html)
 
-        has_unlimited_dispatch: bool = self.scraping_funcs.has_unlimited_dispatch(soup_html)
+        is_auto_dispatch, second_quantity_in_stock = self.scraping_funcs.has_unlimited_dispatch_and_quantity_in_stock(
+            soup_html)
+        final_quantity_in_stock: int = _get_final_quantity_in_stock(first_quantity_in_stock, second_quantity_in_stock)
+
         standardized_listing_type: str = get_standardized_listing_type(non_standardized_listing_type)
-        if has_unlimited_dispatch and standardized_listing_type == ListingType.MANUAL_DIGITAL.name:
+        if is_auto_dispatch and standardized_listing_type == ListingType.MANUAL_DIGITAL.name:
             standardized_listing_type = ListingType.AUTO_DIGITAL.name
 
         shipping_methods = self.scraping_funcs.get_shipping_methods(soup_html)
@@ -218,7 +233,7 @@ class EmpireScrapingSession(BaseScraper):
         listing_observation.origin_country = country_ids[0]
         listing_observation.escrow = escrow
         listing_observation.listing_type = standardized_listing_type
-        listing_observation.quantity_in_stock = quantity_in_stock
+        listing_observation.quantity_in_stock = final_quantity_in_stock
         listing_observation.ends_in = ends_in
         listing_observation.nr_of_views = nr_of_views
 

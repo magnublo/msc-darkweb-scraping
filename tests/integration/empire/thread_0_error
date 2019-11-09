@@ -3941,7 +3941,7 @@ canada
 [_scrape_listing()]ends_in: Never
 
 
-[_scrape_listing()]has_unlimited_dispatch: False
+[_scrape_listing()]has_unlimited_dispatch_and_quantity_in_stock: False
 
 
 [_scrape_listing()]standardized_listing_type: MANUAL_DIGITAL

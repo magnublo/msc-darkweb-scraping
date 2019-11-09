@@ -7,7 +7,7 @@ import dateparser as dateparser
 from bs4 import BeautifulSoup
 
 from src.base.base_functions import BaseFunctions
-from definitions import EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS, CURRENCY_COLUMN_LENGTH
+from definitions import EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS, CURRENCY_COLUMN_LENGTH, ONE_DAY
 from src.db_utils import shorten_and_sanitize_for_text_column
 from src.utils import parse_int, parse_time_delta_from_string, parse_float
 
@@ -533,13 +533,16 @@ class EmpireScrapingFunctions(BaseFunctions):
         return product_class, quantity_left, ends_in
 
     @staticmethod
-    def has_unlimited_dispatch(soup_html) -> bool:
+    def has_unlimited_dispatch_and_quantity_in_stock(soup_html) -> Tuple[bool, Optional[int]]:
         italic_text_box = soup_html.select_one(".listDes > p:nth-child(3) > i:nth-child(7)")
         if italic_text_box:
-            assert italic_text_box.text == "Unlimited items available for auto-dispatch"
-            return True
+            if italic_text_box.text == "Unlimited items available for auto-dispatch":
+                return True, None
+            else:
+                quantity_in_stock = parse_int(italic_text_box.text.split(maxsplit=1)[0])
+                return True, quantity_in_stock
         else:
-            return False
+            return False, None
 
     @staticmethod
     def get_nrs_of_views(soup_html: BeautifulSoup) -> Tuple[int]:
@@ -562,16 +565,16 @@ class EmpireScrapingFunctions(BaseFunctions):
         return tuple(nrs_of_views)
 
     @staticmethod
-    def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[str, int, str, float, Optional[str], bool]]:
+    def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[str, float, str, float, Optional[str], bool]]:
 
-        shipping_methods: List[Tuple[str, int, str, float, Optional[str], bool]] = []
+        shipping_methods: List[Tuple[str, float, str, float, Optional[str], bool]] = []
 
         options = soup_html.select("select.productTbl > option")
         option: BeautifulSoup
         for option in options:
             description, shipping_time, price_string = [s.strip() for s in option.text.split("-")]
             timedelta_val = parse_time_delta_from_string(shipping_time)
-            days_shipping_time = timedelta_val.days
+            days_shipping_time: float = timedelta_val.total_seconds() / ONE_DAY
             fiat_currency_and_price_per_unit = price_string.split("+")
             fiat_currency = fiat_currency_and_price_per_unit[0].strip()
             assert len(fiat_currency) == CURRENCY_COLUMN_LENGTH
