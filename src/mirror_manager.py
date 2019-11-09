@@ -282,7 +282,8 @@ class MirrorManager:
 
     def _get_candidate_mirror(self) -> Optional[MarketMirror]:
         candidate_mirrors: List[MarketMirror] = self.scraper.db_session.query(MarketMirror).filter(
-            MarketMirror.last_offline_timestamp < int(time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR)).all()
+            MarketMirror.last_offline_timestamp < int(time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR,
+                                                      MarketMirror.market_id == self.scraper.market_id)).all()
 
         candidate_mirror = max(candidate_mirrors, key=lambda c: c.last_online_timestamp)
 
