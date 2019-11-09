@@ -2,13 +2,12 @@ from typing import List, Tuple, Type
 
 from definitions import EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, MARKET_IDS, EMPIRE_MIN_CREDENTIALS_PER_THREAD, \
     CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
-from src.base_logger import BaseClassWithLogger
-from src.base_scraper import BaseScraper
-from src.base_scraping_manager import ScrapingManager
+from src.base.base_logger import BaseClassWithLogger
+from src.base.base_scraper import BaseScraper
+from src.base.base_scraping_manager import ScrapingManager
 from src.cryptonia.cryptonia_scrape import CryptoniaScrapingSession
 from src.empire.empire_scrape import EmpireScrapingSession
 from src.utils import get_logger_name
-from tests.integration.test_main import MockedScrapingManager, MockedCryptoniaScrapingSession
 
 grey = "\x1b[38;21m"
 yellow = "\x1b[33;21m"
@@ -33,8 +32,9 @@ _BASE_CLASS_FORMATTER_CONFIGS = { #TODO: Give each logger a handler for each sev
 CLASS_FORMATTER_CONFIGS = {
     get_logger_name(CryptoniaScrapingSession.__name__): _BASE_CLASS_FORMATTER_CONFIGS[get_logger_name(BaseScraper.__name__)],
     get_logger_name(EmpireScrapingSession.__name__): _BASE_CLASS_FORMATTER_CONFIGS[get_logger_name(BaseScraper.__name__)],
-    get_logger_name(MockedScrapingManager.__name__): _BASE_CLASS_FORMATTER_CONFIGS[get_logger_name(ScrapingManager.__name__)], # TODO: Move test mock class logic into test code
-    get_logger_name(MockedCryptoniaScrapingSession.__name__): _BASE_CLASS_FORMATTER_CONFIGS[get_logger_name(BaseScraper.__name__)] # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedScrapingManager.__name__): _BASE_CLASS_FORMATTER_CONFIGS[get_logger_name(ScrapingManager.__name__)], # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedCryptoniaScrapingSession.__name__): _BASE_CLASS_FORMATTER_CONFIGS[get_logger_name(BaseScraper.__name__)], # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedEmpireScrapingSession.__name__): _BASE_CLASS_FORMATTER_CONFIGS[get_logger_name(BaseScraper.__name__)] # TODO: Move test mock class logic into test code
 }
 
 CLASS_FORMATTER_CONFIGS.update(_BASE_CLASS_FORMATTER_CONFIGS)
@@ -57,8 +57,9 @@ _BASE_CLASS_HANDLER_CONFIGS = {
 CLASS_HANDLER_CONFIGS = {
     get_logger_name(CryptoniaScrapingSession.__name__): _BASE_CLASS_HANDLER_CONFIGS[get_logger_name(BaseScraper.__name__)],
     get_logger_name(EmpireScrapingSession.__name__): _BASE_CLASS_HANDLER_CONFIGS[get_logger_name(BaseScraper.__name__)],
-    get_logger_name(MockedScrapingManager.__name__): _BASE_CLASS_HANDLER_CONFIGS[get_logger_name(ScrapingManager.__name__)], # TODO: Move test mock class logic into test code
-    get_logger_name(MockedCryptoniaScrapingSession.__name__): _BASE_CLASS_HANDLER_CONFIGS[get_logger_name(BaseScraper.__name__)] # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedScrapingManager.__name__): _BASE_CLASS_HANDLER_CONFIGS[get_logger_name(ScrapingManager.__name__)], # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedCryptoniaScrapingSession.__name__): _BASE_CLASS_HANDLER_CONFIGS[get_logger_name(BaseScraper.__name__)], # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedEmpireScrapingSession.__name__): _BASE_CLASS_HANDLER_CONFIGS[get_logger_name(BaseScraper.__name__)] # TODO: Move test mock class logic into test code
 }
 
 CLASS_HANDLER_CONFIGS.update(_BASE_CLASS_HANDLER_CONFIGS)
@@ -79,8 +80,9 @@ _BASE_CLASS_LOGGER_CONFIGS = {
 CLASS_LOGGER_CONFIGS = {
     get_logger_name(CryptoniaScrapingSession.__name__): _BASE_CLASS_LOGGER_CONFIGS[get_logger_name(BaseScraper.__name__)],
     get_logger_name(EmpireScrapingSession.__name__): _BASE_CLASS_LOGGER_CONFIGS[get_logger_name(BaseScraper.__name__)],
-    get_logger_name(MockedScrapingManager.__name__): _BASE_CLASS_LOGGER_CONFIGS[get_logger_name(ScrapingManager.__name__)], # TODO: Move test mock class logic into test code
-    get_logger_name(MockedCryptoniaScrapingSession.__name__): _BASE_CLASS_LOGGER_CONFIGS[get_logger_name(BaseScraper.__name__)] # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedScrapingManager.__name__): _BASE_CLASS_LOGGER_CONFIGS[get_logger_name(ScrapingManager.__name__)], # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedCryptoniaScrapingSession.__name__): _BASE_CLASS_LOGGER_CONFIGS[get_logger_name(BaseScraper.__name__)], # TODO: Move test mock class logic into test code
+    #get_logger_name(MockedEmpireScrapingSession.__name__): _BASE_CLASS_LOGGER_CONFIGS[get_logger_name(BaseScraper.__name__)]  # TODO: Move test mock class logic into test code
 }
 
 CLASS_LOGGER_CONFIGS.update(_BASE_CLASS_LOGGER_CONFIGS)

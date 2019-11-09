@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - Product Details</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-08 23:55 | 
+Logged in as <a class="controlbox_link" href="/user/JANISPELUDA">JANISPELUDA</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width:130px; vertical-align: top; }
+.qty { width: 30px; }
+.good { color: green; }
+.bad { color: red; }
+.error { font-size: small; color: red; }
+.grid_input { width: 100% }
+.sm_method { }
+.sm_escrow { width:80px; }
+.sm_cost { width:120px; }
+.sm_currency { width:120px; }
+.sm_action { width:80px; text-align:center; }
+.sm_autoshop_msg { }
+.tagbox { display: inline-block; background-color: #eeeeee; margin-bottom: 5px; border: 1px solid black; border-radius: 5px; padding:3px;  }
+.closebox { color: #000000; font-weight: bold; text-decoration: none; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<h2>QP (112g) Space Cookies AAAA 25% THC Indoor Weed *Ships WW*</h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/messages/new/support/Reporting+product+%2318300783"><span class="icono-flag smicon"></span>Report This Listing</a>
+<a class="toolbar_link" href="/products/"><span class="icono-leftArrow smicon"></span> Back to Products</a>
+</div>
+</div>
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="shipping"></a>
+<a class="noanchor" id="countries"></a>
+<a class="noanchor" id="feedback"></a>
+<a class="noanchor" id="pricing"></a>
+<a class="noanchor" id="autofill"></a>
+<div class="content_div">
+<div class="top_part">
+<a href="/image/22350773" target="_blank" title="Click to view full resolution image."><img class="picture" src="/image/22350773"/></a>
+<div class="product_details">
+<div class="product_data">
+<label>Sold by:</label>
+<a href="/user/StashSpot">StashSpot</a>
+<span class="verified">LEVEL 1</span>
+<span class="lgtext" style="font-weight: bold"><span title="Total sales">(22)</span> <span style="color: green;" title="Positive Feedback Percentage">100.00%</span></span>
+<a class="smlink" href="/messages/new/StashSpot/QP+%28112g%29+Space+Cookies+AAAA+25%25+THC+Indoor+Weed+%2AShips+WW%2A+%28Product+%2318300783%29" title="Click to contact this vendor."><span class="icono-mail"></span></a>
+</div>
+<div class="product_data">
+<label>Category:</label>
+<span>Weed</span>
+</div>
+<div class="product_data">
+<label>Listing Type:</label>
+<span>Physical Listing</span>
+</div>
+<div class="product_data">
+<label>Price:</label>
+<span class="lgtext">650.00 USD/1/4pound</span>
+<span>(0.07382050 BTC/1/4pound)</span>
+</div>
+<div class="product_data">
+<label>FE or Escrow:</label>
+<span class="verified">ESCROW</span>
+</div>
+<div class="product_data">
+<label>In stock:</label>
+<span>100 1/4pound</span>
+</div>
+<div class="product_data">
+<label>Accepted Payments:</label>
+<span><img alt="Bitcoin (BTC)" src="/image/btc_nm.png" style="height: 18px; max-width: 200px"/> <img alt="Monero (XMR)" src="/image/xmr_nm.png" style="height: 18px; max-width: 200px"/></span>
+</div>
+<div class="product_data">
+<label>Ships from:</label>
+<div class="lbllist">Canada → Worldwide</div>
+</div>
+</div>
+</div>
+</div>
+<form method="post">
+<div class="buydiv">
+<label class="buttonlink buynow">BUY NOW&gt;&gt;</label><select class="shipselect" name="shipping_method">
+<option value="0">--Select Shipping Method--</option>
+<option value="18300793">Worldwide Letter  no tracking (2.00 USD)</option>
+<option value="18300803">Worldwide Registered Mail  tracking (20.00 USD)</option>
+<option value="18300813">CanadaUSA XpressPost Envelope (maximum 6.5oz)  tracking (25.00 USD)</option>
+<option value="18300823">Worldwide Xpress tracking (60.00 USD)</option>
+</select><input class="qty" name="qty" type="number" value="1"/><input class="clickbuy" name="submit" type="submit" value="PLACE ORDER"/>
+</div>
+<div style="height: 10px"></div>
+</form>
+<div class="tab" id="generaltab"><a class="tablink" href="#general">Description</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<div class="content_div">
+<p>High grade BC grown bud AAAA 25% THC. No games, this is the best weed you’ll have smoked. Ships from Canada/USA.</p>
+</div>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>1) Make sure address is correct and proper format for your country. In general make sure you don’t forget FULL NAME (yes it’s necessary,) STREET ADDRESS AND APARTMENT #/BLOCK #, CITY, POSTAL CODE/ZIP CODE, STATE/PROVINCE and COUNTRY</p>
+<p>2) Shipping Time Estimates (see product listing for all options)</p>
+<p>Lettermail
+Canada/USA 1-14 days
+International 4-21 days</p>
+<p>Small Packet
+5-12 business days</p>
+<p>XpressPost
+Canada/USA 1-10 business days
+International 4-11 business days</p>
+<p>Expedited Parcel
+1-13 business days</p>
+<p>Tracked Packet
+6-17 business days</p>
+<p>3) No refund/reship</p>
+<p>4) Please use pgp to send your address and sensitive info</p>
+<p>5) Contact us if you have any questions about your order</p>
+</div>
+</div>
+<div class="target_content" id="feedback_div">
+<div class="content_div">
+<div class="mainbox">
+<table style="width: 100%">
+<tr class="gridhdr">
+<td class="gridhdr rating_good"> </td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user"> </td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1g MDMA Moonrocks 99% Purity</span>
+<p>5/5</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-29</span>
+<span class="smtext rating_date">0.03170000 BTC</span>
+<span class="smtext rating_date">d***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g Colombian High Heat Cocaine</span>
+<p>good stuff</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-25</span>
+<span class="smtext rating_date">0.00880000 BTC</span>
+<span class="smtext rating_date">h***4</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1g Golden Triangle Heroin #4  Very Potent</span>
+<p>Great product and customer support. There was some confusion on my end resulting in my finalization being delayed but that was entirely my fault.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-17</span>
+<span class="smtext rating_date">0.01200000 BTC</span>
+<span class="smtext rating_date">s***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">0.5g Golden Triangle Heroin #4  Very Potent</span>
+<p>Thanks, decent dope</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-15</span>
+<span class="smtext rating_date">0.00610000 BTC</span>
+<span class="smtext rating_date">s***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1g Golden Triangle Heroin #4  Very Potent</span>
+<p>Arrived quick, but was shipped from CA when the listing said US. Edit: Tried the product, not very strong and was very rough on the nose.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-10-07</span>
+<span class="smtext rating_date">0.01190000 BTC</span>
+<span class="smtext rating_date">b***5</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">0.5g Golden Triangle Heroin #4  Very Potent</span>
+<p>A+</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-10-03</span>
+<span class="smtext rating_date">0.01750000 BTC</span>
+<span class="smtext rating_date">M***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1/4 oz (7g) Space Cookies AAAA 25% THC (1/2oz-$55) (1oz-$100)</span>
+<p>Came in like brick weed but w.e</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-09-17</span>
+<span class="smtext rating_date">0.00330000 BTC</span>
+<span class="smtext rating_date">i***i</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g Golden Triangle Heroin #4  Very Potent</span>
+<p>Really amazing quality product with a unique marshmallow-like smell? Definitely give these guys a try</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-09-16</span>
+<span class="smtext rating_date">0.01670000 BTC</span>
+<span class="smtext rating_date">i***g</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">0.5g Golden Triangle Heroin #4  Very Potent</span>
+<p>Cant tell if what I received is from this vendor or another, but I think it is this one and it seems to be quality stuff. Gray, mostly larger rocks/shards with a strong vinegar smell. Fast shipping and good stealth.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-09-05</span>
+<span class="smtext rating_date">0.00850000 BTC</span>
+<span class="smtext rating_date">s***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">1g Moroccan Hash High Grade</span>
+<p>Arrived in 13 days, hash was pretty soft, rolled up nice, taste wasn't really there, but the high was definitely not bad. Wouldn't call this high grade necessarily, but deff not bunk</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-09-04</span>
+<span class="smtext rating_date">0.00100000 BTC</span>
+<span class="smtext rating_date">K***a</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">1g Golden Triangle Heroin #4  Very Potent</span>
+<p>fast shipping, good comm. A+</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-08-29</span>
+<span class="smtext rating_date">0.01010000 BTC</span>
+<span class="smtext rating_date">p***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">0.5g Golden Triangle Heroin #4  Very Potent</span>
+<p>super fast shipping good stealth thanks</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-08-29</span>
+<span class="smtext rating_date">0.00500000 BTC</span>
+<span class="smtext rating_date">J***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">5x 20mg Vyvanse (Lisdexamfetamine)</span>
+<p>fast shipping. good product.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-08-28</span>
+<span class="smtext rating_date">0.02160000 BTC</span>
+<span class="smtext rating_date">k***l</span>
+</td>
+</tr>
+</table>
+</div>
+<span class="smtext">This is the most recent feedback. To view all feedback visit the vendor profile.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 8000.00 EUR = 8805.14 USD = 6892.74 GBP = 144.74000353 XMR = 12833.67 AUD = 11648.22 CAD</span></div>
+</div>
+</div>
+</body>
+</html>

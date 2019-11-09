@@ -9,7 +9,8 @@ python3-anticaptcha==1.5.4
 demoji==0.1.5
 lxml==4.4.1
 cfscrape==2.0.8
-mysql-connector-python==8.0.18
+mysql-connector-python==8.0.17
 sty==1.0.0b12
 blessings==1.7
 text2digits==0.0.5
+pycountry==19.8.18

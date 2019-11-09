@@ -4,9 +4,9 @@ from sqlalchemy import Column, Integer, Date, DateTime, ForeignKey, Float, Uniqu
 
 from definitions import MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, Base, CURRENCY_COLUMN_LENGTH, \
     XMPP_JABBER_ID_COLUMN_LENGTH
-from src.models import scraping_session, seller_terms_and_conditions
+from src.models import description_text
+from src.models import scraping_session
 from src.models import seller
-from src.models import seller_description_text
 
 TABLE_NAME = 'seller_observation'
 PRIMARY_KEY = 'id'
@@ -21,8 +21,8 @@ class SellerObservation(Base):
     url = Column(String(URL_COLUMN_LENGTH))
 
     seller_id = Column(Integer, ForeignKey(seller.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
-    description = Column(CHAR(32), ForeignKey(seller_description_text.TABLE_NAME_AND_PRIMARY_KEY))
-    terms_and_conditions_id = Column(Integer, ForeignKey(seller_terms_and_conditions.TABLE_NAME_AND_PRIMARY_KEY))
+    description = Column(Integer, ForeignKey(description_text.TABLE_NAME_AND_PRIMARY_KEY))
+    terms_and_conditions_id = Column(Integer, ForeignKey(description_text.TABLE_NAME_AND_PRIMARY_KEY))
     disputes = Column(Integer)
     last_online = Column(Date) #Within the last 3 days # Within the last 24 hours
 
@@ -50,6 +50,8 @@ class SellerObservation(Base):
     negative_1m = Column(Integer)
     negative_6m = Column(Integer)
     negative_12m = Column(Integer)
+
+    banned = Column(Boolean)
 
     # cryptonia columns
     disputes_won = Column(Integer)

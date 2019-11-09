@@ -4,7 +4,7 @@ from math import ceil
 from multiprocessing import Queue
 from random import shuffle
 from threading import RLock
-from typing import List, Tuple, Type
+from typing import List, Tuple, Type, Optional
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,26 +13,36 @@ from sqlalchemy import func
 from definitions import EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_HTTP_HEADERS, \
     FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
-    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, MD5_HASH_STRING_ENCODING, EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH
-from environment_settings import DEBUG_MODE
-from src.base_functions import BaseFunctions
-from src.base_scraper import BaseScraper
+    EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, MD5_HASH_STRING_ENCODING, EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH, \
+    EMPIRE_MIN_CREDENTIALS_PER_THREAD
+from src.base.base_functions import BaseFunctions
+from src.base.base_scraper import BaseScraper
 from src.db_utils import get_column_name
 from src.empire.empire_functions import EmpireScrapingFunctions
-from src.models.country import Country
 from src.models.feedback import Feedback
 from src.models.listing_observation import ListingObservation
-from src.models.listing_text import ListingText
 from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
 from src.models.seller_observation import SellerObservation
 from src.models.verified_external_account import VerifiedExternalAccount
-from src.utils import get_page_as_soup_html
+from src.utils import get_page_as_soup_html, get_standardized_listing_type, ListingType
+
+
+def _parse_payment_type(payment_type: str) -> Tuple[bool, bool]:
+    # accepts multisig, has escrow
+    if payment_type.lower() == "Escrow".lower():
+        return False, True
+    elif payment_type.lower() == "Escrow, MultiSig".lower():
+        return True, True
+    elif payment_type.lower() == "FE Listing 100%".lower():
+        return False, False
+    else:
+        raise AssertionError('Unknown listing field content in "Payment".')
 
 
 class EmpireScrapingSession(BaseScraper):
-
     __refresh_mirror_db_lock__ = RLock()
+    __user_credentials_db_lock__ = RLock()
 
     def _get_anti_captcha_kwargs(self) -> dict:
         return {'numeric': 1}
@@ -42,8 +52,20 @@ class EmpireScrapingSession(BaseScraper):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
                          session_id=session_id)
 
-    def get_base_url(self) -> str:
-        raise NotImplementedError('')
+    def _has_successful_login_phrase(self) -> bool:
+        return False
+
+    def _get_successful_login_phrase(self) -> str:
+        return ""
+
+    def _get_min_credentials_per_thread(self) -> int:
+        return EMPIRE_MIN_CREDENTIALS_PER_THREAD
+
+    def _get_mirror_db_lock(self) -> RLock:
+        return self.__refresh_mirror_db_lock__
+
+    def _get_user_credentials_db_lock(self) -> RLock:
+        return self.__user_credentials_db_lock__
 
     def _get_scraping_funcs(self) -> Type[BaseFunctions]:
         return EmpireScrapingFunctions
@@ -65,10 +87,13 @@ class EmpireScrapingSession(BaseScraper):
 
     def _get_headers(self) -> dict:
         headers = EMPIRE_HTTP_HEADERS
-        headers["Referer"] = "http://" + self.mirror_base_url + "/login"
+        if self.mirror_base_url:
+            headers["Referer"] = self._get_schemaed_url_from_path("/login")
+            headers["Host"] = self.mirror_base_url
         return headers
 
     def populate_queue(self):
+        self.logger.info(f"Fetching {EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH} and creating task queue...")
         web_response = self._get_logged_in_web_response(EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH)
         soup_html = get_page_as_soup_html(web_response.text)
         pairs_of_category_base_urls_and_nr_of_listings = self.scraping_funcs.get_category_urls_and_nr_of_listings(
@@ -80,20 +105,21 @@ class EmpireScrapingSession(BaseScraper):
             url = pairs_of_category_base_urls_and_nr_of_listings[i][0]
             nr_of_pages = ceil(nr_of_listings / 15)
             for k in range(0, nr_of_pages):
-                task_list.append(url + str(k * 15))
+                task_list.append((url + str(k * 15),))
 
         shuffle(task_list)
 
         for task in task_list:
             self.queue.put(task)
 
+        self.logger.info(f"Queue has been populated with {len(task_list)} tasks.")
         self.initial_queue_size = self.queue.qsize()
         self.db_session.query(ScrapingSession).filter(ScrapingSession.id == self.session_id).update(
             {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
         self.db_session.commit()
 
-    def _scrape_listing(self, title, seller_name, seller_url, product_page_url, is_sticky,
-                        btc_rate, ltc_rate, xmr_rate):
+    def _scrape_listing(self, title: str, seller_name: str, seller_url: str, product_page_url: str, is_sticky: bool,
+                        nr_of_views: int, btc_rate: float, ltc_rate: float, xmr_rate: float):
         seller: Seller
         is_new_seller: bool
         listing_observation: ListingObservation
@@ -102,8 +128,7 @@ class EmpireScrapingSession(BaseScraper):
         web_response: requests.Response
         soup_html: BeautifulSoup
         listing_text: str
-        listing_text_id: str
-        categories: List[str]
+        listing_categories: Tuple[Tuple[str, int, Optional[str], Optional[int]]]
         website_category_ids: List[int]
         accepts_BTC: bool
         accepts_LTC: bool
@@ -114,10 +139,14 @@ class EmpireScrapingSession(BaseScraper):
         price: float
         origin_country: str
         destination_countries: List[str]
-        escrow: str #TODO: Fix this
-
-
-        # TODO: Scrape shipping methods, accepts_multisig, in_stock, listing_type(with parenthesis field), ends_in, bulk price
+        payment_type: str
+        accepts_BTC_multisig: bool
+        escrow: bool
+        non_standardized_listing_type: str
+        quantity_in_stock: int
+        ends_in: str
+        self.scraping_funcs: EmpireScrapingFunctions
+        shipping_methods: Tuple[Tuple[str, int, str, float, Optional[str], bool]]
 
         seller, is_new_seller = self._get_seller(seller_name)
 
@@ -140,24 +169,35 @@ class EmpireScrapingSession(BaseScraper):
         soup_html = get_page_as_soup_html(web_response.text)
 
         listing_text = self.scraping_funcs.get_description(soup_html)
-        listing_text_id = hashlib.md5(listing_text.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
-        categories, website_category_ids = self.scraping_funcs.get_categories_and_ids(soup_html, self.mirror_base_url)
+        listing_categories = self.scraping_funcs.get_listing_categories(soup_html, self.mirror_base_url)
         accepts_BTC, accepts_LTC, accepts_XMR = self.scraping_funcs.accepts_currencies(soup_html)
         nr_sold, nr_sold_since_date = self.scraping_funcs.get_nr_sold_since_date(soup_html)
         fiat_currency, price = self.scraping_funcs.get_fiat_currency_and_price(soup_html)
-        origin_country, destination_countries, escrow = \
+        origin_country, destination_countries, payment_type = \
             self.scraping_funcs.get_origin_country_and_destinations_and_payment_type(
                 soup_html)
 
-        self._add_category_junctions(categories, website_category_ids, listing_observation.id)
+        accepts_BTC_multisig, escrow = _parse_payment_type(payment_type)
 
-        self.db_session.merge(ListingText(
-            id=listing_text_id,
-            text=listing_text
-        ))
+        non_standardized_listing_type, quantity_in_stock, ends_in = \
+            self.scraping_funcs.get_product_class_quantity_left_and_ends_in(
+                soup_html)
 
+        has_unlimited_dispatch: bool = self.scraping_funcs.has_unlimited_dispatch(soup_html)
+        standardized_listing_type: str = get_standardized_listing_type(non_standardized_listing_type)
+        if has_unlimited_dispatch and standardized_listing_type == ListingType.MANUAL_DIGITAL.name:
+            standardized_listing_type = ListingType.AUTO_DIGITAL.name
 
-        country_ids: Tuple[int] = self._add_countries([origin_country]+destination_countries)
+        shipping_methods = self.scraping_funcs.get_shipping_methods(soup_html)
+        bulk_prices = self.scraping_funcs.get_bulk_prices(soup_html)
+
+        self._add_bulk_prices(listing_observation.id, bulk_prices)
+        self._add_shipping_methods(listing_observation.id, shipping_methods)
+        self._add_category_junctions(listing_observation.id, listing_categories)
+
+        listing_text_id: int = self._add_text(listing_text)
+
+        country_ids: Tuple[int] = self._add_countries(origin_country, *destination_countries)
         destination_country_ids = country_ids[1:]
         self._add_country_junctions(destination_country_ids, listing_observation.id)
 
@@ -165,6 +205,7 @@ class EmpireScrapingSession(BaseScraper):
         listing_observation.btc = accepts_BTC
         listing_observation.ltc = accepts_LTC
         listing_observation.xmr = accepts_XMR
+        listing_observation.btc_multisig = accepts_BTC_multisig
         listing_observation.nr_sold = nr_sold
         listing_observation.nr_sold_since_date = nr_sold_since_date
         listing_observation.promoted_listing = is_sticky
@@ -174,8 +215,12 @@ class EmpireScrapingSession(BaseScraper):
         listing_observation.xmr_rate = xmr_rate
         listing_observation.fiat_currency = fiat_currency
         listing_observation.price = price
-        listing_observation.origin_country = origin_country
+        listing_observation.origin_country = country_ids[0]
         listing_observation.escrow = escrow
+        listing_observation.listing_type = standardized_listing_type
+        listing_observation.quantity_in_stock = quantity_in_stock
+        listing_observation.ends_in = ends_in
+        listing_observation.nr_of_views = nr_of_views
 
         self.db_session.flush()
 
@@ -183,7 +228,7 @@ class EmpireScrapingSession(BaseScraper):
         self.print_crawling_debug_message(url=seller_url)
 
         web_response = self._get_logged_in_web_response(seller_url)
-        soup_html = get_page_as_soup_html(web_response)
+        soup_html = get_page_as_soup_html(web_response.text)
 
         seller_name = seller.name
         description = self.scraping_funcs.get_seller_about_description(soup_html, seller_name)
@@ -196,6 +241,7 @@ class EmpireScrapingSession(BaseScraper):
         negative_1m, negative_6m, negative_12m = self.scraping_funcs.get_seller_statistics(soup_html)
 
         stealth_rating, quality_rating, value_price_rating = self.scraping_funcs.get_star_ratings(soup_html)
+        is_banned: bool = self.scraping_funcs.user_is_banned(soup_html)
 
         parenthesis_number, vendor_level, trust_level = \
             self.scraping_funcs.get_parenthesis_number_and_vendor_and_trust_level(
@@ -203,10 +249,11 @@ class EmpireScrapingSession(BaseScraper):
 
         positive_feedback_received_percent, registration_date = self.scraping_funcs.get_mid_user_info(soup_html)
 
-        external_market_verifications: List[Tuple[str, int, float]] = self.scraping_funcs.get_external_market_ratings(
+        external_market_verifications: Tuple[
+            Tuple[str, int, float, str]] = self.scraping_funcs.get_external_market_ratings(
             soup_html)
 
-        seller_observation_description = self._add_seller_observation_description(description)
+        seller_observation_description = self._add_text(description)
 
         previous_seller_observation = self.db_session.query(SellerObservation).filter(
             SellerObservation.created_date == self.db_session.query(func.max(SellerObservation.created_date)).filter(
@@ -260,7 +307,8 @@ class EmpireScrapingSession(BaseScraper):
             quality_rating=quality_rating,
             value_price_rating=value_price_rating,
             vendor_level=vendor_level,
-            trust_level=trust_level
+            trust_level=trust_level,
+            banned=is_banned
         )
 
         if is_new_seller:
@@ -277,7 +325,7 @@ class EmpireScrapingSession(BaseScraper):
 
         web_response = self._get_logged_in_web_response(url)
 
-        soup_html = get_page_as_soup_html(web_response)
+        soup_html = get_page_as_soup_html(web_response.text)
 
         feedback_array = self.scraping_funcs.get_feedbacks(soup_html)
 
@@ -307,7 +355,8 @@ class EmpireScrapingSession(BaseScraper):
                 feedback_message_text=feedback["feedback_message"],
                 seller_response_message=feedback["seller_response_message"],
                 text_hash=hashlib.md5(
-                    (feedback["feedback_message"] + feedback["seller_response_message"]).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[
+                    (feedback["feedback_message"] + feedback["seller_response_message"]).encode(
+                        MD5_HASH_STRING_ENCODING)).hexdigest()[
                           :FEEDBACK_TEXT_HASH_COLUMN_LENGTH],
                 buyer=feedback["buyer"],
                 currency=feedback["currency"],
@@ -319,7 +368,7 @@ class EmpireScrapingSession(BaseScraper):
 
         next_url_with_feeback = self.scraping_funcs.get_next_feedback_page(soup_html)
 
-        if next_url_with_feeback and not DEBUG_MODE:
+        if next_url_with_feeback:
             self._scrape_feedback(seller, is_new_seller, category, next_url_with_feeback)
 
     def _scrape_pgp_key(self, seller: Seller, is_new_seller: bool, url: str) -> None:
@@ -328,14 +377,16 @@ class EmpireScrapingSession(BaseScraper):
 
         if scrape_pgp_this_session:
             web_response = self._get_logged_in_web_response(url)
-            soup_html = get_page_as_soup_html(web_response)
+            soup_html = get_page_as_soup_html(web_response.text)
             pgp_key_content = self.scraping_funcs.get_pgp_key(soup_html)
             self._add_pgp_key(seller, pgp_key_content)
 
     def _scrape_queue_item(self, search_result_url: str):
+        self.scraping_funcs: EmpireScrapingFunctions
+
         web_response = self._get_logged_in_web_response(search_result_url)
 
-        soup_html = get_page_as_soup_html(web_response)
+        soup_html = get_page_as_soup_html(web_response.text)
         product_page_urls, urls_is_sticky = self.scraping_funcs.get_product_page_urls(soup_html)
 
         if len(product_page_urls) == 0:
@@ -346,24 +397,27 @@ class EmpireScrapingSession(BaseScraper):
 
         titles, sellers, seller_urls = self.scraping_funcs.get_titles_and_sellers(soup_html)
         btc_rate, ltc_rate, xmr_rate = self.scraping_funcs.get_cryptocurrency_rates(soup_html)
+        nrs_of_views: Tuple[int] = self.scraping_funcs.get_nrs_of_views(soup_html)
 
-        assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky)
+        assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky) == len(
+            nrs_of_views)
 
-        for title, seller_name, seller_url, product_page_url, is_sticky in zip(titles, sellers, seller_urls,
-                                                                               product_page_urls,
-                                                                               urls_is_sticky):
+        for title, seller_name, seller_url, product_page_url, is_sticky, nr_of_views in zip(titles, sellers,
+                                                                                            seller_urls,
+                                                                                            product_page_urls,
+                                                                                            urls_is_sticky,
+                                                                                            nrs_of_views):
             self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
-                                         is_sticky, btc_rate, ltc_rate, xmr_rate, func=self._scrape_listing)
-
+                                         is_sticky, nr_of_views, btc_rate, ltc_rate, xmr_rate,
+                                         func=self._scrape_listing)
 
     def _add_external_market_verifications(self, seller_observation_id: int,
-                                           external_market_verifications: List[Tuple[str, int, float]]) -> None:
+                                           external_market_verifications: Tuple[Tuple[str, int, float, str]]) -> None:
 
-        for market_id, sales, rating in external_market_verifications:
+        for market_id, sales, rating, free_text in external_market_verifications:
             self.db_session.add(
-                                VerifiedExternalAccount(
-                                        seller_observation_id=seller_observation_id, market_id=market_id,
-                                        confirmed_sales=sales, rating=rating)
-                                )
+                VerifiedExternalAccount(
+                    seller_observation_id=seller_observation_id, market_id=market_id,
+                    confirmed_sales=sales, rating=rating, free_text=free_text)
+            )
             self.db_session.flush()
-

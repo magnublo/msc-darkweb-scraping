@@ -3,7 +3,17 @@ import logging
 from enum import Enum
 from typing import Callable
 from src.utils import get_logger_name
+from sty import fg
 
+RED = fg.red
+YELLOW = fg.yellow
+END_COLOR = fg.rs
+
+def _red(s: str) -> str:
+    return RED+s+END_COLOR
+
+def _yellow(s: str) -> str:
+    return YELLOW+s+END_COLOR
 
 class Severity(Enum):
     CRITICAL = logging.CRITICAL
@@ -24,23 +34,23 @@ class LoggingWrapper:
 
     def critical(self, msg: str):
         custom_msg = self.get_customized_message(msg)
-        return self._logger.critical(custom_msg)
+        return self._logger.critical(_red(custom_msg))
 
     def fatal(self, msg: str):
         custom_msg = self.get_customized_message(msg)
-        return self._logger.fatal(custom_msg)
+        return self._logger.fatal(_red(custom_msg))
 
     def error(self, msg: str):
         custom_msg = self.get_customized_message(msg)
-        return self._logger.error(custom_msg)
+        return self._logger.error(_red(custom_msg))
 
     def warning(self, msg: str):
         custom_msg = self.get_customized_message(msg)
-        return self._logger.warning(custom_msg)
+        return self._logger.warning(_yellow(custom_msg))
 
     def warn(self, msg: str):
         custom_msg = self.get_customized_message(msg)
-        return self._logger.warn(custom_msg)
+        return self._logger.warn(_yellow(custom_msg))
 
     def info(self, msg: str):
         custom_msg = self.get_customized_message(msg)

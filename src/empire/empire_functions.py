@@ -1,12 +1,32 @@
+import re
 from datetime import datetime
-from typing import List, Tuple
+from typing import List, Tuple, Optional
+from urllib.parse import urlparse
 
 import dateparser as dateparser
 from bs4 import BeautifulSoup
 
-from definitions import EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS
-from src.base_functions import BaseFunctions
+from src.base.base_functions import BaseFunctions
+from definitions import EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS, CURRENCY_COLUMN_LENGTH
 from src.db_utils import shorten_and_sanitize_for_text_column
+from src.utils import parse_int, parse_time_delta_from_string, parse_float
+
+ASSUMED_MAXIMUM_LISTINGS_PER_SEARCH_RESULT = 15
+ONION_URl_REGEX = re.compile(r"^https?\:\/\/[\w\-\.]+\.onion")
+
+
+def _parse_external_market_rating(titled_span: BeautifulSoup, remaining_external_market_ratings: List[str]) -> Optional[
+    Tuple[
+        str, int, float, List[str]]]:
+    for market_id, market_string in remaining_external_market_ratings:
+        if titled_span["title"].find(market_string) != -1:
+            parts = titled_span.text.split(" ")
+            sales = int(parts[1])
+            rating = float(parts[2][1:-1])
+            remaining_external_market_ratings.remove((market_id, market_string))
+            return market_id, sales, rating, remaining_external_market_ratings
+
+    return None
 
 
 class EmpireScrapingFunctions(BaseFunctions):
@@ -34,10 +54,10 @@ class EmpireScrapingFunctions(BaseFunctions):
         return shorten_and_sanitize_for_text_column(description)
 
     @staticmethod
-    def get_product_page_urls(soup_html):
+    def get_product_page_urls(soup_html: BeautifulSoup) -> Tuple[Tuple[str], Tuple[bool]]:
         centre_columns = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
-        product_page_urls = []
-        urls_is_sticky = []
+        product_page_urls: List[str] = []
+        urls_is_sticky: List[bool] = []
 
         for column in centre_columns:
             is_sticky = False
@@ -51,13 +71,13 @@ class EmpireScrapingFunctions(BaseFunctions):
                     is_sticky = True
 
             urls_is_sticky.append(is_sticky)
-            product_page_urls.append(hrefs[0]['href'])
+            product_page_urls.append(urlparse(hrefs[0]['href']).path)
 
-        assert len(product_page_urls) <= 15
+        assert len(product_page_urls) <= ASSUMED_MAXIMUM_LISTINGS_PER_SEARCH_RESULT
 
         assert len(urls_is_sticky) == len(product_page_urls)
 
-        return product_page_urls, urls_is_sticky
+        return tuple(product_page_urls), tuple(urls_is_sticky)
 
     @staticmethod
     def get_nr_sold_since_date(soup_html):
@@ -87,7 +107,6 @@ class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_origin_country_and_destinations_and_payment_type(soup_html) -> Tuple[str, List[str], str]:
-        #TODO: Return 'escrow' as boolean instead of payment_type string
         tables = [table for table in soup_html.findAll('table', attrs={'class': 'productTbl'})]
         table = tables[0]
         tbodies = [tbody for tbody in table.findAll('tbody')]
@@ -160,12 +179,13 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert False
 
     @staticmethod
-    def get_categories_and_ids(soup_html: BeautifulSoup, mirror_base_url: str) -> Tuple[List[str], List[int]]:
+    def get_listing_categories(soup_html: BeautifulSoup, mirror_base_url: str) -> Tuple[
+        Tuple[str, int, Optional[str], Optional[int]]]:
+        # each element has name, marketside_id, parent_name and level
+
+        listing_categories: List[Tuple[str, int, Optional[str], Optional[int]]] = []
+
         h3s = [div for div in soup_html.findAll('h3')]
-
-        categories = []
-        category_ids = []
-
         for h3 in h3s:
             a_tags = [a_tag for a_tag in h3.findAll('a', href=True)]
             if len(a_tags) == 1:
@@ -173,22 +193,22 @@ class EmpireScrapingFunctions(BaseFunctions):
                     category = a_tags[0].text.strip()
                     url = str(a_tags[0]['href'])
                     url_fragments = url.split("/")
-                    category_id = int(url_fragments[-2])
-                    categories.append(category)
-                    category_ids.append(category_id)
+                    marketside_category_id = int(url_fragments[-2])
+                    parent_category_name = listing_categories[-1][0] if len(listing_categories) > 0 else None
+                    listing_categories.append(
+                        (category, marketside_category_id, parent_category_name, len(listing_categories)))
+                    # TODO: Ignoring parent name and level for now
 
-        assert len(category_ids) == len(categories)
-
-        return categories, category_ids
+        return tuple(listing_categories)
 
     @staticmethod
-    def get_titles_and_sellers(soup_html):
-        titles = []
-        sellers = []
-        seller_urls = []
+    def get_titles_and_sellers(soup_html: BeautifulSoup) -> Tuple[Tuple[str], Tuple[str], Tuple[str]]:
+        titles: List[str] = []
+        sellers: List[str] = []
+        seller_urls: List[str] = []
 
         col_1centres = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
-        assert len(col_1centres) <= 15
+        assert len(col_1centres) <= ASSUMED_MAXIMUM_LISTINGS_PER_SEARCH_RESULT
         assert len(col_1centres) > 0
         for col1_centre in col_1centres:
             head_tags = [div for div in col1_centre.findAll('div', attrs={'class': 'head'})]
@@ -200,11 +220,11 @@ class EmpireScrapingFunctions(BaseFunctions):
             user_href_links = [href for href in padp_p_tags[0].findAll('a', href=True)]
             assert len(user_href_links) == 1
             sellers.append(user_href_links[0].text)
-            seller_urls.append(user_href_links[0]["href"])
+            seller_urls.append(urlparse(user_href_links[0]["href"]).path)
 
         assert len(titles) == len(sellers) == len(col_1centres)
 
-        return titles, sellers, seller_urls
+        return tuple(titles), tuple(sellers), tuple(seller_urls)
 
     @staticmethod
     def get_captcha_image_url_from_market_page(soup_html):
@@ -212,26 +232,26 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert len(image_divs) == 1
         img_tags = [img for img in image_divs[0].findAll('img')]
         assert len(img_tags) == 1
-        return img_tags[0]['src']
+        url: str = img_tags[0]['src']
+        return urlparse(url).path
 
     @staticmethod
-    def get_category_urls_and_nr_of_listings(soup_html):
+    def get_category_urls_and_nr_of_listings(soup_html: BeautifulSoup) -> Tuple[Tuple[str, int]]:
         main_menu_uls = [ul for ul in soup_html.findAll('ul', attrs={'class': 'mainmenu'})]
         assert len(main_menu_uls) == 1
         main_menu_ul = main_menu_uls[0]
         lis = [li for li in main_menu_ul.findAll('li', recursive=False)]
         assert len(lis) == 11
 
-        category_urls_and_nr_of_listings = []
+        category_urls_and_nr_of_listings: List[Tuple[str, int]] = []
 
         for li in lis:
-            url = li.find('a', href=True)["href"]
-            url_fragments = url.split("/")
-            category_url = "/".join(url_fragments[:-1]) + "/"
+            category_url = li.find('a', href=True)["href"]
+            category_url_path = urlparse(category_url).path
             nr_of_listings = li.find('span').text
-            category_urls_and_nr_of_listings.append([category_url, nr_of_listings])
+            category_urls_and_nr_of_listings.append((category_url_path, nr_of_listings))
 
-        return category_urls_and_nr_of_listings
+        return tuple(category_urls_and_nr_of_listings)
 
     @staticmethod
     def get_login_payload(soup_html: BeautifulSoup, username: str, password: str, captcha_solution: str) -> dict:
@@ -322,22 +342,24 @@ class EmpireScrapingFunctions(BaseFunctions):
         return star_ratings
 
     @staticmethod
-    def get_feedback_categories_and_feedback_urls_and_pgp_url(soup_html):
+    def get_feedback_categories_and_feedback_urls_and_pgp_url(soup_html: BeautifulSoup) -> Tuple[
+        Tuple[str], Tuple[str], str]:
         tab_divs = [div for div in soup_html.findAll('div', attrs={'class': 'tab'})]
         assert len(tab_divs) == 1
         hrefs = [href for href in tab_divs[0].findAll('a', href=True)]
         assert len(hrefs) == 6
 
-        feedback_categories = []
-        feedback_urls = []
+        feedback_categories: List[str] = []
+        feedback_urls: List[str] = []
 
         for href in hrefs[1:5]:
             feedback_categories.append(href.text)
-            feedback_urls.append(href["href"])
+            feedback_url_path = urlparse(href["href"]).path
+            feedback_urls.append(feedback_url_path)
 
-        pgp_url = hrefs[5]["href"]
+        pgp_url = urlparse(hrefs[5]["href"]).path
 
-        return feedback_categories, feedback_urls, pgp_url
+        return tuple(feedback_categories), tuple(feedback_urls), pgp_url
 
     @staticmethod
     def get_feedbacks(soup_html):
@@ -398,7 +420,6 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         return feedbacks
 
-
     @staticmethod
     def get_mid_user_info(soup_html: BeautifulSoup) -> Tuple[float, datetime]:
         user_info_mid_divs = [div for div in soup_html.findAll('div', attrs={'class': 'user_info_mid'})]
@@ -422,7 +443,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return positive_feedback_received_percent, registration_date
 
     @staticmethod
-    def get_next_feedback_page(soup_html):
+    def get_next_feedback_page(soup_html: BeautifulSoup) -> Optional[str]:
         pagination_uls = [ul for ul in soup_html.findAll('ul', attrs={'class': 'pagination'})]
 
         if len(pagination_uls) == 0:
@@ -442,7 +463,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         for pagination_page_url in data_ci_pagination_pages:
             try:
                 if int(pagination_page_url.text) > current_page:
-                    return pagination_page_url["href"]
+                    return urlparse(pagination_page_url["href"]).path
             except ValueError:
                 pass
 
@@ -461,8 +482,9 @@ class EmpireScrapingFunctions(BaseFunctions):
         return pre.text
 
     @staticmethod
-    def get_external_market_ratings(soup_html: BeautifulSoup) -> List[Tuple[str, int, float]]:
-        external_ratings: List[Tuple[str, int, float]] = []
+    def get_external_market_ratings(soup_html: BeautifulSoup) -> Tuple[
+        Tuple[Optional[str], Optional[int], Optional[float], Optional[str]]]:
+        external_ratings: List[Tuple[Optional[str], Optional[int], Optional[float], Optional[str]]] = []
 
         user_info_mid_divs = [div for div in soup_html.findAll('div', attrs={'class': 'user_info_mid'})]
         assert len(user_info_mid_divs) == 1
@@ -474,16 +496,128 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         spans = [span for span in inner_div.findAll('span')]
         if len(spans) > 0:
-            titled_spans = [span for span in spans if "title" in span.keys() and span["title"].find("Verified") != -1]
+            titled_spans = [span for span in spans if
+                            "title" in span.attrs.keys() and span.attrs["title"].find("Verified") != -1]
             remaining_external_market_ratings = list(EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS)
             for titled_span in titled_spans:
-                for market_id, market_string in remaining_external_market_ratings:
-                    if titled_span["title"].find(market_string) != -1:
-                        parts = titled_span.text.split(" ")
-                        sales = int(parts[1])
-                        rating = float(parts[2][1:-1])
-                        external_ratings.append((market_id, sales, rating))
-                        remaining_external_market_ratings.remove((market_id, market_string))
-                        break
+                ext_market_rating = _parse_external_market_rating(titled_span, remaining_external_market_ratings)
+                if ext_market_rating:
+                    market_id, sales, rating, remaining_external_market_ratings = ext_market_rating
+                    free_text = None
+                else:
+                    market_id, sales, rating, free_text = (None, None, None, titled_span.text)
 
-        return external_ratings
+                external_ratings.append((market_id, sales, rating, free_text))
+
+        return tuple(external_ratings)
+
+    @staticmethod
+    def get_product_class_quantity_left_and_ends_in(soup_html: BeautifulSoup) -> Tuple[str, int, str]:
+        product_class: str
+        quantity_left: Optional[int]
+        ends_in: str
+
+        product_class_table_row = soup_html.select_one("table.productTbl > tbody:nth-child(2) > tr:nth-child(1)")
+        quantity_left_table_row = soup_html.select_one("table.productTbl > tbody:nth-child(2) > tr:nth-child(2)")
+        ends_in_table_row = soup_html.select_one("table.productTbl > tbody:nth-child(2) > tr:nth-child(3)")
+
+        assert product_class_table_row.select_one("td:nth-child(1)").text == "Product Class"
+        assert quantity_left_table_row.select_one("td:nth-child(1)").text == "Quantity Left"
+        assert ends_in_table_row.select_one("td:nth-child(1)").text == "Ends In"
+
+        product_class = product_class_table_row.select_one("td:nth-child(2)").text
+        quantity_text = quantity_left_table_row.select_one("td:nth-child(2)").text.strip()
+        quantity_left = int(quantity_text) if quantity_text != "Unlimited" else None
+        ends_in = ends_in_table_row.select_one("td:nth-child(2)").text
+
+        return product_class, quantity_left, ends_in
+
+    @staticmethod
+    def has_unlimited_dispatch(soup_html) -> bool:
+        italic_text_box = soup_html.select_one(".listDes > p:nth-child(3) > i:nth-child(7)")
+        if italic_text_box:
+            assert italic_text_box.text == "Unlimited items available for auto-dispatch"
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def get_nrs_of_views(soup_html: BeautifulSoup) -> Tuple[int]:
+        nrs_of_views: List[int] = []
+        pattern = "Views:"
+        head_div: BeautifulSoup
+
+        head_divs = soup_html.select("div.col-1search > div:nth-child(2) > div:nth-child(1)")
+        assert len(head_divs) <= ASSUMED_MAXIMUM_LISTINGS_PER_SEARCH_RESULT
+        assert len(head_divs) > 0
+        for head_div in head_divs:
+            pattern_index = head_div.text.find(pattern)
+            assert pattern_index != -1
+            relative_slash_index = head_div.text[pattern_index + len(pattern):].find("/")
+            start_index = pattern_index + len(pattern)
+            end_index = pattern_index + len(pattern) + relative_slash_index
+            nr_of_views = parse_int(head_div.text[start_index:end_index])
+            nrs_of_views.append(nr_of_views)
+
+        return tuple(nrs_of_views)
+
+    @staticmethod
+    def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[str, int, str, float, Optional[str], bool]]:
+
+        shipping_methods: List[Tuple[str, int, str, float, Optional[str], bool]] = []
+
+        options = soup_html.select("select.productTbl > option")
+        option: BeautifulSoup
+        for option in options:
+            description, shipping_time, price_string = [s.strip() for s in option.text.split("-")]
+            timedelta_val = parse_time_delta_from_string(shipping_time)
+            days_shipping_time = timedelta_val.days
+            fiat_currency_and_price_per_unit = price_string.split("+")
+            fiat_currency = fiat_currency_and_price_per_unit[0].strip()
+            assert len(fiat_currency) == CURRENCY_COLUMN_LENGTH
+            price_and_is_per_unit = fiat_currency_and_price_per_unit[1].split("/")
+            if len(price_and_is_per_unit) == 1:
+                price_is_per_unit = False
+                quantity_unit_name = None
+            elif len(price_and_is_per_unit) == 2:
+                price_is_per_unit = True
+                quantity_unit_name = price_and_is_per_unit[1].strip()
+            else:
+                raise AssertionError(f"Unknown format in {option.text}")
+            price = parse_float(price_and_is_per_unit[0])
+            shipping_methods.append(
+                (description, days_shipping_time, fiat_currency, price, quantity_unit_name, price_is_per_unit))
+
+        return tuple(shipping_methods)
+
+    @staticmethod
+    def get_bulk_prices(soup_html: BeautifulSoup) -> Tuple[Tuple[int, Optional[int], float, float, Optional[float]]]:
+
+
+        bulk_prices: List[Tuple[int, Optional[int], float, float, Optional[float]]] = []
+
+        bulk_table_rows = soup_html.select(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div:nth-child(1) > "
+            "div.listDes > table:nth-child(7) > tbody > tr")
+
+        table_row: BeautifulSoup
+        for table_row in bulk_table_rows:
+            tds = table_row.select("td")
+            assert len(tds) == 4
+            quantity_range_string_parts = tds[1].text.split()
+            assert len(quantity_range_string_parts) == 5
+            lower_bound = parse_int(quantity_range_string_parts[2])
+            upper_bound = parse_int(quantity_range_string_parts[4])
+            fiat_currency, unparsed_fiat_price = tds[2].text.strip().split()
+            fiat_price = parse_float(unparsed_fiat_price)
+            unparsed_bulk_btc_price, crypto_currency = tds[3].text.strip().split()
+            bulk_btc_price = parse_float(unparsed_bulk_btc_price)
+            bulk_prices.append((lower_bound, upper_bound, fiat_price, bulk_btc_price, None))
+
+        return tuple(bulk_prices)
+
+    @staticmethod
+    def user_is_banned(soup_html: BeautifulSoup) -> bool:
+        span: BeautifulSoup = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > h1 > span")
+        return span.text == "(BANNED)"

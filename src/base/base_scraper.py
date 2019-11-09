@@ -9,7 +9,7 @@ from multiprocessing import Queue
 from threading import RLock
 from time import sleep
 from time import time
-from typing import Callable, List, Tuple, Union, Type, Any, Dict
+from typing import Callable, List, Tuple, Union, Type, Any, Dict, Optional
 
 import requests
 from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
@@ -21,14 +21,16 @@ from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DAT
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
     RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, WEB_EXCEPTIONS_TUPLE, \
     DB_EXCEPTIONS_TUPLE
-from src.base_functions import BaseFunctions
-from src.base_logger import BaseClassWithLogger
+from src.base.base_functions import BaseFunctions
+from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
     get_column_name
 from src.mirror_manager import MirrorManager
 from src.models.bulk_price import BulkPrice
 from src.models.captcha_solution import CaptchaSolution
 from src.models.country import Country
+from src.models.country_alias import CountryAlias
+from src.models.description_text import DescriptionText
 from src.models.error import Error
 from src.models.listing_category import ListingCategory
 from src.models.listing_observation import ListingObservation
@@ -37,14 +39,13 @@ from src.models.listing_observation_country import ListingObservationCountry
 from src.models.pgp_key import PGPKey
 from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
-from src.models.seller_description_text import SellerDescriptionText
 from src.models.seller_observation import SellerObservation
 from src.models.shipping_method import ShippingMethod
 from src.models.user_credential import UserCredential
 from src.models.web_session_cookie import WebSessionCookie
-from src.utils import pretty_print_GET, get_error_string, print_error_to_file, is_internal_server_error, \
-    InternalServerErrorException, is_bad_gateway, BadGatewayException, error_is_sqlalchemy_error, \
-    GenericException, get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url
+from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
+    GenericException, get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
+    temporary_server_error, pretty_print_POST, determine_real_country
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -67,17 +68,17 @@ class BaseScraper(BaseClassWithLogger):
         self.thread_id = thread_id
         self.nr_of_threads = nr_of_threads
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
-        self.headers = self._get_headers()
         self.queue = queue
         self.market_id = self._get_market_id()
         self.start_time = time()
         self.duplicates_this_session = 0
         self.web_sessions: Tuple[requests.Session] = self._get_web_sessions()
         self.initial_queue_size = self.queue.qsize()
-        self.time_last_received_response = 0.0
+        self.time_last_received_response = time()
         self.session_id = session_id or self._initiate_session()
         self.mirror_manager = MirrorManager(self)
         self.mirror_base_url: str = self.mirror_manager.get_new_mirror()
+        self.headers = self._get_headers()
         self._set_saved_cookie_on_web_sessions()
         self.web_session = self._rotate_web_session()
 
@@ -117,8 +118,8 @@ class BaseScraper(BaseClassWithLogger):
         errors = self.db_session.query(Error).filter_by(thread_id=self.thread_id, type=error_type).order_by(
             Error.updated_date.asc())
 
-        finger_print = hashlib.md5((error_type + str(time())).encode(MD5_HASH_STRING_ENCODING)) \
-                           .hexdigest()[0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
+        finger_print = hashlib.md5((error_type + str(time())).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[
+                       0:ERROR_FINGER_PRINT_COLUMN_LENGTH]
 
         error_string = sanitize_error(error_string, locals().keys())
         error_string = shorten_and_sanitize_for_medium_text_column(error_string)
@@ -155,7 +156,7 @@ class BaseScraper(BaseClassWithLogger):
                 self.db_session.merge(scraping_session)
                 self.db_session.commit()
                 break
-            except:
+            except DB_EXCEPTIONS_TUPLE:
                 sleep(10)
 
         self.db_session.expunge_all()
@@ -195,6 +196,9 @@ class BaseScraper(BaseClassWithLogger):
                     ListingObservation.seller_id == seller_id).first()
 
         if existing_listing_observation:
+            if existing_listing_observation.origin_country is None:
+                return existing_listing_observation, True  # This listing is the result of an exception and rollback
+                # mid-scrape
             self.print_crawling_debug_message(existing_listing_observation=existing_listing_observation)
             self.duplicates_this_session += 1
             listing_observation = existing_listing_observation
@@ -211,7 +215,7 @@ class BaseScraper(BaseClassWithLogger):
         return listing_observation, is_new_listing_observation
 
     def _exists_seller_observation_from_this_session(self, seller_id: int) -> bool:
-        existing_seller_observation = self.db_session.query(SellerObservation) \
+        existing_seller_observation = self.db_session.query(SellerObservation.id) \
             .filter(SellerObservation.session_id == self.session_id) \
             .join(Seller) \
             .filter(SellerObservation.seller_id == seller_id) \
@@ -222,22 +226,35 @@ class BaseScraper(BaseClassWithLogger):
         else:
             return True
 
-    def _add_category_junctions(self, categories: List[str], website_category_ids: List[Union[int, None]],
-                                listing_observation_id: int) -> None:
+    def _add_category_junctions(self, listing_observation_id: int, listing_categories: Tuple[
+        Tuple[str, Optional[int], Optional[str], Optional[int]]]) -> None:
 
-        for i in range(0, len(categories)):
-            category = self.db_session.query(ListingCategory).filter(
-                ListingCategory.website_id == website_category_ids[i],
-                ListingCategory.name == categories[i],
+        for category_name, marketside_category_id, parent_category_name, category_level in listing_categories:
+            category: ListingCategory = self.db_session.query(ListingCategory).filter(
+                ListingCategory.website_id == marketside_category_id,
+                ListingCategory.name == category_name,
                 ListingCategory.market == self.market_id).first()
+
+            parent_category = self.db_session.query(ListingCategory.id).filter(
+                ListingCategory.name == parent_category_name, ListingCategory.market == self.market_id,
+                ListingCategory.level == category_level - 1).first()  # TODO: Move inside 'if' when db is cleaned
 
             if not category:
                 category = ListingCategory(
-                    website_id=website_category_ids[i],
-                    name=categories[i],
-                    market=self.market_id
+                    website_id=marketside_category_id,
+                    name=category_name,
+                    market=self.market_id,
+                    parent_category_id=parent_category.id if parent_category else None,
+                    level=category_level
                 )
                 self.db_session.add(category)
+                self.db_session.flush()
+            else:
+                # TODO: Temporary. can be removed when db is updated
+                category.website_id = marketside_category_id
+                category.name = category_name
+                category.parent_category = parent_category.id if parent_category else None
+                category.level = category_level
                 self.db_session.flush()
 
             self.db_session.add(ListingObservationCategory(
@@ -255,61 +272,59 @@ class BaseScraper(BaseClassWithLogger):
             ))
         self.db_session.flush()
 
-    def _add_countries(self, countries: List[str]) -> Tuple[int]:
+    def _add_countries(self, *countries: str) -> Tuple[int]:
         country_ids: List[int] = []
         for country_name in countries:
-            existing_country = self.db_session.query(Country).filter(Country.name == country_name).first()
+            # first, check if alias is stored and match with country
+            existing_country = self.db_session.query(Country.id).filter(
+                Country.id == self.db_session.query(CountryAlias.country_id).filter(
+                    CountryAlias.name == country_name).subquery()).first()
             if existing_country:
                 country_ids.append(existing_country.id)
             else:
-                new_country = self.db_session.add(Country(name=country_name))
+                # country alias not found. first checking with debian db or stored continent dict
+                legit_country_name, alpha_2, alpha_3, is_continent = determine_real_country(country_name)
+                # whatever name we get back from the 'determine_real_country' function, we either query it or create it
+                db_country_id: int = self._create_or_fetch_country(legit_country_name, alpha_2, alpha_3, is_continent)
+                # adding missing alias for this country
+                self.db_session.add(CountryAlias(name=country_name, country_id=db_country_id))
                 self.db_session.flush()
-                country_ids.append(new_country.id)
+                country_ids.append(db_country_id)
+
         assert len(country_ids) == len(countries)
         return tuple(country_ids)
 
-    def _add_shipping_methods(self, listing_observation_id: int, shipping_descriptions: List[str],
-                              shipping_days: List[int],
-                              shipping_currencies: List[str], shipping_prices: List[float],
-                              shipping_unit_names: List[str], price_is_per_units: List[bool]) -> None:
+    def _add_shipping_methods(self, listing_observation_id: int, shipping_methods: Tuple[
+        Tuple[str, Optional[int], str, float, Optional[str], Optional[bool]]]) -> None:
 
-        for description, days, currency, price, unit_name, price_is_per_unit in zip(shipping_descriptions,
-                                                                                    shipping_days, shipping_currencies,
-                                                                                    shipping_prices,
-                                                                                    shipping_unit_names,
-                                                                                    price_is_per_units):
+        for description, days, currency, price, unit_name, price_is_per_unit in shipping_methods:
             self.db_session.add(
                 ShippingMethod(listing_observation_id=listing_observation_id, description=description,
                                days_shipping_time=days, fiat_currency=currency, price=price,
                                quantity_unit_name=unit_name, price_is_per_unit=price_is_per_unit))
 
-    def _add_bulk_prices(self, listing_observation_id: int, bulk_lower_bounds: List[int],
-                         bulk_upper_bounds: List[Union[int, None]],
-                         bulk_fiat_prices: List[float], bulk_btc_prices: List[float],
-                         bulk_discount_percents: List[float]) -> None:
+    def _add_bulk_prices(self, listing_observation_id: int,
+                         bulk_prices: Tuple[Tuple[int, Optional[int], float, float, Optional[float]]]) -> None:
 
-        for lower_bound, upper_bound, fiat_price, btc_price, discount_percent in zip(
-                bulk_lower_bounds, bulk_upper_bounds, bulk_fiat_prices, bulk_btc_prices, bulk_discount_percents):
+        for lower_bound, upper_bound, fiat_price, btc_price, discount_percent in bulk_prices:
             self.db_session.add(
                 BulkPrice(listing_observation_id=listing_observation_id, unit_amount_lower_bound=lower_bound,
                           unit_amount_upper_bound=upper_bound, unit_fiat_price=fiat_price, unit_btc_price=btc_price,
                           discount_percent=discount_percent))
 
-    def _add_seller_observation_description(self, description_text: str) -> str:
-        description_text_hash = hashlib.md5(description_text.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
-        existing_seller_description_text = self.db_session.query(SellerDescriptionText).filter_by(
-            id=description_text_hash).first()
+    def _add_text(self, text: Optional[str]) -> int:
+        text = text if text else ""
+        text_hash = hashlib.md5(text.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
+        text_id_result = self.db_session.query(DescriptionText.id).filter(
+            DescriptionText.text_hash == text_hash).first()
 
-        if existing_seller_description_text:
-            return existing_seller_description_text.id
+        if text_id_result:
+            return text_id_result.id
         else:
-            seller_description_text = SellerDescriptionText(
-                id=description_text_hash,
-                text=description_text
-            )
-            self.db_session.add(seller_description_text)
+            new_text = DescriptionText(text_hash=text_hash, text=text)
+            self.db_session.add(new_text)
             self.db_session.flush()
-            return seller_description_text.id
+            return new_text.id
 
     def _should_scrape_pgp_key_this_session(self, seller: Seller, is_new_seller: bool) -> bool:
         most_recent_pgp_key = self.db_session.query(PGPKey).filter_by(seller_id=seller.id).order_by(
@@ -326,8 +341,8 @@ class BaseScraper(BaseClassWithLogger):
 
     def _add_pgp_key(self, seller: Seller, pgp_key_content: str) -> None:
         key_hash: str = hashlib.md5(pgp_key_content.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
-        existing_pgp_key = self.db_session.query(PGPKey).filter(PGPKey.seller_id == seller.id,
-                                                                PGPKey.key_hash == key_hash).first()
+        existing_pgp_key = self.db_session.query(PGPKey.id).filter(PGPKey.seller_id == seller.id,
+                                                                   PGPKey.key_hash == key_hash).first()
         if not existing_pgp_key:
             self.db_session.add(PGPKey(seller_id=seller.id, key=pgp_key_content, key_hash=key_hash))
             self.db_session.flush()
@@ -367,21 +382,17 @@ class BaseScraper(BaseClassWithLogger):
         response = self._get_web_response_with_error_catch(web_session, http_verb, url, proxies=self.proxy,
                                                            headers=self.headers, data=post_data)
 
-        if self._is_logged_out(response, self.login_url, self.is_logged_out_phrase):
+        if self._is_logged_out(response, self.login_url, self.is_logged_out_phrase) and not post_data:
             self._login_and_set_cookie(web_session, response)
             return self._get_logged_in_web_response(url_path, web_session=web_session)
         else:
-            if is_internal_server_error(response):
-                raise InternalServerErrorException(response.text)
-            elif is_bad_gateway(response):
-                raise BadGatewayException(response.text)
-            else:
-                self.pages_counter += 1
-                self.web_session = self._rotate_web_session()
-                return response
+            self.pages_counter += 1
+            if not post_data:
+                web_session.headers.update({"Origin": self._get_schemaed_url_from_path(url_path)})
+            self.web_session = self._rotate_web_session()
+            return response
 
     def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response):
-        self.web_session.cookies.clear()
         soup_html = get_page_as_soup_html(web_response.text)
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
         image_response = self._get_logged_in_web_response(image_url, web_session=web_session).content
@@ -435,23 +446,29 @@ class BaseScraper(BaseClassWithLogger):
                 WebSessionCookie(thread_id=self.thread_id, session_id=self.session_id, username=username,
                                  mirror_url=self.mirror_base_url, python_object=cookie_object_base64)
             )
-
-        self.db_session.flush()
+        self.logger.info(
+            "Saved cookie {0} to db for username {1} and url {2]".format(''.join(str(dict(cookie_jar)).split('\n')),
+                                                                         username, f"{self.mirror_base_url[0:5]}..."))
+        self.db_session.commit()
 
     def _set_saved_cookie_on_web_sessions(self) -> None:
         for web_session in self.web_sessions:
-            cookie_dict_from_db: dict = self._get_cookie_from_db(web_session.username, web_session.password)
+            cookie_dict_from_db: dict = self._get_cookie_from_db(web_session.username)
             if cookie_dict_from_db:
+                self.logger.info(
+                    "Loaded cookie {0} from db for user {1]".format(''.join(str(cookie_dict_from_db).split('\n')),
+                                                                    web_session.username))
                 web_session.cookies.update(cookie_dict_from_db)
                 web_session.finger_print = hashlib.md5(
                     self._get_cookie_string(web_session).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[0:3]
             else:
+                self.logger.info(f"Found no stored cookie for user {web_session.username}.")
                 web_session.finger_print = ""
 
-    def _get_cookie_from_db(self, username: str, password: str) -> Union[dict, None]:
+    def _get_cookie_from_db(self, username: str) -> Union[dict, None]:
         web_session_cookie: WebSessionCookie = self.db_session.query(WebSessionCookie).filter(
             WebSessionCookie.username == username,
-            WebSessionCookie.mirror_url == password).first()
+            WebSessionCookie.mirror_url == self.mirror_base_url).first()
 
         if web_session_cookie:
             base64_cookie_dict_binary = web_session_cookie.python_object
@@ -469,13 +486,17 @@ class BaseScraper(BaseClassWithLogger):
 
     def _get_web_response_with_error_catch(self, web_session, http_verb, url, *args, **kwargs) -> Response:
         while True:
+            self._log_web_request(web_session, http_verb, url, *args, **kwargs)
             try:
                 web_response = web_session.request(http_verb, url, *args, **kwargs)
+                if temporary_server_error(web_response):
+                    raise temporary_server_error(web_response)
                 self.time_last_received_response = time()
                 if self._is_meta_refresh(web_response.text):
                     redir_url = self._get_schemaed_url_from_path(
                         self._wait_out_meta_refresh_and_get_redirect_url(web_response))
-                    return web_session.get(redir_url, headers=self.headers, proxies=self.proxy)
+                    return self._get_web_response_with_error_catch(web_session, 'GET', redir_url, headers=self.headers,
+                                                                   proxies=self.proxy)
                 else:
                     return web_response
             except (KeyboardInterrupt, SystemExit, AttributeError) as e:
@@ -484,10 +505,11 @@ class BaseScraper(BaseClassWithLogger):
                 raise e
             except WEB_EXCEPTIONS_TUPLE as e:
                 self._log_and_print_error(e, traceback.format_exc(), print_error=False)
-                self.logger.warn(type(e))
+                self.logger.warn(type(e).__name__)
                 if time() - self.time_last_received_response > DEAD_MIRROR_TIMEOUT:
                     self.mirror_base_url = self._db_error_catch_wrapper(func=self.mirror_manager.get_new_mirror,
                                                                         rollback=False)
+                    self.headers = self._get_headers()
 
     def _db_error_catch_wrapper(self, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None,
                                 rollback: bool = True) -> Any:
@@ -519,19 +541,21 @@ class BaseScraper(BaseClassWithLogger):
             return self._db_error_catch_wrapper(*args, func=func, error_data=error_data, rollback=rollback)
 
     def _generic_error_catch_wrapper(self, *args, func: Callable) -> any:
+
         try:
             return func(*args)
         except BaseException as e:
             self._process_generic_error(e)
+        # noinspection PyBroadException
         except:
             e = GenericException()
             self._process_generic_error(e)
 
     def _format_logger_message(self, msg: str) -> str:
         if hasattr(self, 'web_session'):
-            return f"[t-ID {self.thread_id} prx {self.proxy_port} cok {self.web_session.finger_print}] {msg}"
+            return f"[t-ID {self.thread_id} prx {self.proxy_port} wbs {str(self.web_session.__hash__())[-3:]}] {msg}"
         else:
-            return f"[t-ID {self.thread_id} prx {self.proxy_port} cok xxx] {msg}"
+            return f"[t-ID {self.thread_id} prx {self.proxy_port}] {msg}"
 
     def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
         if self._has_successful_login_phrase():
@@ -539,7 +563,7 @@ class BaseScraper(BaseClassWithLogger):
                 return False
         for history_response in response.history:
             if history_response.is_redirect:
-                if history_response.raw.headers._container['location'][1] == login_url:
+                if history_response.headers.get('location') == login_url:
                     return True
 
         if response.text.find(login_page_phrase) != -1:
@@ -646,14 +670,19 @@ class BaseScraper(BaseClassWithLogger):
         with self.user_credentials_db_lock:
             web_session: requests.Session = self._get_web_session_object()
 
-            user_crendentials: UserCredential = self.db_session.query(UserCredential).filter(
-                UserCredential.market_id == self.market_id, UserCredential.thread_id == -1).first()
+            user_credential: UserCredential = self.db_session.query(UserCredential).filter(
+                UserCredential.market_id == self.market_id, UserCredential.thread_id == -1,
+                UserCredential.is_registered == 1).join(WebSessionCookie,
+                                                        WebSessionCookie.username == UserCredential.username,
+                                                        isouter=True).order_by(
+                WebSessionCookie.updated_date.desc()).first()
 
-            assert user_crendentials is not None
-            user_crendentials.thread_id = self.thread_id
-            web_session.username = user_crendentials.username
-            web_session.password = user_crendentials.password
-            self.logger.info(f"Loaded username {user_crendentials.username}")
+            assert user_credential is not None
+            assert user_credential.thread_id == -1
+            user_credential.thread_id = self.thread_id
+            web_session.username = user_credential.username
+            web_session.password = user_credential.password
+            self.logger.info(f"Loaded username {user_credential.username}")
             self.db_session.commit()
             return web_session
 
@@ -666,3 +695,22 @@ class BaseScraper(BaseClassWithLogger):
 
     def _rotate_web_session(self) -> requests.Session:
         return self.web_sessions[self.pages_counter % len(self.web_sessions)]
+
+    def _log_web_request(self, session, verb, *args, **kwargs) -> None:
+        kwargs.pop('proxies')
+        if verb is 'GET':
+            req_str = pretty_print_GET(session.prepare_request(requests.Request(verb, *args, **kwargs)))
+        elif verb is 'POST':
+            req_str = pretty_print_POST(session.prepare_request(requests.Request(verb, *args, **kwargs)))
+        else:
+            raise AssertionError(f'Unconfigured verb {verb}')
+        self.logger.debug(req_str)
+
+    def _create_or_fetch_country(self, legit_country_name: str, alpha_2: str, alpha_3: str, is_continent: bool) -> int:
+        country: Country = self.db_session.query(Country).filter(Country.name == legit_country_name).first()
+        if not country:
+            country = self.db_session.add(
+                Country(name=legit_country_name, iso_alpha2_code=alpha_2, iso_alpha3_code=alpha_3,
+                        is_continent=is_continent))
+            self.db_session.flush()
+        return country.id

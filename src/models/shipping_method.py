@@ -20,8 +20,10 @@ class ShippingMethod(Base):
                                     ForeignKey(listing_observation.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
 
     description = Column(String(128))
-    quantity_unit_name = Column(CHAR(6))
     price = Column(Float)
-    price_is_per_unit = Column(Boolean)
     fiat_currency = Column(CHAR(CURRENCY_COLUMN_LENGTH))
+
+    #empire
     days_shipping_time = Column(Integer)
+    quantity_unit_name = Column(CHAR(6))
+    price_is_per_unit = Column(Boolean)

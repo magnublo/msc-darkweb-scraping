@@ -1,3 +1,4 @@
+import pickle
 import re
 from datetime import datetime
 
@@ -15,26 +16,33 @@ class TestGetCategoryTuplesCategoryUrlsAndNrOfListings(CryptoniaBaseTest):
 
     def test_get_category_tuples_category_urls_and_nr_of_listings(self):
         soup_html = self._get_page_as_soup_html(file_name="saved_cryptonia_category_index_0")
-        category_lists, urls = scrapingFunctions.get_category_lists_and_urls(
+        category_pairs, urls = scrapingFunctions.get_category_pairs_and_urls(
             soup_html)
-        self.assertEqual(len(category_lists), len(urls))
-        self.assertEqual(len(category_lists), 68)
-        for category_list in category_lists:
-            self.assertEqual(len(category_list), 2)
+        self.assertEqual(len(category_pairs), len(urls))
+        self.assertEqual(len(category_pairs), 68)
+        for category_pair in category_pairs:
+            self.assertEqual(len(category_pair), 2)
+            self.assertEqual(category_pair[0][0], category_pair[1][2])
+            for category in category_pair:
+                self.assertEqual(category[1], None)
 
 
 class TestGetNrOfResultPagesInCategory(CryptoniaBaseTest):
 
-    def test_get_nr_of_result_pages_in_category__zero(self):
+    def test_get_nr_of_result_pages_in_category_zero(self):
         soup_html = self._get_page_as_soup_html(file_name="search_results/saved_cryptonia_search_result_in_category_0")
         nr_of_pages_in_category = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
         self.assertEqual(nr_of_pages_in_category, 111)
 
-    def test_get_nr_of_result_pages_in_category__one(self):
+    def test_get_nr_of_result_pages_in_category_one(self):
         soup_html = self._get_page_as_soup_html(file_name="search_results/saved_cryptonia_search_result_in_category_1")
         nr_of_pages_in_category = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
         self.assertEqual(nr_of_pages_in_category, 31)
 
+    def test_get_nr_of_result_pages_in_category_five(self):
+        soup_html = self._get_page_as_soup_html(file_name="search_results/saved_cryptonia_search_result_in_category_5")
+        nr_of_pages_in_category = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
+        self.assertEqual(nr_of_pages_in_category, 0)
 
 class TestGetProductPageUrls(CryptoniaBaseTest):
 
@@ -282,6 +290,13 @@ class TestGetFiatCurrencyAndPriceAndUnitType(CryptoniaBaseTest):
         self.assertEqual(price, 97.0)
         self.assertEqual(unit_type, "item")
 
+    def test_get_fiat_currency_and_price_and_unit_type_twelve(self):
+        soup_html = self._get_page_as_soup_html(file_name=f"listings/saved_cryptonia_listing_12")
+        fiat_currency, price, unit_type = scrapingFunctions.get_fiat_currency_and_price_and_unit_type(soup_html)
+
+        self.assertEqual(fiat_currency, "USD")
+        self.assertEqual(price, 650.0)
+        self.assertEqual(unit_type, "1/4pound")
 
 class TestGetOriginCountryAndDestinations(CryptoniaBaseTest):
 
@@ -502,6 +517,14 @@ class TestGetQuantityInStockAndUnitType(CryptoniaBaseTest):
         self.assertEqual("gram", unit_type)
         self.assertEqual(28, minimum_order_unit_amount)
 
+    def test_get_quantity_in_stock_and_unit_type_twelve(self):
+        soup_html = self._get_page_as_soup_html(file_name='listings/saved_cryptonia_listing_12')
+        quantity, unit_type, minimum_order_unit_amount = \
+            scrapingFunctions.get_quantity_in_stock_unit_type_and_minimum_order_unit_amount(
+                soup_html)
+        self.assertEqual(100, quantity)
+        self.assertEqual("1/4pound", unit_type)
+        self.assertEqual(1, minimum_order_unit_amount)
 
 class TestGetListingType(CryptoniaBaseTest):
 
@@ -531,128 +554,56 @@ class TestGetShippingMethods(CryptoniaBaseTest):
 
     def test_get_shipping_methods_zero(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_0')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 2
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(["Priority Mail", "Add On"], shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([16.0, 0.0], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual(
+            (('Priority Mail', None, 'USD', 16.0, None, False), ('Add On', None, 'USD', 0.0, None, False)),
+            shipping_methods)
 
     def test_get_shipping_methods_one(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_1')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 5
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(['1st Class Post UK', 'Special Delivery (N.D. Before 1pm) UK', 'Priority Post Europe',
-                          'Tracked/Signed Xpress Europe', 'Special Delivery Saturday Before 1pm UK'],
-                         shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([5.11, 6.4, 7.68, 12.81, 12.81], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('1st Class Post UK', None, 'USD', 5.11, None, False),
+                               ('Special Delivery (N.D. Before 1pm) UK', None, 'USD', 6.4, None, False),
+                               ('Priority Post Europe', None, 'USD', 7.68, None, False),
+                               ('Tracked/Signed Xpress Europe', None, 'USD', 12.81, None, False),
+                               ('Special Delivery Saturday Before 1pm UK', None, 'USD', 12.81, None, False)),
+                              shipping_methods)
 
     def test_get_shipping_methods_two(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_2')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 2
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(['PRIORITY SHIPPING 2-3 DAY', 'COMBINED SHIPPING ONLY'], shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([84817.64, 0.0], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('PRIORITY SHIPPING 2-3 DAY', None, 'USD', 84817.64, None, False),
+                               ('COMBINED SHIPPING ONLY', None, 'USD', 0.0, None, False)), shipping_methods)
 
     def test_get_shipping_methods_three(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_3')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 5
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(['(DE) DOMESTIC only (KEIN Tracking), 1-5 Tage', '(DE) PRIO-Brief (MIT Tracking), 1-3 Tage',
-                          '(DE) Einschreiben-Einwurf (MIT Tracking), 1-5 Tage',
-                          '(DE+EU) Zusatzartikel / additional item',
-                          '(EU) Reg. Mail / Recommandé (Track&Sign!), 3-10 days'], shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([3.33, 5.55, 7.77, 0.0, 8.32], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('(DE) DOMESTIC only (KEIN Tracking), 1-5 Tage', None, 'USD', 3.33, None, False),
+                               ('(DE) PRIO-Brief (MIT Tracking), 1-3 Tage', None, 'USD', 5.55, None, False),
+                               ('(DE) Einschreiben-Einwurf (MIT Tracking), 1-5 Tage', None, 'USD', 7.77, None, False),
+                               ('(DE+EU) Zusatzartikel / additional item', None, 'USD', 0.0, None, False), (
+                               '(EU) Reg. Mail / Recommandé (Track&Sign!), 3-10 days', None, 'USD', 8.32, None, False)),
+                              shipping_methods)
 
     def test_get_shipping_methods_four(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_4')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 1
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(['NATIONAL MAIL SERVICE [STEALTH]'], shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([5.55], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('NATIONAL MAIL SERVICE [STEALTH]', None, 'USD', 5.55, None, False),), shipping_methods)
 
     def test_get_shipping_methods_five(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_5')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 1
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(['AUTOSHOP'], shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([0.0], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('AUTOSHOP', None, 'USD', 0.0, None, False),), shipping_methods)
 
     def test_get_shipping_methods_six(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_6')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 1
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(['AUTOSHOP'], shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([0.0], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('AUTOSHOP', None, 'USD', 0.0, None, False),), shipping_methods)
 
     def test_get_shipping_methods_seven(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_7')
-        res = shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-              price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
-        expected_length = 1
-
-        self.assertEqual([len(res[i]) for i in range(len(res))], [expected_length for _ in res])
-
-        self.assertEqual(['DIGITAL DELIVERY'], shipping_descriptions)
-        self.assertEqual([None] * expected_length, shipping_days)
-        self.assertEqual(["USD"] * expected_length, shipping_currencies)
-        self.assertEqual([0.0], shipping_prices)
-        self.assertEqual([None] * expected_length, shipping_unit_names)
-        self.assertEqual([False] * expected_length, price_is_per_units)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('DIGITAL DELIVERY', None, 'USD', 0.0, None, False),), shipping_methods)
 
 
 class TestGetBulkPrices(CryptoniaBaseTest):
@@ -669,23 +620,15 @@ class TestGetBulkPrices(CryptoniaBaseTest):
 
     def test_get_bulk_prices_four(self):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_4')
-        bulk_lower_bounds, bulk_upper_bounds, bulk_fiat_prices, bulk_btc_prices, bulk_discount_percents = \
-            scrapingFunctions.get_bulk_prices(
-                soup_html)
+        bulk_prices = scrapingFunctions.get_bulk_prices(soup_html)
 
-        same_length_res = [bulk_lower_bounds, bulk_fiat_prices, bulk_btc_prices, bulk_discount_percents]
         expected_length = 10
 
-        self.assertEqual([len(same_length_res[i]) for i in range(len(same_length_res))],
-                         [expected_length for _ in same_length_res])
-
-        self.assertEqual(
-            [0.0002905, 0.00023217, 0.00020883, 0.00016917, 0.00016217, 0.00015633, 0.000133, 0.00012133, 0.00011667,
-             0.000112], bulk_btc_prices)
-        self.assertEqual(['38', '50', '55', '64', '65', '66', '71', '74', '75', '76'], bulk_discount_percents)
-        self.assertEqual([2.76, 2.21, 1.98, 1.61, 1.54, 1.48, 1.26, 1.15, 1.11, 1.06], bulk_fiat_prices)
-        self.assertEqual([5, 10, 25, 50, 75, 100, 250, 500, 750, 1000], bulk_lower_bounds)
-        self.assertEqual([9, 24, 49, 74, 99, 249, 499, 749, 999, None], bulk_upper_bounds)
+        self.assertTupleEqual(((5, 9, 2.76, 0.0002905, '38'), (10, 24, 2.21, 0.00023217, '50'),
+                               (25, 49, 1.98, 0.00020883, '55'), (50, 74, 1.61, 0.00016917, '64'),
+                               (75, 99, 1.54, 0.00016217, '65'), (100, 249, 1.48, 0.00015633, '66'),
+                               (250, 499, 1.26, 0.000133, '71'), (500, 749, 1.15, 0.00012133, '74'),
+                               (750, 999, 1.11, 0.00011667, '75'), (1000, None, 1.06, 0.000112, '76')), bulk_prices)
 
 
 class TestGetSellerAboutDescription(CryptoniaBaseTest):
@@ -737,12 +680,12 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(96.87, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([('DREAM_MARKET', 34000, 4.82, 5.0, None, None, None, None),
+        self.assertEqual((('DREAM_MARKET', 34000, 4.82, 5.0, None, None, None, None),
                           ('WALL_STREET_MARKET', 354, 4.7, 5.0, None, None, None, None),
-                          ('ALPHA_BAY_MARKET', None, None, None, 9888, 44, 57, None)], external_market_ratings)
+                          ('ALPHA_BAY_MARKET', None, None, None, 9888, 44, 57, None)), external_market_ratings)
         self.assertEqual(('BTC', 0.06925569, 'USD', 646.22), amount_on_escrow)
         self.assertEqual("United Kingdom", ships_from)
-        self.assertListEqual(["Worldwide"], ships_to)
+        self.assertTupleEqual(("Worldwide",), ships_to)
         self.assertEqual(None, jabber_id)
         self.assertEqual(True, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-15 13:19:58"), member_since)
@@ -755,10 +698,10 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(0.0, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([], external_market_ratings)
+        self.assertEqual((), external_market_ratings)
         self.assertEqual(('BTC', 0.0, 'USD', 0.0), amount_on_escrow)
         self.assertEqual(None, ships_from)
-        self.assertListEqual(["Worldwide"], ships_to)
+        self.assertTupleEqual(("Worldwide",), ships_to)
         self.assertEqual(None, jabber_id)
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-10-28 12:43:10"), member_since)
@@ -771,13 +714,13 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(100.0, percent_positive_rating)
         self.assertTupleEqual((1, 1), disputes)
-        self.assertEqual([('DREAM_MARKET', 3700, 4.96, 5.0, None, None, None, 'nr of sales is lower estimate'),
-                          ('WALL_STREET_MARKET', 910, 4.93, 5.0, None, None, None, None)], external_market_ratings)
+        self.assertTupleEqual((('DREAM_MARKET', 3700, 4.96, 5.0, None, None, None, 'nr of sales is lower estimate'),
+                               ('WALL_STREET_MARKET', 910, 4.93, 5.0, None, None, None, None)), external_market_ratings)
         self.assertEqual(('BTC', 1.07896587, 'USD', 9815.02), amount_on_escrow)
         self.assertEqual("Germany", ships_from)
-        self.assertListEqual(
-            ['Austria', 'Belgium', 'France', 'Finland', 'Germany', 'Denmark', 'Luxembourg', 'Poland', 'Sweden',
-             'Norway'], ships_to)
+        self.assertTupleEqual(
+            ('Austria', 'Belgium', 'France', 'Finland', 'Germany', 'Denmark', 'Luxembourg', 'Poland', 'Sweden',
+             'Norway'), ships_to)
         self.assertEqual('horch@xabber.de', jabber_id)
         self.assertEqual(True, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-22 10:20:33"), member_since)
@@ -826,11 +769,11 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(75.0, percent_positive_rating)
         self.assertTupleEqual((2, 2), disputes)
-        self.assertListEqual([('EMPIRE_MARKET', 58, 96.67, 100.0, None, None, None, None)], external_market_ratings)
+        self.assertTupleEqual((('EMPIRE_MARKET', 58, 96.67, 100.0, None, None, None, None),), external_market_ratings)
         self.assertEqual(('BTC', 0.0966432, 'USD', 900.01), amount_on_escrow)
         self.assertEqual("China", ships_from)
-        self.assertListEqual(
-            ['Worldwide'], ships_to)
+        self.assertTupleEqual(
+            ('Worldwide',), ships_to)
         self.assertEqual('cindicator@xmpp.jp', jabber_id)
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-05-21 09:11:42"), member_since)
@@ -852,12 +795,12 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(98.39, percent_positive_rating)
         self.assertTupleEqual((1, 1), disputes)
-        self.assertListEqual([('DREAM_MARKET', 31000, 4.87, 5.0, None, None, None, None),
-                              ('ALPHA_BAY_MARKET', None, None, None, 866, 41, 20, None),
-                              ('HANSA_MARKET', None, None, None, 1399, 47, 47, None)], external_market_ratings)
+        self.assertTupleEqual((('DREAM_MARKET', 31000, 4.87, 5.0, None, None, None, None),
+                               ('ALPHA_BAY_MARKET', None, None, None, 866, 41, 20, None),
+                               ('HANSA_MARKET', None, None, None, 1399, 47, 47, None)), external_market_ratings)
         self.assertEqual(('BTC', 0.00257843, 'USD', 23.65), amount_on_escrow)
         self.assertEqual("Worldwide", ships_from)
-        self.assertListEqual(["Worldwide"], ships_to)
+        self.assertTupleEqual(("Worldwide",), ships_to)
         self.assertEqual(None, jabber_id)
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-05-13 07:15:51"), member_since)
@@ -879,11 +822,11 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(100.0, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([], external_market_ratings)
+        self.assertEqual((), external_market_ratings)
         self.assertEqual(('BTC', 0.00268991, 'USD', 24.69), amount_on_escrow)
         self.assertEqual("Netherlands", ships_from)
-        self.assertListEqual(
-            ['Worldwide'], ships_to)
+        self.assertTupleEqual(
+            ('Worldwide',), ships_to)
         self.assertEqual(None, jabber_id)
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-23 09:57:45"), member_since)
@@ -896,14 +839,14 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(100.0, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([('DREAM_MARKET', 1000, 4.94, 5.0, None, None, None, None),
+        self.assertEqual((('DREAM_MARKET', 1000, 4.94, 5.0, None, None, None, None),
                           ('WALL_STREET_MARKET', 1084, 4.68, 5.0, None, None, None, None),
                           ('ALPHA_BAY_MARKET', None, None, None, 168, 3, 0, None),
-                          ('HANSA_MARKET', 1000, 4.94, 5.0, None, None, None, None)], external_market_ratings)
+                          ('HANSA_MARKET', 1000, 4.94, 5.0, None, None, None, None)), external_market_ratings)
         self.assertEqual(('BTC', 0.15362283, 'USD', 1409.9), amount_on_escrow)
         self.assertEqual("United Kingdom", ships_from)
-        self.assertListEqual(
-            ['United Kingdom'], ships_to)
+        self.assertTupleEqual(
+            ('United Kingdom',), ships_to)
         self.assertEqual('martell@jabber.ccc.de', jabber_id)
         self.assertEqual(True, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-21 12:25:03"), member_since)
@@ -916,13 +859,13 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(100.0, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([('DREAM_MARKET', 3300, 4.97, None, None, None, None, None),
+        self.assertEqual((('DREAM_MARKET', 3300, 4.97, None, None, None, None, None),
                           ('WALL_STREET_MARKET', 112, 4.86, None, None, None, None, None),
-                          ('EMPIRE_MARKET', 27, 100.0, 100.0, None, None, None, None)], external_market_ratings)
+                          ('EMPIRE_MARKET', 27, 100.0, 100.0, None, None, None, None)), external_market_ratings)
         self.assertEqual(('BTC', 0.0254694, 'USD', 233.06), amount_on_escrow)
         self.assertEqual("Australia", ships_from)
-        self.assertListEqual(
-            ['Australia'], ships_to)
+        self.assertTupleEqual(
+            ('Australia',), ships_to)
         self.assertEqual(None, jabber_id)
         self.assertEqual(True, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-20 23:27:29"), member_since)
@@ -935,11 +878,11 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(0.0, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([('DREAM_MARKET', 185, 4.99, 5.0, None, None, None, None)], external_market_ratings)
+        self.assertEqual((('DREAM_MARKET', 185, 4.99, 5.0, None, None, None, None),), external_market_ratings)
         self.assertEqual(('BTC', 0.0, 'USD', 0.0), amount_on_escrow)
         self.assertEqual("United Kingdom", ships_from)
-        self.assertListEqual(
-            ['Worldwide'], ships_to)
+        self.assertTupleEqual(
+            ('Worldwide',), ships_to)
         self.assertEqual(None, jabber_id)
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-28 20:12:09"), member_since)
@@ -952,13 +895,13 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(100.0, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([('DREAM_MARKET', 1650, 4.89, 5.0, None, None, None, None),
+        self.assertEqual((('DREAM_MARKET', 1650, 4.89, 5.0, None, None, None, None),
                           ('WALL_STREET_MARKET', 153, 4.85, 5.0, None, None, None, None),
-                          ('EMPIRE_MARKET', 80, 100.0, 100.0, None, None, None, None)], external_market_ratings)
+                          ('EMPIRE_MARKET', 80, 100.0, 100.0, None, None, None, None)), external_market_ratings)
         self.assertEqual(('BTC', 0.05019241, 'USD', 459.3), amount_on_escrow)
         self.assertEqual("Netherlands", ships_from)
-        self.assertListEqual(
-            ['Worldwide'], ships_to)
+        self.assertTupleEqual(
+            ('Worldwide',), ships_to)
         self.assertEqual(None, jabber_id)
         self.assertEqual(True, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-02 19:35:02"), member_since)
@@ -971,16 +914,16 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(97.87, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual([('DREAM_MARKET', 12000, 4.94, 5.0, None, None, None, None),
+        self.assertEqual((('DREAM_MARKET', 12000, 4.94, 5.0, None, None, None, None),
                           ('BLACK_BANK_MARKET', None, None, None, 4, 0, 0, None),
                           ('NUCLEUS_MARKET', 895, 4.95, 5.0, None, None, None, None),
                           ('ALPHA_BAY_MARKET', None, None, None, 1142, 21, 92, None),
                           ('ABRAXAS_MARKET', 1020, 5.0, 5.0, None, None, None, None),
-                          ('MIDDLE_EARTH_MARKET', 145, 9.85, 10.0, None, None, None, None)], external_market_ratings)
+                          ('MIDDLE_EARTH_MARKET', 145, 9.85, 10.0, None, None, None, None)), external_market_ratings)
         self.assertEqual(('BTC', 0.03794626, 'USD', 347.33), amount_on_escrow)
         self.assertEqual("United States", ships_from)
-        self.assertListEqual(
-            ['United States'], ships_to)
+        self.assertTupleEqual(
+            ('United States',), ships_to)
         self.assertEqual('MarleysMainMan@xmpp.jp', jabber_id)
         self.assertEqual(True, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-02 18:48:33"), member_since)
@@ -1255,8 +1198,7 @@ class TestGetMetaRefreshInterval(CryptoniaBaseTest):
         self.assertEqual(redirect_url, "/login")
 
     # def test_temp(self):
-    #     rng = [3,4,5,6,8,10]
-    #     for i in rng:
+    #     for i in range(17):
     #         soup_html = self._get_page_as_soup_html(f'users/saved_cryptonia_user_profile_{i}')
     #         res = percent_positive_rating, disputes, external_market_ratings, amount_on_escrow, ships_from, ships_to,\
     #               jabber_id, fe_enabled, member_since, last_online = scrapingFunctions.get_seller_info(

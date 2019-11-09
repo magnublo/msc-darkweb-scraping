@@ -1,0 +1,448 @@
+<html>
+<head>
+<title>Empire Market - Thedutchconnect</title>
+<link href="http://empiremktxgjovhm.onion/public/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="http://empiremktxgjovhm.onion/public/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="http://empiremktxgjovhm.onion/favicon.png" rel="icon" type="image/png"/>
+</head>
+<body>
+<div class="header">
+<div class="img-logo">
+<a href="http://empiremktxgjovhm.onion/home"><img src="http://empiremktxgjovhm.onion/public/image/logo.png"/></a>
+</div>
+<div class="right-session">
+<div id="right-session-information">
+<div class="right-session-image">
+<a href="http://empiremktxgjovhm.onion/myprofile">
+<img src="http://empiremktxgjovhm.onion/public/image/login.png"/>
+</a>
+</div>
+<div class="right-session-text">
+<p class="padp" style="line-height: 16px;"><b> Logged in as <a href="http://empiremktxgjovhm.onion/myinfo">using_python3</a> [<a href="http://empiremktxgjovhm.onion/index/logout">Logout</a>]</b></p>
+<p class="padp" style="width:max-content; line-height: 16px;"><b> BTC: <a href="http://empiremktxgjovhm.onion/balance/bitcoin">0.00000</a> / LTC: <a href="http://empiremktxgjovhm.onion/balance/litecoin">0.00000</a> / <br/>XMR: <a href="http://empiremktxgjovhm.onion/balance/monero">0.00000</a> [<a href="http://empiremktxgjovhm.onion/autoshop">My Autoshop</a>]</b> </p>
+<p class="padp"></p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="sm-nav" style="width: 43%;">
+<ul>
+<li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"/> USD 9362.94</a></li>
+<li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"/> CAD 12345.80</a></li>
+<li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"/> EUR 8458.30</a></li>
+<li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"/> AUD 13606.40</a></li>
+<li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"/> GBP 7282.83</a></li>
+</ul>
+</div>
+<div class="clear"></div>
+<div class="body-content">
+<nav id="primary_nav_wrap">
+<ul>
+<li><a href="http://empiremktxgjovhm.onion/home">HOME</a></li>
+<li><a href="http://empiremktxgjovhm.onion/message">MESSAGES <span style="color:inherit;">
+</span></a>
+<ul>
+<li><a href="http://empiremktxgjovhm.onion/message/newmsg">Send Message</a></li>
+<li><a href="http://empiremktxgjovhm.onion/message">Conversations</a></li>
+<li><a href="http://empiremktxgjovhm.onion/message/settab/vendors">--- Vendors</a></li>
+<li><a href="http://empiremktxgjovhm.onion/message/settab/buyers">--- Buyers</a></li>
+</ul>
+</li>
+<li><a href="http://empiremktxgjovhm.onion/order">ORDERS</a>
+<ul>
+<li><a href="http://empiremktxgjovhm.onion/order">Current Orders</a></li>
+<li><a href="http://empiremktxgjovhm.onion/order/archive">Archived Orders</a></li>
+</ul>
+</li>
+<li><a href="http://empiremktxgjovhm.onion/sales/vendor">BECOME A VENDOR</a></li>
+<li>
+<a href="http://empiremktxgjovhm.onion/balance/bitcoin">BALANCE</a>
+<ul>
+<li><a href="http://empiremktxgjovhm.onion/balance/bitcoin">Bitcoin Balance</a></li>
+<li><a href="http://empiremktxgjovhm.onion/balance/litecoin">Litecoin Balance</a></li>
+<li><a href="http://empiremktxgjovhm.onion/balance/monero">Monero Balance</a></li>
+</ul>
+</li>
+<li><a href="http://empiremktxgjovhm.onion/profile/settab/p_feedback">FEEDBACK</a>
+<ul>
+<li><a href="http://empiremktxgjovhm.onion/profile/settab/p_feedback">View Feedback &amp; Profile</a></li>
+<li><a href="http://empiremktxgjovhm.onion/myinfo">Edit Profile</a></li>
+</ul>
+</li>
+<li><a href="http://tpo7v66snknyugsf.onion" target="_blank">FORUMS</a></li>
+<li><a href="http://empiremktxgjovhm.onion/support">SUPPORT</a>
+<ul>
+<li><a href="http://empiremktxgjovhm.onion/support">Ticket List</a></li>
+<li><a href="http://empiremktxgjovhm.onion/support/newticket">Create Ticket</a></li>
+<li><a href="http://empiremktxgjovhm.onion/support/faq">FAQ</a></li>
+<li><a href="http://empiremktxgjovhm.onion/disputes">Disputes</a></li>
+<li><a href="http://empiremktxgjovhm.onion/support/contactinformation">View Contact Information</a></li>
+</ul>
+</li>
+<li style="float:right;margin:0px;">
+<a href="http://empiremktxgjovhm.onion/notifications" style="padding:0px;">
+<img src="http://empiremktxgjovhm.onion/public/image/white_bell.png" style="margin-top: -1px;"/>
+</a>
+</li>
+</ul>
+</nav>
+<div class="clear"></div>
+<div class="sub_head_inner_header">
+<i aria-hidden="true" class="fa fa-user fa-fontSet"></i>
+<div class="check"><p></p></div>
+<h3><a href="http://empiremktxgjovhm.onion/u/Thedutchconnect">Thedutchconnect's Profile</a></h3>
+<div class="check"><p></p></div>
+<i aria-hidden="true" class="fa fa-sitemap fa-fontSet sitemap"></i>
+</div>
+<div class="wrapper-index">
+<div class="left-content">
+<div id="information">
+<div class="login-Head">
+<div class="loginHead-logo">
+<i aria-hidden="true" class="fa fa-briefcase padi"></i>
+</div>
+<div class="loginHead-head">
+<h3 class="padh3">PROFILE ACTIONS</h3>
+</div>
+</div>
+<div class="clear"></div>
+<nav class="full">
+<ul class="usermenu">
+<li><a href="http://empiremktxgjovhm.onion/myinfo">My Information</a></li>
+<li><a href="http://empiremktxgjovhm.onion/message">Private Messages
+        <li><a href="http://empiremktxgjovhm.onion/listings">Listings</a></li>
+<li><a href="http://empiremktxgjovhm.onion/order">Orders</a></li>
+<li><a href="http://empiremktxgjovhm.onion/queue/list">Queue List</a></li>
+<li><a href="http://empiremktxgjovhm.onion/profile/favorite_listings">Favorite Listings</a></li>
+<li><a href="http://empiremktxgjovhm.onion/profile/favorite_vendors">Favorite Vendors</a></li>
+<li><a href="http://empiremktxgjovhm.onion/myprofile">Feedback</a></li>
+<li><a href="http://empiremktxgjovhm.onion/profile/blocklist">Vendor Block List</a></li>
+<li><a href="http://empiremktxgjovhm.onion/support">Help</a></li>
+</a></li></ul>
+</nav>
+</div>
+<div id="information">
+<div class="login-Head">
+<div class="loginHead-logo">
+<i aria-hidden="true" class="fa fa-users padi"></i>
+</div>
+<div class="loginHead-head">
+<h3 class="padh3"> BUYER STATISTICS</h3>
+</div>
+</div>
+<div class="clear"></div>
+<div class="statistics">
+<h3 class="padp">Bought Items</h3>
+<p class="padp"> Items Bought <span class="float-right boldstats">0</span></p>
+</div>
+<div class="statistics">
+<h3 class="padp">Payments</h3>
+<p class="padp"> Paid <span class="float-right boldstats" style="color:#00bb00;">USD 0.00</span></p>
+<p class="padp"> In Escrow<span class="float-right boldstats" style="color:#bb0000;">USD 0.00</span></p>
+</div>
+<div class="statistics">
+<p class="padp"> <font color="gray">Total Purchases </font><span class="float-right boldstats"> <font color="gray"> USD 0.00 </font></span></p>
+</div>
+</div>
+<div id="information">
+<div class="login-Head">
+<div class="loginHead-logo">
+<i aria-hidden="true" class="fa fa-bitcoin padi"></i>
+</div>
+<div class="loginHead-head">
+<h3 class="padh3"> EXCHANGE RATES</h3>
+</div>
+</div>
+<div class="clear"></div>
+<div class="statistics">
+<h3 class="padp">Bitcoin (BTC)</h3>
+<p class="padp"> United States Dollar (USD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					9362.94				</font>
+</span>
+</p>
+<p class="padp"> Canadian Dollar (CAD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					12345.80				</font>
+</span>
+</p>
+<p class="padp"> Euro (EUR)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					8458.30				</font>
+</span>
+</p>
+<p class="padp"> Australian Dollar (AUD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					13606.40				</font>
+</span>
+</p>
+<p class="padp"> British Pound (GBP)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					7282.83				</font>
+</span>
+</p>
+<p class="padp"> <a href="http://empiremktxgjovhm.onion/balance/bitcoin">Deposits &amp; Withdrawals</a></p>
+</div>
+<div class="statistics">
+<h3 class="padp">Litecoin (LTC)</h3>
+<p class="padp"> United States Dollar (USD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					64.08				</font>
+</span>
+</p>
+<p class="padp"> Canadian Dollar (CAD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					84.50				</font>
+</span>
+</p>
+<p class="padp"> Euro (EUR)
+			<span class="float-right boldstats">
+<font color="#bb0000">
+					57.80				</font>
+</span>
+</p>
+<p class="padp"> Australian Dollar (AUD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					93.13				</font>
+</span>
+</p>
+<p class="padp"> British Pound (GBP)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					49.84				</font>
+</span>
+</p>
+<p class="padp"> <a href="http://empiremktxgjovhm.onion/balance/litecoin">Deposits &amp; Withdrawals</a></p>
+</div>
+<div class="statistics">
+<h3 class="padp">Monero (XMR)</h3>
+<p class="padp"> United States Dollar (USD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					64.30				</font>
+</span>
+</p>
+<p class="padp"> Canadian Dollar (CAD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					84.84				</font>
+</span>
+</p>
+<p class="padp"> Euro (EUR)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					58.12				</font>
+</span>
+</p>
+<p class="padp"> Australian Dollar (AUD)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					93.52				</font>
+</span>
+</p>
+<p class="padp"> British Pound (GBP)
+			<span class="float-right boldstats">
+<font color="#00bb00">
+					50.04				</font>
+</span>
+</p>
+<p class="padp"> <a href="http://empiremktxgjovhm.onion/balance/monero">Deposits &amp; Withdrawals</a></p>
+</div>
+<div class="statistics">
+<p class="padp"> <font color="gray" size="1px">The above rates are updated every 15 minutes and taken using a weighted average of major exchange platforms. </font></p>
+</div>
+</div>
+</div>
+<div class="right-content">
+<h1 class="seth1">Thedutchconnect <i>| User Profile</i> <span></span></h1>
+<div class="user_info">
+<div class="user_info_left">
+<img alt="" src="http://empiremktxgjovhm.onion/public/image/2019/08/25/1566733146ugqO7xdovsYVaGR3xeGR-100_100.JPG"/>
+<!--<img src="">-->
+</div>
+<div class="user_info_mid">
+<h3 class="user_info_mid_head">Thedutchconnect <span style="">(384)</span>
+<span class="user_info_trust level-5">Vendor level 5</span>
+<span class="user_info_trust level-4">Trust level 4</span>
+</h3>
+<div style="padding-top: 10px;">
+<p class="bold" style="padding: 0;">Market Positive feedback(last 12 months): <b>94.27</b>%</p>
+<!--<p class="bold setp">Autoshop Positive feedback(last 12 months): <b><?//= $card_perc; ?></b>%</p>-->
+<p style="padding: 0;">Member since: <span class="bold1">July 28, 2019</span></p>
+</div>
+</div>
+<div class="user_info_right">
+<br/>
+<ul>
+<li><a class="replyBtn btnlist" href="http://empiremktxgjovhm.onion/store/Thedutchconnect">View Store</a></li>
+<li><a class="replyBtn btnlist" href="http://empiremktxgjovhm.onion/Message/newMsg_u/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">Send Message</a></li>
+<li><a class="replyBtn btnlist" href="http://empiremktxgjovhm.onion/Profile/addFavorite_vendor/Thedutchconnect/d4a01daf9d1315f599576048c1ebb6cfb0c1d775">Add to Favorite</a></li>
+<li><a class="replyBtn btnlist" href="http://empiremktxgjovhm.onion/Profile/addBlock/Thedutchconnect/d4a01daf9d1315f599576048c1ebb6cfb0c1d775">Block Vendor</a></li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+<div class="seller_rating">
+<h3 class="headfeed">Seller Feedback Ratings <span class="headfeedSpan">(last 12 months)</span>
+</h3>
+<table>
+<tr>
+<th></th>
+<th>1 month</th>
+<th>6 months</th>
+<th>12 months</th>
+</tr>
+<tr>
+<td><img height="12px" src="http://empiremktxgjovhm.onion/public/image/feedback1.png" width="12px"/> Positive</td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">37</a></td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">250</a></td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">250</a></td>
+</tr>
+<tr>
+<td><img height="12px" src="http://empiremktxgjovhm.onion/public/image/feedback2.png" width="12px"/> Neutral</td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">3</a></td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">13</a></td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">13</a></td>
+</tr>
+<tr>
+<td><img height="12px" src="http://empiremktxgjovhm.onion/public/image/feedback3.png" width="12px"/> Negative</td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">10</a></td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">16</a></td>
+<td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">16</a></td>
+</tr>
+</table>
+</div>
+<div class="buyer_statistics">
+<h3 class="headfeed">Buyer Statistics <span class="headfeedSpan">(Since join date)</span>
+</h3>
+<table>
+<tr>
+<th></th>
+<th>Since join</th>
+</tr>
+<tr>
+<td>Total Disputes / Orders</td>
+<td class="align-right">0 / 0</td>
+</tr>
+<tr>
+<td>Total Spendings</td>
+<td class="align-right">---</td>
+</tr>
+<tr>
+<td>Feedback left</td>
+<td class="align-right">0 (0% Positive)</td>
+</tr>
+<tr>
+<td>Last online</td>
+<td class="align-right">Nov 07, 2019</td>
+</tr>
+</table>
+</div>
+<div class="clear"></div>
+<div class="rating_star">
+<table>
+<tr>
+<th></th>
+<th></th>
+<th>Stealth</th>
+<th>Quality</th>
+<th>Value Price</th>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+</td>
+<td>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+</td>
+<td>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+<i aria-hidden="true" class="fa fa-star" style="color:gold;"></i>
+</td>
+</tr>
+</table>
+</div>
+<div class="clear"></div>
+<div class="tab">
+<a class="tablinks focus" href="http://empiremktxgjovhm.onion/Profile/setUserTab/about/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">About</a>
+<a class="tablinks" href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">Positive Feedback</a>
+<a class="tablinks" href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">Negative Feedback</a>
+<a class="tablinks" href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">Neutral Feedback</a>
+<a class="tablinks" href="http://empiremktxgjovhm.onion/Profile/setUserTab/l_feedback/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">Left Feedback</a>
+<a class="tablinks" href="http://empiremktxgjovhm.onion/Profile/setUserTab/pgp/L1IyR3M1ZzFzUnFoODR5d3BlRlY0dz09">PGP</a>
+</div>
+<div class="tabcontent_user_feedback" style="display:block;">
+<h3 class="headfeed">About Thedutchconnect</h3>
+<p style="word-wrap: break-word; white-space: pre-wrap;">FORMER DREAM MARKET AND NIGHTMARE MARKET VENDOR WITH OVER THOUSANDS OF SALES! NIGHTMARE MARKET HAS EXIT SCAMMED AND LEFT US WITH 8K IN ESCROW SO WE CONTINUE OUR BUSINESS HERE NOW!
+
+========= PRODUCTS! ============
+
+WE OFFER HIGH QUALITY PRODUCTS:
+
+COCAINE
+HEROIN #3 ( AA, AA+, AAA+)
+CRACK / FREEBASE
+LSD 220 UG
+MDMA
+
+========= WHAT DO WE PROVIDE? ============
+1. The Best Prices Available, We will match or beat any other domestic price.
+2. Perfect Customer Service, We try to respond to ALL messages within 24 hours.
+3. We always test our products before we offer it.
+4. We ship orders the same day you have ordered.
+5. Packages will fit through any standard letter box.
+
+=========         SHIPPING INFO        =============
+&gt; We ship all our products from The Netherlands to Worldwide
+
+TIME:
+West Europe 3-5 Business Days
+Scandinavia  3-7 Business Days
+East Europe  3-7 Business Days
+Asia  7-14 Business Days
+Russia 10+ Business Days
+Australia  12-24 Business Days
+South America 10-15 Business Days
+(These are business days, don’t count weekends and holidays)
+
+======= Provide me the following details when placing a order ======
+&gt; Full Name
+&gt; Street + House number
+&gt; City (State) Postal code
+&gt; COUNTRY</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<p><font size="1">
+<span style="float:right;">
+	Server time: Thursday, Nov 7, 2019 08:36:14	</span>
+<span style="float:left;">Copyright © 2019 Empire Market empiremktxgjovhm.onion</span> </font><br/>
+</p>
+</div>
+</body>
+</html>

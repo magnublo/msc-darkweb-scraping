@@ -1,9 +1,9 @@
-import hashlib
 from multiprocessing import Queue
-from random import shuffle
+from multiprocessing import Queue
+from random import shuffle, random, gauss
 from threading import RLock
-from typing import List, Tuple, Type
-from urllib import parse
+from time import sleep
+from typing import Tuple, Type
 
 import cfscrape
 import requests
@@ -11,21 +11,18 @@ from bs4 import BeautifulSoup
 from requests import Response
 
 from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX_URL_PATH, CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, \
-    MD5_HASH_STRING_ENCODING, CRYPTONIA_MARKET_LOGIN_PHRASE, \
+    CRYPTONIA_MARKET_LOGIN_PHRASE, \
     CRYPTONIA_SRC_DIR, CRYPTONIA_MARKET_ID, CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE, \
     CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
-from src.base_functions import BaseFunctions
-from src.base_scraper import BaseScraper
+from src.base.base_functions import BaseFunctions
+from src.base.base_scraper import BaseScraper
 from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions, \
     CryptoniaScrapingFunctions
 from src.db_utils import get_column_name
-from src.models.country import Country
 from src.models.feedback import Feedback
-from src.models.listing_text import ListingText
 from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
 from src.models.seller_observation import SellerObservation
-from src.models.seller_terms_and_conditions import SellerTermsAndConditions
 from src.models.verified_external_account import VerifiedExternalAccount
 from src.utils import get_page_as_soup_html
 
@@ -59,18 +56,19 @@ class CryptoniaScrapingSession(BaseScraper):
         self.logger.info(f"Fetching {self.mirror_base_url}{CRYPTONIA_MARKET_CATEGORY_INDEX_URL_PATH}")
         web_response = self._get_logged_in_web_response(CRYPTONIA_MARKET_CATEGORY_INDEX_URL_PATH)
         soup_html = get_page_as_soup_html(web_response.text)
-        category_lists, category_base_urls = \
-            scrapingFunctions.get_category_lists_and_urls(soup_html)
+        listing_category_pairs, category_base_urls = \
+            scrapingFunctions.get_category_pairs_and_urls(soup_html)
         task_list = []
 
-        for category_list, category_base_url in zip(category_lists, category_base_urls):
+        for listing_category_pair, category_base_url in zip(listing_category_pairs, category_base_urls):
             self.logger.info(f"Fetching {self.mirror_base_url}{category_base_url}...")
             web_response = self._get_logged_in_web_response(category_base_url)
             soup_html = get_page_as_soup_html(web_response.text)
             nr_of_pages = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
-            task_list.append((category_list, category_base_url))
+            if nr_of_pages is not 0:
+                task_list.append((listing_category_pair, category_base_url))
             for k in range(1, nr_of_pages):
-                task_list.append((category_list, f"{category_base_url}/{k+1}"))
+                task_list.append((listing_category_pair, f"{category_base_url}/{k+1}"))
 
         shuffle(task_list)
 
@@ -82,7 +80,8 @@ class CryptoniaScrapingSession(BaseScraper):
             {get_column_name(ScrapingSession.initial_queue_size): self.initial_queue_size})
         self.db_session.commit()
 
-    def _scrape_queue_item(self, category_list: List[str], search_result_url: str) -> None:
+    def _scrape_queue_item(self, category_pair: Tuple[Tuple[str, int, str, int]],
+                           search_result_url: str) -> None:
         web_response = self._get_logged_in_web_response(search_result_url)
 
         soup_html = get_page_as_soup_html(web_response.text)
@@ -103,10 +102,10 @@ class CryptoniaScrapingSession(BaseScraper):
         for title, seller_name, seller_url, product_page_url in zip(titles, sellers, seller_urls,
                                                                     product_page_urls):
             self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
-                                         btc_rate, xmr_rate, category_list, func=self._scrape_listing)
+                                         btc_rate, xmr_rate, category_pair, func=self._scrape_listing)
 
     def _scrape_listing(self, title: str, seller_name: str, seller_url: str, product_page_url: str, btc_rate: float,
-                        xmr_rate: float, category_list: List[str]):
+                        xmr_rate: float, category_pair: Tuple[Tuple[str, int, str, int]]):
         seller, is_new_seller = self._get_seller(seller_name)
 
         listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
@@ -127,7 +126,6 @@ class CryptoniaScrapingSession(BaseScraper):
         listing_type = scrapingFunctions.get_listing_type(soup_html)
 
         listing_text = scrapingFunctions.get_description(soup_html)
-        listing_text_id = hashlib.md5(listing_text.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
 
         accepts_BTC, accepts_BTC_multisig, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
         fiat_currency, price, unit_type = scrapingFunctions.get_fiat_currency_and_price_and_unit_type(soup_html)
@@ -138,35 +136,24 @@ class CryptoniaScrapingSession(BaseScraper):
         if not _unit_types_are_equal(unit_type, second_unit_type):
             raise AssertionError("Unit types are not consistent across listing.")
 
+        origin_country: str
+        destination_countries: Tuple[str]
         origin_country, destination_countries = scrapingFunctions.get_origin_country_and_destinations(soup_html)
         escrow = scrapingFunctions.supports_escrow(soup_html)
 
-        shipping_descriptions, shipping_days, shipping_currencies, shipping_prices, shipping_unit_names, \
-        price_is_per_units = scrapingFunctions.get_shipping_methods(soup_html)
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
 
-        bulk_lower_bounds, bulk_upper_bounds, bulk_fiat_prices, bulk_btc_prices, bulk_discount_percents = \
-            scrapingFunctions.get_bulk_prices(
-                soup_html)
+        bulk_prices = scrapingFunctions.get_bulk_prices(soup_html)
 
-        self._add_shipping_methods(listing_observation.id, shipping_descriptions, shipping_days, shipping_currencies,
-                                   shipping_prices, shipping_unit_names, price_is_per_units)
+        self._add_shipping_methods(listing_observation.id, shipping_methods)
 
-        self._add_bulk_prices(listing_observation.id, bulk_lower_bounds, bulk_upper_bounds, bulk_fiat_prices,
-                              bulk_btc_prices,
-                              bulk_discount_percents)
+        self._add_bulk_prices(listing_observation.id, bulk_prices)
 
-        self._add_category_junctions(category_list, [None for _ in category_list], listing_observation.id)
+        self._add_category_junctions(listing_observation.id, category_pair)
 
-        self.db_session.merge(ListingText(
-            id=listing_text_id,
-            text=listing_text
-        ))
+        listing_text_id: int = self._add_text(listing_text)
 
-        self.db_session.merge(Country(
-            id=origin_country
-        ))
-
-        country_ids: Tuple[int] = self._add_countries([origin_country]+destination_countries)
+        country_ids: Tuple[int] = self._add_countries(origin_country, *destination_countries)
         destination_country_ids = country_ids[1:]
         self._add_country_junctions(destination_country_ids, listing_observation.id)
 
@@ -179,7 +166,7 @@ class CryptoniaScrapingSession(BaseScraper):
         listing_observation.xmr_rate = xmr_rate
         listing_observation.fiat_currency = fiat_currency
         listing_observation.price = price
-        listing_observation.origin_country = origin_country
+        listing_observation.origin_country = country_ids[0]
         listing_observation.escrow = escrow
         listing_observation.quantity_in_stock = quantity_in_stock
         listing_observation.unit_type = unit_type
@@ -204,13 +191,13 @@ class CryptoniaScrapingSession(BaseScraper):
 
         parenthesis_number, vendor_level = scrapingFunctions.get_parenthesis_number_and_vendor_level(soup_html)
 
-        description_text_hash = self._add_seller_observation_description(description)
+        description_text_hash = self._add_text(description)
         self._scrape_feedback(seller, is_new_seller, soup_html=soup_html)
 
         pgp_key_content = scrapingFunctions.get_pgp_key(soup_html)
         self._add_pgp_key(seller, pgp_key_content)
         terms_and_conditions_text: str = scrapingFunctions.get_terms_and_conditions(soup_html)
-        terms_and_conditions_id: int = self._add_terms_and_conditions(terms_and_conditions_text)
+        terms_and_conditions_id: int = self._add_text(terms_and_conditions_text)
 
         seller_observation = SellerObservation(
             seller_id=seller.id,
@@ -291,7 +278,7 @@ class CryptoniaScrapingSession(BaseScraper):
 
         for publication_date, feedback_category, title, feedback_message_text, text_hash, buyer, crypto_currency, \
             price in list(
-            zip(*feedback_array)):
+                zip(*feedback_array)):
             if not is_new_seller:
                 existing_feedback = self.db_session.query(Feedback).filter_by(
                     date_published=publication_date,
@@ -329,7 +316,7 @@ class CryptoniaScrapingSession(BaseScraper):
         if next_feedback_url:
             self._scrape_feedback(seller, is_new_seller, url=next_feedback_url)
 
-    def _add_external_market_verifications(self, seller_observation_id: int, external_market_verifications: List[
+    def _add_external_market_verifications(self, seller_observation_id: int, external_market_verifications: Tuple[
         Tuple[str, int, float, float, int, int, int, str]]) -> None:
 
         for market_id, sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text in \
@@ -342,28 +329,10 @@ class CryptoniaScrapingSession(BaseScraper):
             )
             self.db_session.flush()
 
-    def _add_terms_and_conditions(self, terms_and_conditions_text: str) -> int:
-        terms_and_conditions_text = terms_and_conditions_text if terms_and_conditions_text else ""
-        terms_and_conditions_text_hash = hashlib.md5(
-            terms_and_conditions_text.encode(MD5_HASH_STRING_ENCODING)).hexdigest()
-
-        existing_terms_and_conditions_text = self.db_session.query(SellerTermsAndConditions).filter(
-            SellerTermsAndConditions.text_hash == terms_and_conditions_text_hash).first()
-
-        if existing_terms_and_conditions_text:
-            return existing_terms_and_conditions_text.id
-        else:
-            terms_and_conditions = SellerTermsAndConditions(
-                text=terms_and_conditions_text,
-                text_hash=terms_and_conditions_text_hash
-            )
-            self.db_session.add(terms_and_conditions)
-            self.db_session.flush()
-            return terms_and_conditions.id
-
-    def _get_login_payload(self, soup_html: BeautifulSoup, username: str, password: str, captcha_solution: str) -> dict:
-        return scrapingFunctions.get_login_payload(soup_html, username, password, captcha_solution)
-
     @staticmethod
     def _is_successful_login_response(response: Response) -> bool:
         return response.text.find(CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE) != -1
+
+    def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response):
+        web_session.cookies.clear()
+        super()._login_and_set_cookie(web_session, web_response)

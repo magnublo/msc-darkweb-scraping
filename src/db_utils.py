@@ -172,14 +172,13 @@ def fix_integrity_of_database(db_session: Session, market_id: str):
 
     if len(broken_sellers.all() + broken_listings.all()) > 0:
         prompt_str = _get_prompt_str(broken_sellers.all(), broken_listings.all(), market_id)
-
         ans = input(prompt_str)
         if ans == "Y":
-            broken_sellers.delete()
-            broken_listings.delete()
+            db_session.query(Seller).filter(Seller.id.in_([seller.id for seller in broken_sellers.all()])).delete(synchronize_session=False)
+            db_session.query(ListingObservation).filter(ListingObservation.id.in_([listing.id for listing in broken_listings.all()])).delete(synchronize_session=False)
         else:
             print("Please manually ensure the integrity of the database before starting new scraping session.")
-            db_session.expunge_all()
+            db_session.expire_all()
             db_session.close()
             exit()
 
@@ -235,8 +234,10 @@ def get_column_name(column: InstrumentedAttribute) -> str:
     return column.expression._Annotated__element.description
 
 
-def get_engine():
-    engine = create_engine(DB_ENGINE_URL, **SQLALCHEMY_CREATE_ENGINE_KWARGS)
+def get_engine(echo: bool=None):
+    create_engine_kwargs = dict(SQLALCHEMY_CREATE_ENGINE_KWARGS)
+    if echo is not None: create_engine_kwargs.update({'echo': echo})
+    engine = create_engine(DB_ENGINE_URL, **create_engine_kwargs)
     return engine
 
 

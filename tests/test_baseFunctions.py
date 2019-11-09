@@ -1,9 +1,8 @@
 from datetime import datetime
 from typing import List
-from unittest import TestCase
 
 from definitions import ROOT_DIR, DARKFAIL_MARKET_STRINGS
-from src.base_functions import BaseFunctions as scrapingFunctions
+from src.base.base_functions import BaseFunctions as scrapingFunctions
 from tests.base_test import BaseTest
 
 TESTS_DIR = ROOT_DIR + "tests/"

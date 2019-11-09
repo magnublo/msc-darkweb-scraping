@@ -3,11 +3,11 @@ import datetime
 from sqlalchemy import Column, Integer, Date, ForeignKey, Boolean, DateTime, Float, CHAR, String
 
 import src.models.country as country
-import src.models.listing_text as listing_text
 import src.models.scraping_session as scraping_session
 import src.models.seller as seller
 from definitions import MYSQL_CASCADE, CREATED_DATE_COLUMN_NAME, URL_COLUMN_LENGTH, CURRENCY_COLUMN_LENGTH, Base, \
-    PRODUCT_TITLE_COLUMN_LENGTH, COUNTRY_NAME_COLUMN_LENGTH
+    PRODUCT_TITLE_COLUMN_LENGTH, MYSQL_VARCHAR_DEFAULT_LENGTH
+from src.models import description_text
 
 TABLE_NAME = 'listing_observation'
 PRIMARY_KEY = 'id'
@@ -22,7 +22,7 @@ class ListingObservation(Base):
     created_date = Column(CREATED_DATE_COLUMN_NAME, DateTime, default=datetime.datetime.utcnow)
 
     session_id = Column(Integer, ForeignKey(scraping_session.TABLE_NAME_AND_PRIMARY_KEY, ondelete=MYSQL_CASCADE))
-    listing_text_id = Column(CHAR(32), ForeignKey(listing_text.TABLE_NAME_AND_PRIMARY_KEY))
+    listing_text_id = Column(Integer, ForeignKey(description_text.TABLE_NAME_AND_PRIMARY_KEY))
 
     title = Column(CHAR(PRODUCT_TITLE_COLUMN_LENGTH)) # max 64 characters cryptonia
     url = Column(String(URL_COLUMN_LENGTH))
@@ -51,7 +51,8 @@ class ListingObservation(Base):
     ltc_rate = Column(Float)
     nr_sold = Column(Integer)
     nr_sold_since_date = Column(Date)
-    # ends in (Date / String)
+    ends_in = Column(String(MYSQL_VARCHAR_DEFAULT_LENGTH)) #TODO: Fix this when possible values are enumerated.
+    nr_of_views = Column(Integer)
 
     # cryptonia
     minimum_order_unit_amount = Column(Integer, default=1)

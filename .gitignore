@@ -263,3 +263,5 @@ environmentSettings.py
 environment_settings.py
 
 /venv
+
+test.py

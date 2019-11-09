@@ -1,5 +1,6 @@
-from time import time
-from typing import List, Dict
+from threading import RLock
+from time import time, sleep
+from typing import List, Dict, Optional
 
 import cfscrape
 import requests
@@ -9,8 +10,8 @@ from sqlalchemy import func
 
 from definitions import REFRESH_MIRROR_DB_LIMIT, MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH, DARKFAIL_URL, \
     DARKFAIL_MARKET_STRINGS, MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR, \
-    WEB_EXCEPTIONS_TUPLE, DARKFAIL_MARKET_SUBURLS
-from src.base_functions import BaseFunctions
+    WEB_EXCEPTIONS_TUPLE, DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE
+from src.base.base_functions import BaseFunctions
 from src.models.listing_observation import ListingObservation
 from src.models.market_mirror import MarketMirror
 from src.models.scraping_session import ScrapingSession
@@ -36,38 +37,22 @@ class MirrorManager:
         # test mirror
         # if test failed, recurse
 
-        current_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
-            MarketMirror.market_id == self.scraper.market_id,
-            MarketMirror.url == self.scraper.mirror_base_url).first()
-
-        if current_mirror:
-            current_mirror.last_offline_timestamp = time()
-            self.scraper.db_session.add(current_mirror)
-            self.scraper.db_session.flush()
+        self._set_failure_time_current_mirror()
 
         # The candidate mirror is the most recently online mirror that has not failed within the last
         # MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR seconds.
-        candidate_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
-            MarketMirror.last_online_timestamp == self.scraper.db_session.query(
-                func.max(MarketMirror.last_online_timestamp)) \
-            .filter(MarketMirror.last_offline_timestamp < time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR) \
-            .filter(MarketMirror.market_id == self.scraper.market_id) \
-            .subquery().as_scalar()).first()
+        candidate_mirror = self._get_candidate_mirror()
 
-        if not candidate_mirror and time() - self.scraper.time_last_refreshed_mirror_db > \
-                MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH:
-            if self.scraper.mirror_db_lock.acquire(False):
-                self._refresh_mirror_db()
-                self.scraper.mirror_db_lock.release()
-                return self.get_new_mirror()
-            else:
-                self.scraper.logger.warn("Tried refreshing mirror db, but other thread has lock.")
-                raise AssertionError("Lock was acquired, but should not be possible in this state.")
-        if time() - candidate_mirror.last_offline_timestamp < REFRESH_MIRROR_DB_LIMIT:
+        last_offline_timestamp = candidate_mirror.last_offline_timestamp if candidate_mirror else time()
+
+        if (not candidate_mirror) and time() - last_offline_timestamp < REFRESH_MIRROR_DB_LIMIT:
             if time() - self.scraper.time_last_refreshed_mirror_db > MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH:
+                self.scraper.logger.info("Attempting to acquire lock...")
                 if self.scraper.mirror_db_lock.acquire(False):
+                    self.scraper.logger.info(f"Lock acquired. {self.scraper.mirror_db_lock}")
                     self._refresh_mirror_db()
                     self.scraper.mirror_db_lock.release()
+                    self.scraper.logger.info("Lock released.")
                     return self.get_new_mirror()
                 else:
                     self.scraper.logger.warn("Tried refreshing mirror db, but other thread has lock.")
@@ -76,14 +61,34 @@ class MirrorManager:
                     f"No mirrors have been online last {REFRESH_MIRROR_DB_LIMIT} seconds, but mirror db was refreshed "
                     f"within last {MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH} seconds, so no action taken.")
 
-        mirror_works = test_mirror(candidate_mirror.url, self.scraper.headers, self.scraper.proxy)
+        if not candidate_mirror:
+            candidate_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
+                MarketMirror.last_online_timestamp == self.scraper.db_session.query(
+                    func.max(MarketMirror.last_online_timestamp)) \
+                .filter(MarketMirror.market_id == self.scraper.market_id) \
+                .subquery().as_scalar()).first()
+            if not candidate_mirror:
+                self.scraper.logger.warn(
+                    "No mirrors in database, and none available from external mirror overview site.")
+                self.scraper.logger.info(f"Sleeping {WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE} and retrying.")
+                sleep(WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE)
+                return self.get_new_mirror()
+
+
+        self.scraper.logger.info(f"Testing mirror {candidate_mirror.url}...")
+        mirror_works: bool = test_mirror(candidate_mirror.url, self.scraper._get_headers(), self.scraper.proxy,
+                                   logfunc=self.scraper.logger.info)
 
         if mirror_works:
+            self.scraper.logger.info("Mirror works.")
             candidate_mirror.last_online_timestamp = time()
+            self.scraper.db_session.add(candidate_mirror)
             self.scraper.db_session.commit()
             return candidate_mirror.url
         else:
+            self.scraper.logger.info("Mirror failed test.")
             candidate_mirror.last_offline_timestamp = time()
+            self.scraper.db_session.add(candidate_mirror)
             self.scraper.db_session.commit()
             return self.get_new_mirror()
 
@@ -93,6 +98,11 @@ class MirrorManager:
 
         mirror_status_dict: dict = self._get_mirror_status_dict_from_external_overview()  # key: url, val: is_online
         urls_in_retrieved_mirrors: List[str] = [key for key in mirror_status_dict.keys()]
+        if not urls_in_retrieved_mirrors:
+            self.scraper.time_last_refreshed_mirror_db = time()
+            self.scraper.logger.warn(
+                f"Mirror for market with string {DARKFAIL_MARKET_STRINGS[self.scraper.market_id]} not found.")
+            return
 
         existing_mirrors: List[MarketMirror] = self.scraper.db_session.query(MarketMirror).filter(
             MarketMirror.market_id == self.scraper.market_id,
@@ -188,10 +198,12 @@ class MirrorManager:
         if self.scraper.scraping_funcs.captcha_solution_was_wrong(final_page_soup_html):
             self.scraper.logger.warn("Wrong captcha solution. Retrying.")
             self.scraper.anti_captcha_control.complaint_on_result(int(solution_response["taskId"]), "image")
-            self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=False, website="DARKFAIL")
+            self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=False,
+                                               website="DARKFAIL")
             return self._get_final_page_mirror_status_dict(sub_page_url)
         else:
-            self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=True, website="DARKFAIL")
+            self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=True,
+                                               website="DARKFAIL")
             return self.scraper.scraping_funcs.get_market_mirrors_from_final_page(final_page_soup_html)
 
     def _get_captcha_page_url(self, sub_page_url: str) -> str:
@@ -203,8 +215,7 @@ class MirrorManager:
         return self.scraper.scraping_funcs.get_captcha_page_url(sub_page_soup_html)
 
     def _has_scraped_at_least_one_item(self) -> bool:
-        existing_listing_observation_id: int = self.scraper.db_session.query(ListingObservation).with_entities(
-            ListingObservation.id).filter(
+        existing_listing_observation_id: int = self.scraper.db_session.query(ListingObservation.id).filter(
             ListingObservation.session_id == self.scraper.db_session.query(
                 func.max(ScrapingSession.id)) \
             .filter(ListingObservation.thread_id == self.scraper.thread_id)
@@ -253,7 +264,6 @@ class MirrorManager:
             "accept-language": "en-US,en;q=0.9,nb;q=0.8",
             "cache-control": "no-cache",
             "pragma": "no-cache",
-            # referer: https://dark.fail/captcha/cryptonia
             "sec-fetch-mode": "navigate",
             "sec-fetch-site": "same-origin",
             "sec-fetch-user": "?1",
@@ -261,3 +271,27 @@ class MirrorManager:
             "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 "
                           "Safari/537.36"
         }
+
+    def _set_failure_time_current_mirror(self) -> None:
+        current_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
+            MarketMirror.market_id == self.scraper.market_id,
+            MarketMirror.url == self.scraper.mirror_base_url).first()
+
+        if current_mirror:
+            current_mirror.last_offline_timestamp = time()
+            self.scraper.db_session.add(current_mirror)
+            self.scraper.db_session.flush()
+
+    def _get_candidate_mirror(self) -> Optional[MarketMirror]:
+        candidate_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
+            MarketMirror.last_online_timestamp == self.scraper.db_session.query(
+                func.max(MarketMirror.last_online_timestamp)) \
+            .filter(MarketMirror.last_offline_timestamp < time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR) \
+            .filter(MarketMirror.market_id == self.scraper.market_id) \
+            .subquery().as_scalar()).first()
+        if candidate_mirror:
+            self.scraper.logger.info(
+                f"Retrieved candidate mirror with url {candidate_mirror.url}. Was confirmed online "
+                f"{time()- candidate_mirror.last_online_timestamp} seconds ago, and confirmed offline "
+                f"{time()- candidate_mirror.last_offline_timestamp} seconds ago.")
+        return candidate_mirror

@@ -1,10 +1,11 @@
 import os
 from _mysql_connector import MySQLError
+
 from typing import Tuple, List
 
 import requests
 import urllib3
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, DatabaseError
 from sqlalchemy.ext.declarative import declarative_base
 
 from environment_settings import MYSQL_ECHO_DEBUG
@@ -58,7 +59,8 @@ CREATED_DATE_COLUMN_NAME = "created_date"
 
 BEAUTIFUL_SOUP_HTML_PARSER = "lxml"
 
-ANTI_CAPTCHA_ACCOUNT_KEY = "6c5815eb3db205d9c4a05ba6941b0a3a"
+ANTI_CAPTCHA_ACCOUNT_KEY = os.getenv('ANTI_CAPTCHA_ACCOUNT_KEY')
+assert ANTI_CAPTCHA_ACCOUNT_KEY is not None
 ANTI_CAPTCHA_CREATE_TASK_URL = "http://api.anti-captcha.com/createTask"
 ANTI_CAPTCHA_GET_TASK_URL = "https://api.anti-captcha.com/getTaskResult"
 ANTI_CAPTCHA_WAIT_INTERVAL = 2
@@ -99,12 +101,14 @@ EMPIRE_MARKET_ID = "EMPIRE_MARKET"
 EMPIRE_MIN_CREDENTIALS_PER_THREAD = 1
 EMPIRE_SRC_DIR = ROOT_SRC_DIR + "empire/"
 EMPIRE_HTTP_HEADERS = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
             "Accept-Language": "en-US,en;q=0.5",
             "Accept-Encoding": "gzip, deflate",
             "Connection": "keep-alive",
-            "Upgrade-Insecure-Requests": "1"
+            "Upgrade-Insecure-Requests": "1",
+            "Pragma": "no-cache",
+            "Cache-Control": "no-cache",
         }
 
 EMPIRE_MARKET_LOGIN_PHRASE = "Welcome to Empire Market! Please login to access the marketplace."
@@ -124,7 +128,7 @@ CRYPTONIA_MARKET_CREDENTIALS = [["usingPython3", "Password123!"]]
 CRYPTONIA_DIR = ROOT_DIR + "src/cryptonia/"
 CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE = "No products found."
 CRYPTONIA_PHYSICAL_LISTING_TYPE_STRING = "Physical Listing"
-CRYPTONIA_WORLD_COUNTRY = "Worldwide"
+CRYPTONIA_WORLD_COUNTRY: str = "Worldwide"
 CRYPTONIA_MARKET_LOGIN_PHRASE = "Please provide your credentials to continue."
 CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE = "You have been successfully login."
 CRYPTONIA_SRC_DIR = ROOT_SRC_DIR + "cryptonia/"
@@ -144,11 +148,12 @@ CRYPTONIA_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (MIDDLE_EARTH_MARKET_ID, "Middle Earth:")
 ]
 
-DEAD_MIRROR_TIMEOUT = 1200
-MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR = 1800.0
-REFRESH_MIRROR_DB_LIMIT = 2700
-MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH = 1800
-DARKFAIL_OFFLINE_STATUS_TIME_PENALTY = 1800.0
+DEAD_MIRROR_TIMEOUT = 1200 # if mirror has not responded in this many seconds, rotate mirror
+MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR = 1800  # a mirror will not be rechecked if it has failed within this many seconds
+REFRESH_MIRROR_DB_LIMIT = 2700  # if best candidate mirror has failed within last 2700 seconds, it warrants a db refresh
+MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH = 1800  # db is not refreshed more frequently than this number of seconds
+WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE = 60
+
 DARKFAIL_URL = "dark.fail"
 DARKFAIL_MARKET_STRINGS = {
     EMPIRE_MARKET_ID: "Empire Market",
@@ -164,7 +169,7 @@ DARKFAIL_MARKET_SUBURLS = {
 Base = declarative_base()
 MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID)
 WEB_EXCEPTIONS_TUPLE = (requests.HTTPError, urllib3.exceptions.HTTPError, requests.RequestException)
-DB_EXCEPTIONS_TUPLE = (SQLAlchemyError, MySQLError, AttributeError, SystemError)
+DB_EXCEPTIONS_TUPLE = (SQLAlchemyError, MySQLError, AttributeError, SystemError, DatabaseError)
 
 for market_id in MARKET_IDS:
     assert market_id in DARKFAIL_MARKET_STRINGS.keys()

@@ -7,7 +7,7 @@ import demoji
 from definitions import Base
 from dynamic_config import get_logger_config, WEBSITES_TO_BE_SCRAPED
 from environment_settings import DB_USERNAME
-from src.base_scraping_manager import ScrapingManager
+from src.base.base_scraping_manager import ScrapingManager
 from src.db_utils import kill_all_db_conns_for_user_and_current_ip, set_settings, \
     get_engine, get_db_session, get_settings, fix_integrity_of_database
 from src.tor_proxy_check import get_available_tor_proxies
@@ -15,7 +15,6 @@ from src.utils import get_proxies, get_user_input, do_parameter_sanity_check
 
 
 def run():
-    faulthandler.enable()
     dictConfig(get_logger_config())
 
     user_input = get_user_input()

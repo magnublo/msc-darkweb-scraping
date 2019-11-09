@@ -1,16 +1,27 @@
 import inspect
 import re
 from datetime import datetime, timedelta
+from enum import Enum
 from time import time, sleep
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Optional, Callable
 
 import brotli
+import pycountry
 import requests
 from bs4 import BeautifulSoup
+from text2digits import text2digits
 from urllib3.exceptions import HTTPError
 
 from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, WEB_EXCEPTIONS_TUPLE, MAX_MARKET_THREADS_PER_PROXY
+from src.data.continent_dict import CONTINENT_DICTIONARY
+from src.data.country_dict import COUNTRY_DICT
 from src.tor_proxy_check import get_proxy_dict
+
+
+class ListingType(Enum):
+    PHYSICAL = 1,
+    AUTO_DIGITAL = 2,
+    MANUAL_DIGITAL = 3
 
 
 class LoggedOutException(Exception):
@@ -29,6 +40,13 @@ class BadGatewayException(HTTPError):
 
 class InternalServerErrorException(HTTPError):
     DEFAULT_TEXT = "Received response code 500."
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
+
+
+class GatewayTimeoutException(HTTPError):
+    DEFAULT_TEXT = "Received response code 504."
 
     def __init__(self, text=DEFAULT_TEXT):
         super().__init__(text)
@@ -92,26 +110,38 @@ def get_error_string(scraping_object, error_traceback, sys_exec_info) -> str:
     return "\n\n\n".join([time_of_error] + [error_traceback] + local_variable_strings + object_variable_strings)
 
 
-def is_bad_gateway(response: requests.Response) -> bool:
-    if response.status_code == 502:
+def temporary_server_error(response) -> Optional[HTTPError]:
+    if is_internal_server_error(response):
+        return InternalServerErrorException(response.text)
+    elif is_bad_gateway(response):
+        return BadGatewayException(response.text)
+    elif is_gateway_timed_out(response):
+        return GatewayTimeoutException(response.text)
+    else:
+        return None
+
+
+def response_history_contains_code(response: requests.Response, response_code: int) -> bool:
+    if response.status_code == response_code:
         return True
 
     for history_response in response.history:
-        if history_response.status_code == 502:
+        if history_response.status_code == response_code:
             return True
 
     return False
+
+
+def is_gateway_timed_out(response):
+    return response_history_contains_code(response, 504)
+
+
+def is_bad_gateway(response: requests.Response) -> bool:
+    return response_history_contains_code(response, 502)
 
 
 def is_internal_server_error(response: requests.Response) -> bool:
-    if response.status_code == 500:
-        return True
-
-    for history_response in response.history:
-        if history_response.status_code == 500:
-            return True
-
-    return False
+    return response_history_contains_code(response, 500)
 
 
 def queue_is_empty(queue) -> bool:
@@ -186,12 +216,12 @@ def get_user_input() -> Tuple[Tuple[int, int, bool], ...]:
     return tuple(user_input_tuples)
 
 
-def _parse_float(unparsed_float: str) -> float:
+def parse_float(unparsed_float: str) -> float:
     return float(re.sub(r'[^\d.]+', '', unparsed_float))
 
 
-def _parse_int(unparsed_float: str) -> int:
-    return int(re.sub(r'[^\d.]+', '', unparsed_float))
+def parse_int(unparsed_int: str) -> int:
+    return int(re.sub(r'[^\d]+', '', unparsed_int))
 
 
 def get_proxy_port(proxy_dict: dict) -> int:
@@ -203,14 +233,15 @@ def get_schemaed_url(unschemaed_url: str, schema: str) -> str:
     return f"{schema}://{unschemaed_url}"
 
 
-def test_mirror(url: str, headers: dict, proxy: dict) -> bool:
+def test_mirror(url: str, headers: dict, proxy: dict, logfunc: Callable[[str], None]) -> bool:
     schemaed_url = get_schemaed_url(url, schema="http")
-    for _ in range(5):
+    for i in range(10):
         try:
-            requests.get(schemaed_url, headers=headers, proxies=proxy)
+            logfunc(f"Try nr. {i+1}, testing {schemaed_url}...")
+            requests.get(schemaed_url, headers=headers, proxies=proxy, timeout=10)
             return True
         except WEB_EXCEPTIONS_TUPLE as e:
-            a = 1
+            logfunc(f"{type(e).__name__}")
     return False
 
 
@@ -219,8 +250,10 @@ def do_parameter_sanity_check(proxy_dict_tuples: Tuple[Tuple[Dict], ...], availa
     from dynamic_config import WEBSITES_TO_BE_SCRAPED
     assert len(proxy_dict_tuples) == len(WEBSITES_TO_BE_SCRAPED)
     for proxy_dicts, thread_count, (market_id, _, _) in zip(proxy_dict_tuples, thread_counts, WEBSITES_TO_BE_SCRAPED):
-        if thread_count > len(available_ports)*MAX_MARKET_THREADS_PER_PROXY:
-            print(f"{market_id} has {thread_count} threads and needs {thread_count*MAX_MARKET_THREADS_PER_PROXY} proxies, but only has {len(available_ports)}. Exiting... ")
+        if thread_count > len(available_ports) * MAX_MARKET_THREADS_PER_PROXY:
+            print(
+                f"{market_id} has {thread_count} threads and needs {thread_count*MAX_MARKET_THREADS_PER_PROXY} "
+                f"proxies, but only has {len(available_ports)}. Exiting... ")
             exit()
     print("Sanity check complete.")
 
@@ -230,3 +263,60 @@ def get_response_text(response: requests.Response) -> str:
         return brotli.decompress(response.content)
     else:
         return response.text
+
+
+def get_standardized_listing_type(non_standardized_listing_type: str) -> str:
+    conversion_dict: Dict[str, ListingType] = {
+        'Physical Listing': ListingType.PHYSICAL,
+        'Digital Listing (Manual Fulfillment)': ListingType.MANUAL_DIGITAL,
+        'Digital Autoshop Listing': ListingType.AUTO_DIGITAL,
+        'Physical Package': ListingType.PHYSICAL,
+        'Digital': ListingType.MANUAL_DIGITAL
+    }
+
+    return conversion_dict[non_standardized_listing_type].name
+
+
+def parse_time_delta_from_string(time_string: str) -> timedelta:
+    unit_amount_and_unit_type = time_string.split()
+    if len(unit_amount_and_unit_type) == 2:
+        unparsed_unit_amount, unit_type = unit_amount_and_unit_type
+    elif len(unit_amount_and_unit_type) == 1:
+        unparsed_unit_amount, unit_type = (1, unit_amount_and_unit_type[0])
+    else:
+        raise AssertionError(f"Could not parse time unit and time amount in {unit_amount_and_unit_type}")
+
+    unit_amount = unparsed_unit_amount if type(unparsed_unit_amount) == int else int(
+        text2digits.Text2Digits().convert_to_digits(str(unparsed_unit_amount)))
+
+    if unit_type[:3] == "day":
+        return timedelta(days=int(unit_amount))
+    elif unit_type[:4] == "week":
+        return timedelta(days=int(unit_amount) * 7)
+    elif unit_type == "hours":
+        return timedelta(hours=int(unit_amount))
+    else:
+        raise AssertionError(f'Unknown unit type {unit_type}')
+
+
+COUNTRY_NAME_SPLIT_REGEX = re.compile(r"\s|\(.*\)")
+
+
+def determine_real_country(country_name: str) -> Tuple[str, Optional[str], Optional[str], bool]:
+    # returns country_name, iso_alpha2_code, iso_alpha3_code, is_continent
+    country_name = country_name.strip()
+    if country_name in CONTINENT_DICTIONARY.keys():
+        return CONTINENT_DICTIONARY[country_name], None, None, True
+    else:
+        if country_name in COUNTRY_DICT.keys():
+            country_name = COUNTRY_DICT[country_name]
+        name_components = re.split(COUNTRY_NAME_SPLIT_REGEX, country_name)
+        while len(name_components) > 0:
+            try:
+                country_result = pycountry.countries.search_fuzzy(" ".join(name_components))[0]
+                return country_result.name, country_result.alpha_2, country_result.alpha_3, False
+            except LookupError:
+                #if we found no countries, we cut out a word from the country name and try again
+                name_components = name_components[:-1]
+
+        return country_name, None, None, False

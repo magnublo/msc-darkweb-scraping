@@ -60,8 +60,9 @@ def print_tor_proxy_statuses(statuses: List[Tuple[ProxyStatus, int]]):
     output_lines = []
     for proxy_status, port in statuses:
         output_lines.append(get_status_row_tuple(proxy_status, port))
-    print(tabulate([output_line for output_line in output_lines], headers=TABLE_HEADERS,
-                   tablefmt=TABLE_FORMAT, colalign=COLALIGN))
+    if len(statuses) > 0:
+        print(tabulate([output_line for output_line in output_lines], headers=TABLE_HEADERS,
+                       tablefmt=TABLE_FORMAT, colalign=COLALIGN))
 
 
 def get_proxy_dict(port: int) -> dict:
@@ -93,10 +94,12 @@ def check_proxy(line_nr: int, proxy_port: int, lock: RLock, total_lines: int, re
     proxy_works = res_text.find(TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE) != -1
     proxy_status = ProxyStatus.OK if proxy_works else ProxyStatus.ERROR
     print_tor_proxy_status(proxy_status, proxy_port, line_nr, lock, total_lines)
-    result_queue.put((proxy_port, proxy_status.value))
+    result_queue.put((proxy_port, proxy_status))
+
 
 def get_recommended_nr_of_tor_proxies(total_nr_of_threads: int) -> int:
     return math.ceil(total_nr_of_threads / MAX_MARKET_THREADS_PER_PROXY)
+
 
 def get_available_tor_proxies(total_nr_of_threads: int) -> List[int]:
     recommended_nr_of_tor_proxies = get_recommended_nr_of_tor_proxies(total_nr_of_threads)
@@ -122,7 +125,9 @@ def get_available_tor_proxies(total_nr_of_threads: int) -> List[int]:
     print('')
     nr_of_working_proxies = sum([proxy[1] == ProxyStatus.OK for proxy in proxies])
     if nr_of_working_proxies < recommended_nr_of_tor_proxies:
-        print(f"{fg.yellow}WARNING. Your Tor proxy host '{TOR_PROXY_SERVER_ADDRESS}' only has {nr_of_working_proxies} working proxies, against recommended {recommended_nr_of_tor_proxies}.")
-        print(f"{fg.yellow}Run script on {TOR_PROXY_SERVER_ADDRESS} to fix.")
+        print(
+            f"{fg.yellow}WARNING. Your Tor proxy host '{TOR_PROXY_SERVER_ADDRESS}' only has {nr_of_working_proxies} "
+            f"working proxies, against recommended {recommended_nr_of_tor_proxies}.")
+        print(f"{fg.yellow}Run script on {TOR_PROXY_SERVER_ADDRESS} to fix.{fg.rs}")
 
     return [proxy[0] for proxy in proxies]

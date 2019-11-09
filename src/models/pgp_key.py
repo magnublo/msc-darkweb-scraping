@@ -9,6 +9,7 @@ TABLE_NAME = 'pgp_key'
 PRIMARY_KEY = 'id'
 TABLE_NAME_AND_PRIMARY_KEY = TABLE_NAME+"."+PRIMARY_KEY
 
+
 class PGPKey(Base):
 
     __tablename__ = TABLE_NAME

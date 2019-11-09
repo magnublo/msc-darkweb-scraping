@@ -1,0 +1,592 @@
+<html><head>
+    <title>Empire Market - Naturalminds</title>
+    <link rel="stylesheet" type="text/css" href="http://empiremktxgjovhm.onion/public/css/style.css">
+    <link rel="stylesheet" href="http://empiremktxgjovhm.onion/public/css/font-awesome.min.css">
+	<link rel="icon" href="http://empiremktxgjovhm.onion/favicon.png" type="image/png">
+</head>
+<body>
+<div class="header">
+    <div class="img-logo">
+        <a href="http://empiremktxgjovhm.onion/home"><img src="http://empiremktxgjovhm.onion/public/image/logo.png"></a>
+    </div>
+
+    <div class="right-session">
+        <div id="right-session-information">
+            <div class="right-session-image">
+              <a href="http://empiremktxgjovhm.onion/myprofile">
+
+					    <img src="http://empiremktxgjovhm.onion/public/image/login.png">
+			  				</a>
+
+            </div>
+            <div class="right-session-text">
+                <p class="padp" style="line-height: 16px;" "=""><b> Logged in as <a href="http://empiremktxgjovhm.onion/myinfo">using_python3</a> [<a href="http://empiremktxgjovhm.onion/index/logout">Logout</a>]</b></p>
+
+				<p class="padp" style="width:max-content; line-height: 16px;"><b> BTC: <a href="http://empiremktxgjovhm.onion/balance/bitcoin">0.00000</a> / LTC: <a href="http://empiremktxgjovhm.onion/balance/litecoin">0.00000</a> / <br>XMR: <a href="http://empiremktxgjovhm.onion/balance/monero">0.00000</a> [<a href="http://empiremktxgjovhm.onion/autoshop">My Autoshop</a>]</b> </p>
+
+
+
+
+
+			  <p class="padp"></p>
+			</div>
+        </div>
+    </div>
+</div>
+<div>
+<div class="sm-nav" style="width: 43%;">
+
+
+			<ul>
+            <li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"> USD 9341.83</a></li>
+            <li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"> CAD 12314.00</a></li>
+            <li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"> EUR 8439.49</a></li>
+            <li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"> AUD 13570.10</a></li>
+            <li><a><img src="http://empiremktxgjovhm.onion/public/image/arrow-asc.png"> GBP 7266.54</a></li>
+			</ul>
+
+
+
+    </div>
+    <div class="clear"></div>
+    <div class="body-content">
+        <nav id="primary_nav_wrap">
+            <ul>
+              <li><a href="http://empiremktxgjovhm.onion/home">HOME</a></li>
+
+
+
+              <li><a href="http://empiremktxgjovhm.onion/message">MESSAGES <span style="color:inherit;">
+
+
+			  </span></a>
+                <ul>
+                  <li><a href="http://empiremktxgjovhm.onion/message/newmsg">Send Message</a></li>
+                  <li><a href="http://empiremktxgjovhm.onion/message">Conversations</a></li>
+
+
+                  <li><a href="http://empiremktxgjovhm.onion/message/settab/vendors">--- Vendors</a></li>
+                  <li><a href="http://empiremktxgjovhm.onion/message/settab/buyers">--- Buyers</a></li>
+
+
+
+
+
+                </ul>
+              </li>
+              <li><a href="http://empiremktxgjovhm.onion/order">ORDERS</a>
+                <ul>
+                  <li><a href="http://empiremktxgjovhm.onion/order">Current Orders</a></li>
+                  <li><a href="http://empiremktxgjovhm.onion/order/archive">Archived Orders</a></li>
+                </ul>
+              </li>
+                              <li><a href="http://empiremktxgjovhm.onion/sales/vendor">BECOME A VENDOR</a></li>
+                            <li>
+
+						<a href="http://empiremktxgjovhm.onion/balance/bitcoin">BALANCE</a>
+
+
+				  <ul>
+						<li><a href="http://empiremktxgjovhm.onion/balance/bitcoin">Bitcoin Balance</a></li>
+						<li><a href="http://empiremktxgjovhm.onion/balance/litecoin">Litecoin Balance</a></li>
+						<li><a href="http://empiremktxgjovhm.onion/balance/monero">Monero Balance</a></li>
+				  </ul>
+			  </li>
+              <li><a href="http://empiremktxgjovhm.onion/profile/settab/p_feedback">FEEDBACK</a>
+                <ul>
+                    <li><a href="http://empiremktxgjovhm.onion/profile/settab/p_feedback">View Feedback &amp; Profile</a></li>
+                    <li><a href="http://empiremktxgjovhm.onion/myinfo">Edit Profile</a></li>
+                </ul>
+               </li>
+              <li><a href="http://tpo7v66snknyugsf.onion" target="_blank">FORUMS</a></li>
+              <li><a href="http://empiremktxgjovhm.onion/support">SUPPORT</a>
+                <ul>
+                    <li><a href="http://empiremktxgjovhm.onion/support">Ticket List</a></li>
+                    <li><a href="http://empiremktxgjovhm.onion/support/newticket">Create Ticket</a></li>
+		    <li><a href="http://empiremktxgjovhm.onion/support/faq">FAQ</a></li>
+                    <li><a href="http://empiremktxgjovhm.onion/disputes">Disputes</a></li>
+                    <li><a href="http://empiremktxgjovhm.onion/support/contactinformation">View Contact Information</a></li>
+                </ul>
+              </li>
+                <li style="float:right;margin:0px;">
+                  <a style="padding:0px;" href="http://empiremktxgjovhm.onion/notifications">
+                    <img style="margin-top: -1px;" src="http://empiremktxgjovhm.onion/public/image/white_bell.png">
+                  </a>
+              </li>
+            </ul>
+        </nav>
+        <div class="clear"></div>
+        <div class="sub_head_inner_header">
+          <i class="fa fa-user fa-fontSet" aria-hidden="true"></i>
+          <div class="check"><p></p></div>
+          <h3><a href="http://empiremktxgjovhm.onion/u/Naturalminds">Naturalminds's Profile</a></h3>
+          <div class="check"><p></p></div>
+          <i class="fa fa-sitemap fa-fontSet sitemap" aria-hidden="true"></i>
+        </div>
+        <div class="wrapper-index">
+            <div class="left-content">
+              <div id="information">
+    <div class="login-Head">
+        <div class="loginHead-logo">
+           <i class="fa fa-briefcase padi" aria-hidden="true"></i>
+        </div>
+        <div class="loginHead-head">
+        <h3 class="padh3">PROFILE ACTIONS</h3>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <nav class="full">
+      <ul class="usermenu">
+        <li><a href="http://empiremktxgjovhm.onion/myinfo">My Information</a></li>
+
+
+        <li><a href="http://empiremktxgjovhm.onion/message">Private Messages
+        </a></li><li><a href="http://empiremktxgjovhm.onion/listings">Listings</a></li>
+        <li><a href="http://empiremktxgjovhm.onion/order">Orders</a></li>
+
+
+
+
+		<li><a href="http://empiremktxgjovhm.onion/queue/list">Queue List</a></li>
+		<li><a href="http://empiremktxgjovhm.onion/profile/favorite_listings">Favorite Listings</a></li>
+        <li><a href="http://empiremktxgjovhm.onion/profile/favorite_vendors">Favorite Vendors</a></li>
+        <li><a href="http://empiremktxgjovhm.onion/myprofile">Feedback</a></li>
+
+		        <li><a href="http://empiremktxgjovhm.onion/profile/blocklist">Vendor Block List</a></li>
+
+
+
+        <li><a href="http://empiremktxgjovhm.onion/support">Help</a></li>
+      </ul>
+    </nav>
+</div>
+
+
+				<div id="information">
+	<div class="login-Head">
+		<div class="loginHead-logo">
+		   <i class="fa fa-users padi" aria-hidden="true"></i>
+		</div>
+		<div class="loginHead-head">
+		<h3 class="padh3"> BUYER STATISTICS</h3>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="statistics">
+		<h3 class="padp">Bought Items</h3>
+		<p class="padp"> Items Bought <span class="float-right boldstats">0</span></p>
+	</div>
+	<div class="statistics">
+		<h3 class="padp">Payments</h3>
+		<p class="padp"> Paid <span class="float-right boldstats" style="color:#00bb00;">USD 0.00</span></p>
+		<p class="padp"> In Escrow<span class="float-right boldstats" style="color:#bb0000;">USD 0.00</span></p>
+	</div>
+	<div class="statistics">
+		<p class="padp"> <font color="gray">Total Purchases </font><span class="float-right boldstats"> <font color="gray"> USD 0.00 </font></span></p>
+	</div>
+</div>
+
+				<div id="information">
+	<div class="login-Head">
+		<div class="loginHead-logo">
+		   <i class="fa fa-bitcoin padi" aria-hidden="true"></i>
+		</div>
+		<div class="loginHead-head">
+		<h3 class="padh3"> EXCHANGE RATES</h3>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="statistics">
+		<h3 class="padp">Bitcoin (BTC)</h3>
+
+		<p class="padp"> United States Dollar (USD)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					9341.83				</font>
+
+			</span>
+		</p>
+		<p class="padp"> Canadian Dollar (CAD)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					12314.00				</font>
+			</span>
+		</p>
+		<p class="padp"> Euro (EUR)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					8439.49				</font>
+			</span>
+		</p>
+		<p class="padp"> Australian Dollar (AUD)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					13570.10				</font>
+			</span>
+		</p>
+		<p class="padp"> British Pound (GBP)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					7266.54				</font>
+			</span>
+		</p>
+		<p class="padp"> <a href="http://empiremktxgjovhm.onion/balance/bitcoin">Deposits &amp; Withdrawals</a></p>
+
+
+	</div>
+
+	<div class="statistics">
+	<h3 class="padp">Litecoin (LTC)</h3>
+	<p class="padp"> United States Dollar (USD)
+			<span class="float-right boldstats">
+				<font color="#bb0000">
+					63.47				</font>
+			</span>
+		</p>
+		<p class="padp"> Canadian Dollar (CAD)
+			<span class="float-right boldstats">
+				<font color="#bb0000">
+					83.68				</font>
+			</span>
+		</p>
+		<p class="padp"> Euro (EUR)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					57.35				</font>
+			</span>
+		</p>
+		<p class="padp"> Australian Dollar (AUD)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					92.20				</font>
+			</span>
+		</p>
+		<p class="padp"> British Pound (GBP)
+			<span class="float-right boldstats">
+				<font color="#bb0000">
+					49.36				</font>
+			</span>
+		</p>
+		<p class="padp"> <a href="http://empiremktxgjovhm.onion/balance/litecoin">Deposits &amp; Withdrawals</a></p>
+
+	</div>
+
+		<div class="statistics">
+	<h3 class="padp">Monero (XMR)</h3>
+	<p class="padp"> United States Dollar (USD)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					64.30				</font>
+			</span>
+		</p>
+		<p class="padp"> Canadian Dollar (CAD)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					84.76				</font>
+			</span>
+		</p>
+		<p class="padp"> Euro (EUR)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					58.07				</font>
+			</span>
+		</p>
+		<p class="padp"> Australian Dollar (AUD)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					93.41				</font>
+			</span>
+		</p>
+		<p class="padp"> British Pound (GBP)
+			<span class="float-right boldstats">
+				<font color="#00bb00">
+					50.00				</font>
+			</span>
+		</p>
+		<p class="padp"> <a href="http://empiremktxgjovhm.onion/balance/monero">Deposits &amp; Withdrawals</a></p>
+
+	</div>
+
+	<div class="statistics">
+	  <p class="padp"> <font color="gray" size="1px">The above rates are updated every 15 minutes and taken using a weighted average of major exchange platforms. </font></p>
+	</div>
+</div>
+
+
+			</div>
+
+            <div class="right-content">
+                								                <h1 class="seth1">Naturalminds <i>| User Profile</i> <span></span></h1>
+                <div class="user_info">
+                    <div class="user_info_left">
+
+
+
+
+									<img src="http://empiremktxgjovhm.onion/public/image/2019/09/30/1569847277O15IzMGGMO3LbBHTupg4-100_100.png" alt="">
+
+
+
+
+
+                        <!--<img src="">-->
+                    </div>
+                    <div class="user_info_mid">
+                        <h3 class="user_info_mid_head">Naturalminds <span style="">(514)</span>
+                                                        <span class="user_info_trust level-5">Vendor level 5</span>
+                                                        <span class="user_info_trust level-5">Trust level 5</span>
+
+
+
+
+
+
+							</h3>
+						<div style="padding-top: 10px;">
+
+
+
+
+
+
+
+
+
+                        <p class="bold" style="padding: 0;">Market Positive feedback(last 12 months): <b>97.16</b>%</p>
+						<!--<p class="bold setp">Autoshop Positive feedback(last 12 months): <b><?//= $card_perc; ?></b>%</p>-->
+                        <p style="padding: 0;">Member since: <span class="bold1">April 02, 2019</span></p>
+						</div>
+                    </div>
+                    <div class="user_info_right">
+                        <br>
+                        <ul>
+							                            <li><a href="http://empiremktxgjovhm.onion/store/Naturalminds" class="replyBtn btnlist">View Store</a></li>
+							                                                        <li><a href="http://empiremktxgjovhm.onion/Message/newMsg_u/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09" class="replyBtn btnlist">Send Message</a></li>
+
+
+
+                                                        <li><a href="http://empiremktxgjovhm.onion/Profile/addFavorite_vendor/Naturalminds/c185141bf5a1613edd4361700b1543466dae5e02" class="replyBtn btnlist">Add to Favorite</a></li>
+
+
+
+
+																					<li><a href="http://empiremktxgjovhm.onion/Profile/addBlock/Naturalminds/c185141bf5a1613edd4361700b1543466dae5e02" class="replyBtn btnlist">Block Vendor</a></li>
+
+
+
+                                                    </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                    <div class="seller_rating">
+                        <h3 class="headfeed">Seller Feedback Ratings <span class="headfeedSpan">(last 12 months)</span>
+                        </h3>
+                        <table>
+                            <tbody><tr>
+                                <th></th>
+                                <th>1 month</th>
+                                <th>6 months</th>
+                                <th>12 months</th>
+                            </tr>
+                            <tr>
+                                <td><img src="http://empiremktxgjovhm.onion/public/image/feedback1.png" width="12px" height="12px"> Positive</td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">69</a></td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">359</a></td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">360</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="http://empiremktxgjovhm.onion/public/image/feedback2.png" width="12px" height="12px"> Neutral</td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">2</a></td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">17</a></td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">17</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="http://empiremktxgjovhm.onion/public/image/feedback3.png" width="12px" height="12px"> Negative</td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">2</a></td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">11</a></td>
+                                <td><a href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">11</a></td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <div class="buyer_statistics">
+                        <h3 class="headfeed">Buyer Statistics <span class="headfeedSpan">(Since join date)</span>
+                        </h3>
+                        <table>
+                            <tbody><tr>
+                                <th></th>
+                                <th>Since join</th>
+                            </tr>
+                            <tr>
+                                <td>Total Disputes / Orders</td>
+                                <td class="align-right">0 / 0</td>
+                            </tr>
+                            <tr>
+                                <td>Total Spendings</td>
+                                <td class="align-right">---</td>
+                            </tr>
+                            <tr>
+                                <td>Feedback left</td>
+                                <td class="align-right">0 (0% Positive)</td>
+                            </tr>
+                            <tr>
+                                <td>Last online</td>
+                                <td class="align-right">Nov 07, 2019</td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                <div class="clear"></div>
+                <div class="rating_star">
+                    <table>
+                            <tbody><tr>
+                                <th></th>
+                                <th></th>
+                                <th>Stealth</th>
+                                <th>Quality</th>
+                                <th>Value Price</th>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                    </td>
+                                <td>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                    </td>
+                                <td>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true" style="color:gold;"></i>
+                                                                    </td>
+                            </tr>
+                        </tbody></table>
+                </div>
+                 <div class="clear"></div>
+             <div class="tab">
+              <a class="tablinks focus" href="http://empiremktxgjovhm.onion/Profile/setUserTab/about/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">About</a>
+              <a class="tablinks " href="http://empiremktxgjovhm.onion/Profile/setUserTab/p_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">Positive Feedback</a>
+              <a class="tablinks " href="http://empiremktxgjovhm.onion/Profile/setUserTab/n_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">Negative Feedback</a>
+              <a class="tablinks " href="http://empiremktxgjovhm.onion/Profile/setUserTab/c_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">Neutral Feedback</a>
+              <a class="tablinks " href="http://empiremktxgjovhm.onion/Profile/setUserTab/l_feedback/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">Left Feedback</a>
+              <a class="tablinks " href="http://empiremktxgjovhm.onion/Profile/setUserTab/pgp/cXFXVmpIckJEVGtGa2g5NTdVQ1kydz09">PGP</a>
+            </div>
+                        <div class="tabcontent_user_feedback" style="display:block;">
+                <h3 class="headfeed">About Naturalminds</h3>
+                <p style="word-wrap: break-word; white-space: pre-wrap;">EMAIL: NMdeals@protonmail.com
+
+For all your questions or whenever the market goes down.
+
+WITH ALMOST 6 YEARS EXPERIENCE ON DARK WE ARE BACK WITH THE BEST QUALITY COKE
+
+WE WERE ALSO FAMOUS ON DREAM. WE HAD A 4.94/5 RATING.
+
+★★★ DREAM CUSTOMERS GETTING DISCOUNT★★★
+
+=====================================
+
+
+We are the famous Naturalminds and we are back on Empire with AAA+ grade quality. We are an experienced team that only sells uncut products. We get our product straight from the source. Everything is LAB-tested and Tested by ourselves. No bullshit, only the best products for the best price.
+
+
+---------------------------------------
+★ PRODUCT ★
+
+
+We sell AAA+ quality cocaine.
+
+- Just pure coke, UNCUT
+- FISHSCALE
+- Straight from the brick
+
+
+---------------------------------------
+★ ORDERS ★
+
+
+Orders between Monday and Friday will be shipped within 24 hours.
+All orders placed on a Friday night, Saturday and Sunday, will be shipped at Monday, because there are no shipments in the weekend.
+
+
+---------------------------------------
+★ ADDRESS FORMAT ★
+
+
+Please format your address like:
+
+      Name + Last-name
+      Street + number
+      Postal code + City
+      **COUNTRY**
+
+Please do not forget to ADD your COUNTRY
+
+Also please write down everything in English
+
+-If you have forget to write down your country, No worries we will fill it for you.-
+
+---------------------------------------
+★ ETA on SHIPPING ★
+
+
+Shipping time:
+ 1.Germany: 1-2 business days
+ 2.Benelux: 3-5 business days
+ 3.EU: 3-5 business days
+ 4.Rest of the world: +- 5 Business days
+
+ *We do provide track and trace for orders above 10g*
+
+( WE DON’T USE REAL RETURN ADDRESSES)
+
+
+--------------------------------------
+★ REFUNDING &amp; RESHIPPING ★
+
+
+When your order has not arrived, please send us a message and we will resolve the problem. NEVER give a NEGATIVE feedback first. Otherwise we can’t help you out.
+
+
+
+ USA = 0% Refund
+ Scandinavian Countries = 0% Refund
+ Australia = 0% Refund
+
+
+----------------------------------
+★ FEEDBACK ★
+
+
+We take everything we do very serious.
+Please leave a good feedback .
+
+* before you want to place a bad feedback please contact us first so we can Help you with your problem. </p>
+            </div>
+            			    </div>
+</div>
+</div>
+</div>
+<div class="footer">
+    <p><font size="1">
+
+	<span style="float:right;">
+	Server time: Thursday, Nov 7, 2019 07:37:02	</span>
+
+
+    <span style="float:left;">Copyright © 2019 Empire Market empiremktxgjovhm.onion</span> </font><br>
+
+	</p>
+
+</div>
+
+
+</body></html>

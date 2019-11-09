@@ -2,8 +2,8 @@ import threading
 from multiprocessing import Queue
 from time import sleep
 from typing import List, Tuple, Type, Dict
-from src.base_logger import BaseClassWithLogger
-from src.base_scraper import BaseScraper
+from src.base.base_logger import BaseClassWithLogger
+from src.base.base_scraper import BaseScraper
 from src.db_utils import get_settings
 from src.models.settings import Settings
 from src.utils import queue_is_empty, get_seconds_until_midnight, get_utc_datetime_next_midnight

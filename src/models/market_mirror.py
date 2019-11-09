@@ -1,7 +1,7 @@
 import datetime
 import uuid
 
-from sqlalchemy import Column, DateTime, Integer, String, CHAR, Float, Index
+from sqlalchemy import Column, DateTime, Integer, String, CHAR, Index, TIMESTAMP
 
 from definitions import Base, MARKET_NAME_COLUMN_LENGTH, URL_COLUMN_LENGTH
 
@@ -15,8 +15,8 @@ class MarketMirror(Base):
 
     id = Column(Integer, primary_key=True)
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
-    last_offline_timestamp = Column(Float, default=0)
-    last_online_timestamp = Column(Float, nullable=False)
+    last_offline_timestamp = Column(Integer, default=0)
+    last_online_timestamp = Column(Integer, nullable=False)
     market_id = Column(CHAR(MARKET_NAME_COLUMN_LENGTH), nullable=False)
     url = Column(String(URL_COLUMN_LENGTH), nullable=False)
 

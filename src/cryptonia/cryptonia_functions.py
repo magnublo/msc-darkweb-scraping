@@ -1,8 +1,6 @@
 import hashlib
-import re
-from datetime import datetime, timedelta, date
-from typing import List, Tuple, Union, Callable, Any, Optional
-from text2digits import text2digits
+from datetime import datetime, date
+from typing import Tuple, Union, Callable, Any, Optional, List
 
 import dateparser
 from bs4 import BeautifulSoup
@@ -10,10 +8,10 @@ from bs4 import BeautifulSoup
 from definitions import CRYPTONIA_WORLD_COUNTRY, CRYPTONIA_MARKET_EXTERNAL_MARKET_STRINGS, \
     DREAM_MARKET_ID, WALL_STREET_MARKET_ID, NUCLEUS_MARKET_ID, ALPHA_BAY_MARKET_ID, CGMC_MARKET_ID, HANSA_MARKET_ID, \
     BLACK_BANK_MARKET_ID, AGORA_MARKET_ID, BLACK_MARKET_RELOADED_ID, ABRAXAS_MARKET_ID, MIDDLE_EARTH_MARKET_ID, \
-    FEEDBACK_TEXT_HASH_COLUMN_LENGTH, MD5_HASH_STRING_ENCODING, ONE_WEEK, EMPIRE_MARKET_ID
-from src.base_functions import BaseFunctions
+    FEEDBACK_TEXT_HASH_COLUMN_LENGTH, MD5_HASH_STRING_ENCODING, EMPIRE_MARKET_ID
+from src.base.base_functions import BaseFunctions
 from src.db_utils import shorten_and_sanitize_for_text_column
-from src.utils import _parse_float, _parse_int
+from src.utils import parse_float, parse_int, parse_time_delta_from_string
 
 ASSUMED_MINIMUM_NUMBER_OF_PRODUCT_DATA_DIVS = 7
 
@@ -51,9 +49,9 @@ def _get_sales_rating_max_rating_from_external_rating(info_string: str) -> Tuple
 
     rating_and_max_rating = rating_string.split("/")
     if len(rating_and_max_rating) == 2:
-        rating, max_rating = [_parse_float(r) for r in rating_and_max_rating]
+        rating, max_rating = [parse_float(r) for r in rating_and_max_rating]
     elif len(rating_and_max_rating) == 1:
-        rating, max_rating = (_parse_float(rating_and_max_rating[0]), None)
+        rating, max_rating = (parse_float(rating_and_max_rating[0]), None)
     else:
         raise AssertionError("Unknown rating format in external market verification.")
     good_reviews, neutral_reviews, bad_reviews = (None, None, None)
@@ -63,7 +61,7 @@ def _get_sales_rating_max_rating_from_external_rating(info_string: str) -> Tuple
     else:
         free_text = "nr of sales is lower estimate"
 
-    sales = _parse_int(unparsed_nr_of_sales)
+    sales = parse_int(unparsed_nr_of_sales)
 
     return sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
 
@@ -71,12 +69,13 @@ def _get_sales_rating_max_rating_from_external_rating(info_string: str) -> Tuple
 def _get_good_neutral_bad_reviews_from_external_rating(info_string: str) -> Tuple[
     None, None, None, Any, Any, Any, None]:
     sales, rating, max_rating, free_text = (None, None, None, None)
-    good_reviews, neutral_reviews, bad_reviews = [_parse_int(a) for a in info_string.split("/")]
+    good_reviews, neutral_reviews, bad_reviews = [parse_int(a) for a in info_string.split("/")]
     return sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
 
 
 def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[str, int, float, float, int, int, int, str]:
-    if market_id in [EMPIRE_MARKET_ID, DREAM_MARKET_ID, AGORA_MARKET_ID, WALL_STREET_MARKET_ID, NUCLEUS_MARKET_ID, ABRAXAS_MARKET_ID,
+    if market_id in [EMPIRE_MARKET_ID, DREAM_MARKET_ID, AGORA_MARKET_ID, WALL_STREET_MARKET_ID, NUCLEUS_MARKET_ID,
+                     ABRAXAS_MARKET_ID,
                      MIDDLE_EARTH_MARKET_ID, CGMC_MARKET_ID]:
         res = _get_sales_rating_max_rating_from_external_rating(info_string)
     elif market_id in [ALPHA_BAY_MARKET_ID, BLACK_BANK_MARKET_ID, BLACK_MARKET_RELOADED_ID]:
@@ -93,7 +92,7 @@ def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[str, i
     return market_id, sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
 
 
-def _parse_external_market_verifications(label_div: BeautifulSoup) -> List[
+def _parse_external_market_verifications(label_div: BeautifulSoup) -> Tuple[
     Tuple[str, int, float, float, int, int, int, str]]:
     external_market_verifications: List[Tuple[str, int, float, float, int, int, int, str]] = []
 
@@ -113,7 +112,7 @@ def _parse_external_market_verifications(label_div: BeautifulSoup) -> List[
         if len(external_market_verifications) != len(verified_spans):
             raise AssertionError(f"Unknown external market {verified_spans}")
 
-    return external_market_verifications
+    return tuple(external_market_verifications)
 
 
 def _parse_amount_on_escrow(label_div: BeautifulSoup) -> Tuple[str, float, str, float]:
@@ -134,12 +133,14 @@ def _parse_ships_from(label_div: BeautifulSoup) -> str:
     return span.text.strip()
 
 
-def _parse_ships_to(label_div: BeautifulSoup) -> List[str]:
+def _parse_ships_to(label_div: BeautifulSoup) -> Tuple[str]:
+    s: str
+
     spans = [span for span in label_div.findAll('span')]
     assert len(spans) == 1
     span = spans[0]
 
-    return [s.strip() for s in span.text.split(",")]
+    return tuple([s.strip() for s in span.text.split(",")])
 
 
 def _parse_jabber_id(label_div: BeautifulSoup) -> str:
@@ -187,26 +188,10 @@ def _parse_last_online(label_div: BeautifulSoup) -> date:
     delimiter = _find_last_online_text_delimiter(span_text)
 
     time_ago_string = span_text.split(delimiter)[1].strip()
-    unit_amount_and_unit_type = time_ago_string.split()
 
-    if len(unit_amount_and_unit_type) == 2:
-        unparsed_unit_amount, unit_type = unit_amount_and_unit_type
-    elif len(unit_amount_and_unit_type) == 1:
-        unparsed_unit_amount, unit_type = (1, unit_amount_and_unit_type[0])
-    else:
-        raise AssertionError(f"Could not parse time unit and time amount in {unit_amount_and_unit_type}")
+    time_delta_val = parse_time_delta_from_string(time_ago_string)
 
-    unit_amount = unparsed_unit_amount if type(unparsed_unit_amount) == int else int(
-        text2digits.Text2Digits().convert_to_digits(str(unparsed_unit_amount)))
-
-    if unit_type[:3] == "day":
-        last_online = datetime.utcnow() - timedelta(days=int(unit_amount))
-    elif unit_type[:4] == "week":
-        last_online = datetime.utcnow() - timedelta(seconds=int(unit_amount) * ONE_WEEK)
-    elif unit_type == "hours":
-        last_online = datetime.utcnow() - timedelta(hours=int(unit_amount))
-    else:
-        raise AssertionError
+    last_online = datetime.utcnow() - time_delta_val
 
     return date(year=last_online.year, month=last_online.month, day=last_online.day)
 
@@ -278,8 +263,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return shorten_and_sanitize_for_text_column(content_div.text)
 
     @staticmethod
-    def get_product_page_urls(soup_html) -> List[str]:
-        product_page_urls = []
+    def get_product_page_urls(soup_html) -> Tuple[str]:
+        product_page_urls: List[str] = []
 
         tables = [table for table in soup_html.findAll('table', attrs={'style': 'width: 100%'})]
         assert len(tables) == 1
@@ -297,7 +282,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
 
         assert len(product_page_urls) == len(trs) - 2
 
-        return product_page_urls
+        return tuple(product_page_urls)
 
     @staticmethod
     def get_nr_sold_since_date(soup_html) -> int:
@@ -308,13 +293,17 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         raise NotImplementedError('')
 
     @staticmethod
-    def get_origin_country_and_destinations(soup_html: BeautifulSoup) -> Tuple[str, List[str]]:
+    def get_origin_country_and_destinations(soup_html: BeautifulSoup) -> Tuple[str, Tuple[str]]:
+        origin: str
+        dest: List[str]
+        a_dest: str
+
         product_data_divs = [div for div in soup_html.findAll('div', attrs={'class': 'product_data'})]
         assert len(product_data_divs) >= ASSUMED_MINIMUM_NUMBER_OF_PRODUCT_DATA_DIVS
         product_data_divs = [div for div in product_data_divs if div.find('label').text == "Ships from:"]
         assert len(product_data_divs) <= 1
         if len(product_data_divs) == 0:
-            return CRYPTONIA_WORLD_COUNTRY, [CRYPTONIA_WORLD_COUNTRY]
+            return CRYPTONIA_WORLD_COUNTRY, tuple([CRYPTONIA_WORLD_COUNTRY])
         else:
             product_data_div = product_data_divs[0]
 
@@ -325,7 +314,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         origin, dest = origin_to_dest.split("→")
         dests = [a_dest.strip() for a_dest in ([dest] + dests)]
 
-        return origin.strip(), dests
+        return origin.strip(), tuple(dests)
 
     @staticmethod
     def get_cryptocurrency_rates(soup_html: BeautifulSoup) -> Tuple[float, float]:
@@ -350,7 +339,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return message
 
     @staticmethod
-    def get_category_lists_and_urls(soup_html: BeautifulSoup) -> Tuple[List[List], List[str]]:
+    def get_category_pairs_and_urls(soup_html: BeautifulSoup) -> Tuple[
+        Tuple[Tuple[Tuple[str, int, str, int]]], Tuple[str]]:
         sidebar_inners = [div for div in soup_html.findAll('div', attrs={'class': 'sidebar_inner'})]
         assert len(sidebar_inners) == 2
         sidebar_inner = sidebar_inners[1]
@@ -358,8 +348,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         category_name_spans = [span for span in sidebar_inner.findAll('span', attrs={'class', 'lgtext'})]
         assert len(chksubcats_divs) == len(category_name_spans) == 10
 
-        category_lists = []
-        urls = []
+        category_lists: List[Tuple[Tuple[str, int, str, int]]] = []
+        urls: List[str] = []
 
         for chksubcats_div, category_name_span in zip(chksubcats_divs, category_name_spans):
             main_category_name = category_name_span.text.strip()
@@ -368,17 +358,20 @@ class CryptoniaScrapingFunctions(BaseFunctions):
                 subcategory_href_inner_text_parts = subcategory_href.text.split(" ")
                 assert len(subcategory_href_inner_text_parts) == 2
                 subcategory_name = subcategory_href_inner_text_parts[0].strip()
-                categories = [main_category_name, subcategory_name]
+                categories = ((main_category_name, None, None, 0), (subcategory_name, None, main_category_name, 1))
                 subcategory_base_url = subcategory_href["href"]
                 category_lists.append(categories)
                 urls.append(subcategory_base_url)
 
         assert len(category_lists) == len(urls)
-        return category_lists, urls
+        return tuple(category_lists), tuple(urls)
 
     @staticmethod
     def get_nr_of_result_pages_in_category(soup_html: BeautifulSoup) -> int:
         tds = [td for td in soup_html.findAll('td', attrs={'class', 'gridftr'})]
+        no_products_p: BeautifulSoup = soup_html.select_one("#body > div.mainarea > div > div > div.mainbox > p")
+        if no_products_p and no_products_p.text == 'No products found in this category.':
+            return 0
         assert len(tds) == 1
         td: BeautifulSoup = tds[0]
         spans = [span for span in td.findAll('span')]
@@ -389,10 +382,10 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return int(parts_of_span[2])
 
     @staticmethod
-    def get_titles_sellers_and_seller_urls(soup_html: BeautifulSoup) -> Tuple[List[str], List[str], List[str]]:
-        titles = []
-        sellers = []
-        seller_urls = []
+    def get_titles_sellers_and_seller_urls(soup_html: BeautifulSoup) -> Tuple[Tuple[str], Tuple[str], Tuple[str]]:
+        titles: List[str] = []
+        sellers: List[str] = []
+        seller_urls: List[str] = []
 
         tables = [table for table in soup_html.findAll('table', attrs={'style': 'width: 100%'})]
         assert len(tables) == 1
@@ -415,7 +408,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
             name_div = divs[0]
             titles.append(name_div.text)
 
-        return titles, sellers, seller_urls
+        return tuple(titles), tuple(sellers), tuple(seller_urls)
 
     @staticmethod
     def get_fiat_currency_and_price_and_unit_type(soup_html: BeautifulSoup) -> Tuple[str, float, str]:
@@ -429,7 +422,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         assert len(lg_spans) == 1
         lg_span = lg_spans[0]
         price, currency_slash_unit = lg_span.text.split(" ")
-        currency, unit = currency_slash_unit.split("/")
+        currency, unit = currency_slash_unit.split("/", maxsplit=1) #name of unit can contain slash, e.g. "1/4 pound"
         return currency, float(price), unit
 
     @staticmethod
@@ -493,8 +486,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return span.text
 
     @staticmethod
-    def get_shipping_methods(soup_html) -> Tuple[
-        List[str], List[Union[int, None]], List[str], List[float], List[Union[str, None]], List[bool]]:
+    def get_shipping_methods(soup_html) -> Tuple[Tuple[str, Optional[int], str, float, Optional[str], Optional[bool]]]:
 
         shipselects = [select for select in
                        soup_html.findAll('select', attrs={'class': 'shipselect', 'name': 'shipping_method'})]
@@ -505,28 +497,32 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         options = [option for option in shipselect.findAll('option')]
         assert len(options) >= 2
 
-        descriptions, days, currencies, prices, unit_names, price_is_per_units = [], [], [], [], [], []
+        shipping_methods: List[Tuple[str, Optional[int], str, float, Optional[str], Optional[bool]]] = []
 
         for option in options[1:]:
             description = "(".join(option.text.split("(")[:-1])[:-1]
             price_and_currency = option.text.split("(")[-1].split(" ")
             price, currency = float(price_and_currency[0]), price_and_currency[1][:-1]
-            shipping_days, shipping_unit_name, price_is_per_unit = None, None, False
-            descriptions.append(description), days.append(shipping_days), currencies.append(currency),
-            prices.append(price), unit_names.append(shipping_unit_name), price_is_per_units.append(price_is_per_unit)
+            days, unit_name, price_is_per_unit = None, None, False
+            shipping_methods.append((description, days, currency, price, unit_name, price_is_per_unit))
 
-        return descriptions, days, currencies, prices, unit_names, price_is_per_units
+        return tuple(shipping_methods)
 
     @staticmethod
-    def get_bulk_prices(soup_html: BeautifulSoup) -> Tuple[
-        List[int], List[Union[int, None]], List[float], List[float], List[float]]:
+    def get_bulk_prices(soup_html: BeautifulSoup) -> Tuple[Tuple[int, Optional[int], float, float, Optional[float]]]:
         all_product_data_divs = [div for div in soup_html.findAll('div', attrs={'class': 'product_data'})]
         product_data_divs = [div for div in soup_html.findAll('div', attrs={'class': 'product_data',
                                                                             'style': 'margin-top: 0; padding-top: 0'})]
         assert len(product_data_divs) <= len(all_product_data_divs) - ASSUMED_MINIMUM_NUMBER_OF_PRODUCT_DATA_DIVS
 
-        bulk_lower_bounds, bulk_upper_bounds, bulk_fiat_prices, bulk_btc_prices, bulk_discount_percents = [], [], [], \
-                                                                                                          [], []
+        lower_bounds: List[int] = []
+        upper_bounds: List[Optional[int]] = []
+        fiat_prices: List[float] = []
+        btc_prices: List[float] = []
+        discount_percents: List[float] = []
+
+        lower_bounds, upper_bounds, fiat_prices, btc_prices, discount_percents = [], [], [], \
+                                                                                 [], []
 
         for product_data_div in product_data_divs:
             labels = [label for label in product_data_div.findAll('label')]
@@ -548,20 +544,27 @@ class CryptoniaScrapingFunctions(BaseFunctions):
             pricetag_span = spans[2]
             discount_percent = pricetag_span.text.split("%")[0]
 
-            bulk_lower_bounds.append(bulk_lower_bound)
-            bulk_fiat_prices.append(bulk_fiat_price)
-            bulk_btc_prices.append(bulk_btc_price)
-            bulk_discount_percents.append(discount_percent)
+            lower_bounds.append(bulk_lower_bound)
+            fiat_prices.append(bulk_fiat_price)
+            btc_prices.append(bulk_btc_price)
+            discount_percents.append(discount_percent)
 
-        for i in range(len(bulk_lower_bounds) - 1):
-            bulk_upper_bounds.append(bulk_lower_bounds[i + 1] - 1)
+        for i in range(len(lower_bounds) - 1):
+            upper_bounds.append(lower_bounds[i + 1] - 1)
 
-        assert max(len(bulk_lower_bounds), 1) - 1 == len(bulk_upper_bounds)
+        assert max(len(lower_bounds), 1) - 1 == len(upper_bounds)
 
-        for i in range(len(bulk_lower_bounds) - len(bulk_upper_bounds)):
-            bulk_upper_bounds.append(None)
+        for i in range(len(lower_bounds) - len(upper_bounds)):
+            upper_bounds.append(None)
 
-        return bulk_lower_bounds, bulk_upper_bounds, bulk_fiat_prices, bulk_btc_prices, bulk_discount_percents
+        bulk_prices: List[Tuple[int, Optional[int], float, float, Optional[float]]] = []
+
+        for lower_bound, upper_bound, fiat_price, btc_price, discount_percent in zip(lower_bounds, upper_bounds,
+                                                                                     fiat_prices, btc_prices,
+                                                                                     discount_percents):
+            bulk_prices.append((lower_bound, upper_bound, fiat_price, btc_price, discount_percent))
+
+        return tuple(bulk_prices)
 
     @staticmethod
     def get_seller_about_description(soup_html: BeautifulSoup) -> str:
@@ -574,8 +577,8 @@ class CryptoniaScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_seller_info(soup_html: BeautifulSoup) -> Tuple[
-        float, Tuple[int, int], List[Tuple[str, int, float, float, int, int, int, str]], Tuple[
-            str, float, str, float], str, List[str], any, bool, datetime, date]:
+        float, Tuple[int, int], Tuple[Tuple[str, int, float, float, int, int, int, str]], Tuple[
+            str, float, str, float], str, Tuple[str], any, bool, datetime, date]:
 
         res = []
 
@@ -602,7 +605,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
             k = 0
             expected_label = expected_labels_and_parsing_funcs[k][1]
             labels = [label for label in label_div.findAll('label')]
-            if 'lbllist' in [item for sublist in label_div.attrs.values() for item in sublist]:
+            if 'lblTuple' in [item for subTuple in label_div.attrs.values() for item in subTuple]:
                 assert len(labels) == 0
             else:
                 assert len(labels) == 1
@@ -618,10 +621,10 @@ class CryptoniaScrapingFunctions(BaseFunctions):
 
         percent_positive_rating: float = res[0]
         disputes: Tuple[int, int] = res[1]
-        external_market_verifications: List[Tuple[str, int, float, float, int, int, int, str]] = res[2]
+        external_market_verifications: Tuple[Tuple[str, int, float, float, int, int, int, str]] = res[2]
         amount_on_escrow: Tuple[str, float, str, float] = res[3]
         ships_from: str = res[4]
-        ships_to: List[str] = res[5]
+        ships_to: Tuple[str] = res[5]
         jabber_id: str = res[6]
         fe_enabled: bool = res[7]
         member_since: datetime = res[8]
@@ -632,7 +635,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         if not ships_from:
             ships_from = None
 
-        return percent_positive_rating, disputes, external_market_verifications, amount_on_escrow, ships_from, \
+        return percent_positive_rating, disputes, tuple(external_market_verifications), amount_on_escrow, ships_from, \
                ships_to, \
                jabber_id, fe_enabled, member_since, last_online
 
@@ -683,7 +686,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
 
             feedback_category_span = spans[0]
 
-            tag_attributes = [item for sublist in feedback_category_span.attrs.values() for item in sublist]
+            tag_attributes = [item for subTuple in feedback_category_span.attrs.values() for item in subTuple]
             if 'icono-checkCircle' in tag_attributes and len(tag_attributes) == 13:
                 feedback_category = "Positive Feedback"
             elif 'icono-crossCircle' in tag_attributes and len(tag_attributes) == 11:

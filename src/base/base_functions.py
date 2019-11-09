@@ -6,18 +6,20 @@ from typing import Tuple, Optional, List, Dict
 import bs4
 import dateparser
 from bs4 import BeautifulSoup
-from src.base_logger import BaseClassWithLogger
+from src.base.base_logger import BaseClassWithLogger
 
 
 def _find_index_of_h4_with_market_string(h4s: List[BeautifulSoup], market_string: str,
-                                         content_soup: BeautifulSoup) -> int:
+                                         content_soup: BeautifulSoup) -> Optional[int]:
     for h4 in h4s:
         a_href_tags = [a_tag for a_tag in h4.findAll('a', href=True)]
-        assert len(a_href_tags) == 1
-        if a_href_tags[0].text.strip() == market_string:
-            return content_soup.contents.index(h4)
-
-    raise AssertionError(f"Mirror for market with string {market_string} not found in h4 headings.")
+        if len(a_href_tags) == 1:
+            if a_href_tags[0].text.strip() == market_string:
+                return content_soup.contents.index(h4)
+        elif len(a_href_tags) == 0:
+            continue
+        else:
+            raise AssertionError(f'Expected 1 or 2 hrefs in {h4}')
 
 
 def _find_index_of_next_h_tag(start_index: int, content_soup: BeautifulSoup) -> int:
@@ -109,6 +111,8 @@ class BaseFunctions(BaseClassWithLogger):
         content_soup: BeautifulSoup = content_soups[0]
         h4s = [h4 for h4 in content_soup.findAll('h4')]
         index_of_h4_with_market_string: int = _find_index_of_h4_with_market_string(h4s, market_string, content_soup)
+        if not index_of_h4_with_market_string:
+            return None
         index_of_next_h4: int = _find_index_of_next_h_tag(index_of_h4_with_market_string, content_soup)
         div_with_sub_url = _find_market_div_with_sub_url(index_of_h4_with_market_string, index_of_next_h4, content_soup)
 
@@ -169,6 +173,8 @@ class BaseFunctions(BaseClassWithLogger):
         content_soup: BeautifulSoup = content_soups[0]
         h4s = [h4 for h4 in content_soup.findAll('h4')]
         index_of_h4_with_market_string: int = _find_index_of_h4_with_market_string(h4s, market_string, content_soup)
+        if not index_of_h4_with_market_string:
+            return {}
         index_of_next_h4: int = _find_index_of_next_h_tag(index_of_h4_with_market_string, content_soup)
 
         lis = _find_lis_with_mirrors(index_of_h4_with_market_string, index_of_next_h4, content_soup)

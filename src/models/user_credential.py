@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, CHAR, UniqueConstraint
+from sqlalchemy import Column, DateTime, Integer, String, CHAR, UniqueConstraint, Boolean
 
 from definitions import Base, MARKET_NAME_COLUMN_LENGTH
 
@@ -21,5 +21,6 @@ class UserCredential(Base):
     market_id = Column(CHAR(MARKET_NAME_COLUMN_LENGTH))
     username = Column(String(32))
     password = Column(String(128))
+    is_registered = Column(Boolean)
 
     UniqueConstraint(market_id, username)
