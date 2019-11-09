@@ -20,7 +20,8 @@ from sqlalchemy.exc import ProgrammingError
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
     RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, WEB_EXCEPTIONS_TUPLE, \
-    DB_EXCEPTIONS_TUPLE, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT
+    DB_EXCEPTIONS_TUPLE, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, FAILED_CAPTCHAS_PER_PAUSE, \
+    TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
@@ -55,6 +56,7 @@ class BaseScraper(BaseClassWithLogger):
         super().__init__()
         engine = get_engine()
         self.pages_counter = 0
+        self.failed_captcha_counter = 0
         self.mirror_db_lock: RLock = self._get_mirror_db_lock()
         self.user_credentials_db_lock: RLock = self._get_user_credentials_db_lock()
         self.proxy_port: int = get_proxy_port(proxy)
@@ -412,8 +414,12 @@ class BaseScraper(BaseClassWithLogger):
 
         if self._is_logged_out(web_response, self.login_url, self.is_logged_out_phrase):
             self.logger.warn("INCORRECTLY SOLVED CAPTCHA, TRYING AGAIN...")
+            self.failed_captcha_counter += 1
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
             self._add_captcha_solution(base64_image, captcha_solution, correct=False)
+            if self.failed_captcha_counter % FAILED_CAPTCHAS_PER_PAUSE == 0:
+                self.logger.critical(f"Failed {FAILED_CAPTCHAS_PER_PAUSE} captchas, waiting {TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL} seconds.")
+                sleep(TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL)
             self._login_and_set_cookie(web_session, web_response)
         else:
             web_session.finger_print = hashlib.md5(
