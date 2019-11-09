@@ -447,7 +447,7 @@ class BaseScraper(BaseClassWithLogger):
                                  mirror_url=self.mirror_base_url, python_object=cookie_object_base64)
             )
         self.logger.info(
-            "Saved cookie {0} to db for username {1} and url {2]".format(''.join(str(dict(cookie_jar)).split('\n')),
+            "Saved cookie {0} to db for username {1} and url {2}".format(''.join(str(dict(cookie_jar)).split('\n')),
                                                                          username, f"{self.mirror_base_url[0:5]}..."))
         self.db_session.commit()
 
