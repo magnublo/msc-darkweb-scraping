@@ -1,4 +1,3 @@
-
 from time import time, sleep
 from typing import List, Dict, Optional
 
@@ -74,10 +73,9 @@ class MirrorManager:
                 sleep(WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE)
                 return self.get_new_mirror()
 
-
         self.scraper.logger.info(f"Testing mirror {candidate_mirror.url}...")
         mirror_works: bool = test_mirror(candidate_mirror.url, self.scraper._get_headers(), self.scraper.proxy,
-                                   logfunc=self.scraper.logger.info)
+                                         logfunc=self.scraper.logger.info)
 
         if mirror_works:
             self.scraper.logger.info("Mirror works.")
@@ -283,12 +281,11 @@ class MirrorManager:
             self.scraper.db_session.flush()
 
     def _get_candidate_mirror(self) -> Optional[MarketMirror]:
-        candidate_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
-            MarketMirror.last_online_timestamp == self.scraper.db_session.query(
-                func.max(MarketMirror.last_online_timestamp)) \
-            .filter(MarketMirror.last_offline_timestamp < int(time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR)) \
-            .filter(MarketMirror.market_id == self.scraper.market_id) \
-            .subquery().as_scalar()).first()
+        candidate_mirrors: List[MarketMirror] = self.scraper.db_session.query(MarketMirror).filter(
+            MarketMirror.last_offline_timestamp < int(time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR)).all()
+
+        candidate_mirror = max(candidate_mirrors, key=lambda c: c.last_online_timestamp)
+
         if candidate_mirror:
             self.scraper.logger.info(
                 f"Retrieved candidate mirror with url {candidate_mirror.url}. Was confirmed online "
