@@ -45,7 +45,13 @@ def _parse_disputes(label_div: BeautifulSoup) -> Tuple[int, int]:
 
 def _get_sales_rating_max_rating_from_external_rating(info_string: str) -> Tuple[
     int, Union[float, Any], Optional[Any], None, None, None, Optional[str]]:
-    unparsed_nr_of_sales, rating_string = info_string.split(" deals")
+    unparsed_nr_of_sales_and_rating_string = info_string.split(" deals")
+    if len(unparsed_nr_of_sales_and_rating_string) == 1: #doesn't contain very common keyword "deals"
+        unparsed_nr_of_sales, rating_string = info_string.split()
+    elif len(unparsed_nr_of_sales_and_rating_string) == 2:
+        unparsed_nr_of_sales, rating_string = unparsed_nr_of_sales_and_rating_string
+    else:
+        raise AssertionError("Unknown format on external rating")
 
     rating_and_max_rating = rating_string.split("/")
     if len(rating_and_max_rating) == 2:

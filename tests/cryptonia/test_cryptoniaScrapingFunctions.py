@@ -44,6 +44,7 @@ class TestGetNrOfResultPagesInCategory(CryptoniaBaseTest):
         nr_of_pages_in_category = scrapingFunctions.get_nr_of_result_pages_in_category(soup_html)
         self.assertEqual(nr_of_pages_in_category, 0)
 
+
 class TestGetProductPageUrls(CryptoniaBaseTest):
 
     def test_get_product_page_urls_zero(self):
@@ -298,6 +299,7 @@ class TestGetFiatCurrencyAndPriceAndUnitType(CryptoniaBaseTest):
         self.assertEqual(price, 650.0)
         self.assertEqual(unit_type, "1/4pound")
 
+
 class TestGetOriginCountryAndDestinations(CryptoniaBaseTest):
 
     def test_get_origin_country_and_destinations_zero(self):
@@ -526,6 +528,7 @@ class TestGetQuantityInStockAndUnitType(CryptoniaBaseTest):
         self.assertEqual("1/4pound", unit_type)
         self.assertEqual(1, minimum_order_unit_amount)
 
+
 class TestGetListingType(CryptoniaBaseTest):
 
     def test_get_quantity_in_stock_and_unit_type(self):
@@ -582,7 +585,8 @@ class TestGetShippingMethods(CryptoniaBaseTest):
                                ('(DE) PRIO-Brief (MIT Tracking), 1-3 Tage', None, 'USD', 5.55, None, False),
                                ('(DE) Einschreiben-Einwurf (MIT Tracking), 1-5 Tage', None, 'USD', 7.77, None, False),
                                ('(DE+EU) Zusatzartikel / additional item', None, 'USD', 0.0, None, False), (
-                               '(EU) Reg. Mail / Recommandé (Track&Sign!), 3-10 days', None, 'USD', 8.32, None, False)),
+                                   '(EU) Reg. Mail / Recommandé (Track&Sign!), 3-10 days', None, 'USD', 8.32, None,
+                                   False)),
                               shipping_methods)
 
     def test_get_shipping_methods_four(self):
@@ -927,6 +931,24 @@ class TestGetSellerInfo(CryptoniaBaseTest):
         self.assertEqual('MarleysMainMan@xmpp.jp', jabber_id)
         self.assertEqual(True, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-04-02 18:48:33"), member_since)
+
+    def test_get_seller_info_seventeen(self):
+        soup_html = self._get_page_as_soup_html('users/saved_cryptonia_user_profile_17')
+        percent_positive_rating, disputes, external_market_ratings, amount_on_escrow, ships_from, ships_to, \
+        jabber_id, fe_enabled, member_since, last_online = scrapingFunctions.get_seller_info(
+            soup_html)
+
+        self.assertEqual(99.0, percent_positive_rating)
+        self.assertTupleEqual((1, 1), disputes)
+        self.assertEqual((('DREAM_MARKET', 5400, 4.82, 5.0, None, None, None, None),
+                          ('WALL_STREET_MARKET', 109, 4.96, 5.0, None, None, None, None)), external_market_ratings)
+        self.assertEqual(('BTC', 0.53120783, 'USD', 4657.67), amount_on_escrow)
+        self.assertEqual("United States", ships_from)
+        self.assertTupleEqual(
+            ('Worldwide',), ships_to)
+        self.assertEqual(None, jabber_id)
+        self.assertEqual(False, fe_enabled)
+        self.assertEqual(datetime.fromisoformat("2019-04-21 01:42:36"), member_since)
 
 
 class TestGetParenthesisNumberAndVendorLevel(CryptoniaBaseTest):

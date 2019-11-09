@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cryptonia Market - allgoldeverything Profile</title>
+<link href="/css-5" rel="stylesheet"/>
+<link href="/css-icons" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div>
+<span> </span>
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span> </span>
+<a class="controlbox_link" href="/account"><span class="icono-sliders smicon"></span>Settings</a>
+<span> </span>
+<a class="controlbox_link" href="/messages"><div class="icono-mail smicon"></div>Mail</a>
+<span> </span>
+<a class="controlbox_link" href="/orders"><span class="icono-cart smicon"></span>Orders</a>
+<span> </span>
+<a class="controlbox_link" href="/messages/new/support"><span class="icono-support smicon"></span>Support</a>
+<span> </span>
+<a class="controlbox_link" href="/logout"><span class="icono-signOut smicon"></span>Logout</a>
+</div>
+<div style="margin-top: -8px;">
+<span style="font-size: smaller; margin-top: 5px; float:right">
+Server Time: 2019-11-09 18:57 | 
+Logged in as <a class="controlbox_link" href="/user/9snoopymmissy0">9snoopymmissy0</a>
+</span>
+</div>
+</div>
+</div>
+<div id="body">
+<style>
+label { width: 195px; }
+</style>
+<div class="mainarea">
+<div class="mainarea_inner">
+<a class="noanchor" id="general"></a>
+<a class="noanchor" id="terms"></a>
+<a class="noanchor" id="pgp"></a>
+<a class="noanchor" id="feedback"></a>
+<h2><span class="icono-user"></span> allgoldeverything<span class="lgtext"> (1096)</span>
+ <span class="verified">LEVEL 1</span> <span class="verified">VERIFIED</span></h2>
+<div class="toolbar">
+<div class="toolbar_menu">
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+<div class="toolbar_spacer"></div>
+<div class="toolbar_layer"></div>
+</div>
+<div class="toolbar_dropdown">
+<a class="toolbar_link" href="/products/allgoldeverything"><span class="icono-market smicon"></span>View Vendor Listings</a>
+<a class="toolbar_link" href="/messages/new/allgoldeverything"><span class="icono-mail smicon"></span>Contact Vendor</a>
+<a class="toolbar_link" href="/messages/new/support/Reporting+allgoldeverything"><span class="icono-flag smicon"></span>Report This Vendor</a>
+</div>
+</div>
+<div class="inline_div">
+<img class="picture" src="/image/241971"/>
+</div>
+<div class="inline_div">
+<div>
+<label>Positive:</label>
+<span style="font-weight: bold; color: green;">99.00%</span>
+</div>
+<div>
+<label>Disputes <span class="smtext">(won/lost)</span>:</label>
+<span class="good"><span style="fong-weight: bold;">1</span></span>/<span class="bad">2</span>
+</div>
+<div>
+<label>Verifications:</label>
+<div class="lbllist"><span class="verified">Dream: 5400 4.82/5</span>
+<span class="verified">Wallstreet: 109 deals, 4.96/5</span></div>
+</div>
+<div>
+<label>Amount on Escrow:</label>
+<span>0.53120783 BTC (<b>4657.67 USD</b>)</span>
+</div>
+<div>
+<label>Ships From:</label>
+<span> United States</span>
+</div>
+<div>
+<label>Ships To:</label>
+<span>Worldwide</span>
+</div>
+<div>
+<label>FE Enabled:</label>
+<span>No</span>
+</div>
+<div>
+<label>Member since:</label>
+<span>2019-04-21 01:42:36</span>
+</div>
+<div>
+<label>Last online:</label>
+<span>Within the last 24 hours</span>
+</div>
+</div>
+<div style="width: 0px; height: 0px;"></div>
+<div class="tab" id="generaltab"><a class="tablink" href="/user/allgoldeverything#general">Profile</a></div>
+<div class="tab" id="termstab"><a class="tablink" href="/user/allgoldeverything#terms">Terms &amp; Conditions</a></div>
+<div class="tab" id="pgptab"><a class="tablink" href="/user/allgoldeverything#pgp">PGP</a></div>
+<div class="tab" id="feedbacktab"><a class="tablink" href="/user/allgoldeverything#feedback">Feedback</a></div>
+<div class="tabview" id="tabview1">
+<div class="target_content" id="general_div">
+<p>ALL ORDERS WILL BE SHIPPED WITHIN 24HOURS OF PROCESSING!!</p>
+<p>WELCOME TO ALLGOLDEVERYTHING!!
+your true world class vendor</p>
+<p>Here at All Gold Everything, EVERYTHING we offer is of the FINEST QUALITY, the best there is to offer of whatever it is we’re selling. We DO NOT CUT any of our products. EVERYTHING we offer is of the PUREST QUALITY and PRICED FAIRLY.</p>
+<p>When placing orders MAKE SURE you ENCRYPT ADDRESS information!</p>
+<p>Thanks for shopping with All Gold Everything! And please, spread the word to your friends.. All Gold Everything is here to stay and we look forward to doing business with you! PEACE</p>
+<p>$$VENDORS HIT ME UP WE ARE ALL ON SAME
+TEAM!!$$</p>
+</div>
+<div class="target_content" id="terms_div">
+<div class="content_div">
+<p>All orders will be processed and shipped within 24 business hours!
+Please only combine express orders or very small orders(2g or less) Thank You</p>
+<p>If not satisfied please contact us here at AGE we aim to please and will work with you to find a practical resolution for both parties we thank you again for your patronage! AGE IS BACK!!</p>
+<p>ALL NON-ENCRYPTED SHIPPING ORDERS WILL BE REJECTED (SORRY! ITS FOR YOURS AND OUR SAFETY)</p>
+</div>
+</div>
+<div class="target_content" id="pgp_div">
+<textarea class="ascii_armour_textarea" readonly="">-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+l3l7Hx5SmQ==
+=aMPv
+-----END PGP PUBLIC KEY BLOCK-----
+
+</textarea>
+</div>
+<div class="target_content" id="feedback_div">
+<div class="content_div">
+<div class="mainbox">
+<table style="width: 100%">
+<tr class="gridhdr">
+<td class="gridhdr rating_good"> </td>
+<td class="gridhdr rating_message">FEEDBACK</td>
+<td class="gridhdr rating_user"> </td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>The most reliable vendor on the markets. Not the highest quality product, but nobody can beat the profesionalism.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-09</span>
+<span class="smtext rating_date">0.01540000 BTC</span>
+<span class="smtext rating_date">J***p</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">DUTCH MOLLY 84% PURE!!!</span>
+<p>CRAZY fast shipping. An excellent vendor</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-09</span>
+<span class="smtext rating_date">0.01080000 BTC</span>
+<span class="smtext rating_date">R***h</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>While all of my previous experiences have been positive, I had to dispute this order after it did not arrive for seven days and AGE did not respond to my message. He eventually resent the package, but it took over two weeks total to arrive.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-09</span>
+<span class="smtext rating_date">0.01760000 BTC</span>
+<span class="smtext rating_date">b***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">PERUVIAN FISHSCALE COCAINE FOB</span>
+<p>very quick transaction, thanks! very good stuff too</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.01070000 BTC</span>
+<span class="smtext rating_date">a***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">PERUVIAN FISHSCALE COCAINE FOB</span>
+<p>received today, waited over two weeks but vendor was responsive. I also paid for 2 day shipping :(</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.09640000 BTC</span>
+<span class="smtext rating_date">t***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>Original pack got lost in the mail, but AGE made it right. Took a bit longer than I would have liked, and communication could have been better, but the main thing is it got here, quality is the good light gray, weight was on, and stealth was good.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.09560000 BTC</span>
+<span class="smtext rating_date">a***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>great product</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.24720000 BTC</span>
+<span class="smtext rating_date">b***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">DUTCH MOLLY 84% PURE!!!</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.03080000 BTC</span>
+<span class="smtext rating_date">h***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>GREAT EXPERIENCE!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.01360000 BTC</span>
+<span class="smtext rating_date">b***d</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">DUTCH MOLLY 84% PURE!!!</span>
+<p>Received fast w/express shipping. Looks great!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.01080000 BTC</span>
+<span class="smtext rating_date">B***t</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>ordered on the 1st, shipped on the 3rd, recieved on the 7th... dont know what happened but didnt i dont complain... dope is good..</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.01590000 BTC</span>
+<span class="smtext rating_date">m***1</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">DUTCH MOLLY 84% PURE!!!</span>
+<p>Package was lost in the mail but AGE sorted it out and refund was received.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.01210000 BTC</span>
+<span class="smtext rating_date">s***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>Express shipping took 6 days this time, usps fault. Every other order has been overnight. Still the best vemdpr pf any current market </p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.01580000 BTC</span>
+<span class="smtext rating_date">w***3</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>10/10 excellent product like usual. Great speed and good OPSEC. Thank you!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.01530000 BTC</span>
+<span class="smtext rating_date">G***d</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">PERUVIAN FISHSCALE COCAINE FOB</span>
+<p>A++Fast shipping, product arrived heavy and tested out at over 90%. Excellent vendor!!!!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-08</span>
+<span class="smtext rating_date">0.04720000 BTC</span>
+<span class="smtext rating_date">K***9</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">PERUVIAN FISHSCALE COCAINE FOB</span>
+<p>No feedback left.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-07</span>
+<span class="smtext rating_date">0.01970000 BTC</span>
+<span class="smtext rating_date">F***m</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>Super reliable. Good quality and excellent stealth. Fast shipping. Would write a thousand more good reviews like this but I'm quitting for good. AGE is a great vendor though. Highly recommended.</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-07</span>
+<span class="smtext rating_date">0.01380000 BTC</span>
+<span class="smtext rating_date">3***s</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>Shipping  was 1 day late but product is very good, acurrate to the .00 Honest &amp; reliable, what else can you ask for??</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-07</span>
+<span class="smtext rating_date">0.01580000 BTC</span>
+<span class="smtext rating_date">B***0</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">STRAIGHT DROP CRACK ROCK</span>
+<p>The real deal and fast shipping</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-07</span>
+<span class="smtext rating_date">0.01070000 BTC</span>
+<span class="smtext rating_date">P***y</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>Great! Thank you!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-07</span>
+<span class="smtext rating_date">0.01390000 BTC</span>
+<span class="smtext rating_date">s***r</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">PERUVIAN FISHSCALE COCAINE FOB</span>
+<p>4 days T2D with a weekend thrown in there, weight was spot on with excellent packaging, the quality is first-rate Peruvian with that euphoric rush that you've come to expect from a line of the Lady but usually are disappointed. 5/5 goes out to the AGE!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-07</span>
+<span class="smtext rating_date">0.01080000 BTC</span>
+<span class="smtext rating_date">j***2</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">DUTCH MOLLY 84% PURE!!!</span>
+<p>I received it (finally) and it weighed exactly one gram, which is why I'm rating this as positive. But I ordered express and received it 6 days later, I messaged AGE twice and never received a response and there was barely any opsec.</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-07</span>
+<span class="smtext rating_date">0.01090000 BTC</span>
+<span class="smtext rating_date">t***n</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">PERUVIAN FISHSCALE COCAINE FOB</span>
+<p>super fast delivery and the product is right on!</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-06</span>
+<span class="smtext rating_date">0.00890000 BTC</span>
+<span class="smtext rating_date">a***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell gridalt"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message gridalt">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>super fast delivery, product is right on!</p>
+</td>
+<td class="rating_user gridalt">
+<span class="smtext rating_date">2019-11-06</span>
+<span class="smtext rating_date">0.01360000 BTC</span>
+<span class="smtext rating_date">a***e</span>
+</td>
+</tr>
+<tr>
+<td class="rating_cell"><span class="icono-checkCircle" style="color: green"></span></td>
+<td class="rating_message">
+<span class="rating_product">Uncut #4 Heroin GREY DRAGON</span>
+<p>great product, very nice to have people keeping things legit. Thanks for your hard work. A+</p>
+</td>
+<td class="rating_user">
+<span class="smtext rating_date">2019-11-06</span>
+<span class="smtext rating_date">0.01590000 BTC</span>
+<span class="smtext rating_date">t***n</span>
+</td>
+</tr>
+<tr>
+<td class="gridftr" colspan="5">
+<span>&lt;&lt;</span>
+<span>1 of 36</span>
+<a href="/user/allgoldeverything/2#feedback">&gt;&gt;</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+<div class="rate_div">
+<span class="smtext">1 BTC = 7964.31 EUR = 8768.08 USD = 6863.41 GBP = 143.78000509 XMR = 12777.91 AUD = 11598.23 CAD</span></div>
+</div>
+</div>
+</body>
+</html>
