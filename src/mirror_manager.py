@@ -1,4 +1,4 @@
-from threading import RLock
+
 from time import time, sleep
 from typing import List, Dict, Optional
 
@@ -81,13 +81,13 @@ class MirrorManager:
 
         if mirror_works:
             self.scraper.logger.info("Mirror works.")
-            candidate_mirror.last_online_timestamp = time()
+            candidate_mirror.last_online_timestamp = int(time())
             self.scraper.db_session.add(candidate_mirror)
             self.scraper.db_session.commit()
             return candidate_mirror.url
         else:
             self.scraper.logger.info("Mirror failed test.")
-            candidate_mirror.last_offline_timestamp = time()
+            candidate_mirror.last_offline_timestamp = int(time())
             self.scraper.db_session.add(candidate_mirror)
             self.scraper.db_session.commit()
             return self.get_new_mirror()
@@ -124,7 +124,7 @@ class MirrorManager:
                 nr_of_new_working_mirrors += 1
                 last_offline_timestamp = 0
             else:
-                last_offline_timestamp = time()
+                last_offline_timestamp = int(time())
             last_online_timestamp = new_mirror_last_online
             self.scraper.db_session.add(
                 MarketMirror(last_offline_timestamp=last_offline_timestamp, last_online_timestamp=last_online_timestamp,
@@ -278,7 +278,7 @@ class MirrorManager:
             MarketMirror.url == self.scraper.mirror_base_url).first()
 
         if current_mirror:
-            current_mirror.last_offline_timestamp = time()
+            current_mirror.last_offline_timestamp = int(time())
             self.scraper.db_session.add(current_mirror)
             self.scraper.db_session.flush()
 
@@ -286,7 +286,7 @@ class MirrorManager:
         candidate_mirror: MarketMirror = self.scraper.db_session.query(MarketMirror).filter(
             MarketMirror.last_online_timestamp == self.scraper.db_session.query(
                 func.max(MarketMirror.last_online_timestamp)) \
-            .filter(MarketMirror.last_offline_timestamp < time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR) \
+            .filter(MarketMirror.last_offline_timestamp < int(time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR)) \
             .filter(MarketMirror.market_id == self.scraper.market_id) \
             .subquery().as_scalar()).first()
         if candidate_mirror:
