@@ -88,7 +88,7 @@ class BaseScraper(BaseClassWithLogger):
             self._generic_error_catch_wrapper(*queue_item, func=self._scrape_queue_item)
 
         print("Job queue is empty. Wrapping up...")
-        self._wrap_up_session()
+        self._wrap_up_session(exited_gracefully=True)
 
     def _initiate_session(self) -> int:
         from socket import getfqdn
@@ -143,13 +143,13 @@ class BaseScraper(BaseClassWithLogger):
             print_error_to_file(self.market_id, self.thread_id, meta_error_string, "meta")
         sleep(2)
 
-    def _wrap_up_session(self) -> None:
+    def _wrap_up_session(self, exited_gracefully: bool = False) -> None:
         scraping_session = self.db_session.query(ScrapingSession).filter(
             ScrapingSession.id == self.session_id).first()
 
         scraping_session.time_finished = datetime.fromtimestamp(time())
         scraping_session.duplicates_encountered += self.duplicates_this_session
-        scraping_session.exited_gracefully = True
+        scraping_session.exited_gracefully = exited_gracefully
 
         while True:
             try:
