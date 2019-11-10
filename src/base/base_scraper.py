@@ -695,8 +695,8 @@ class BaseScraper(BaseClassWithLogger):
                         anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
                     ).captcha_handler(captcha_base64=base64_image)
                 break
-            except ReadError:
-                pass
+            except ReadError as e:
+                self.logger.critical(f"Got AntiCaptcha ReadError, trying again...\n{str(e)}")
 
         captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
                                                              func=lambda d: d["solution"]["text"])
