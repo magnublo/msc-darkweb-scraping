@@ -21,6 +21,6 @@ class TestMain(TestCase):
     @patch('src.main.WEBSITES_TO_BE_SCRAPED', MOCKED_WEBSITES_TO_BE_SCRAPED_CRYPTONIA)
     @patch('src.main.get_logger_config', side_effect=mocked_get_logger_config)
     @skip("Integration test with many dependencies")
-    def test_main(self, mocked_get_user_input: Mock, mocked_get_logger_config):
+    def test_cryptonia_main(self, mocked_get_user_input: Mock, mocked_get_logger_config):
         with patch('src.main.ScrapingManager', MockedScrapingManager):
             src.main.run()

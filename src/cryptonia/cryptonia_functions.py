@@ -43,31 +43,46 @@ def _parse_disputes(label_div: BeautifulSoup) -> Tuple[int, int]:
     return disputes_won, disputes_lost
 
 
+def _parse_rating_string(rating_string: str) -> Tuple[float, Optional[float]]:
+    rating_and_max_rating = rating_string.split("/")
+    if len(rating_and_max_rating) == 2:     # contains both rating and max rating
+        rating, max_rating = [parse_float(r) for r in rating_and_max_rating]
+        return rating, max_rating
+    elif len(rating_and_max_rating) == 1:   # contains only rating
+        return parse_float(rating_and_max_rating[0]), None
+    else:
+        raise AssertionError("Unknown rating format in external market verification.")
+
+
 def _get_sales_rating_max_rating_from_external_rating(info_string: str) -> Tuple[
-    int, Union[float, Any], Optional[Any], None, None, None, Optional[str]]:
+    Optional[int], Union[float, Any], Optional[Any], None, None, None, Optional[str]]:
+
+    info_string = info_string.strip()
     unparsed_nr_of_sales_and_rating_string = info_string.split(" deals")
     if len(unparsed_nr_of_sales_and_rating_string) == 1:  # doesn't contain very common keyword "deals"
-        unparsed_nr_of_sales, rating_string = info_string.split()
+        unparsed_nr_of_sales_and_rating_string = info_string.split()
+        if len(unparsed_nr_of_sales_and_rating_string) == 1:
+            if info_string.find("/") == -1:  # is probably sales
+                return parse_int(info_string), None, None, None, None, None, None
+            else:  # is probably rating
+                unparsed_nr_of_sales, rating_string = ("", unparsed_nr_of_sales_and_rating_string[0])
+        else:
+            unparsed_nr_of_sales, rating_string = unparsed_nr_of_sales_and_rating_string
     elif len(unparsed_nr_of_sales_and_rating_string) == 2:
         unparsed_nr_of_sales, rating_string = unparsed_nr_of_sales_and_rating_string
     else:
         raise AssertionError("Unknown format on external rating")
 
-    rating_and_max_rating = rating_string.split("/")
-    if len(rating_and_max_rating) == 2:
-        rating, max_rating = [parse_float(r) for r in rating_and_max_rating]
-    elif len(rating_and_max_rating) == 1:
-        rating, max_rating = (parse_float(rating_and_max_rating[0]), None)
-    else:
-        raise AssertionError("Unknown rating format in external market verification.")
+    rating, max_rating = _parse_rating_string(rating_string)
+
     good_reviews, neutral_reviews, bad_reviews = (None, None, None)
 
-    if not unparsed_nr_of_sales[-1] == "+":
+    if unparsed_nr_of_sales.find("+") == -1:
         free_text = None
     else:
         free_text = "nr of sales is lower estimate"
 
-    sales = parse_int(unparsed_nr_of_sales)
+    sales = None if unparsed_nr_of_sales is "" else parse_int(unparsed_nr_of_sales)
 
     return sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
 
@@ -92,7 +107,7 @@ def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
     elif market_id in [HANSA_MARKET_ID]:
         try:
             res = _get_sales_rating_max_rating_from_external_rating(info_string)
-        except ValueError:
+        except (ValueError, AssertionError):
             res = _get_good_neutral_bad_reviews_from_external_rating(info_string)
     else:
         res = (None, None, None, None, None, None, info_string)
@@ -505,7 +520,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         shipselect = shipselects[0]
 
         options = [option for option in shipselect.findAll('option')]
-        assert len(options) >= 2
+        assert len(options) >= 1
 
         shipping_methods: List[Tuple[str, Optional[float], str, float, Optional[str], Optional[bool]]] = []
 

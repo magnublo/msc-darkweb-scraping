@@ -609,6 +609,10 @@ class TestGetShippingMethods(CryptoniaBaseTest):
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
         self.assertTupleEqual((('DIGITAL DELIVERY', None, 'USD', 0.0, None, False),), shipping_methods)
 
+    def test_get_shipping_methods_thirteen(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_13')
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((), shipping_methods)
 
 class TestGetBulkPrices(CryptoniaBaseTest):
 
@@ -965,6 +969,22 @@ class TestGetSellerInfo(CryptoniaBaseTest):
         self.assertEqual(None, jabber_id)
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-08-25 11:11:46"), member_since)
+
+    def test_get_seller_info_twentyone(self):
+        soup_html = self._get_page_as_soup_html('users/saved_cryptonia_user_profile_21')
+        percent_positive_rating, disputes, external_market_ratings, amount_on_escrow, ships_from, ships_to, \
+        jabber_id, fe_enabled, member_since, last_online = scrapingFunctions.get_seller_info(
+            soup_html)
+
+        self.assertEqual(100.0, percent_positive_rating)
+        self.assertTupleEqual((1, 1), disputes)
+        self.assertEqual((('DREAM_MARKET', None, 4.97, 5.0, None, None, None, None),), external_market_ratings)
+        self.assertEqual(('BTC', 0.09387265, 'USD', 823.44), amount_on_escrow)
+        self.assertEqual('United States', ships_from)
+        self.assertTupleEqual(('United States',), ships_to)
+        self.assertEqual(None, jabber_id)
+        self.assertEqual(False, fe_enabled)
+        self.assertEqual(datetime.fromisoformat("2019-04-22 20:31:57"), member_since)
 
 
 class TestGetParenthesisNumberAndVendorLevel(CryptoniaBaseTest):
