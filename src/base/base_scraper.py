@@ -13,21 +13,24 @@ from time import time
 from typing import Callable, List, Tuple, Union, Type, Any, Dict, Optional
 
 import requests
-from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask, ReadError
+from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
+from python3_anticaptcha.errors import AntiCaptchaApiException
 from requests import Response
 from requests.cookies import RequestsCookieJar
 from sqlalchemy import func
-from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
+from sqlalchemy.exc import ProgrammingError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
     RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, \
     FAILED_CAPTCHAS_PER_PAUSE, \
-    TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE
+    TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE, ANTICAPTCHA_ERROR_PER_PAUSE, \
+    TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
     get_column_name
+from src.exceptions import DeadMirrorException, GenericException
 from src.mirror_manager import MirrorManager
 from src.models.bulk_price import BulkPrice
 from src.models.captcha_solution import CaptchaSolution
@@ -49,7 +52,6 @@ from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
     get_temporary_server_error, pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string
-from src.exceptions import DeadMirrorException, GenericException
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -682,6 +684,7 @@ class BaseScraper(BaseClassWithLogger):
         anti_captcha_kwargs = anti_captcha_kwargs if anti_captcha_kwargs else self._get_anti_captcha_kwargs()
         self.logger.info("Sending image to anti-catpcha.com API...")
 
+        tries: int = 0
         while True:
             try:
                 captcha_solution_response = ImageToTextTask.ImageToTextTask(
@@ -695,8 +698,14 @@ class BaseScraper(BaseClassWithLogger):
                         anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
                     ).captcha_handler(captcha_base64=base64_image)
                 break
-            except ReadError as e:
-                self.logger.critical(f"Got AntiCaptcha ReadError, trying again...\n{str(e)}")
+            except AntiCaptchaApiException as e:
+                tries += 1
+                if tries % ANTICAPTCHA_ERROR_PER_PAUSE == 0:
+                    self.logger.critical(
+                        f"Gotten {ANTICAPTCHA_ERROR_PER_PAUSE} AntiCaptcha errors consecutively. Sleeping "
+                        f"{TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL} seconds...")
+                else:
+                    self.logger.critical(f"Got AntiCaptcha ReadError nr. {tries}, trying again...\n{str(e)}")
 
         captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
                                                              func=lambda d: d["solution"]["text"])
