@@ -681,9 +681,16 @@ class BaseScraper(BaseClassWithLogger):
         time_before_requesting_captcha_solve = time()
         anti_captcha_kwargs = anti_captcha_kwargs if anti_captcha_kwargs else self._get_anti_captcha_kwargs()
         self.logger.info("Sending image to anti-catpcha.com API...")
+
         captcha_solution_response = ImageToTextTask.ImageToTextTask(
             anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
         ).captcha_handler(captcha_base64=base64_image)
+
+        while "errorCode" in captcha_solution_response.keys() and captcha_solution_response[
+            "errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
+            captcha_solution_response = ImageToTextTask.ImageToTextTask(
+                anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
+            ).captcha_handler(captcha_base64=base64_image)
 
         captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
                                                              func=lambda d: d["solution"]["text"])
@@ -748,3 +755,7 @@ class BaseScraper(BaseClassWithLogger):
                     UserCredential.username == web_session.username, UserCredential.market_id == self.market_id).first()
                 user_credential.thread_id = -1
             self.db_session.commit()
+
+    def _ask_solution_until_ready_worker(self, base64_image):
+        self._generic_error_catch_wrapper(captcha_solution_response,
+                                          func=lambda d: d["solution"]["text"])
