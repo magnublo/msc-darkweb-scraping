@@ -317,7 +317,7 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         lbllist_div = lbllist_divs[0]
         origin_to_dest, *dests = lbllist_div.text.split(",")
         origin, dest = origin_to_dest.split("→")
-        dests = [a_dest.strip() for a_dest in ([dest] + dests)]
+        dests = [a_dest.strip() for a_dest in ([dest] + dests) if a_dest.strip() != ""]
 
         return origin.strip(), tuple(dests)
 

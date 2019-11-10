@@ -132,7 +132,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         td = tds[3]
         payment_type = td.text.strip()
 
-        return origin_country, destinations, payment_type
+        return origin_country, [d for d in destinations if d != ""], payment_type
 
     @staticmethod
     def get_cryptocurrency_rates(soup_html):
