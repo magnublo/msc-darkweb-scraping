@@ -691,12 +691,14 @@ class BaseScraper(BaseClassWithLogger):
                     anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
                 ).captcha_handler(captcha_base64=base64_image)
 
-                while "errorCode" in captcha_solution_response.keys() and captcha_solution_response[
-                    "errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
-                    self.logger.warn("Anti-Captcha API has no workers available, trying again...")
-                    captcha_solution_response = ImageToTextTask.ImageToTextTask(
-                        anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
-                    ).captcha_handler(captcha_base64=base64_image)
+                while int(captcha_solution_response["errorId"]) > 0:
+                    if captcha_solution_response["errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
+                        self.logger.warn("Anti-Captcha API has no workers available, trying again...")
+                        captcha_solution_response = ImageToTextTask.ImageToTextTask(
+                            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
+                        ).captcha_handler(captcha_base64=base64_image)
+                    else:
+                        raise AntiCaptchaApiException(str(captcha_solution_response))
                 break
             except AntiCaptchaApiException as e:
                 tries += 1
@@ -705,7 +707,7 @@ class BaseScraper(BaseClassWithLogger):
                         f"Gotten {ANTICAPTCHA_ERROR_PER_PAUSE} AntiCaptcha errors consecutively. Sleeping "
                         f"{TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL} seconds...")
                 else:
-                    self.logger.critical(f"Got AntiCaptcha ReadError nr. {tries}, trying again...\n{str(e)}")
+                    self.logger.critical(f"Got AntiCaptcha exception nr. {tries}, trying again...\n{str(e)}")
 
         captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
                                                              func=lambda d: d["solution"]["text"])
