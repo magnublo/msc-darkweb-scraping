@@ -143,7 +143,7 @@ CRYPTONIA_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (ALPHA_BAY_MARKET_ID, "Alphabay:"),
     (CGMC_MARKET_ID, "CGMC:"),
     (HANSA_MARKET_ID, "Hansa:"),
-    (BLACK_BANK_MARKET_ID, "Black Bank"),
+    (BLACK_BANK_MARKET_ID, "Black Bank:"),
     (AGORA_MARKET_ID, "Agora:"),
     (BLACK_MARKET_RELOADED_ID, "Black Market Reloaded:"),
     (ABRAXAS_MARKET_ID, "Abraxas:"),

@@ -1,4 +1,5 @@
 import hashlib
+import re
 from datetime import datetime, date
 from typing import Tuple, Union, Callable, Any, Optional, List
 
@@ -43,76 +44,56 @@ def _parse_disputes(label_div: BeautifulSoup) -> Tuple[int, int]:
     return disputes_won, disputes_lost
 
 
-def _parse_rating_string(rating_string: str) -> Tuple[float, Optional[float]]:
-    rating_and_max_rating = rating_string.split("/")
-    if len(rating_and_max_rating) == 2:     # contains both rating and max rating
-        rating, max_rating = [parse_float(r) for r in rating_and_max_rating]
-        return rating, max_rating
-    elif len(rating_and_max_rating) == 1:   # contains only rating
-        return parse_float(rating_and_max_rating[0]), None
-    else:
-        raise AssertionError("Unknown rating format in external market verification.")
-
-
-def _get_sales_rating_max_rating_from_external_rating(info_string: str) -> Tuple[
-    Optional[int], Union[float, Any], Optional[Any], None, None, None, Optional[str]]:
-
-    info_string = info_string.strip()
-    unparsed_nr_of_sales_and_rating_string = info_string.split(" deals")
-    if len(unparsed_nr_of_sales_and_rating_string) == 1:  # doesn't contain very common keyword "deals"
-        unparsed_nr_of_sales_and_rating_string = info_string.split()
-        if len(unparsed_nr_of_sales_and_rating_string) == 1:
-            if info_string.find("/") == -1:  # is probably sales
-                return parse_int(info_string), None, None, None, None, None, None
-            else:  # is probably rating
-                unparsed_nr_of_sales, rating_string = ("", unparsed_nr_of_sales_and_rating_string[0])
-        else:
-            unparsed_nr_of_sales, rating_string = unparsed_nr_of_sales_and_rating_string
-    elif len(unparsed_nr_of_sales_and_rating_string) == 2:
-        unparsed_nr_of_sales, rating_string = unparsed_nr_of_sales_and_rating_string
-    else:
-        raise AssertionError("Unknown format on external rating")
-
-    rating, max_rating = _parse_rating_string(rating_string)
-
-    good_reviews, neutral_reviews, bad_reviews = (None, None, None)
-
-    if unparsed_nr_of_sales.find("+") == -1:
-        free_text = None
-    else:
-        free_text = "nr of sales is lower estimate"
-
-    sales = None if unparsed_nr_of_sales is "" else parse_int(unparsed_nr_of_sales)
-
-    return sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
-
-
-def _get_good_neutral_bad_reviews_from_external_rating(info_string: str) -> Tuple[
-    None, None, None, Any, Any, Any, None]:
-    sales, rating, max_rating, free_text = (None, None, None, None)
-    good_reviews, neutral_reviews, bad_reviews = [parse_int(a) for a in info_string.split("/")]
-    return sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
-
-
 def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
     str, Optional[int], Optional[float], Optional[float], Optional[int], Optional[int], Optional[int], Optional[str]]:
-    if market_id in [EMPIRE_MARKET_ID, DREAM_MARKET_ID, AGORA_MARKET_ID, WALL_STREET_MARKET_ID, NUCLEUS_MARKET_ID,
-                     ABRAXAS_MARKET_ID,
-                     MIDDLE_EARTH_MARKET_ID, CGMC_MARKET_ID]:
-        if info_string.strip() == "":
-            return market_id, None, None, None, None, None, None, "No seller stats associated with this verification."
-        res = _get_sales_rating_max_rating_from_external_rating(info_string)
-    elif market_id in [ALPHA_BAY_MARKET_ID, BLACK_BANK_MARKET_ID, BLACK_MARKET_RELOADED_ID]:
-        res = _get_good_neutral_bad_reviews_from_external_rating(info_string)
-    elif market_id in [HANSA_MARKET_ID]:
-        try:
-            res = _get_sales_rating_max_rating_from_external_rating(info_string)
-        except (ValueError, AssertionError):
-            res = _get_good_neutral_bad_reviews_from_external_rating(info_string)
-    else:
-        res = (None, None, None, None, None, None, info_string)
 
-    sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text = res
+    sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text = (
+        None, None, None, None, None, None, None)
+
+    if info_string == "":
+        pass  # empty string
+        free_text = "No seller stats associated with this verification."
+    elif re.match(r"^\d+\/\d+\/\d+$", info_string):
+        pass  # good neutral bad tuple, 11/2/44
+        good_reviews, neutral_reviews, bad_reviews = [int(a) for a in info_string.split("/")]
+    elif re.match(r"^\d+,?\d+\+?\s+deals,?\s+\d+(\.\d+)*\/\d+(\.\d+)*%?$", info_string):
+        pass  # deals tuple, sales nr is lower estimate, '123 deals, 2.44/5'
+        whitespace_parts = info_string.split()
+        if whitespace_parts[0][-1] == "+":
+            free_text = 'nr of sales is lower estimate'
+        slash_parts = whitespace_parts[-1].split("/")
+        sales, rating, max_rating = (parse_int(whitespace_parts[0]), float(slash_parts[0]), parse_float(slash_parts[1]))
+    elif re.match(r"^\d+,?\d+\+?\s+deals,?\s+\d+(\.\d+)*$", info_string):
+        pass  # deals tuple, sales nr is lower estimate, '123 deals, 2.44'
+        whitespace_parts = info_string.split()
+        slash_parts = whitespace_parts[-1].split("/")
+        sales, rating = (parse_int(whitespace_parts[0]), float(slash_parts[0]))
+    elif re.match(r"^\d+(\.\d+)*\/\d+(\.\d+)*$", info_string):
+        pass  # rating, max_rating tuple, '2.44/5'
+        rating, max_rating = [float(f) for f in info_string.split("/")]
+    elif re.match(r"^\d+,?\d+\s+\d+(\.\d+)*\/\d+(\.\d+)*$", info_string):
+        pass  # sales, rating, max_rating tuple, '123 2.44/5'
+        parts = re.split(r"\s+|\/", info_string)
+        sales, rating, max_rating = (int(parts[0]), float(parts[1]), float(parts[2]))
+    elif re.match(r"^\d+,?\d+\s+ deals,?$", info_string):
+        pass  # sales, '123 deals'
+        sales = int(info_string.split()[0])
+    elif re.match(r"^\d+,?\d+$", info_string):
+        pass  # sales without deals keyword, 123
+        sales = int(info_string)
+    elif re.match(r"^\d+\.\d+$", info_string):
+        pass  # rating only
+        rating = float(info_string)
+    elif re.match(r"^\d+,?\d+\+?~\d+,?\d+\+?\s+deals,?\s+\d+(\.\d+)*\/\d+(\.\d+)*%?$", info_string):
+        pass  # deals tuple, sales is a range, '12~22 deals, 2.44/5'
+        whitespace_parts = info_string.split()
+        lower_bound, upper_bound = [parse_int(i) for i in whitespace_parts[0].split("~")]
+        free_text = f"Sales is somewhere between {lower_bound} and {upper_bound}."
+        slash_parts = whitespace_parts[-1].split("/")
+        sales, rating, max_rating = (int(sum((upper_bound, lower_bound))/2), float(slash_parts[0]), parse_float(slash_parts[1]))
+    else:
+        free_text = info_string
+
     return market_id, sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text
 
 
@@ -128,7 +109,7 @@ def _parse_external_market_verifications(label_div: BeautifulSoup) -> Tuple[
             for market_id, market_string in remaining_external_market_ratings:
                 if verified_span.text.find(market_string) != -1:
                     parts = verified_span.text.split(market_string)
-                    external_rating_tuple = _get_external_rating_tuple(market_id, "".join(parts))
+                    external_rating_tuple = _get_external_rating_tuple(market_id, "".join(parts).strip())
                     external_market_verifications.append(external_rating_tuple)
                     remaining_external_market_ratings.remove((market_id, market_string))
                     break

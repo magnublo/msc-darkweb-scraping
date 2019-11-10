@@ -926,7 +926,7 @@ class TestGetSellerInfo(CryptoniaBaseTest):
                           ('BLACK_BANK_MARKET', None, None, None, 4, 0, 0, None),
                           ('NUCLEUS_MARKET', 895, 4.95, 5.0, None, None, None, None),
                           ('ALPHA_BAY_MARKET', None, None, None, 1142, 21, 92, None),
-                          ('ABRAXAS_MARKET', 1020, 5.0, 5.0, None, None, None, None),
+                          ('ABRAXAS_MARKET', 15, 5.0, 5.0, None, None, None, "Sales is somewhere between 10 and 20."),
                           ('MIDDLE_EARTH_MARKET', 145, 9.85, 10.0, None, None, None, None)), external_market_ratings)
         self.assertEqual(('BTC', 0.03794626, 'USD', 347.33), amount_on_escrow)
         self.assertEqual("United States", ships_from)
