@@ -106,7 +106,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return currency, price
 
     @staticmethod
-    def get_origin_country_and_destinations_and_payment_type(soup_html) -> Tuple[str, List[str], str]:
+    def get_origin_country_and_destinations_and_payment_type(soup_html) -> Tuple[str, Tuple[str], str]:
         tables = [table for table in soup_html.findAll('table', attrs={'class': 'productTbl'})]
         table = tables[0]
         tbodies = [tbody for tbody in table.findAll('tbody')]
@@ -124,7 +124,8 @@ class EmpireScrapingFunctions(BaseFunctions):
         tds = [td for td in tr.findAll('td')]
         assert len(tds) == 4
         td = tds[3]
-        destinations = [destination.strip() for destination in td.text.split(",")]
+        destination_countries: List[str] = [td.text[a.regs[0][0]:a.regs[0][1]].strip() for a in
+                                            BaseFunctions.COMMA_SEPARATED_COUNTRY_REGEX.finditer(td.text)]
 
         tr = trs[2]
         tds = [td for td in tr.findAll('td')]
@@ -132,7 +133,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         td = tds[3]
         payment_type = td.text.strip()
 
-        return origin_country, [d for d in destinations if d != ""], payment_type
+        return origin_country, tuple(destination_countries), payment_type
 
     @staticmethod
     def get_cryptocurrency_rates(soup_html):

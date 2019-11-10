@@ -1,3 +1,4 @@
+import re
 from abc import abstractstaticmethod
 from datetime import datetime
 from time import time
@@ -7,7 +8,6 @@ import bs4
 import dateparser
 from bs4 import BeautifulSoup
 from src.base.base_logger import BaseClassWithLogger
-
 
 def _find_index_of_h4_with_market_string(h4s: List[BeautifulSoup], market_string: str,
                                          content_soup: BeautifulSoup) -> Optional[int]:
@@ -90,7 +90,10 @@ def _find_lis_with_mirrors(start_index: int, end_index: int, content_soup: Beaut
     return tuple(lis)
 
 
+
 class BaseFunctions(BaseClassWithLogger):
+
+    COMMA_SEPARATED_COUNTRY_REGEX = re.compile(r"([^,])+(,(\s+[a-zA-Z]+)+(\s+of))?")
 
     @abstractstaticmethod
     def get_captcha_image_url_from_market_page(soup_html: BeautifulSoup) -> str:

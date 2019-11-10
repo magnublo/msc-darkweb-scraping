@@ -270,3 +270,52 @@ class TestGetLoginPayload(EmpireBaseTest):
         soup_html = self._get_page_as_soup_html('login_page/saved_empire_login_page_0')
         login_payload: dict = scrapingFunctions.get_login_payload(soup_html, 'using_python1', 'Password123!', "012371")
         a = 1
+
+
+class TestGetOriginCountryAndDestinationsAndPaymentType(EmpireBaseTest):
+
+    def test_get_origin_country_and_destinations_and_payment_type_zero(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_0')
+        origin_country, destination_countries, payment_type = \
+            scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
+            soup_html)
+        self.assertEqual(origin_country, "World Wide")
+        self.assertTupleEqual(('World Wide',), destination_countries)
+        self.assertEqual("Escrow", payment_type)
+
+
+    def test_get_origin_country_and_destinations_and_payment_type_one(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_1')
+        origin_country, destination_countries, payment_type = \
+            scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
+            soup_html)
+        self.assertEqual(origin_country, "Latvia")
+        self.assertTupleEqual(('World Wide',), destination_countries)
+        self.assertEqual("Escrow", payment_type)
+
+    def test_get_origin_country_and_destinations_and_payment_type_nine(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_9')
+        origin_country, destination_countries, payment_type = \
+            scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
+            soup_html)
+        self.assertEqual(origin_country, "Germany")
+        self.assertTupleEqual(('Austria', 'Belgium', 'Finland', 'France', 'Germany'), destination_countries)
+        self.assertEqual("Escrow", payment_type)
+
+    def test_get_origin_country_and_destinations_and_payment_type_ten(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_10')
+        origin_country, destination_countries, payment_type = \
+            scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
+            soup_html)
+        self.assertEqual(origin_country, "Netherlands")
+        self.assertTupleEqual(('World Wide', 'United States', 'Asia', 'Africa', 'Antarctica(c)'), destination_countries)
+        self.assertEqual("Escrow", payment_type)
+
+    def test_get_origin_country_and_destinations_and_payment_type_eleven(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_11')
+        origin_country, destination_countries, payment_type = \
+            scrapingFunctions.get_origin_country_and_destinations_and_payment_type(
+            soup_html)
+        self.assertEqual(origin_country, "United Kingdom")
+        self.assertTupleEqual(('World Wide', 'United States', 'Asia', 'Africa', 'Antarctica(c)'), destination_countries)
+        self.assertEqual("Escrow", payment_type)

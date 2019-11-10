@@ -46,7 +46,6 @@ def _parse_disputes(label_div: BeautifulSoup) -> Tuple[int, int]:
 
 def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
     str, Optional[int], Optional[float], Optional[float], Optional[int], Optional[int], Optional[int], Optional[str]]:
-
     sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text = (
         None, None, None, None, None, None, None)
 
@@ -90,7 +89,8 @@ def _get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
         lower_bound, upper_bound = [parse_int(i) for i in whitespace_parts[0].split("~")]
         free_text = f"Sales is somewhere between {lower_bound} and {upper_bound}."
         slash_parts = whitespace_parts[-1].split("/")
-        sales, rating, max_rating = (int(sum((upper_bound, lower_bound))/2), float(slash_parts[0]), parse_float(slash_parts[1]))
+        sales, rating, max_rating = (
+        int(sum((upper_bound, lower_bound)) / 2), float(slash_parts[0]), parse_float(slash_parts[1]))
     else:
         free_text = info_string
 
@@ -315,11 +315,12 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         lbllist_divs = [div for div in product_data_div.findAll('div', attrs={'class': 'lbllist'})]
         assert len(lbllist_divs) == 1
         lbllist_div = lbllist_divs[0]
-        origin_to_dest, *dests = lbllist_div.text.split(",")
-        origin, dest = origin_to_dest.split("→")
-        dests = [a_dest.strip() for a_dest in ([dest] + dests) if a_dest.strip() != ""]
+        origin_string, dests_string = lbllist_div.text.split("→")
+        origin_country: str = origin_string.strip()
+        destination_countries: List[str] = [dests_string[a.regs[0][0]:a.regs[0][1]].strip() for a in
+                                            BaseFunctions.COMMA_SEPARATED_COUNTRY_REGEX.finditer(dests_string)]
 
-        return origin.strip(), tuple(dests)
+        return origin_country, tuple(destination_countries)
 
     @staticmethod
     def get_cryptocurrency_rates(soup_html: BeautifulSoup) -> Tuple[float, float]:

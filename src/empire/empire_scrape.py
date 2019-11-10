@@ -148,7 +148,7 @@ class EmpireScrapingSession(BaseScraper):
         fiat_currency: str
         price: float
         origin_country: str
-        destination_countries: List[str]
+        destination_countries: Tuple[str]
         payment_type: str
         accepts_BTC_multisig: bool
         escrow: bool
