@@ -688,6 +688,7 @@ class BaseScraper(BaseClassWithLogger):
 
         while "errorCode" in captcha_solution_response.keys() and captcha_solution_response[
             "errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
+            self.logger.warn("Anti-Captcha API has no workers available, trying again...")
             captcha_solution_response = ImageToTextTask.ImageToTextTask(
                 anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
             ).captcha_handler(captcha_base64=base64_image)
