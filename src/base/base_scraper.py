@@ -13,7 +13,7 @@ from time import time
 from typing import Callable, List, Tuple, Union, Type, Any, Dict, Optional
 
 import requests
-from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
+from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask, ReadError
 from requests import Response
 from requests.cookies import RequestsCookieJar
 from sqlalchemy import func
@@ -682,16 +682,21 @@ class BaseScraper(BaseClassWithLogger):
         anti_captcha_kwargs = anti_captcha_kwargs if anti_captcha_kwargs else self._get_anti_captcha_kwargs()
         self.logger.info("Sending image to anti-catpcha.com API...")
 
-        captcha_solution_response = ImageToTextTask.ImageToTextTask(
-            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
-        ).captcha_handler(captcha_base64=base64_image)
+        while True:
+            try:
+                captcha_solution_response = ImageToTextTask.ImageToTextTask(
+                    anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
+                ).captcha_handler(captcha_base64=base64_image)
 
-        while "errorCode" in captcha_solution_response.keys() and captcha_solution_response[
-            "errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
-            self.logger.warn("Anti-Captcha API has no workers available, trying again...")
-            captcha_solution_response = ImageToTextTask.ImageToTextTask(
-                anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
-            ).captcha_handler(captcha_base64=base64_image)
+                while "errorCode" in captcha_solution_response.keys() and captcha_solution_response[
+                    "errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
+                    self.logger.warn("Anti-Captcha API has no workers available, trying again...")
+                    captcha_solution_response = ImageToTextTask.ImageToTextTask(
+                        anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
+                    ).captcha_handler(captcha_base64=base64_image)
+                break
+            except ReadError:
+                pass
 
         captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
                                                              func=lambda d: d["solution"]["text"])
