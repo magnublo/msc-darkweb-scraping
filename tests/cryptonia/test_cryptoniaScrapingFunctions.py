@@ -966,6 +966,7 @@ class TestGetSellerInfo(CryptoniaBaseTest):
         self.assertEqual(False, fe_enabled)
         self.assertEqual(datetime.fromisoformat("2019-08-25 11:11:46"), member_since)
 
+
 class TestGetParenthesisNumberAndVendorLevel(CryptoniaBaseTest):
 
     def test_get_parenthesis_number_and_vendor_level_zero(self):

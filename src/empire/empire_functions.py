@@ -281,7 +281,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         return shorten_and_sanitize_for_text_column(description_after_standard_heading)
 
     @staticmethod
-    def get_seller_statistics(soup_html):
+    def get_seller_statistics(soup_html: BeautifulSoup) -> int:
         seller_rating_divs = [div for div in soup_html.findAll('div', attrs={'class': 'seller_rating'})]
         assert len(seller_rating_divs) == 1
         hrefs = [href for href in seller_rating_divs[0].findAll('a', href=True)]

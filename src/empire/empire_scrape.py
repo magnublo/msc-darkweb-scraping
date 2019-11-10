@@ -41,12 +41,12 @@ def _parse_payment_type(payment_type: str) -> Tuple[bool, bool]:
 
 
 def _get_final_quantity_in_stock(first_quantity_in_stock: Optional[int], second_quantity_in_stock: Optional[int]) -> \
-Optional[int]:
-    #both are None
+        Optional[int]:
+    # both are None
     if first_quantity_in_stock is None and second_quantity_in_stock is None:
         return None
 
-    #return lowest of those quantities which are not None
+    # return lowest of those quantities which are not None
     return min([i for i in [first_quantity_in_stock, second_quantity_in_stock] if i is not None])
 
 
@@ -270,9 +270,11 @@ class EmpireScrapingSession(BaseScraper):
 
         seller_observation_description = self._add_text(description)
 
-        previous_seller_observation = self.db_session.query(SellerObservation).filter(
-            SellerObservation.created_date == self.db_session.query(func.max(SellerObservation.created_date)).filter(
-                SellerObservation.seller_id == seller.id).subquery().as_scalar()).first()
+        previous_seller_observation = self.db_session.query(
+            SellerObservation).join(Seller, SellerObservation.seller_id == Seller.id, isouter=False).filter(
+            Seller.id == seller.id,
+            Seller.market == self.market_id
+        ).order_by(SellerObservation.created_date.desc()).first()
 
         if previous_seller_observation:
             new_positive_feedback = previous_seller_observation.positive_1m < positive_1m
