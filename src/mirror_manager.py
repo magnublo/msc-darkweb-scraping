@@ -27,7 +27,7 @@ class MirrorManager:
         self.headers: dict = self._get_headers()
 
     def get_new_mirror(self) -> str:
-        self.scraper.logger.info()
+        self.scraper.logger.info("Acquiring current_mirror_failure lock...")
         with self.scraper.current_mirror_failure_lock:
             engine = get_engine()
             db_session = get_db_session(engine)
