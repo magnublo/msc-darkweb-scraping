@@ -78,7 +78,6 @@ def get_error_string(scraping_object, error_traceback, sys_exec_info) -> str:
     return "\n\n\n".join([time_of_error] + [error_traceback] + local_variable_strings + object_variable_strings)
 
 
-
 def get_temporary_server_error(response) -> Optional[HTTPError]:
     if is_internal_server_error(response):
         return InternalServerErrorException(response.text)
@@ -185,7 +184,8 @@ def get_user_input() -> Tuple[Tuple[int, int, bool], ...]:
                 input(f"[{market_id}] Resume session_id [blank makes new]: ")) if nr_of_threads > 0 else None
         except ValueError:
             initial_session_id = None
-        start_immediately_str: str = input(f"[{market_id}] Start immediately? (True/False)")
+        start_immediately_str: str = input(
+            f"[{market_id}] Start immediately? (True/False)") if nr_of_threads > 0 else "false"
         if start_immediately_str.lower() == "false" or bool(start_immediately_str.lower()) == False:
             start_immediately: bool = False
         else:
@@ -279,11 +279,11 @@ def parse_time_delta_from_string(time_string: str) -> timedelta:
     unit_amount, unit_type = parse_unit_amount_and_unit_type_from_string(time_string)
 
     if unit_type[:3] == "day":
-        return timedelta(seconds=unit_amount*ONE_DAY)
+        return timedelta(seconds=unit_amount * ONE_DAY)
     elif unit_type[:4] == "week":
-        return timedelta(seconds=unit_amount*ONE_WEEK)
+        return timedelta(seconds=unit_amount * ONE_WEEK)
     elif unit_type == "hours":
-        return timedelta(seconds=unit_amount*ONE_HOUR)
+        return timedelta(seconds=unit_amount * ONE_HOUR)
     else:
         raise AssertionError(f'Unknown unit type {unit_type}')
 
@@ -305,7 +305,7 @@ def determine_real_country(country_name: str) -> Tuple[str, Optional[str], Optio
                 country_result = pycountry.countries.search_fuzzy(" ".join(name_components))[0]
                 return country_result.name, country_result.alpha_2, country_result.alpha_3, False
             except LookupError:
-                #if we found no countries, we cut out a word from the country name and try again
+                # if we found no countries, we cut out a word from the country name and try again
                 name_components = name_components[:-1]
 
         return country_name, None, None, False
@@ -313,7 +313,7 @@ def determine_real_country(country_name: str) -> Tuple[str, Optional[str], Optio
 
 def get_estimated_finish_time_as_readable_string(start_time: float, initial_queue_size: int, queue_size: int) -> str:
     pages_left = queue_size
-    pages_scraped = initial_queue_size-queue_size
+    pages_scraped = initial_queue_size - queue_size
     time_spent = time() - start_time
     time_left = (pages_left / pages_scraped) * time_spent
 
@@ -322,7 +322,7 @@ def get_estimated_finish_time_as_readable_string(start_time: float, initial_queu
     minutes = (time_left - days * 86400 - hours * 3600) // 60
     seconds = time_left - days * 86400 - hours * 3600 - minutes * 60
     result: str = ("{0} day{1}, ".format(days, "s" if days != 1 else "") if days else "") + \
-             ("{0} hour{1}, ".format(hours, "s" if hours != 1 else "") if hours else "") + \
-             ("{0} minute{1}, ".format(minutes, "s" if minutes != 1 else "") if minutes else "") + \
-             ("{0} second{1}, ".format(seconds, "s" if seconds != 1 else "") if seconds else "")
+                  ("{0} hour{1}, ".format(hours, "s" if hours != 1 else "") if hours else "") + \
+                  ("{0} minute{1}, ".format(minutes, "s" if minutes != 1 else "") if minutes else "") + \
+                  ("{0} second{1}, ".format(seconds, "s" if seconds != 1 else "") if seconds else "")
     return result
