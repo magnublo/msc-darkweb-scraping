@@ -272,7 +272,14 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         product_page_urls: List[str] = []
 
         tables = [table for table in soup_html.findAll('table', attrs={'style': 'width: 100%'})]
-        assert len(tables) == 1
+        if len(tables) == 0:
+            res: Tuple[str] = ()
+            return res
+        elif len(tables) == 1:
+            pass
+        else:
+            raise AssertionError("Unknown format in search result page.")
+
         table = tables[0]
 
         trs = [tr for tr in table.findAll('tr')]
@@ -394,7 +401,14 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         seller_urls: List[str] = []
 
         tables = [table for table in soup_html.findAll('table', attrs={'style': 'width: 100%'})]
-        assert len(tables) == 1
+        if len(tables) == 0:
+            res: Tuple[str] = ()
+            return res, res, res
+        elif len(tables) == 1:
+            pass
+        else:
+            raise AssertionError("Unknown format in search result page.")
+
         table = tables[0]
 
         trs = [tr for tr in table.findAll('tr')]

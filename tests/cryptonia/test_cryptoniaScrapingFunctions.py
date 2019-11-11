@@ -83,6 +83,14 @@ class TestGetProductPageUrls(CryptoniaBaseTest):
             rs = re.findall(PRODUCT_PAGE_URL_REGEX, url)
             self.assertNotEqual(len(rs), -1)
 
+    def test_get_product_page_urls_six(self):
+        soup_html = self._get_page_as_soup_html(file_name="search_results/saved_cryptonia_search_result_in_category_6")
+        product_page_urls = scrapingFunctions.get_product_page_urls(soup_html)
+        self.assertEqual(len(product_page_urls), 0)
+
+        for url in product_page_urls:
+            rs = re.findall(PRODUCT_PAGE_URL_REGEX, url)
+            self.assertNotEqual(len(rs), -1)
 
 class TestGetTitlesSellersAndSellerUrls(CryptoniaBaseTest):
 
@@ -122,6 +130,14 @@ class TestGetTitlesSellersAndSellerUrls(CryptoniaBaseTest):
             rs = re.findall(SELLER_URL_REGEX, url)
             self.assertNotEqual(len(rs), -1)
 
+    def test_get_titles_sellers_and_seller_urls_six(self):
+        soup_html = self._get_page_as_soup_html(file_name="search_results/saved_cryptonia_search_result_in_category_6")
+        titles, sellers, seller_urls = scrapingFunctions.get_titles_sellers_and_seller_urls(soup_html)
+        self.assertEqual(len(titles), 0)
+
+        for url in seller_urls:
+            rs = re.findall(SELLER_URL_REGEX, url)
+            self.assertNotEqual(len(rs), -1)
 
 class TestGetCryptocurrencyRates(CryptoniaBaseTest):
 
