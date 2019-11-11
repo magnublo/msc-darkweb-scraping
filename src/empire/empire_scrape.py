@@ -444,7 +444,7 @@ class EmpireScrapingSession(BaseScraper):
                                                                                             product_page_urls,
                                                                                             urls_is_sticky,
                                                                                             nrs_of_views):
-            self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
+            self._db_error_catch_wrapper(self.db_session, title, seller_name, seller_url, product_page_url,
                                          is_sticky, nr_of_views, btc_rate, ltc_rate, xmr_rate,
                                          func=self._scrape_listing)
 

@@ -1,8 +1,6 @@
 from multiprocessing import Queue
-from multiprocessing import Queue
-from random import shuffle, random, gauss
+from random import shuffle
 from threading import RLock
-from time import sleep
 from typing import Tuple, Type
 
 import cfscrape
@@ -108,7 +106,7 @@ class CryptoniaScrapingSession(BaseScraper):
 
         for title, seller_name, seller_url, product_page_url in zip(titles, sellers, seller_urls,
                                                                     product_page_urls):
-            self._db_error_catch_wrapper(title, seller_name, seller_url, product_page_url,
+            self._db_error_catch_wrapper(self.db_session, title, seller_name, seller_url, product_page_url,
                                          btc_rate, xmr_rate, category_pair, func=self._scrape_listing)
 
     def _scrape_listing(self, title: str, seller_name: str, seller_url: str, product_page_url: str, btc_rate: float,

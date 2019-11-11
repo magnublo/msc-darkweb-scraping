@@ -19,6 +19,7 @@ from requests import Response
 from requests.cookies import RequestsCookieJar
 from sqlalchemy import func
 from sqlalchemy.exc import ProgrammingError
+from sqlalchemy.orm import Session
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
@@ -113,7 +114,7 @@ class BaseScraper(BaseClassWithLogger):
         self.db_session.expunge(scraping_session)
         return session_id
 
-    def _log_and_print_error(self, error_object, error_string, updated_date=None, print_error=True) -> None:
+    def _log_and_print_error(self, db_session: Session, error_object, error_string, updated_date=None, print_error=True) -> None:
 
         if print_error:
             self.logger.debug(error_string)
@@ -123,7 +124,7 @@ class BaseScraper(BaseClassWithLogger):
         else:
             error_type = type(error_object).__name__
 
-        errors = self.db_session.query(Error).filter_by(thread_id=self.thread_id, type=error_type).order_by(
+        errors = db_session.query(Error).filter_by(thread_id=self.thread_id, type=error_type).order_by(
             Error.updated_date.asc())
 
         finger_print = hashlib.md5((error_type + str(time())).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[
@@ -143,9 +144,9 @@ class BaseScraper(BaseClassWithLogger):
         else:
             error = Error(updated_date=updated_date, session_id=self.session_id, thread_id=self.thread_id,
                           type=error_type, text=error_string, finger_print=finger_print)
-            self.db_session.add(error)
+            db_session.add(error)
         try:
-            self.db_session.commit()
+            db_session.commit()
         except ProgrammingError:
             meta_error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
             print_error_to_file(self.market_id, self.thread_id, meta_error_string, "meta")
@@ -507,7 +508,7 @@ class BaseScraper(BaseClassWithLogger):
     def _process_generic_error(self, e: BaseException) -> None:
         error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
         print_error_to_file(self.market_id, self.thread_id, error_string)
-        self._log_and_print_error(e, error_string, print_error=False)
+        self._log_and_print_error(self.db_session, e, error_string, print_error=False)
         self._wrap_up_session()
         raise e
 
@@ -528,37 +529,37 @@ class BaseScraper(BaseClassWithLogger):
                 else:
                     return web_response
             except (KeyboardInterrupt, SystemExit, AttributeError) as e:
-                self._log_and_print_error(e, traceback.format_exc())
+                self._log_and_print_error(self.db_session, e, traceback.format_exc())
                 self._wrap_up_session()
                 raise e
             except WEB_EXCEPTIONS_TUPLE as e:
-                self._log_and_print_error(e, traceback.format_exc(), print_error=False)
+                self._log_and_print_error(self.db_session, e, traceback.format_exc(), print_error=False)
                 self.logger.warn(type(e).__name__)
                 if time() - self.time_last_received_response > DEAD_MIRROR_TIMEOUT:
-                    self.mirror_base_url = self._db_error_catch_wrapper(func=self.mirror_manager.get_new_mirror,
+                    self.mirror_base_url = self._db_error_catch_wrapper(self.db_session, func=self.mirror_manager.get_new_mirror,
                                                                         rollback=False)
                     self.headers = self._get_headers()
                     raise DeadMirrorException
 
-    def _db_error_catch_wrapper(self, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None,
+    def _db_error_catch_wrapper(self, db_session: Session, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None,
                                 rollback: bool = True) -> Any:
         if not error_data:
             error_data = []
 
         try:
             if rollback:
-                self.db_session.rollback()
+                db_session.rollback()
             res = func(*args)
-            self.db_session.commit()
+            db_session.commit()
             for error_object, error_string, timestamp in error_data:
-                self._log_and_print_error(error_object, error_string, updated_date=timestamp, print_error=False)
+                self._log_and_print_error(db_session, error_object, error_string, updated_date=timestamp, print_error=False)
             return res
 
         except DB_EXCEPTIONS_TUPLE as error:
             error_string = traceback.format_exc()
             if type(error) == AttributeError:
                 if not error_is_sqlalchemy_error(error_string):
-                    self._log_and_print_error(error, error_string)
+                    self._log_and_print_error(db_session, error, error_string)
                     raise error
             error_data.append((error, error_string, datetime.utcnow()))
             seconds_until_next_try = self._get_wait_interval(error_data)
@@ -567,7 +568,7 @@ class BaseScraper(BaseClassWithLogger):
                 f"Problem with DBMS connection. Retrying in "
                 f"{seconds_until_next_try} seconds...")
             sleep(seconds_until_next_try)
-            return self._db_error_catch_wrapper(*args, func=func, error_data=error_data, rollback=rollback)
+            return self._db_error_catch_wrapper(self.db_session, *args, func=func, error_data=error_data, rollback=rollback)
 
     def _generic_error_catch_wrapper(self, *args, func: Callable) -> any:
 
@@ -778,7 +779,4 @@ class BaseScraper(BaseClassWithLogger):
                 user_credential.thread_id = -1
             self.db_session.commit()
 
-    def _ask_solution_until_ready_worker(self, base64_image):
-        self._generic_error_catch_wrapper(captcha_solution_response,
-                                          func=lambda d: d["solution"]["text"])
 
