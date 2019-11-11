@@ -285,7 +285,10 @@ class MirrorManager:
             MarketMirror.last_offline_timestamp < int(time() - MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR),
             MarketMirror.market_id == self.scraper.market_id).all()
 
-        candidate_mirror = max(candidate_mirrors, key=lambda c: c.last_online_timestamp)
+        if len(candidate_mirrors) > 0:
+            candidate_mirror = max(candidate_mirrors, key=lambda c: c.last_online_timestamp)
+        else:
+            candidate_mirror = None
 
         if candidate_mirror:
             self.scraper.logger.info(
