@@ -16,7 +16,7 @@ import requests
 from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
 from python3_anticaptcha.errors import AntiCaptchaApiException
 from requests import Response
-from requests.cookies import RequestsCookieJar
+from requests.cookies import RequestsCookieJar, CookieConflictError
 from sqlalchemy import func
 from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm import Session
@@ -56,6 +56,8 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, e
 
 
 class BaseScraper(BaseClassWithLogger):
+
+    __wrap_up_session_lock__ = RLock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
                  proxy: dict, session_id: int):
@@ -153,23 +155,24 @@ class BaseScraper(BaseClassWithLogger):
         sleep(2)
 
     def _wrap_up_session(self, exited_gracefully: bool = False) -> None:
-        scraping_session = self.db_session.query(ScrapingSession).filter(
-            ScrapingSession.id == self.session_id).first()
+        with self.__wrap_up_session_lock__:
+            scraping_session = self.db_session.query(ScrapingSession).filter(
+                ScrapingSession.id == self.session_id).first()
 
-        scraping_session.time_finished = datetime.fromtimestamp(time())
-        scraping_session.duplicates_encountered += self.duplicates_this_session
-        scraping_session.exited_gracefully = exited_gracefully
+            scraping_session.time_finished = datetime.fromtimestamp(time())
+            scraping_session.duplicates_encountered += self.duplicates_this_session
+            scraping_session.exited_gracefully = exited_gracefully
 
-        while True:
-            try:
-                self.db_session.merge(scraping_session)
-                self.db_session.commit()
-                break
-            except DB_EXCEPTIONS_TUPLE:
-                sleep(10)
+            while True:
+                try:
+                    self.db_session.merge(scraping_session)
+                    self.db_session.commit()
+                    break
+                except DB_EXCEPTIONS_TUPLE:
+                    sleep(10)
 
-        self.db_session.expunge_all()
-        self.db_session.close()
+            self.db_session.expunge_all()
+            self.db_session.close()
 
     def _get_cookie_string(self, web_session: requests.Session) -> str:
         request_as_string = pretty_print_GET(web_session.prepare_request(
@@ -473,9 +476,12 @@ class BaseScraper(BaseClassWithLogger):
                 WebSessionCookie(thread_id=self.thread_id, session_id=self.session_id, username=username,
                                  mirror_url=self.mirror_base_url, python_object=cookie_object_base64)
             )
-        self.logger.info(
+        try:
+            self.logger.info(
             "Saved cookie {0} to db for username {1} and url {2}".format(''.join(str(dict(cookie_jar)).split('\n')),
                                                                          username, f"{self.mirror_base_url[0:5]}..."))
+        except CookieConflictError:
+            pass
         self.db_session.commit()
 
     def _set_cookie_on_web_sessions(self) -> None:
@@ -536,8 +542,7 @@ class BaseScraper(BaseClassWithLogger):
                 self._log_and_print_error(self.db_session, e, traceback.format_exc(), print_error=False)
                 self.logger.warn(type(e).__name__)
                 if time() - self.time_last_received_response > DEAD_MIRROR_TIMEOUT:
-                    self.mirror_base_url = self._db_error_catch_wrapper(self.db_session, func=self.mirror_manager.get_new_mirror,
-                                                                        rollback=False)
+                    self.mirror_base_url = self.mirror_manager.get_new_mirror()
                     self.headers = self._get_headers()
                     raise DeadMirrorException
 
