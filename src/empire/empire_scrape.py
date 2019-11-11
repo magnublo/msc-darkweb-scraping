@@ -73,7 +73,7 @@ class EmpireScrapingSession(BaseScraper):
                          session_id=session_id)
 
     def _get_mirror_failure_lock(self) -> RLock:
-        return self._get_mirror_failure_lock()
+        return self.__mirror_failure_lock__
 
     def _has_successful_login_phrase(self) -> bool:
         return False

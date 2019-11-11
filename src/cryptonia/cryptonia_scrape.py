@@ -43,7 +43,7 @@ class CryptoniaScrapingSession(BaseScraper):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
 
     def _get_mirror_failure_lock(self) -> RLock:
-        return self._get_mirror_failure_lock()
+        return self.__mirror_failure_lock__
 
     def _get_min_credentials_per_thread(self) -> int:
         return CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
