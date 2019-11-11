@@ -27,6 +27,13 @@ class MirrorManager:
         self.headers: dict = self._get_headers()
 
     def get_new_mirror(self) -> str:
+        with self.scraper.current_mirror_failure_lock:
+            self._set_failure_time_current_mirror()
+
+        with self.scraper.mirror_db_lock:
+            return self._get_new_mirror()
+
+    def _get_new_mirror(self) -> str:
         # set failure time for current mirror
         # get mirror with oldest failure time
         # if no mirror with old failure time
@@ -35,8 +42,6 @@ class MirrorManager:
         # recurse
         # test mirror
         # if test failed, recurse
-        self.scraper.db_session.rollback()
-        self._set_failure_time_current_mirror()
 
         # The candidate mirror is the most recently online mirror that has not failed within the last
         # MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR seconds.
@@ -46,15 +51,8 @@ class MirrorManager:
 
         if (not candidate_mirror) and time() - last_offline_timestamp < REFRESH_MIRROR_DB_LIMIT:
             if time() - self.scraper.time_last_refreshed_mirror_db > MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH:
-                self.scraper.logger.info("Attempting to acquire lock...")
-                if self.scraper.mirror_db_lock.acquire(False):
-                    self.scraper.logger.info(f"Lock acquired. {self.scraper.mirror_db_lock}")
-                    self._refresh_mirror_db()
-                    self.scraper.mirror_db_lock.release()
-                    self.scraper.logger.info("Lock released.")
-                    return self.get_new_mirror()
-                else:
-                    self.scraper.logger.warn("Tried refreshing mirror db, but other thread has lock.")
+                self._refresh_mirror_db()
+                return self._get_new_mirror()
             else:
                 self.scraper.logger.warn(
                     f"No mirrors have been online last {REFRESH_MIRROR_DB_LIMIT} seconds, but mirror db was refreshed "
@@ -71,7 +69,7 @@ class MirrorManager:
                     "No mirrors in database, and none available from external mirror overview site.")
                 self.scraper.logger.info(f"Sleeping {WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE} and retrying.")
                 sleep(WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE)
-                return self.get_new_mirror()
+                return self._get_new_mirror()
 
         self.scraper.logger.info(f"Testing mirror {candidate_mirror.url}...")
         mirror_works: bool = test_mirror(candidate_mirror.url, self.scraper._get_headers(), self.scraper.proxy,
@@ -88,7 +86,7 @@ class MirrorManager:
             candidate_mirror.last_offline_timestamp = int(time())
             self.scraper.db_session.add(candidate_mirror)
             self.scraper.db_session.commit()
-            return self.get_new_mirror()
+            return self._get_new_mirror()
 
     def _refresh_mirror_db(self) -> None:
         self.scraper.logger.info(f"Refreshing mirror db...")
@@ -279,6 +277,7 @@ class MirrorManager:
             current_mirror.last_offline_timestamp = int(time())
             self.scraper.db_session.add(current_mirror)
             self.scraper.db_session.flush()
+            self.scraper.db_session.expunge(current_mirror)
 
     def _get_candidate_mirror(self) -> Optional[MarketMirror]:
         candidate_mirrors: List[MarketMirror] = self.scraper.db_session.query(MarketMirror).filter(

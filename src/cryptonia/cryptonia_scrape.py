@@ -34,11 +34,18 @@ def _unit_types_are_equal(unit_type: str, second_unit_type: str) -> bool:
 
 
 class CryptoniaScrapingSession(BaseScraper):
+
+
+
     __refresh_mirror_db_lock__ = RLock()
     __user_credentials_db_lock__ = RLock()
+    __mirror_failure_lock__ = RLock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict, session_id: int):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
+
+    def _get_mirror_failure_lock(self) -> RLock:
+        return self._get_mirror_failure_lock()
 
     def _get_min_credentials_per_thread(self) -> int:
         return CRYPTONIA_MIN_CREDENTIALS_PER_THREAD

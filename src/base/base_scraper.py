@@ -63,6 +63,7 @@ class BaseScraper(BaseClassWithLogger):
         self.pages_counter = 0
         self.failed_captcha_counter = 0
         self.mirror_db_lock: RLock = self._get_mirror_db_lock()
+        self.current_mirror_failure_lock: RLock = self._get_mirror_failure_lock()
         self.user_credentials_db_lock: RLock = self._get_user_credentials_db_lock()
         self.proxy_port: int = get_proxy_port(proxy)
         self.time_last_refreshed_mirror_db = 0.0
@@ -678,6 +679,10 @@ class BaseScraper(BaseClassWithLogger):
     def _get_user_credentials_db_lock(self) -> RLock:
         raise NotImplementedError('')
 
+    @abstractmethod
+    def _get_mirror_failure_lock(self) -> RLock:
+        raise NotImplementedError('')
+
     def _get_captcha_solution_from_base64_image(self, base64_image: str, anti_captcha_kwargs: Dict[str, int] = None) \
             -> Tuple[str, dict]:
         time_before_requesting_captcha_solve = time()
@@ -776,3 +781,4 @@ class BaseScraper(BaseClassWithLogger):
     def _ask_solution_until_ready_worker(self, base64_image):
         self._generic_error_catch_wrapper(captcha_solution_response,
                                           func=lambda d: d["solution"]["text"])
+
