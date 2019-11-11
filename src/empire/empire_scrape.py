@@ -50,6 +50,14 @@ def _get_final_quantity_in_stock(first_quantity_in_stock: Optional[int], second_
     return min([i for i in [first_quantity_in_stock, second_quantity_in_stock] if i is not None])
 
 
+def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) -> bool:
+    for history_response in web_response.history:
+        if history_response.is_redirect:
+            if history_response.headers.get('location') == f"{mirror_base_url}{EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH}":
+                return True
+    return False
+
+
 class EmpireScrapingSession(BaseScraper):
     __refresh_mirror_db_lock__ = RLock()
     __user_credentials_db_lock__ = RLock()
@@ -180,7 +188,14 @@ class EmpireScrapingSession(BaseScraper):
         web_response = self._get_logged_in_web_response(product_page_url)
         soup_html = get_page_as_soup_html(web_response.text)
 
-        listing_text = self.scraping_funcs.get_description(soup_html)
+        try:
+            listing_text = self.scraping_funcs.get_description(soup_html)
+        except AssertionError as e:
+            if _is_redirect_to_home(self.mirror_base_url, web_response):
+                return
+            else:
+                raise e
+
         listing_categories = self.scraping_funcs.get_listing_categories(soup_html, self.mirror_base_url)
         accepts_BTC, accepts_LTC, accepts_XMR = self.scraping_funcs.accepts_currencies(soup_html)
         nr_sold, nr_sold_since_date = self.scraping_funcs.get_nr_sold_since_date(soup_html)
