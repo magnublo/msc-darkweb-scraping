@@ -185,7 +185,11 @@ def get_user_input() -> Tuple[Tuple[int, int, bool], ...]:
                 input(f"[{market_id}] Resume session_id [blank makes new]: ")) if nr_of_threads > 0 else None
         except ValueError:
             initial_session_id = None
-        start_immediately = bool(input(f"[{market_id}] Start immediately? (True/False)")) if nr_of_threads > 0 else True
+        start_immediately_str: str = input(f"[{market_id}] Start immediately? (True/False)")
+        if start_immediately_str.lower() == "false" or bool(start_immediately_str.lower()) == False:
+            start_immediately: bool = False
+        else:
+            start_immediately: bool = True
         user_input_tuples.append((nr_of_threads, initial_session_id, start_immediately))
 
     return tuple(user_input_tuples)
