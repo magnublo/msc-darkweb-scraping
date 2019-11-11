@@ -12,7 +12,6 @@ from definitions import REFRESH_MIRROR_DB_LIMIT, MINIMUM_WAIT_BETWEEN_MIRROR_DB_
     DARKFAIL_MARKET_STRINGS, MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR, \
     DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE, WEB_EXCEPTIONS_TUPLE
 from src.base.base_functions import BaseFunctions
-from src.base.base_scraper import BaseScraper
 from src.db_utils import get_db_session, get_engine
 from src.models.market_mirror import MarketMirror
 from src.utils import test_mirror, get_page_as_soup_html, get_schemaed_url, pretty_print_GET, pretty_print_POST, \
@@ -31,7 +30,6 @@ class MirrorManager:
         with self.scraper.current_mirror_failure_lock:
             engine = get_engine()
             db_session = get_db_session(engine)
-            self.scraper: BaseScraper
             self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._set_failure_time_current_mirror)
             db_session.close()
 
