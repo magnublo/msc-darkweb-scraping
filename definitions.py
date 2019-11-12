@@ -161,7 +161,7 @@ MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR = 1800.0  # a mirror will not be rechecked i
 REFRESH_MIRROR_DB_LIMIT = 2700.0  # if best candidate mirror has failed within last 2700 seconds, it warrants a db refresh
 MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH = 1800.0  # db is not refreshed more frequently than this number of seconds
 WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE = 60.0
-MIRROR_TEST_TIMEOUT_LIMIT = 12.5
+MIRROR_TEST_TIMEOUT_LIMIT = 16.0
 NR_OF_TRIES_PER_MIRROR = 10
 
 DARKFAIL_URL = "dark.fail"
