@@ -10,7 +10,8 @@ from sqlalchemy.orm import Session
 
 from definitions import REFRESH_MIRROR_DB_LIMIT, MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH, DARKFAIL_URL, \
     DARKFAIL_MARKET_STRINGS, MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR, \
-    DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE, WEB_EXCEPTIONS_TUPLE
+    DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE, WEB_EXCEPTIONS_TUPLE, MIRROR_TEST_TIMEOUT_LIMIT, \
+    NR_OF_TRIES_PER_MIRROR
 from src.base.base_functions import BaseFunctions
 from src.db_utils import get_db_session, get_engine
 from src.models.market_mirror import MarketMirror
@@ -25,6 +26,9 @@ class MirrorManager:
         self.scraper.mirror_base_url = None
         self.web_session = cfscrape.Session()
         self.headers: dict = self._get_headers()
+        self.tries_per_forced_db_refresh: int = REFRESH_MIRROR_DB_LIMIT // (
+                    MIRROR_TEST_TIMEOUT_LIMIT * NR_OF_TRIES_PER_MIRROR)
+        self.tries: int = 1
 
     def get_new_mirror(self) -> str:
         self.scraper.logger.info("Acquiring current_mirror_failure lock...")
@@ -54,8 +58,10 @@ class MirrorManager:
 
         # The candidate mirror is the most recently online mirror that has not failed within the last
         # MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR seconds.
-
-
+        if self.tries % self.tries_per_forced_db_refresh == 0:
+            self._refresh_mirror_db(db_session)
+            self.tries += 1
+            return self._get_new_mirror(db_session)
 
         candidate_mirror = self._get_candidate_mirror(db_session)
 
@@ -86,7 +92,7 @@ class MirrorManager:
         self.scraper.logger.info(f"Testing mirror {candidate_mirror.url}...")
         mirror_works: bool = test_mirror(candidate_mirror.url, self.scraper._get_headers(), self.scraper.proxy,
                                          logfunc=self.scraper.logger.info)
-
+        self.tries += 1
         if mirror_works:
             self.scraper.logger.info("Mirror works.")
             candidate_mirror.last_online_timestamp = int(time())

@@ -13,7 +13,7 @@ from text2digits import text2digits
 from urllib3.exceptions import HTTPError
 
 from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, MAX_MARKET_THREADS_PER_PROXY, \
-    ONE_DAY, ONE_WEEK, ONE_HOUR, WEB_EXCEPTIONS_TUPLE
+    ONE_DAY, ONE_WEEK, ONE_HOUR, WEB_EXCEPTIONS_TUPLE, MIRROR_TEST_TIMEOUT_LIMIT, NR_OF_TRIES_PER_MIRROR
 from src.data.continent_dict import CONTINENT_DICTIONARY
 from src.data.country_dict import COUNTRY_DICT
 from src.exceptions import EmptyResponseException, BadGatewayException, InternalServerErrorException, \
@@ -214,10 +214,10 @@ def get_schemaed_url(unschemaed_url: str, schema: str) -> str:
 
 def test_mirror(url: str, headers: dict, proxy: dict, logfunc: Callable[[str], None]) -> bool:
     schemaed_url = get_schemaed_url(url, schema="http")
-    for i in range(10):
+    for i in range(NR_OF_TRIES_PER_MIRROR):
         try:
             logfunc(f"Try nr. {i+1}, testing {schemaed_url}...")
-            requests.get(schemaed_url, headers=headers, proxies=proxy, timeout=10)
+            requests.get(schemaed_url, headers=headers, proxies=proxy, timeout=MIRROR_TEST_TIMEOUT_LIMIT)
             return True
         except WEB_EXCEPTIONS_TUPLE as e:
             logfunc(f"{type(e).__name__}")
