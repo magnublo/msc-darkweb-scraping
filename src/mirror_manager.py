@@ -106,8 +106,7 @@ class MirrorManager:
                 return self._get_new_mirror(db_session)
 
         self.scraper.logger.info(f"Testing mirror {candidate_mirror.url}...")
-        mirror_works: bool = test_mirror(candidate_mirror.url, self.scraper._get_headers(), self.scraper.proxy,
-                                         logfunc=self.scraper.logger.info)
+        mirror_works: bool = test_mirror(candidate_mirror.url, self.scraper.proxy, logfunc=self.scraper.logger.info)
         self.tries += 1
         if mirror_works:
             self.scraper.logger.info("Mirror works.")

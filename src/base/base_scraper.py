@@ -26,7 +26,7 @@ from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DAT
     RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, \
     FAILED_CAPTCHAS_PER_PAUSE, \
     TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE, ANTICAPTCHA_ERROR_PER_PAUSE, \
-    TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL
+    TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL, WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
@@ -56,7 +56,6 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, e
 
 
 class BaseScraper(BaseClassWithLogger):
-
     __wrap_up_session_lock__ = RLock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
@@ -116,7 +115,8 @@ class BaseScraper(BaseClassWithLogger):
         self.db_session.expunge(scraping_session)
         return session_id
 
-    def _log_and_print_error(self, db_session: Session, error_object, error_string, updated_date=None, print_error=True) -> None:
+    def _log_and_print_error(self, db_session: Session, error_object, error_string, updated_date=None,
+                             print_error=True) -> None:
 
         if print_error:
             self.logger.debug(error_string)
@@ -480,8 +480,9 @@ class BaseScraper(BaseClassWithLogger):
             )
         try:
             self.logger.info(
-            "Saved cookie {0} to db for username {1} and url {2}".format(''.join(str(dict(cookie_jar)).split('\n')),
-                                                                         username, f"{self.mirror_base_url[0:5]}..."))
+                "Saved cookie {0} to db for username {1} and url {2}".format(''.join(str(dict(cookie_jar)).split('\n')),
+                                                                             username,
+                                                                             f"{self.mirror_base_url[0:5]}..."))
         except CookieConflictError:
             pass
         self.db_session.commit()
@@ -547,8 +548,8 @@ class BaseScraper(BaseClassWithLogger):
                     self.mirror_base_url = self.mirror_manager.get_new_mirror()
                     self.headers = self._get_headers()
 
-
-    def _db_error_catch_wrapper(self, db_session: Session, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None,
+    def _db_error_catch_wrapper(self, db_session: Session, *args, func: Callable,
+                                error_data: List[Tuple[object, str, datetime]] = None,
                                 rollback: bool = True) -> Any:
         if not error_data:
             error_data = []
@@ -559,7 +560,8 @@ class BaseScraper(BaseClassWithLogger):
             res = func(*args)
             db_session.commit()
             for error_object, error_string, timestamp in error_data:
-                self._log_and_print_error(db_session, error_object, error_string, updated_date=timestamp, print_error=False)
+                self._log_and_print_error(db_session, error_object, error_string, updated_date=timestamp,
+                                          print_error=False)
             return res
 
         except DB_EXCEPTIONS_TUPLE as error:
@@ -575,7 +577,8 @@ class BaseScraper(BaseClassWithLogger):
                 f"Problem with DBMS connection. Retrying in "
                 f"{seconds_until_next_try} seconds...")
             sleep(seconds_until_next_try)
-            return self._db_error_catch_wrapper(self.db_session, *args, func=func, error_data=error_data, rollback=rollback)
+            return self._db_error_catch_wrapper(self.db_session, *args, func=func, error_data=error_data,
+                                                rollback=rollback)
 
     def _generic_error_catch_wrapper(self, *args, func: Callable) -> any:
 
@@ -706,7 +709,10 @@ class BaseScraper(BaseClassWithLogger):
 
                 while int(captcha_solution_response["errorId"]) > 0:
                     if captcha_solution_response["errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
-                        self.logger.warn("Anti-Captcha API has no workers available, trying again...")
+                        self.logger.warn(
+                            f"Anti-Captcha API has no workers available, sleeping "
+                            f"{WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE} seconds and trying again...")
+                        sleep(WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE)
                         captcha_solution_response = ImageToTextTask.ImageToTextTask(
                             anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
                         ).captcha_handler(captcha_base64=base64_image)
@@ -785,5 +791,3 @@ class BaseScraper(BaseClassWithLogger):
                     UserCredential.username == web_session.username, UserCredential.market_id == self.market_id).first()
                 user_credential.thread_id = -1
             self.db_session.commit()
-
-

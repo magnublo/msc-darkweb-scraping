@@ -212,7 +212,7 @@ def get_schemaed_url(unschemaed_url: str, schema: str) -> str:
     return f"{schema}://{unschemaed_url}"
 
 
-def test_mirror(url: str, headers: dict, proxy: dict, logfunc: Callable[[str], None]) -> bool:
+def test_mirror(url: str, proxy: dict, logfunc: Callable[[str], None]) -> bool:
     schemaed_url = get_schemaed_url(url, schema="http")
     for i in range(NR_OF_TRIES_PER_MIRROR):
         try:
