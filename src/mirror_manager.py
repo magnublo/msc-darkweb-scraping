@@ -27,16 +27,19 @@ class MirrorManager:
         self.web_session = cfscrape.Session()
         self.headers: dict = self._get_headers()
         self.tries_per_forced_db_refresh: int = REFRESH_MIRROR_DB_LIMIT // (
-                    MIRROR_TEST_TIMEOUT_LIMIT * NR_OF_TRIES_PER_MIRROR)
+                MIRROR_TEST_TIMEOUT_LIMIT * NR_OF_TRIES_PER_MIRROR)
         self.tries: int = 1
 
     def get_new_mirror(self) -> str:
-        self.scraper.logger.info("Acquiring current_mirror_failure lock...")
-        with self.scraper.current_mirror_failure_lock:
+
+        if self.scraper.current_mirror_failure_lock.acquire(False):
+            self.scraper.logger.info("Acquired current_mirror_failure lock.")
             engine = get_engine()
             db_session = get_db_session(engine)
             self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._set_failure_time_current_mirror)
             db_session.close()
+        else:
+            return self.scraper.mirror_base_url
 
         with self.scraper.mirror_db_lock:
             engine = get_engine()
@@ -283,7 +286,11 @@ class MirrorManager:
             MarketMirror.url == self.scraper.mirror_base_url).first()
 
         if current_mirror:
+
             current_mirror.last_offline_timestamp = int(time())
+
+            current_mirror.last_online_timestamp = max(current_mirror.last_online_timestamp,
+                                                       int(self.scraper.time_last_received_response))
             db_session.add(current_mirror)
             db_session.flush()
             db_session.expunge(current_mirror)

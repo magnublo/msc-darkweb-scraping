@@ -544,7 +544,7 @@ class BaseScraper(BaseClassWithLogger):
                 if time() - self.time_last_received_response > DEAD_MIRROR_TIMEOUT:
                     self.mirror_base_url = self.mirror_manager.get_new_mirror()
                     self.headers = self._get_headers()
-                    raise DeadMirrorException
+
 
     def _db_error_catch_wrapper(self, db_session: Session, *args, func: Callable, error_data: List[Tuple[object, str, datetime]] = None,
                                 rollback: bool = True) -> Any:
