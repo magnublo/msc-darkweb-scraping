@@ -1,3 +1,4 @@
+import os
 from threading import RLock
 from time import time, sleep
 from typing import List, Dict, Optional
@@ -64,13 +65,13 @@ class MirrorManager:
         # test mirror
         # if test failed, recurse
 
-
-
         if self.tries % self.tries_per_forced_db_refresh == 0:
+            injected_mirror = os.getenv('TEMPORARY_WORKING_MIRROR')
+            if injected_mirror:
+                return injected_mirror
             self._refresh_mirror_db(db_session)
             self.tries += 1
             return self._get_new_mirror(db_session)
-
 
         if self.scraper.queue.empty() and self.scraper.initial_queue_size != 0:
             self.scraper.time_last_received_response = time()
