@@ -1,3 +1,4 @@
+from threading import RLock
 from time import time, sleep
 from typing import List, Dict, Optional
 
@@ -32,20 +33,24 @@ class MirrorManager:
 
     def get_new_mirror(self) -> str:
 
-        if self.scraper.current_mirror_failure_lock.acquire(False):
-            self.scraper.logger.info("Acquired current_mirror_failure lock.")
+        self.scraper.mirror_db_lock: RLock
+
+        with self.scraper.current_mirror_failure_lock:
             engine = get_engine()
             db_session = get_db_session(engine)
             self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._set_failure_time_current_mirror)
             db_session.close()
-        else:
-            return self.scraper.mirror_base_url
 
-        with self.scraper.mirror_db_lock:
+        if self.scraper.mirror_db_lock.acquire(False):
+            self.scraper.logger.info("Acquired mirror_db lock.")
             engine = get_engine()
             db_session = get_db_session(engine)
             new_mirror: str = self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._get_new_mirror)
             db_session.close()
+            self.scraper.mirror_db_lock.release()
+            self.scraper.logger.info("Released mirror_db lock.")
+        else:
+            return self.scraper.mirror_base_url
 
         return new_mirror
 
