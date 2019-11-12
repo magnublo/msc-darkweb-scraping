@@ -217,7 +217,8 @@ def test_mirror(url: str, headers: dict, proxy: dict, logfunc: Callable[[str], N
     for i in range(NR_OF_TRIES_PER_MIRROR):
         try:
             logfunc(f"Try nr. {i+1}, testing {schemaed_url}...")
-            requests.get(schemaed_url, headers=headers, proxies=proxy, timeout=MIRROR_TEST_TIMEOUT_LIMIT)
+            requests.get(schemaed_url, headers=headers, proxies=proxy, timeout=MIRROR_TEST_TIMEOUT_LIMIT,
+                         allow_redirects=False)
             return True
         except WEB_EXCEPTIONS_TUPLE as e:
             logfunc(f"{type(e).__name__}")

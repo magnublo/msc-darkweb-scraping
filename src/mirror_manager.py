@@ -71,7 +71,7 @@ class MirrorManager:
             self.tries += 1
             return self._get_new_mirror(db_session)
 
-        
+
         if self.scraper.queue.empty() and self.scraper.initial_queue_size != 0:
             self.scraper.time_last_received_response = time()
             return self.scraper.mirror_base_url
