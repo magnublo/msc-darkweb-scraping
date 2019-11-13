@@ -396,6 +396,8 @@ class BaseScraper(BaseClassWithLogger):
     def _get_logged_in_web_response(self, url_path: str, post_data: dict = None,
                                     web_session: requests.Session = None) -> Response:
         web_session = web_session if web_session else self.web_session
+        if not web_session:
+            raise AssertionError
         url = self._get_schemaed_url_from_path(url_path)
         http_verb = 'POST' if post_data else 'GET'
 
