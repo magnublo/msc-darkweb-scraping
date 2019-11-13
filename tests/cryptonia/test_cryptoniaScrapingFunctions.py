@@ -159,6 +159,14 @@ class TestGetCryptocurrencyRates(CryptoniaBaseTest):
             self.assertEqual(btc_rate, 7382.25)
             self.assertEqual(xmr_rate, 52.643858263761864)
 
+    def test_get_cryptocurrency_rates_one(self):
+        soup_html = self._get_page_as_soup_html("search_results/saved_cryptonia_search_result_in_category_7")
+        try:
+            _, _ = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+            self.fail("Did not get exception.")
+        except AssertionError:
+            pass
+
 
 class TestGetDescription(CryptoniaBaseTest):
 

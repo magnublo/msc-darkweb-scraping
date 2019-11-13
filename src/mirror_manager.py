@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from definitions import REFRESH_MIRROR_DB_LIMIT, MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH, DARKFAIL_URL, \
     DARKFAIL_MARKET_STRINGS, MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR, \
     DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE, WEB_EXCEPTIONS_TUPLE, MIRROR_TEST_TIMEOUT_LIMIT, \
-    NR_OF_TRIES_PER_MIRROR
+    NR_OF_TRIES_PER_MIRROR, DEAD_MIRROR_TIMEOUT
 from src.base.base_functions import BaseFunctions
 from src.db_utils import get_db_session, get_engine
 from src.models.market_mirror import MarketMirror
@@ -50,10 +50,11 @@ class MirrorManager:
             db_session.close()
             self.scraper.mirror_db_lock.release()
             self.scraper.logger.info("Released mirror_db lock.")
+            return new_mirror
         else:
+            self.scraper.time_last_received_response = time() - (DEAD_MIRROR_TIMEOUT // 1.5)
             return self.scraper.mirror_base_url
 
-        return new_mirror
 
     def _get_new_mirror(self, db_session: Session) -> str:
         # set failure time for current mirror

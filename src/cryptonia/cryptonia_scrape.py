@@ -100,7 +100,13 @@ class CryptoniaScrapingSession(BaseScraper):
                 return
 
         titles, sellers, seller_urls = scrapingFunctions.get_titles_sellers_and_seller_urls(soup_html)
-        btc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+
+        try :
+            btc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
+        except AssertionError:
+            self.logger.critical("Found no footer with currency rates, retrying...")
+            self.db_session.rollback()
+            return self._scrape_queue_item(category_pair, search_result_url)
 
         assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls)
 
@@ -242,7 +248,7 @@ class CryptoniaScrapingSession(BaseScraper):
         return CRYPTONIA_SRC_DIR
 
     def _get_headers(self) -> dict:
-        return {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0",
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0",
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                 "Accept-Language": "en-US,en;q=0.5",
                 "Accept-Encoding": "gzip, deflate",
@@ -250,6 +256,9 @@ class CryptoniaScrapingSession(BaseScraper):
                 "Upgrade-Insecure-Requests": '1',
                 "Cache-Control": "max-age=0}"
                 }
+        if self.mirror_base_url:
+            headers["Host"] = self.mirror_base_url
+        return headers
 
     def _has_successful_login_phrase(self) -> bool:
         return True
