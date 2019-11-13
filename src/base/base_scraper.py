@@ -403,7 +403,7 @@ class BaseScraper(BaseClassWithLogger):
                                                            headers=self.headers, data=post_data)
 
         if self._is_logged_out(response, self.login_url, self.is_logged_out_phrase) and not post_data:
-            self._login_and_set_cookie(web_session, response)
+            web_session = self._login_and_set_cookie(web_session, response)
             return self._get_logged_in_web_response(url_path, web_session=web_session)
         else:
             self.pages_counter += 1
@@ -412,7 +412,7 @@ class BaseScraper(BaseClassWithLogger):
             self.web_session = self._rotate_web_session()
             return response
 
-    def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response):
+    def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response) -> requests.Session:
         soup_html = get_page_as_soup_html(web_response.text)
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
         image_response = self._get_logged_in_web_response(image_url, web_session=web_session).content
@@ -420,8 +420,8 @@ class BaseScraper(BaseClassWithLogger):
         captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
             base64_image)
 
-        login_payload = self.scraping_funcs.get_login_payload(soup_html, self.web_session.username,
-                                                              self.web_session.password, captcha_solution)
+        login_payload = self.scraping_funcs.get_login_payload(soup_html, web_session.username,
+                                                              web_session.password, captcha_solution)
 
         web_response = self._get_logged_in_web_response(self._get_login_url(), post_data=login_payload,
                                                         web_session=web_session)
@@ -442,13 +442,13 @@ class BaseScraper(BaseClassWithLogger):
             if self.failed_captcha_counter % (TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL * 3) == 0:
                 self._release_user_credentials()
                 self.web_sessions = self._get_web_sessions(order_rand=True)
-            self._login_and_set_cookie(web_session, web_response)
+                return self.web_sessions[0]
+            return self._login_and_set_cookie(web_session, web_response)
         else:
-            web_session.finger_print = hashlib.md5(
-                self._get_cookie_string(web_session).encode(MD5_HASH_STRING_ENCODING)).hexdigest()[0:3]
             self._add_captcha_solution(base64_image, captcha_solution, correct=True, username=web_session.username)
-            self._add_web_session_cookie_to_db(self.web_session.cookies)
+            self._add_web_session_cookie_to_db(web_session.cookies)
             self.db_session.commit()
+            return web_session
 
     def _add_captcha_solution(self, image: str, solution: str, correct: bool, website: str = None,
                               username: str = None):

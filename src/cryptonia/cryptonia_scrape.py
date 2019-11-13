@@ -347,6 +347,6 @@ class CryptoniaScrapingSession(BaseScraper):
     def _is_successful_login_response(response: Response) -> bool:
         return response.text.find(CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE) != -1
 
-    def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response):
+    def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response) -> requests.Session:
         web_session.cookies.clear()
-        super()._login_and_set_cookie(web_session, web_response)
+        return super()._login_and_set_cookie(web_session, web_response)
