@@ -545,7 +545,10 @@ class BaseScraper(BaseClassWithLogger):
                 self._log_and_print_error(self.db_session, e, traceback.format_exc(), print_error=False)
                 self.logger.warn(type(e).__name__)
                 if time() - self.time_last_received_response > DEAD_MIRROR_TIMEOUT:
-                    self.mirror_base_url = self.mirror_manager.get_new_mirror()
+                    new_mirror: str = self.mirror_manager.get_new_mirror()
+                    if new_mirror != self.mirror_base_url:
+                        self.mirror_base_url = new_mirror
+                        self._clear_all_cookies()
                     self.headers = self._get_headers()
 
     def _db_error_catch_wrapper(self, db_session: Session, *args, func: Callable,
@@ -791,3 +794,8 @@ class BaseScraper(BaseClassWithLogger):
                     UserCredential.username == web_session.username, UserCredential.market_id == self.market_id).first()
                 user_credential.thread_id = -1
             self.db_session.commit()
+
+    def _clear_all_cookies(self) -> None:
+        for web_session in self.web_sessions:
+            web_session.cookies.clear()
+        self.logger.warning("Cleared all cookies after retrieving new mirror.")
