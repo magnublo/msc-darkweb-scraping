@@ -389,7 +389,9 @@ class BaseScraper(BaseClassWithLogger):
         if self.pages_counter % NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT == 0:
             estimated_finish_time = get_estimated_finish_time_as_readable_string(self.START_TIME,
                                                                                  self.initial_queue_size, queue_size)
-            self.logger.info(f"At current rate, scraping will be completed in {estimated_finish_time}")
+            self.logger.info(
+                f"At current rate, scraping will be completed in {estimated_finish_time[:-1]}. Mirror: "
+                f"{self.mirror_base_url}")
 
     def _get_logged_in_web_response(self, url_path: str, post_data: dict = None,
                                     web_session: requests.Session = None) -> Response:
