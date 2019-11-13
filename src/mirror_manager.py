@@ -52,7 +52,7 @@ class MirrorManager:
             self.scraper.logger.info("Released mirror_db lock.")
             return new_mirror
         else:
-            self.scraper.time_last_received_response = time() - (DEAD_MIRROR_TIMEOUT // 1.5)
+            self.scraper.time_last_received_response = time() - (DEAD_MIRROR_TIMEOUT // 40)
             return self.scraper.mirror_base_url
 
 

@@ -157,7 +157,10 @@ class BaseScraper(BaseClassWithLogger):
     def _wrap_up_session(self, exited_gracefully: bool = False) -> None:
         with self.__wrap_up_session_lock__:
             self._release_user_credentials()
-            self.mirror_manager.set_success_time_current_mirror(self.db_session)
+            try:
+                self.mirror_manager.set_success_time_current_mirror(self.db_session)
+            except:
+                pass
             scraping_session = self.db_session.query(ScrapingSession).filter(
                 ScrapingSession.id == self.session_id).first()
 
