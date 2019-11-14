@@ -43,14 +43,14 @@ class MirrorManager:
             db_session.close()
 
         if self.scraper.mirror_db_lock.acquire(False):
-            self.scraper.logger.info("Acquired mirror_db lock.")
-            engine = get_engine()
-            db_session = get_db_session(engine)
-            new_mirror: str = self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._get_new_mirror)
-            db_session.close()
-            self.scraper.mirror_db_lock.release()
-            self.scraper.logger.info("Released mirror_db lock.")
-            return new_mirror
+            with self.scraper.mirror_db_lock:
+                self.scraper.logger.info("Acquired mirror_db lock.")
+                engine = get_engine()
+                db_session = get_db_session(engine)
+                new_mirror: str = self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._get_new_mirror)
+                db_session.close()
+                self.scraper.logger.info("Released mirror_db lock.")
+                return new_mirror
         else:
             self.scraper.time_last_received_response = time() - (DEAD_MIRROR_TIMEOUT // 40)
             return self.scraper.mirror_base_url

@@ -171,6 +171,7 @@ class BaseScraper(BaseClassWithLogger):
             while True:
                 try:
                     self.db_session.commit()
+                    self.logger.info(f"Commited data to scraping_session with id {self.session_id}.")
                     break
                 except DB_EXCEPTIONS_TUPLE:
                     sleep(2)
