@@ -2,6 +2,8 @@ import threading
 from multiprocessing import Queue
 from time import sleep
 from typing import List, Tuple, Type, Dict
+
+from definitions import ONE_HOUR
 from src.base.base_logger import BaseClassWithLogger
 from src.base.base_scraper import BaseScraper
 from src.db_utils import get_settings
@@ -80,7 +82,7 @@ class ScrapingManager(BaseClassWithLogger):
         return f"[RefillQueue {self.refill_queue_when_complete}, ThreadCount {self.nr_of_threads}] {message}"
 
     def _wait_until_midnight_utc(self) -> None:
-        output_frequency: float = 30.0
+        output_frequency: float = 6*ONE_HOUR
         is_midnight: bool = False
         while True:
             utc_next_midnight_datetime = get_utc_datetime_next_midnight()
