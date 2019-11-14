@@ -405,10 +405,9 @@ class BaseScraper(BaseClassWithLogger):
         web_session = web_session if web_session else self.web_session
         if not web_session:
             raise AssertionError
-        url = self._get_schemaed_url_from_path(url_path)
         http_verb = 'POST' if post_data else 'GET'
 
-        response = self._get_web_response_with_error_catch(web_session, http_verb, url, proxies=self.proxy,
+        response = self._get_web_response_with_error_catch(web_session, http_verb, url_path, proxies=self.proxy,
                                                            headers=self.headers, data=post_data)
 
         if self._is_logged_out(response, self.login_url, self.is_logged_out_phrase) and not post_data:
@@ -532,8 +531,9 @@ class BaseScraper(BaseClassWithLogger):
         self._wrap_up_session()
         raise e
 
-    def _get_web_response_with_error_catch(self, web_session, http_verb, url, *args, **kwargs) -> Response:
+    def _get_web_response_with_error_catch(self, web_session, http_verb, url_path, *args, **kwargs) -> Response:
         while True:
+            url = self._get_schemaed_url_from_path(url_path)
             self._log_web_request(web_session, http_verb, url, *args, **kwargs)
             try:
                 web_response = web_session.request(http_verb, url, *args, **kwargs)
@@ -542,8 +542,7 @@ class BaseScraper(BaseClassWithLogger):
                     raise temporary_server_error
                 self.time_last_received_response = time()
                 if self._is_meta_refresh(web_response.text):
-                    redir_url = self._get_schemaed_url_from_path(
-                        self._wait_out_meta_refresh_and_get_redirect_url(web_response))
+                    redir_url = self._wait_out_meta_refresh_and_get_redirect_url(web_response)
                     return self._get_web_response_with_error_catch(web_session, 'GET', redir_url, headers=self.headers,
                                                                    proxies=self.proxy)
                 else:
