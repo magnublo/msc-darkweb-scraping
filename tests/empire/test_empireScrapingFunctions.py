@@ -210,6 +210,10 @@ class TestGetExternalMarketRatings(EmpireBaseTest):
         external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
         self.assertTupleEqual((), external_market_ratings)
 
+    def test_get_external_market_ratings_five(self):
+        soup_html = self._get_page_as_soup_html("users/saved_empire_user_5")
+        external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((('DREAM_MARKET', 470, 4.92, None),), external_market_ratings)
 
 class TestGetListingCategories(EmpireBaseTest):
 

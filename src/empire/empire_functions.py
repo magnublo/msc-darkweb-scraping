@@ -21,8 +21,8 @@ def _parse_external_market_rating(titled_span: BeautifulSoup, remaining_external
     for market_id, market_string in remaining_external_market_ratings:
         if titled_span["title"].find(market_string) != -1:
             parts = titled_span.text.split(" ")
-            sales = int(parts[1])
-            rating = float(parts[2][1:-1])
+            sales = parse_int(parts[1])
+            rating = parse_float(parts[2][1:-1])
             remaining_external_market_ratings.remove((market_id, market_string))
             return market_id, sales, rating, remaining_external_market_ratings
 
