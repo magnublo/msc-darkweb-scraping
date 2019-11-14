@@ -170,11 +170,10 @@ class BaseScraper(BaseClassWithLogger):
 
             while True:
                 try:
-                    self.db_session.merge(scraping_session)
                     self.db_session.commit()
                     break
                 except DB_EXCEPTIONS_TUPLE:
-                    sleep(10)
+                    sleep(2)
 
             self.db_session.expunge_all()
             self.db_session.close()
