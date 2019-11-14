@@ -173,8 +173,9 @@ class BaseScraper(BaseClassWithLogger):
                     self.db_session.commit()
                     self.logger.info(f"Commited data to scraping_session with id {self.session_id}.")
                     break
-                except DB_EXCEPTIONS_TUPLE:
-                    wait = 2
+                except DB_EXCEPTIONS_TUPLE as e:
+                    wait = 15
+                    self.logger.warn(type(e).__name__)
                     self.logger.warning(
                         f"Error commiting data to scraping_session with id {self.session_id}. Sleeping {wait} seconds "
                         f"and trying again...")

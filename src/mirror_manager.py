@@ -319,7 +319,7 @@ class MirrorManager:
         if current_mirror:
             current_mirror.last_online_timestamp = time()
             db_session.add(current_mirror)
-            db_session.flush()
+            db_session.commit()
 
 
     def _get_candidate_mirror(self, db_session: Session) -> Optional[MarketMirror]:
