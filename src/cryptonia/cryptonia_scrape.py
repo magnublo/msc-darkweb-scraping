@@ -1,6 +1,6 @@
 from multiprocessing import Queue
 from random import shuffle
-from threading import RLock
+from threading import Lock
 from typing import Tuple, Type
 
 import cfscrape
@@ -35,23 +35,23 @@ class CryptoniaScrapingSession(BaseScraper):
 
 
 
-    __refresh_mirror_db_lock__ = RLock()
-    __user_credentials_db_lock__ = RLock()
-    __mirror_failure_lock__ = RLock()
+    __refresh_mirror_db_lock__ = Lock()
+    __user_credentials_db_lock__ = Lock()
+    __mirror_failure_lock__ = Lock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict, session_id: int):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
 
-    def _get_mirror_failure_lock(self) -> RLock:
+    def _get_mirror_failure_lock(self) -> Lock:
         return self.__mirror_failure_lock__
 
     def _get_min_credentials_per_thread(self) -> int:
         return CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
 
-    def _get_mirror_db_lock(self) -> RLock:
+    def _get_mirror_db_lock(self) -> Lock:
         return self.__refresh_mirror_db_lock__
 
-    def _get_user_credentials_db_lock(self) -> RLock:
+    def _get_user_credentials_db_lock(self) -> Lock:
         return self.__user_credentials_db_lock__
 
     def _get_web_session_object(self) -> requests.Session:

@@ -7,7 +7,7 @@ from abc import abstractmethod
 from datetime import datetime
 from multiprocessing import Queue
 from random import gauss
-from threading import RLock
+from threading import Lock
 from time import sleep
 from time import time
 from typing import Callable, List, Tuple, Union, Type, Any, Dict, Optional
@@ -56,7 +56,7 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, e
 
 
 class BaseScraper(BaseClassWithLogger):
-    __wrap_up_session_lock__ = RLock()
+    __wrap_up_session_lock__ = Lock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
                  proxy: dict, session_id: int):
@@ -64,9 +64,9 @@ class BaseScraper(BaseClassWithLogger):
         engine = get_engine()
         self.pages_counter = 0
         self.failed_captcha_counter = 0
-        self.mirror_db_lock: RLock = self._get_mirror_db_lock()
-        self.current_mirror_failure_lock: RLock = self._get_mirror_failure_lock()
-        self.user_credentials_db_lock: RLock = self._get_user_credentials_db_lock()
+        self.mirror_db_lock: Lock = self._get_mirror_db_lock()
+        self.current_mirror_failure_lock: Lock = self._get_mirror_failure_lock()
+        self.user_credentials_db_lock: Lock = self._get_user_credentials_db_lock()
         self.proxy_port: int = get_proxy_port(proxy)
         self.time_last_refreshed_mirror_db = 0.0
         self.scraping_funcs = self._get_scraping_funcs()
@@ -697,15 +697,15 @@ class BaseScraper(BaseClassWithLogger):
         return False
 
     @abstractmethod
-    def _get_mirror_db_lock(self) -> RLock:
+    def _get_mirror_db_lock(self) -> Lock:
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_user_credentials_db_lock(self) -> RLock:
+    def _get_user_credentials_db_lock(self) -> Lock:
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_mirror_failure_lock(self) -> RLock:
+    def _get_mirror_failure_lock(self) -> Lock:
         raise NotImplementedError('')
 
     def _get_captcha_solution_from_base64_image(self, base64_image: str, anti_captcha_kwargs: Dict[str, int] = None) \

@@ -3,7 +3,7 @@ from datetime import datetime
 from math import ceil
 from multiprocessing import Queue
 from random import shuffle
-from threading import RLock
+from threading import Lock
 from typing import List, Tuple, Type, Optional
 
 import requests
@@ -60,9 +60,9 @@ def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) 
 class EmpireScrapingSession(BaseScraper):
 
 
-    __mirror_manager_lock__ = RLock()
-    __user_credentials_db_lock__ = RLock()
-    __mirror_failure_lock__ = RLock()
+    __mirror_manager_lock__ = Lock()
+    __user_credentials_db_lock__ = Lock()
+    __mirror_failure_lock__ = Lock()
 
     def _get_anti_captcha_kwargs(self) -> dict:
         return {'numeric': 1}
@@ -72,7 +72,7 @@ class EmpireScrapingSession(BaseScraper):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
                          session_id=session_id)
 
-    def _get_mirror_failure_lock(self) -> RLock:
+    def _get_mirror_failure_lock(self) -> Lock:
         return self.__mirror_failure_lock__
 
     def _has_successful_login_phrase(self) -> bool:
@@ -84,10 +84,10 @@ class EmpireScrapingSession(BaseScraper):
     def _get_min_credentials_per_thread(self) -> int:
         return EMPIRE_MIN_CREDENTIALS_PER_THREAD
 
-    def _get_mirror_db_lock(self) -> RLock:
+    def _get_mirror_db_lock(self) -> Lock:
         return self.__mirror_manager_lock__
 
-    def _get_user_credentials_db_lock(self) -> RLock:
+    def _get_user_credentials_db_lock(self) -> Lock:
         return self.__user_credentials_db_lock__
 
     def _get_scraping_funcs(self) -> Type[BaseFunctions]:

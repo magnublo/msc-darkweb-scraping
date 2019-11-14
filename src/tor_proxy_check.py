@@ -1,7 +1,7 @@
 import math
 from enum import Enum
 from multiprocessing import Queue
-from threading import RLock, Thread
+from threading import Lock, Thread
 from typing import Tuple, List
 
 import requests
@@ -73,16 +73,15 @@ def get_proxy_dict(port: int) -> dict:
     return proxy_dict
 
 
-def print_tor_proxy_status(proxy_status: ProxyStatus, proxy_port: int, line_nr: int, lock: RLock, total_lines: int):
+def print_tor_proxy_status(proxy_status: ProxyStatus, proxy_port: int, line_nr: int, lock: Lock, total_lines: int):
     row_tuple = get_status_row_tuple(proxy_status, proxy_port)
     row_str = str(tabulate([row_tuple], headers=TABLE_HEADERS, tablefmt=TABLE_FORMAT, colalign=COLALIGN)).split('\n')[1]
     line_offset = total_lines - line_nr
-    lock.acquire()
-    print(f"{TERMINAL.move_up*(line_offset)}{row_str}{TERMINAL.move_down*(line_offset-1)}")
-    lock.release()
+    with lock:
+        print(f"{TERMINAL.move_up*(line_offset)}{row_str}{TERMINAL.move_down*(line_offset-1)}")
 
 
-def check_proxy(line_nr: int, proxy_port: int, lock: RLock, total_lines: int, result_queue: Queue) -> None:
+def check_proxy(line_nr: int, proxy_port: int, lock: Lock, total_lines: int, result_queue: Queue) -> None:
     proxy = get_proxy_dict(proxy_port)
     res_text = ""
     for _ in range(5):
@@ -106,7 +105,7 @@ def get_available_tor_proxies(total_nr_of_threads: int) -> List[int]:
     statuses = []
     threads = []
     result_queue = Queue()
-    lock = RLock()
+    lock = Lock()
     port_sequence = [i for i in range(LOWEST_TOR_PORT, LOWEST_TOR_PORT + recommended_nr_of_tor_proxies * 2, 2)]
 
     for port in port_sequence:

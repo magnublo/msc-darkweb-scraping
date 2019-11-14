@@ -3,7 +3,7 @@ import os
 import socket
 import sys
 from multiprocessing import Queue
-from threading import Thread, RLock
+from threading import Thread, Lock
 from typing import List, Tuple
 
 from tabulate import tabulate
@@ -25,13 +25,13 @@ def run_as_root_or_exit() -> None:
            sys.exit(1)
 
 
-def print_port_status(proxy_status: PortStatus, proxy_port: int, line_nr: int, lock: RLock, total_lines: int):
+def print_port_status(proxy_status: PortStatus, proxy_port: int, line_nr: int, lock: Lock, total_lines: int):
     row_tuple = get_status_row_tuple(proxy_status, proxy_port)
     row_str = str(tabulate([row_tuple], headers=TABLE_HEADERS, tablefmt=TABLE_FORMAT, colalign=COLALIGN)).split('\n')[1]
     line_offset = (total_lines - line_nr)
-    lock.acquire()
-    print(f"{TERMINAL.move_up*(line_offset)}{row_str}{TERMINAL.move_down*(line_offset-1)}")
-    lock.release()
+    with lock:
+        print(f"{TERMINAL.move_up*(line_offset)}{row_str}{TERMINAL.move_down*(line_offset-1)}")
+
 
 def print_port_statuses(statuses: List[Tuple[PortStatus, int]]):
     print('')
@@ -42,7 +42,7 @@ def print_port_statuses(statuses: List[Tuple[PortStatus, int]]):
                    tablefmt=TABLE_FORMAT, colalign=COLALIGN))
 
 
-def check_port(line_nr: int, port: int, lock: RLock, total_nr_of_lines: int, result_queue: Queue) -> None:
+def check_port(line_nr: int, port: int, lock: Lock, total_nr_of_lines: int, result_queue: Queue) -> None:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     result = s.connect_ex(('127.0.0.1', port))
     port_is_busy = result == 0
@@ -56,7 +56,7 @@ def get_busy_ports(socks_ports: List[int], control_ports: List[int]) -> List[int
     all_ports = socks_ports + control_ports
     all_ports.sort()
     statuses = []
-    lock = RLock()
+    lock = Lock()
     result_queue = Queue()
     threads = []
 

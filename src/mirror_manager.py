@@ -1,5 +1,5 @@
 import os
-from threading import RLock
+from threading import Lock
 from time import time, sleep
 from typing import List, Dict, Optional
 
@@ -34,7 +34,7 @@ class MirrorManager:
 
     def get_new_mirror(self) -> str:
 
-        self.scraper.mirror_db_lock: RLock
+        self.scraper.mirror_db_lock: Lock
 
         with self.scraper.current_mirror_failure_lock:
             engine = get_engine()
