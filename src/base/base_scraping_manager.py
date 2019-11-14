@@ -80,11 +80,12 @@ class ScrapingManager(BaseClassWithLogger):
         return f"[RefillQueue {self.refill_queue_when_complete}, ThreadCount {self.nr_of_threads}] {message}"
 
     def _wait_until_midnight_utc(self) -> None:
-
+        output_frequency: float = 30.0
+        is_midnight: bool = False
         while True:
             utc_next_midnight_datetime = get_utc_datetime_next_midnight()
             seconds_until_midnight = get_seconds_until_midnight(utc_next_midnight_datetime=utc_next_midnight_datetime)
-            if seconds_until_midnight >= 2.0 and self.queue.empty():
+            if not is_midnight and self.queue.empty():
                 self.logger.info(
                     f"Waiting until {str(utc_next_midnight_datetime)[:19]} before starting new scraping session."
                 )
@@ -92,7 +93,9 @@ class ScrapingManager(BaseClassWithLogger):
                 minutes = int((seconds_until_midnight - hours * 3600) // 60)
                 seconds = int(seconds_until_midnight - hours * 3600 - minutes * 60)
                 self.logger.info(f"{hours} hours, {minutes} minutes and {seconds} seconds left.\n")
-                sleep(max(min(float(30), seconds_until_midnight - 2.0), 0.0))
+                if output_frequency >= seconds_until_midnight:
+                    is_midnight = True
+                sleep(min(output_frequency, seconds_until_midnight))
             else:
                 return
 
