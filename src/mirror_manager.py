@@ -75,8 +75,10 @@ class MirrorManager:
             return self._get_new_mirror(db_session)
 
         if self.scraper.queue.empty() and self.scraper.initial_queue_size != 0:
-            self.scraper.time_last_received_response = time()
-            return self.scraper.mirror_base_url
+            self.tries += 1
+            if not self.tries % 15 == 0:
+                self.scraper.time_last_received_response = time()
+                return self.scraper.mirror_base_url
 
 
         # The candidate mirror is the most recently online mirror that has not failed within the last

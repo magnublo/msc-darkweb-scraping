@@ -97,7 +97,7 @@ class BaseScraper(BaseClassWithLogger):
             queue_item = self.queue.get(timeout=1)
             self._generic_error_catch_wrapper(*queue_item, func=self._scrape_queue_item)
 
-        print("Job queue is empty. Wrapping up...")
+        self.logger.info("Job queue is empty. Wrapping up...")
         self._wrap_up_session(exited_gracefully=True)
 
     def _initiate_session(self) -> int:
@@ -111,7 +111,7 @@ class BaseScraper(BaseClassWithLogger):
         self.db_session.add(scraping_session)
         self.db_session.commit()
         session_id = scraping_session.id
-        print("Thread nr. " + str(self.thread_id) + " initiated scraping_session with ID: " + str(scraping_session.id))
+        self.logger.info(f"Initiated scraping_session with ID {scraping_session.id}")
         self.db_session.expunge(scraping_session)
         return session_id
 
