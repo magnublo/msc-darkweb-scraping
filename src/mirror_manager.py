@@ -42,7 +42,7 @@ class MirrorManager:
             self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._set_failure_time_current_mirror)
             db_session.close()
 
-        if self.scraper.mirror_db_lock.acquire(False):
+        if self.scraper.mirror_db_lock.locked():
             with self.scraper.mirror_db_lock:
                 self.scraper.logger.info("Acquired mirror_db lock.")
                 engine = get_engine()
