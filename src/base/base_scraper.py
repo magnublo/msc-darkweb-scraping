@@ -159,8 +159,8 @@ class BaseScraper(BaseClassWithLogger):
             self._release_user_credentials()
             try:
                 self.mirror_manager.set_success_time_current_mirror(self.db_session)
-            except:
-                pass
+            except DB_EXCEPTIONS_TUPLE:
+                self.db_session.rollback()
             scraping_session = self.db_session.query(ScrapingSession).filter(
                 ScrapingSession.id == self.session_id).first()
 
