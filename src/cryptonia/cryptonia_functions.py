@@ -256,16 +256,18 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         raise NotImplementedError('')
 
     @staticmethod
-    def get_description(soup_html: BeautifulSoup) -> str:
+    def get_description(soup_html: BeautifulSoup) -> Optional[str]:
         tab_view_1_divs = [div for div in soup_html.findAll('div', attrs={'id': 'tabview1'})]
         assert len(tab_view_1_divs) == 1
         tab_view_1_div = tab_view_1_divs[0]
 
         content_divs = [div for div in tab_view_1_div.findAll('div', attrs={'class': 'content_div'})]
-        assert len(content_divs) >= 1
-        content_div = content_divs[0]
+        if len(content_divs) >= 1:
+            content_div = content_divs[0]
 
-        return shorten_and_sanitize_for_text_column(content_div.text)
+            return shorten_and_sanitize_for_text_column(content_div.text)
+        else:
+            return None
 
     @staticmethod
     def get_product_page_urls(soup_html) -> Tuple[str]:
@@ -492,18 +494,20 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         return int(quantity), unit_type, minimum_order_unit_amount
 
     @staticmethod
-    def get_listing_type(soup_html: BeautifulSoup) -> str:
+    def get_listing_type(soup_html: BeautifulSoup) -> Optional[str]:
         product_data_divs = [div for div in soup_html.findAll('div', attrs={'class': 'product_data'})]
-        assert len(product_data_divs) >= ASSUMED_MINIMUM_NUMBER_OF_PRODUCT_DATA_DIVS
-        product_data_divs = [div for div in product_data_divs if div.find('label').text == "Listing Type:"]
-        assert len(product_data_divs) == 1
-        product_data_div = product_data_divs[0]
+        if len(product_data_divs) >= ASSUMED_MINIMUM_NUMBER_OF_PRODUCT_DATA_DIVS:
+            product_data_divs = [div for div in product_data_divs if div.find('label').text == "Listing Type:"]
+            assert len(product_data_divs) == 1
+            product_data_div = product_data_divs[0]
 
-        spans = [span for span in product_data_div.findAll('span')]
-        assert len(spans) == 1
-        span = spans[0]
+            spans = [span for span in product_data_div.findAll('span')]
+            assert len(spans) == 1
+            span = spans[0]
 
-        return span.text
+            return span.text
+        else:
+            return None
 
     @staticmethod
     def get_shipping_methods(soup_html) -> Tuple[

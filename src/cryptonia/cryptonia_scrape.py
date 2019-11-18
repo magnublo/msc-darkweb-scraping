@@ -32,9 +32,6 @@ def _unit_types_are_equal(unit_type: str, second_unit_type: str) -> bool:
 
 
 class CryptoniaScrapingSession(BaseScraper):
-
-
-
     __refresh_mirror_db_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
@@ -101,7 +98,7 @@ class CryptoniaScrapingSession(BaseScraper):
 
         titles, sellers, seller_urls = scrapingFunctions.get_titles_sellers_and_seller_urls(soup_html)
 
-        try :
+        try:
             btc_rate, xmr_rate = scrapingFunctions.get_cryptocurrency_rates(soup_html)
         except AssertionError:
             self.logger.critical("Found no footer with currency rates, retrying...")
@@ -137,6 +134,10 @@ class CryptoniaScrapingSession(BaseScraper):
         listing_type = scrapingFunctions.get_listing_type(soup_html)
 
         listing_text = scrapingFunctions.get_description(soup_html)
+        if not listing_text or not listing_type:  # we got broken content
+            self.logger.critical("Received listing missing content. Assumed to be broken, trying again...")
+            return self._scrape_listing(title, seller_name, seller_url, product_page_url, btc_rate, xmr_rate,
+                                        category_pair)
 
         accepts_BTC, accepts_BTC_multisig, accepts_XMR = scrapingFunctions.accepts_currencies(soup_html)
         fiat_currency, price, unit_type = scrapingFunctions.get_fiat_currency_and_price_and_unit_type(soup_html)
@@ -249,13 +250,13 @@ class CryptoniaScrapingSession(BaseScraper):
 
     def _get_headers(self) -> dict:
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "en-US,en;q=0.5",
-                "Accept-Encoding": "gzip, deflate",
-                "Connection": "keep-alive",
-                "Upgrade-Insecure-Requests": '1',
-                "Cache-Control": "max-age=0}"
-                }
+                   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                   "Accept-Language": "en-US,en;q=0.5",
+                   "Accept-Encoding": "gzip, deflate",
+                   "Connection": "keep-alive",
+                   "Upgrade-Insecure-Requests": '1',
+                   "Cache-Control": "max-age=0}"
+                   }
         if self.mirror_base_url:
             headers["Host"] = self.mirror_base_url
         return headers
@@ -292,7 +293,7 @@ class CryptoniaScrapingSession(BaseScraper):
 
         for publication_date, feedback_category, title, feedback_message_text, text_hash, buyer, crypto_currency, \
             price in list(
-                zip(*feedback_array)):
+            zip(*feedback_array)):
             if not is_new_seller:
                 existing_feedback = self.db_session.query(Feedback).filter_by(
                     date_published=publication_date,

@@ -186,6 +186,10 @@ class TestGetDescription(CryptoniaBaseTest):
         description = demoji.replace(description)
         self.assertEqual(len(description), description_length)
 
+    def test_get_description_fourteen(self):
+        soup_html = self._get_page_as_soup_html(file_name=f"listings/saved_cryptonia_listing_14")
+        description = scrapingFunctions.get_description(soup_html)
+        self.assertEqual(None, description)
 
 class TestAcceptsCurrencies(CryptoniaBaseTest):
 
@@ -576,6 +580,10 @@ class TestGetListingType(CryptoniaBaseTest):
         listing_type = scrapingFunctions.get_listing_type(soup_html)
         self.assertEqual(listing_type, "Digital Listing (Manual Fulfillment)")
 
+    def test_get_quantity_in_stock_and_unit_type_fifteen(self):
+        soup_html = self._get_page_as_soup_html(file_name='listings/saved_cryptonia_listing_15')
+        listing_type = scrapingFunctions.get_listing_type(soup_html)
+        self.assertEqual(listing_type, None)
 
 class TestGetShippingMethods(CryptoniaBaseTest):
 
