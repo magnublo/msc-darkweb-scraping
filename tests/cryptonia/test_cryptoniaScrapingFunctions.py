@@ -1114,6 +1114,12 @@ class TestGetFeedbacks(CryptoniaBaseTest):
 
         self.assertTupleEqual(expected_value, feedbacks)
 
+    def test_get_feedbacks_six(self):
+        soup_html = self._get_page_as_soup_html('users/saved_cryptonia_user_profile_6')
+        feedbacks = scrapingFunctions.get_feedbacks(soup_html)
+        expected_value = tuple(self._get_expected_value('user_profile_5_feedback'))
+
+        self.assertTupleEqual(expected_value, feedbacks)
 
 class TestGetNextFeedbackUrl(CryptoniaBaseTest):
 

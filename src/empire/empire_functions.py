@@ -385,7 +385,7 @@ class EmpireScrapingFunctions(BaseFunctions):
                 seller_response = messages[1].text.strip()
                 seller_response_header_text = "Seller Response: "
 
-                assert (seller_response[0:len(seller_response_header_text)] == seller_response_header_text)
+                assert (seller_response[0:len(seller_response_header_text)].strip() == seller_response_header_text.strip())
                 feedback["seller_response_message"] = shorten_and_sanitize_for_text_column(
                     seller_response[len(seller_response_header_text):])
             else:
@@ -416,7 +416,7 @@ class EmpireScrapingFunctions(BaseFunctions):
             hrefs = [href["href"] for href in right_column.findAll('a', href=True)]
             assert len(hrefs) == 1
 
-            feedback["product_url"] = hrefs[0]
+            feedback["product_url"] = urlparse(hrefs[0]).path
             feedbacks.append(feedback)
 
         return feedbacks
