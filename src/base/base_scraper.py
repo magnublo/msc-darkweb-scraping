@@ -20,6 +20,7 @@ from requests.cookies import RequestsCookieJar, CookieConflictError
 from sqlalchemy import func
 from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm import Session
+from urllib3.exceptions import HTTPError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
@@ -31,7 +32,8 @@ from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
     get_column_name
-from src.exceptions import DeadMirrorException, GenericException
+from src.exceptions import GenericException, InternalServerErrorException, BadGatewayException, \
+    GatewayTimeoutException, EmptyResponseException, CustomServerErrorException
 from src.mirror_manager import MirrorManager
 from src.models.bulk_price import BulkPrice
 from src.models.captcha_solution import CaptchaSolution
@@ -52,7 +54,8 @@ from src.models.user_credential import UserCredential
 from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
-    get_temporary_server_error, pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string
+    pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string, \
+    is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -538,7 +541,7 @@ class BaseScraper(BaseClassWithLogger):
             self._log_web_request(web_session, http_verb, url, *args, **kwargs)
             try:
                 web_response = web_session.request(http_verb, url, *args, **kwargs)
-                temporary_server_error = get_temporary_server_error(web_response)
+                temporary_server_error = self.get_temporary_server_error(web_response)
                 if temporary_server_error:
                     raise temporary_server_error
                 self.time_last_received_response = time()
@@ -625,6 +628,20 @@ class BaseScraper(BaseClassWithLogger):
 
         return False
 
+    def get_temporary_server_error(self, response) -> Optional[HTTPError]:
+        if self.is_custom_server_error(response):
+            return CustomServerErrorException(response.text)
+        elif is_internal_server_error(response):
+            return InternalServerErrorException(response.text)
+        elif is_bad_gateway(response):
+            return BadGatewayException(response.text)
+        elif is_gateway_timed_out(response):
+            return GatewayTimeoutException(response.text)
+        elif is_empty_response(response):
+            return EmptyResponseException()
+        else:
+            return None
+
     @abstractmethod
     def _get_market_id(self) -> str:
         raise NotImplementedError('')
@@ -706,6 +723,10 @@ class BaseScraper(BaseClassWithLogger):
 
     @abstractmethod
     def _get_mirror_failure_lock(self) -> Lock:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def is_custom_server_error(self, response) -> bool:
         raise NotImplementedError('')
 
     def _get_captcha_solution_from_base64_image(self, base64_image: str, anti_captcha_kwargs: Dict[str, int] = None) \

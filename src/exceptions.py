@@ -14,6 +14,13 @@ class LoggedOutException(Exception):
         super().__init__(text)
 
 
+class CustomServerErrorException(HTTPError):
+    DEFAULT_TEXT = "Custom server error with 200 status code"
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
+
+
 class EmptyResponseException(HTTPError):
     DEFAULT_TEXT = "200 response has no content."
 

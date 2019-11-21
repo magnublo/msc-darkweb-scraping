@@ -32,12 +32,19 @@ def _unit_types_are_equal(unit_type: str, second_unit_type: str) -> bool:
 
 
 class CryptoniaScrapingSession(BaseScraper):
+
+    scraping_funcs: CryptoniaScrapingFunctions
+
     __refresh_mirror_db_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict, session_id: int):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
+
+    def is_custom_server_error(self, response) -> bool:
+        soup_html = get_page_as_soup_html(response.text)
+        return self.scraping_funcs.is_internal_connection_error(soup_html)
 
     def _get_mirror_failure_lock(self) -> Lock:
         return self.__mirror_failure_lock__
@@ -347,6 +354,19 @@ class CryptoniaScrapingSession(BaseScraper):
     @staticmethod
     def _is_successful_login_response(response: Response) -> bool:
         return response.text.find(CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE) != -1
+
+    @staticmethod
+    def get_temporary_server_error(response) -> Optional[HTTPError]:
+        if is_internal_server_error(response):
+            return InternalServerErrorException(response.text)
+        elif is_bad_gateway(response):
+            return BadGatewayException(response.text)
+        elif is_gateway_timed_out(response):
+            return GatewayTimeoutException(response.text)
+        elif is_empty_response(response):
+            return EmptyResponseException()
+        else:
+            return None
 
     def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response) -> requests.Session:
         web_session.cookies.clear()

@@ -1,0 +1,72 @@
+<html><head>
+<meta charset="UTF-8">
+<title>Cryptonia Market - Login</title>
+<link rel="stylesheet" href="/css-5">
+<link rel="stylesheet" href="/css-icons">
+</head>
+<body>
+<div id="container">
+<div id="header">
+<div class="titlebox">
+<h1><a class="hlink" href="/">CRYPTONIA MARKET</a></h1>
+<span class="subt">Walletless, Multisig, Simple and Secure</span>
+</div>
+<div class="controlbox">
+<div style="text-align: right;">
+<a class="controlbox_link" href="/products"><span class="icono-market smicon"></span>Products</a>
+<span>&nbsp;</span>
+<a class="controlbox_link" href="/login"><span class="icono-signIn smicon"></span>Login</a>
+<span>&nbsp;</span>
+<a class="controlbox_link" href="/register"><span class="icono-sun smicon"></span>Register</a>
+</div>
+<span style="margin-top: 0px; alignment: bottom; float: right;">Server Time: 2019-11-21 11:26</span>
+</div>
+</div>
+<div id="body">
+<div class="login_popup">
+<div class="wrapper">
+<h2><span class="icono-signIn"></span>LOGIN</h2>
+<p class="error">Internal connection error. Please contact support.</p>
+<p style="text-align: left">Please provide your credentials to continue.</p>
+<form action="/login" method="post">
+<div class="content_div">
+<input type="input" style="width: 100%" placeholder="Username" name="username" value="vendorPython1" maxlength="32">
+</div>
+<div class="content_div">
+<input type="password" style="width:100%" placeholder="Password" name="password" maxlength="128">
+</div>
+<h3>Captcha</h3>
+<div class="content_div">
+<img class="login_captcha" src="/captcha">
+<a class="refreshCaptcha" href="/login">REFRESH</a>
+</div>
+<div class="content_div">
+<input type="text" style="width:100%" placeholder="Captcha Code" maxlength="5" name="captcha">
+</div>
+<div class="content_div" style="text-align: center">
+<a class="buttonlink" style="width: 100px;" href="/register">REGISTER</a>
+<input type="hidden" name="sess_code" value="f3f94f9936015282f7e5cc00cf74faaa">
+<input type="submit" name="submit" class="btngood" style="width: 100px; height: 29px" value="LOGIN">
+</div>
+</form>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="copy_div">
+<a class="controlbox_link" href="/manifesto">Manifesto</a>
+<span>|</span>
+<a class="controlbox_link" href="/faq">FAQ</a>
+<span>|</span>
+<a class="controlbox_link" href="/dd">Direct Deposits Info</a>
+<span>|</span>
+<a class="controlbox_link" href="/multisig">Multisig Info</a>
+<span>|</span>
+<a class="controlbox_link" href="http://iwetkv7jw4mxiw3lia3tnozhlmb2o643px3j7qp5cpyq4l4ey4udmfad.onion">Forums</a>
+</div>
+</div>
+</div>
+
+
+
+</body></html>

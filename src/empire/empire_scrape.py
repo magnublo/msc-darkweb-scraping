@@ -59,7 +59,6 @@ def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) 
 
 class EmpireScrapingSession(BaseScraper):
 
-
     __mirror_manager_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
@@ -71,6 +70,9 @@ class EmpireScrapingSession(BaseScraper):
                  session_id: int):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
                          session_id=session_id)
+
+    def is_custom_server_error(self, response) -> bool:
+        return False
 
     def _get_mirror_failure_lock(self) -> Lock:
         return self.__mirror_failure_lock__

@@ -1,6 +1,7 @@
 import pickle
 import re
 from datetime import datetime
+from unittest import TestCase
 
 import demoji
 
@@ -92,6 +93,7 @@ class TestGetProductPageUrls(CryptoniaBaseTest):
             rs = re.findall(PRODUCT_PAGE_URL_REGEX, url)
             self.assertNotEqual(len(rs), -1)
 
+
 class TestGetTitlesSellersAndSellerUrls(CryptoniaBaseTest):
 
     def test_get_titles_sellers_and_seller_urls_zero(self):
@@ -138,6 +140,7 @@ class TestGetTitlesSellersAndSellerUrls(CryptoniaBaseTest):
         for url in seller_urls:
             rs = re.findall(SELLER_URL_REGEX, url)
             self.assertNotEqual(len(rs), -1)
+
 
 class TestGetCryptocurrencyRates(CryptoniaBaseTest):
 
@@ -190,6 +193,7 @@ class TestGetDescription(CryptoniaBaseTest):
         soup_html = self._get_page_as_soup_html(file_name=f"listings/saved_cryptonia_listing_14")
         description = scrapingFunctions.get_description(soup_html)
         self.assertEqual(None, description)
+
 
 class TestAcceptsCurrencies(CryptoniaBaseTest):
 
@@ -585,6 +589,7 @@ class TestGetListingType(CryptoniaBaseTest):
         listing_type = scrapingFunctions.get_listing_type(soup_html)
         self.assertEqual(listing_type, None)
 
+
 class TestGetShippingMethods(CryptoniaBaseTest):
 
     def test_get_shipping_methods_zero(self):
@@ -645,6 +650,7 @@ class TestGetShippingMethods(CryptoniaBaseTest):
         soup_html = self._get_page_as_soup_html('listings/saved_cryptonia_listing_13')
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
         self.assertTupleEqual((), shipping_methods)
+
 
 class TestGetBulkPrices(CryptoniaBaseTest):
 
@@ -994,7 +1000,9 @@ class TestGetSellerInfo(CryptoniaBaseTest):
 
         self.assertEqual(87.5, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
-        self.assertEqual((('DREAM_MARKET', 360, 4.95, 5.0, None, None, None, None), ('EMPIRE_MARKET', None, None, None, None, None, None, 'No seller stats associated with this verification.')), external_market_ratings)
+        self.assertEqual((('DREAM_MARKET', 360, 4.95, 5.0, None, None, None, None), (
+        'EMPIRE_MARKET', None, None, None, None, None, None, 'No seller stats associated with this verification.')),
+                         external_market_ratings)
         self.assertEqual(('BTC', 0.0356434, 'USD', 312.93), amount_on_escrow)
         self.assertEqual('United Kingdom', ships_from)
         self.assertTupleEqual(('United Kingdom',), ships_to)
@@ -1120,6 +1128,7 @@ class TestGetFeedbacks(CryptoniaBaseTest):
         expected_value = tuple(self._get_expected_value('user_profile_5_feedback'))
 
         self.assertTupleEqual(expected_value, feedbacks)
+
 
 class TestGetNextFeedbackUrl(CryptoniaBaseTest):
 
@@ -1262,7 +1271,7 @@ class TestGetTermsAndConditions(CryptoniaBaseTest):
 class TestGetLoginPayload(CryptoniaBaseTest):
 
     def test_get_login_payload(self):
-        soup_html = self._get_page_as_soup_html('login_page/saved_cryptonia_login_page')
+        soup_html = self._get_page_as_soup_html('login_page/saved_cryptonia_login_page_0')
         username = "034q8jwfrsejnjj"
         password = "dsfghw49fhsvndfj"
         captcha_solution = "uajnh"
@@ -1280,7 +1289,7 @@ class TestGetLoginPayload(CryptoniaBaseTest):
 class TestGetCaptchaImageUrl(CryptoniaBaseTest):
 
     def test_get_captcha_image_url(self):
-        soup_html = self._get_page_as_soup_html('login_page/saved_cryptonia_login_page')
+        soup_html = self._get_page_as_soup_html('login_page/saved_cryptonia_login_page_0')
         image_url = scrapingFunctions.get_captcha_image_url_from_market_page(soup_html)
         self.assertEqual("/captcha", image_url)
 
@@ -1302,3 +1311,16 @@ class TestGetMetaRefreshInterval(CryptoniaBaseTest):
     #         with open(f'/home/magnus/PycharmProjects/msc/tests/cryptonia/expected_values/user_profile_{
     # i}_seller_info', 'wb') as f:  # Python 3: open(..., 'wb')
     #             f.write(pickle.dumps(res)) if res else f.write(b"")
+
+
+class TestIsInternalConnectionError(CryptoniaBaseTest):
+
+    def test_is_internal_connection_error_zero(self):
+        soup_html = self._get_page_as_soup_html('login_page/saved_cryptonia_login_page_0')
+        is_internal_server_error = scrapingFunctions.is_internal_connection_error(soup_html)
+        self.assertEqual(False, is_internal_server_error)
+
+    def test_is_internal_connection_error_one(self):
+        soup_html = self._get_page_as_soup_html('login_page/saved_cryptonia_login_page_1')
+        is_internal_server_error = scrapingFunctions.is_internal_connection_error(soup_html)
+        self.assertEqual(True, is_internal_server_error)

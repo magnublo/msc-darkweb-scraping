@@ -840,3 +840,9 @@ class CryptoniaScrapingFunctions(BaseFunctions):
         payload[submit_input["name"]] = submit_value
 
         return payload
+
+    @staticmethod
+    def is_internal_connection_error(soup_html: BeautifulSoup):
+        error_message_p: BeautifulSoup = soup_html.select_one("#body > div > div > p.error")
+        error_message: str = error_message_p.text if error_message_p else None
+        return error_message == "Internal connection error. Please contact support."
