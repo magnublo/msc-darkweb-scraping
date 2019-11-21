@@ -45,7 +45,10 @@ class CryptoniaScrapingSession(BaseScraper):
 
     def _handle_custom_server_error(self) -> None:
         time_since_last_response = time() - self.time_last_received_response
-        wait_interval = min(gauss(time_since_last_response, time_since_last_response/10), 0.75*ONE_HOUR)
+        if time_since_last_response > 300:
+            wait_interval = 0.75*ONE_HOUR
+        else:
+            wait_interval = min(gauss(time_since_last_response, time_since_last_response/10), 0.75*ONE_HOUR)
         self.logger.info(f"Got CustomServerErrorException, sleeping {wait_interval} seconds.")
         sleep(wait_interval)
 
