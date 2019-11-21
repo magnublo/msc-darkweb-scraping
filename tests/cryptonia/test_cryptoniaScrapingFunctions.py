@@ -1,6 +1,6 @@
 import pickle
 import re
-from datetime import datetime
+from datetime import datetime, date
 from unittest import TestCase
 
 import demoji
@@ -1001,7 +1001,7 @@ class TestGetSellerInfo(CryptoniaBaseTest):
         self.assertEqual(87.5, percent_positive_rating)
         self.assertTupleEqual((0, 0), disputes)
         self.assertEqual((('DREAM_MARKET', 360, 4.95, 5.0, None, None, None, None), (
-        'EMPIRE_MARKET', None, None, None, None, None, None, 'No seller stats associated with this verification.')),
+            'EMPIRE_MARKET', None, None, None, None, None, None, 'No seller stats associated with this verification.')),
                          external_market_ratings)
         self.assertEqual(('BTC', 0.0356434, 'USD', 312.93), amount_on_escrow)
         self.assertEqual('United Kingdom', ships_from)
@@ -1125,9 +1125,12 @@ class TestGetFeedbacks(CryptoniaBaseTest):
     def test_get_feedbacks_six(self):
         soup_html = self._get_page_as_soup_html('users/saved_cryptonia_user_profile_6')
         feedbacks = scrapingFunctions.get_feedbacks(soup_html)
-        expected_value = tuple(self._get_expected_value('user_profile_5_feedback'))
-
-        self.assertTupleEqual(expected_value, feedbacks)
+        self.assertTupleEqual(((date(year=2019, month=10, day=30), date(year=2019, month=10, day=27)),
+                               ('Positive Feedback', 'Positive Feedback'), (
+                               '100 human FACES (psd) for Passport / ID templates ! (male +femal',
+                               'Dutch (NL) ID CARD Template (front +back)'), ('Perfect !', 'Good quality ! Thanks'),
+                               ('78ea1afd', 'f0aeffcd'), ('H***9', 'H***9'), ('BTC', 'BTC'), (0.0023, 0.0048)),
+                              feedbacks)
 
 
 class TestGetNextFeedbackUrl(CryptoniaBaseTest):

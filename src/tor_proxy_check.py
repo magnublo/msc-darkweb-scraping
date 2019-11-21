@@ -10,9 +10,8 @@ from requests import RequestException
 from sty import fg
 from tabulate import tabulate
 
-from definitions import TOR_PROJECT_URL_FOR_CONFIGURATION_CHECK, TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE, \
-    MAX_MARKET_THREADS_PER_PROXY
-from environment_settings import LOWEST_TOR_PORT, TOR_PROXY_SERVER_ADDRESS
+from definitions import TOR_PROJECT_URL_FOR_CONFIGURATION_CHECK, TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE
+from environment_settings import LOWEST_TOR_PORT, TOR_PROXY_SERVER_ADDRESS, MAX_MARKET_THREADS_PER_PROXY
 
 TERMINAL = Terminal()
 

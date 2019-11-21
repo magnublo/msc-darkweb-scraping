@@ -20,7 +20,6 @@ ROOT_DIR = os.path.dirname(os.path.realpath(__file__)) + "/"
 ROOT_SRC_DIR = ROOT_DIR + "src/"
 WORKING_DIR = os.getcwd() + "/"
 
-MAX_MARKET_THREADS_PER_PROXY = 4
 TOR_PROJECT_URL_FOR_CONFIGURATION_CHECK = "https://check.torproject.org/"
 TOR_PROJECT_CORRECT_CONFIGURATION_SUCCESS_MESSAGE = "Congratulations. This browser is configured to use Tor."
 

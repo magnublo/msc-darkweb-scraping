@@ -355,19 +355,6 @@ class CryptoniaScrapingSession(BaseScraper):
     def _is_successful_login_response(response: Response) -> bool:
         return response.text.find(CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE) != -1
 
-    @staticmethod
-    def get_temporary_server_error(response) -> Optional[HTTPError]:
-        if is_internal_server_error(response):
-            return InternalServerErrorException(response.text)
-        elif is_bad_gateway(response):
-            return BadGatewayException(response.text)
-        elif is_gateway_timed_out(response):
-            return GatewayTimeoutException(response.text)
-        elif is_empty_response(response):
-            return EmptyResponseException()
-        else:
-            return None
-
     def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response) -> requests.Session:
         web_session.cookies.clear()
         return super()._login_and_set_cookie(web_session, web_response)

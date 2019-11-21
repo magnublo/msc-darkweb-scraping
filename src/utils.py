@@ -12,8 +12,8 @@ from bs4 import BeautifulSoup
 from text2digits import text2digits
 from urllib3.exceptions import HTTPError
 
-from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, MAX_MARKET_THREADS_PER_PROXY, \
-    ONE_DAY, ONE_WEEK, ONE_HOUR, WEB_EXCEPTIONS_TUPLE, MIRROR_TEST_TIMEOUT_LIMIT, NR_OF_TRIES_PER_MIRROR
+from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, ONE_DAY, ONE_WEEK, ONE_HOUR, WEB_EXCEPTIONS_TUPLE, MIRROR_TEST_TIMEOUT_LIMIT, NR_OF_TRIES_PER_MIRROR
+from environment_settings import MAX_MARKET_THREADS_PER_PROXY
 from src.data.continent_dict import CONTINENT_DICTIONARY
 from src.data.country_dict import COUNTRY_DICT
 from src.exceptions import EmptyResponseException, BadGatewayException, InternalServerErrorException, \
