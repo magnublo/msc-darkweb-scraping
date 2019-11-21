@@ -71,7 +71,10 @@ class EmpireScrapingSession(BaseScraper):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
                          session_id=session_id)
 
-    def is_custom_server_error(self, response) -> bool:
+    def _handle_custom_server_error(self) -> None:
+        raise NotImplementedError('')
+
+    def _is_custom_server_error(self, response) -> bool:
         return False
 
     def _get_mirror_failure_lock(self) -> Lock:

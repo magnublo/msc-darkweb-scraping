@@ -629,7 +629,8 @@ class BaseScraper(BaseClassWithLogger):
         return False
 
     def get_temporary_server_error(self, response) -> Optional[HTTPError]:
-        if self.is_custom_server_error(response):
+        if self._is_custom_server_error(response):
+            self._handle_custom_server_error()
             return CustomServerErrorException(response.text)
         elif is_internal_server_error(response):
             return InternalServerErrorException(response.text)
@@ -641,6 +642,10 @@ class BaseScraper(BaseClassWithLogger):
             return EmptyResponseException()
         else:
             return None
+
+    @abstractmethod
+    def _handle_custom_server_error(self) -> None:
+        raise NotImplementedError('')
 
     @abstractmethod
     def _get_market_id(self) -> str:
@@ -726,7 +731,7 @@ class BaseScraper(BaseClassWithLogger):
         raise NotImplementedError('')
 
     @abstractmethod
-    def is_custom_server_error(self, response) -> bool:
+    def _is_custom_server_error(self, response) -> bool:
         raise NotImplementedError('')
 
     def _get_captcha_solution_from_base64_image(self, base64_image: str, anti_captcha_kwargs: Dict[str, int] = None) \

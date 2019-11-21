@@ -1,6 +1,7 @@
 from multiprocessing import Queue
-from random import shuffle
+from random import shuffle, gauss
 from threading import Lock
+from time import sleep, time
 from typing import Tuple, Type
 
 import cfscrape
@@ -11,7 +12,7 @@ from requests import Response
 from definitions import CRYPTONIA_MARKET_CATEGORY_INDEX_URL_PATH, CRYPTONIA_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, \
     CRYPTONIA_MARKET_LOGIN_PHRASE, \
     CRYPTONIA_SRC_DIR, CRYPTONIA_MARKET_ID, CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE, \
-    CRYPTONIA_MIN_CREDENTIALS_PER_THREAD
+    CRYPTONIA_MIN_CREDENTIALS_PER_THREAD, ONE_HOUR
 from src.base.base_functions import BaseFunctions
 from src.base.base_scraper import BaseScraper
 from src.cryptonia.cryptonia_functions import CryptoniaScrapingFunctions as scrapingFunctions, \
@@ -42,7 +43,13 @@ class CryptoniaScrapingSession(BaseScraper):
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict, session_id: int):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
 
-    def is_custom_server_error(self, response) -> bool:
+    def _handle_custom_server_error(self) -> None:
+        time_since_last_response = time() - self.time_last_received_response
+        wait_interval = min(gauss(time_since_last_response, time_since_last_response/10), 0.75*ONE_HOUR)
+        self.logger.info(f"Got CustomServerErrorException, sleeping {wait_interval} seconds.")
+        sleep(wait_interval)
+
+    def _is_custom_server_error(self, response) -> bool:
         soup_html = get_page_as_soup_html(response.text)
         return self.scraping_funcs.is_internal_connection_error(soup_html)
 

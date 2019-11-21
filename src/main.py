@@ -1,4 +1,3 @@
-import faulthandler
 import threading
 from logging.config import dictConfig
 
