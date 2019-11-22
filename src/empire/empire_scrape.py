@@ -58,7 +58,6 @@ def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) 
 
 
 class EmpireScrapingSession(BaseScraper):
-
     __mirror_manager_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
@@ -429,7 +428,9 @@ class EmpireScrapingSession(BaseScraper):
         web_response = self._get_logged_in_web_response(search_result_url)
 
         soup_html = get_page_as_soup_html(web_response.text)
-        product_page_urls, urls_is_sticky = self.scraping_funcs.get_product_page_urls(soup_html)
+        product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views = \
+            self.scraping_funcs.get_listing_infos(
+            soup_html)
 
         if len(product_page_urls) == 0:
             if soup_html.text.find(EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE) == -1:
@@ -437,9 +438,7 @@ class EmpireScrapingSession(BaseScraper):
             else:
                 return
 
-        titles, sellers, seller_urls = self.scraping_funcs.get_titles_and_sellers(soup_html)
         btc_rate, ltc_rate, xmr_rate = self.scraping_funcs.get_cryptocurrency_rates(soup_html)
-        nrs_of_views: Tuple[int] = self.scraping_funcs.get_nrs_of_views(soup_html)
 
         assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky) == len(
             nrs_of_views)

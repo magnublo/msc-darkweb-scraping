@@ -54,32 +54,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         return shorten_and_sanitize_for_text_column(description)
 
     @staticmethod
-    def get_product_page_urls(soup_html: BeautifulSoup) -> Tuple[Tuple[str], Tuple[bool]]:
-        centre_columns = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
-        product_page_urls: List[str] = []
-        urls_is_sticky: List[bool] = []
-
-        for column in centre_columns:
-            is_sticky = False
-            divs_with_head_name = [div for div in column.findAll('div', attrs={'class': 'head'})]
-            assert len(divs_with_head_name) == 1
-            hrefs = [href for href in divs_with_head_name[0].findAll('a', href=True)]
-            assert len(hrefs) == 2
-            b_tags = [b_tag for b_tag in divs_with_head_name[0].findAll('b')]
-            for b_tag in b_tags:
-                if b_tag.text == "[sticky]":
-                    is_sticky = True
-
-            urls_is_sticky.append(is_sticky)
-            product_page_urls.append(urlparse(hrefs[0]['href']).path)
-
-        assert len(product_page_urls) <= ASSUMED_MAXIMUM_LISTINGS_PER_SEARCH_RESULT
-
-        assert len(urls_is_sticky) == len(product_page_urls)
-
-        return tuple(product_page_urls), tuple(urls_is_sticky)
-
-    @staticmethod
     def get_nr_sold_since_date(soup_html):
         list_descriptions = [div for div in soup_html.findAll('div', attrs={'class': 'listDes'})]
         assert len(list_descriptions) == 1
@@ -201,31 +175,6 @@ class EmpireScrapingFunctions(BaseFunctions):
                     # TODO: Ignoring parent name and level for now
 
         return tuple(listing_categories)
-
-    @staticmethod
-    def get_titles_and_sellers(soup_html: BeautifulSoup) -> Tuple[Tuple[str], Tuple[str], Tuple[str]]:
-        titles: List[str] = []
-        sellers: List[str] = []
-        seller_urls: List[str] = []
-
-        col_1centres = [div for div in soup_html.findAll('div', attrs={'class': 'col-1centre'})]
-        assert len(col_1centres) <= ASSUMED_MAXIMUM_LISTINGS_PER_SEARCH_RESULT
-        assert len(col_1centres) > 0
-        for col1_centre in col_1centres:
-            head_tags = [div for div in col1_centre.findAll('div', attrs={'class': 'head'})]
-            assert len(head_tags) == 1
-            href_links = [href for href in head_tags[0].findAll('a', href=True)]
-            titles.append(href_links[0].text)
-            padp_p_tags = [p for p in head_tags[0].findAll('p', attrs={'class': 'padp'})]
-            assert len(padp_p_tags) == 1
-            user_href_links = [href for href in padp_p_tags[0].findAll('a', href=True)]
-            assert len(user_href_links) == 1
-            sellers.append(user_href_links[0].text)
-            seller_urls.append(urlparse(user_href_links[0]["href"]).path)
-
-        assert len(titles) == len(sellers) == len(col_1centres)
-
-        return tuple(titles), tuple(sellers), tuple(seller_urls)
 
     @staticmethod
     def get_captcha_image_url_from_market_page(soup_html):
@@ -385,7 +334,8 @@ class EmpireScrapingFunctions(BaseFunctions):
                 seller_response = messages[1].text.strip()
                 seller_response_header_text = "Seller Response: "
 
-                assert (seller_response[0:len(seller_response_header_text)].strip() == seller_response_header_text.strip())
+                assert (seller_response[
+                        0:len(seller_response_header_text)].strip() == seller_response_header_text.strip())
                 feedback["seller_response_message"] = shorten_and_sanitize_for_text_column(
                     seller_response[len(seller_response_header_text):])
             else:
@@ -545,25 +495,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         else:
             return False, None
 
-    @staticmethod
-    def get_nrs_of_views(soup_html: BeautifulSoup) -> Tuple[int]:
-        nrs_of_views: List[int] = []
-        pattern = "Views:"
-        head_div: BeautifulSoup
-
-        head_divs = soup_html.select("div.col-1search > div:nth-child(2) > div:nth-child(1)")
-        assert len(head_divs) <= ASSUMED_MAXIMUM_LISTINGS_PER_SEARCH_RESULT
-        assert len(head_divs) > 0
-        for head_div in head_divs:
-            pattern_index = head_div.text.find(pattern)
-            assert pattern_index != -1
-            relative_slash_index = head_div.text[pattern_index + len(pattern):].find("/")
-            start_index = pattern_index + len(pattern)
-            end_index = pattern_index + len(pattern) + relative_slash_index
-            nr_of_views = parse_int(head_div.text[start_index:end_index])
-            nrs_of_views.append(nr_of_views)
-
-        return tuple(nrs_of_views)
 
     @staticmethod
     def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[str, float, str, float, Optional[str], bool]]:
@@ -597,7 +528,6 @@ class EmpireScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_bulk_prices(soup_html: BeautifulSoup) -> Tuple[Tuple[int, Optional[int], float, float, Optional[float]]]:
 
-
         bulk_prices: List[Tuple[int, Optional[int], float, float, Optional[float]]] = []
 
         bulk_table_rows = soup_html.select(
@@ -625,3 +555,47 @@ class EmpireScrapingFunctions(BaseFunctions):
         span: BeautifulSoup = soup_html.select_one(
             "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > h1 > span")
         return span.text == "(BANNED)"
+
+    @staticmethod
+    def get_listing_infos(soup_html: BeautifulSoup) -> Tuple[
+        Tuple[str], Tuple[bool], Tuple[str], Tuple[str], Tuple[str], Tuple[int]]:
+
+        pattern = "Views:"
+
+        def _get_nr_of_views(head_div: BeautifulSoup) -> int:
+            pattern_index = head_div.text.find(pattern)
+            assert pattern_index != -1
+            relative_slash_index = head_div.text[pattern_index + len(pattern):].find("/")
+            start_index = pattern_index + len(pattern)
+            end_index = pattern_index + len(pattern) + relative_slash_index
+            return parse_int(head_div.text[start_index:end_index])
+
+        product_page_urls: List[str] = []
+        urls_is_sticky: List[bool] = []
+        titles: List[str] = []
+        sellers: List[str] = []
+        seller_urls: List[str] = []
+        nrs_of_views: List[int] = []
+
+        listing_divs: List[BeautifulSoup] = soup_html.select(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div.col-1search")
+        for listing_div in listing_divs:
+            head_div = listing_div.select_one("div.col-1centre > div")
+            if head_div is None: continue
+            title_href = head_div.select_one("a")
+            product_url = urlparse(title_href["href"]).path
+            title = title_href.text
+            is_sticky = head_div.select_one("font") is not None
+            seller_href = head_div.select_one("p > a")
+            seller = seller_href.text
+            seller_url = urlparse(seller_href["href"]).path
+            nr_of_views = _get_nr_of_views(head_div)
+            product_page_urls.append(product_url)
+            urls_is_sticky.append(is_sticky)
+            titles.append(title)
+            sellers.append(seller)
+            seller_urls.append(seller_url)
+            nrs_of_views.append(nr_of_views)
+
+        return tuple(product_page_urls), tuple(urls_is_sticky), tuple(titles), tuple(sellers), tuple(
+            seller_urls), tuple(nrs_of_views)

@@ -57,14 +57,6 @@ class TestGetDescription(EmpireBaseTest):
         self.assertEqual(expected_value, description)
 
 
-class TestGetNrsOfViews(EmpireBaseTest):
-    def test_get_nrs_of_views(self):
-        soup_html = self._get_page_as_soup_html('search_results/saved_empire_search_result_0')
-        nrs_of_views = scrapingFunctions.get_nrs_of_views(soup_html)
-        self.assertTupleEqual((18829, 2735, 2594, 2398, 184, 4074, 41084, 510, 3151, 208, 7132, 595, 136, 15447, 533),
-                              nrs_of_views)
-
-
 class TestGetShippingMethods(EmpireBaseTest):
     def test_get_shipping_methods_zero(self):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_0')
@@ -330,3 +322,69 @@ class TestGetFeedbacks(EmpireBaseTest):
         soup_html = self._get_page_as_soup_html("feedback/saved_empire_feedback_1")
         feedbacks = scrapingFunctions.get_feedbacks(soup_html)
         a = 1
+
+
+class TestGetListingInfos(EmpireBaseTest):
+
+    def test_get_listing_infos_zero(self):
+        soup_html = self._get_page_as_soup_html("search_results/saved_empire_search_result_0")
+        product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views = \
+            scrapingFunctions.get_listing_infos(
+                soup_html)
+        self.assertTupleEqual((('/product/35791/105/186765', '/product/58269/141/232625', '/product/39758/99/199565',
+                                '/product/81664/73/357692', '/product/120269/105/135292', '/product/43757/83/154816',
+                                '/product/30867/83/164102', '/product/84802/69/351381', '/product/102478/75/384730',
+                                '/product/120254/99/561098', '/product/75071/105/158790', '/product/93420/105/174879',
+                                '/product/30850/93/159225', '/product/73918/73/213567', '/product/107595/88/413827'),
+                               (True, True, True, True, True, True, True, True, True, True, True, True, True, True,
+                                True), (
+                                   '2g. Pure Peruvian Cocaine Flake',
+                                   'Oxycontin (Generic Oxycodone ER) 40mg $35-$47.50 each (depending on quantity).',
+                                   'FLASH PROMOTION 🇩🇪🔥 1-5GR ★★ PURE CRYSTAL METH - ICE ★★ FROM 24EU/GR 🔥🇩🇪',
+                                   'Gorilla Glue A+  £190 oz  United Kingdom Next Day Delivery',
+                                   '1g Cocaine 92% tested fresh off the brick', 'KETAMINE S+ Isomer - Uncut- PROMO!',
+                                   '💜🇬🇧 DCUK 1G - 14G SUGAR ISOMER S- KETAMINE EC 99% 🇬🇧💜',
+                                   '100 × Clonazepam Nhwa Brand [ Klonopin / Rivotril ] 2 Mg - $2.2 a pill',
+                                   'Cookies 1000mg / Dank Vape One Week FLASH SALE',
+                                   'uncut meth 1g australia to australia special entry price',
+                                   '***NEW*** 0.5G -7G Bolivian Cocaine Flakes FREE Shipping',
+                                   'SALE** 1G 90% MESSI A COLOMBIAN COCAINE**UK NDD**',
+                                   '2 grams High Quality Pure Dark Turkish Heroin #3 +++ [100%]',
+                                   '★OG KUSH★ (Indoor) (Free Tracking!!) (Top Shelf A++) [Min 4oz]',
+                                   'PROMO Quality Tested! Crystalised MDMA champagne, 20 Grams no powderbulshit! 1.50 '
+                                   'a gram! '
+                                   'WORLDWIDE!'),
+                               ('TheCircuit', 'purepharm', 'AmsterdamNL', 'UKDrugsMan', 'nolove2323', '257Crew',
+                                'DCUKConnection', 'oxytop', 'GreenCurrency', 'masterfood', 'RolexDrugs',
+                                'gbmessicocaine',
+                                'Streetlegend', 'HumboldtGrower', 'Guap'), (
+                                   '/u/TheCircuit', '/u/purepharm', '/u/AmsterdamNL', '/u/UKDrugsMan', '/u/nolove2323',
+                                   '/u/257Crew', '/u/DCUKConnection', '/u/oxytop', '/u/GreenCurrency', '/u/masterfood',
+                                   '/u/RolexDrugs', '/u/gbmessicocaine', '/u/Streetlegend', '/u/HumboldtGrower',
+                                   '/u/Guap'),
+                               (18829, 2735, 2594, 2398, 184, 4074, 41084, 510, 3151, 208, 7132, 595, 136, 15447, 533)),
+                              (product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views))
+
+    def test_get_listing_infos_one(self):
+        soup_html = self._get_page_as_soup_html("search_results/saved_empire_search_result_1")
+        product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views = \
+            scrapingFunctions.get_listing_infos(
+            soup_html)
+        self.assertTupleEqual((('/product/101040/34/510709', '/product/82/35/56', '/product/101107/34/510709',
+                                '/product/104805/34/105383', '/product/107107/34/537502', '/product/99/35/56',
+                                '/product/101/35/56', '/product/110230/34/573618', '/product/117/35/56',
+                                '/product/122799/34/26307'),
+                               (False, False, False, False, False, False, False, False, False, False), (
+                               'Scaning networks for hacking - guide + software', 'How To Make Money With Ringtones',
+                               'HACK ANY WIFI GUARANTEED 100 19',
+                               'Biggest Hacking, Carding and Cracking [2019] Bundle out there!!!!',
+                               'SUCCESSFUL BANK TRANSFER WITH RECEIPT AND DETAILS',
+                               'How To Open Handcuffs Without Keys', 'How To Become An Alpha Male',
+                               'STEAL CRYPTOCURRENCY | PRIVATE GUIDE | +100BTC MADE',
+                               'How To Make $100 A Day (Very Easy)', 'BioHacking Kit for Gene Editing CRISPR'), (
+                               'Venture', 'DrunkDragon', 'Venture', 'SwagQuality', 'StoneBrown', 'DrunkDragon',
+                               'DrunkDragon', 'LouisBitcoin', 'DrunkDragon', 'emeraldgemini'), (
+                               '/u/Venture', '/u/DrunkDragon', '/u/Venture', '/u/SwagQuality', '/u/StoneBrown',
+                               '/u/DrunkDragon', '/u/DrunkDragon', '/u/LouisBitcoin', '/u/DrunkDragon',
+                               '/u/emeraldgemini'), (86, 503, 101, 81, 135, 484, 485, 77, 484, 51)),
+                              (product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views))
