@@ -64,7 +64,7 @@ class BaseScraper(BaseClassWithLogger):
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
                  proxy: dict, session_id: int):
         super().__init__()
-        engine = get_engine()
+        self.engine = get_engine()
         self.pages_counter = 0
         self.failed_captcha_counter = 0
         self.mirror_db_lock: Lock = self._get_mirror_db_lock()
@@ -77,7 +77,7 @@ class BaseScraper(BaseClassWithLogger):
         self.is_logged_out_phrase = self._get_is_logged_out_phrase()
         self.working_dir = self._get_working_dir()
         self.proxy = proxy
-        self.db_session = get_db_session(engine)
+        self.db_session = get_db_session(self.engine)
         self.thread_id = thread_id
         self.nr_of_threads = nr_of_threads
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
@@ -101,7 +101,7 @@ class BaseScraper(BaseClassWithLogger):
             self._generic_error_catch_wrapper(*queue_item, func=self._scrape_queue_item)
 
         self.logger.info("Job queue is empty. Wrapping up...")
-        self._wrap_up_session(exited_gracefully=True)
+        self._wrap_up_session(self.db_session, exited_gracefully=True)
 
     def _initiate_session(self) -> int:
         from socket import getfqdn
@@ -157,14 +157,14 @@ class BaseScraper(BaseClassWithLogger):
             print_error_to_file(self.market_id, self.thread_id, meta_error_string, "meta")
         sleep(2)
 
-    def _wrap_up_session(self, exited_gracefully: bool = False) -> None:
+    def _wrap_up_session(self, db_session: Session, exited_gracefully: bool = False, fail_count: int = 0) -> None:
         with self.__wrap_up_session_lock__:
             self._release_user_credentials()
             try:
-                self.mirror_manager.set_success_time_current_mirror(self.db_session)
+                self.mirror_manager.set_success_time_current_mirror(db_session)
             except DB_EXCEPTIONS_TUPLE:
-                self.db_session.rollback()
-            scraping_session = self.db_session.query(ScrapingSession).filter(
+                db_session.rollback()
+            scraping_session = db_session.query(ScrapingSession).filter(
                 ScrapingSession.id == self.session_id).first()
 
             scraping_session.time_finished = datetime.fromtimestamp(time())
@@ -173,7 +173,7 @@ class BaseScraper(BaseClassWithLogger):
 
             while True:
                 try:
-                    self.db_session.commit()
+                    db_session.commit()
                     self.logger.info(f"Commited data to scraping_session with id {self.session_id}.")
                     break
                 except DB_EXCEPTIONS_TUPLE as e:
@@ -183,9 +183,20 @@ class BaseScraper(BaseClassWithLogger):
                         f"Error commiting data to scraping_session with id {self.session_id}. Sleeping {wait} seconds "
                         f"and trying again...")
                     sleep(wait)
+                    fail_count += 1
+                    if fail_count % 5 == 0:
+                        db_session.expunge_all()
+                        db_session.close()
+                        db_session = get_db_session(self.engine)
+                        return self._wrap_up_session(db_session, exited_gracefully=exited_gracefully,
+                                                     fail_count=fail_count)
+                    elif fail_count > 10:
+                        self.logger.critical(
+                            f"Failed to commit session data to {self.session_id}. Exiting ungracefully.")
+                        break
 
-            self.db_session.expunge_all()
-            self.db_session.close()
+            db_session.expunge_all()
+            db_session.close()
 
     def _get_cookie_string(self, web_session: requests.Session) -> str:
         request_as_string = pretty_print_GET(web_session.prepare_request(
@@ -532,7 +543,7 @@ class BaseScraper(BaseClassWithLogger):
         error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
         print_error_to_file(self.market_id, self.thread_id, error_string)
         self._log_and_print_error(self.db_session, e, error_string, print_error=False)
-        self._wrap_up_session()
+        self._wrap_up_session(self.db_session)
         raise e
 
     def _get_web_response_with_error_catch(self, web_session, http_verb, url_path, *args, **kwargs) -> Response:
@@ -553,7 +564,7 @@ class BaseScraper(BaseClassWithLogger):
                     return web_response
             except (KeyboardInterrupt, SystemExit, AttributeError) as e:
                 self._log_and_print_error(self.db_session, e, traceback.format_exc())
-                self._wrap_up_session()
+                self._wrap_up_session(self.db_session)
                 raise e
             except WEB_EXCEPTIONS_TUPLE as e:
                 self._log_and_print_error(self.db_session, e, traceback.format_exc(), print_error=False)
