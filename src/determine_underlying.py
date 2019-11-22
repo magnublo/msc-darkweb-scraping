@@ -16,18 +16,22 @@ getcontext().prec = 100
 
 MAX_VALID_PERCENT_CHANGE = 25
 
-def load_dict(file_name: str) -> Dict[float, float]:
-    with open(file_name, 'r') as file:
-        lines = file.readlines()
 
-    res = {}
+USD_PER_CAD_DICT = {}
+USD_PER_AUD_DICT = {}
+USD_PER_GBP_DICT = {}
+USD_PER_EUR_DICT = {}
 
-    for line in lines[1:]:
-        day_month, year, rate, _, _, _, _ = line.split(",")
-        d = dateparser.parse(" ".join([day_month, year]))
-        res[d.timestamp()] = float(rate)
+with open("dnb_rates.txt", 'r') as file:
+    lines = file.readlines()
 
-    return res
+res = {}
+
+for line in lines[1:]:
+    day_month, year, _, opening_rate, _, _, _ = line.split(",")
+    d = dateparser.parse(" ".join([day_month, year]))
+    res[d.timestamp()] = float(opening_rate)
+
 
 
 def get_listing_observations(db_session: Session) -> List[tuple]:
@@ -120,10 +124,7 @@ def get_line(url, underlying, min_var, second_min_var, btc_var, xmr_var, ltc_var
 engine = get_engine()
 
 DB_SESSION = get_db_session(engine)
-USD_PER_CAD_DICT = load_dict('/home/magnus/PycharmProjects/msc/CAD_USD Historical Data.csv')
-USD_PER_AUD_DICT = load_dict('/home/magnus/PycharmProjects/msc/AUD_USD Historical Data.csv')
-USD_PER_GBP_DICT = load_dict('/home/magnus/PycharmProjects/msc/GBP_USD Historical Data.csv')
-USD_PER_EUR_DICT = load_dict('/home/magnus/PycharmProjects/msc/EUR_USD Historical Data.csv')
+
 
 assert USD_PER_CAD_DICT.keys() == USD_PER_AUD_DICT.keys() == USD_PER_GBP_DICT.keys() == USD_PER_EUR_DICT.keys()
 
@@ -142,14 +143,14 @@ for i, url in zip(range(len(url_dict.keys())), url_dict.keys()):
         sys.stdout.write(f"\r{round(i/len(url_dict.keys()), 2)*100} %")
         sys.stdout.flush()
 
-with open('insert_variances_statement.txt', 'w') as f:
+with open('insert_variances_statement.sql', 'w') as f:
     # noinspection SqlNoDataSourceInspection,SqlResolve
     f.write(
         r'INSERT INTO `magnublo_scraping`.`listing_observation_currency_variances` (`url`, `underlying`, '
         r'`next_best_diff`, `btc_var`, `xmr_var`, `ltc_var`, `usd_var`, `cad_var`, `aud_var`, `gbp_var`, `eur_var`) '
         r'VALUES ')
     f.writelines(lines[:-1])
-    f.writelines(lines[-1][:-1])
+    f.writelines(lines[-1].strip()[:-1])
 
 DB_SESSION.close()
 
