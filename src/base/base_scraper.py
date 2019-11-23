@@ -27,7 +27,8 @@ from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DAT
     RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, \
     FAILED_CAPTCHAS_PER_PAUSE, \
     TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE, ANTICAPTCHA_ERROR_PER_PAUSE, \
-    TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL, WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE
+    TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL, WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE, \
+    MAX_TEMPORARY_ERRORS_PER_URL
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
@@ -65,6 +66,7 @@ class BaseScraper(BaseClassWithLogger):
                  proxy: dict, session_id: int):
         super().__init__()
         self.engine = get_engine()
+        self.url_failure_counts: Dict[str, int] = {}
         self.pages_counter = 0
         self.failed_captcha_counter = 0
         self.mirror_db_lock: Lock = self._get_mirror_db_lock()
@@ -554,7 +556,10 @@ class BaseScraper(BaseClassWithLogger):
                 web_response = web_session.request(http_verb, url, *args, **kwargs)
                 temporary_server_error = self.get_temporary_server_error(web_response)
                 if temporary_server_error:
-                    raise temporary_server_error
+                    if self._server_error_seems_permanent(temporary_server_error, url_path):
+                        web_response.do_continue = True
+                    else:
+                        raise temporary_server_error
                 self.time_last_received_response = time()
                 if self._is_meta_refresh(web_response.text):
                     redir_url = self._wait_out_meta_refresh_and_get_redirect_url(web_response)
@@ -847,3 +852,10 @@ class BaseScraper(BaseClassWithLogger):
         for web_session in self.web_sessions:
             web_session.cookies.clear()
         self.logger.warning("Cleared all cookies after retrieving new mirror.")
+
+    def _server_error_seems_permanent(self, temporary_server_error, url_path) -> bool:
+        if temporary_server_error not in self.url_failure_counts.keys():
+            self.url_failure_counts[url_path] = 1
+        else:
+            self.url_failure_counts[url_path] += 1
+        return self.url_failure_counts[url_path] > MAX_TEMPORARY_ERRORS_PER_URL

@@ -426,6 +426,8 @@ class EmpireScrapingSession(BaseScraper):
         self.scraping_funcs: EmpireScrapingFunctions
 
         web_response = self._get_logged_in_web_response(search_result_url)
+        if hasattr(web_response, 'do_continue'):
+            return
 
         soup_html = get_page_as_soup_html(web_response.text)
         product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views = \
