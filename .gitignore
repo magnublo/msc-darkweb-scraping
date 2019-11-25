@@ -265,3 +265,5 @@ environment_settings.py
 /venv
 
 test.py
+
+*.csv

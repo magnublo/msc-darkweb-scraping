@@ -1,7 +1,13 @@
+import multiprocessing
+import re
 import statistics
 import sys
+import threading
 from datetime import datetime
 from decimal import *
+from multiprocessing import Queue
+from threading import Lock
+from time import sleep
 from typing import List, Dict, Tuple, Optional
 
 import dateparser
@@ -11,27 +17,34 @@ from sqlalchemy.orm import Session
 from src.db_utils import get_engine, get_db_session
 from src.models.listing_observation import ListingObservation
 from src.models.scraping_session import ScrapingSession
+from itertools import islice
+from sortedcontainers import SortedDict
 
 getcontext().prec = 100
 
 MAX_VALID_PERCENT_CHANGE = 25
 
+USD_PER_CAD_DICT: SortedDict = SortedDict({})
+USD_PER_AUD_DICT: SortedDict = SortedDict({})
+USD_PER_GBP_DICT: SortedDict = SortedDict({})
+USD_PER_EUR_DICT: SortedDict = SortedDict({})
 
-USD_PER_CAD_DICT = {}
-USD_PER_AUD_DICT = {}
-USD_PER_GBP_DICT = {}
-USD_PER_EUR_DICT = {}
-
-with open("dnb_rates.txt", 'r') as file:
-    lines = file.readlines()
+with open("/home/magnus/PycharmProjects/msc/ExchangeRates_minute2.csv", 'r') as file:
+    rate_lines = file.readlines()
 
 res = {}
 
-for line in lines[1:]:
-    day_month, year, _, opening_rate, _, _, _ = line.split(",")
-    d = dateparser.parse(" ".join([day_month, year]))
-    res[d.timestamp()] = float(opening_rate)
-
+for line, i in zip(rate_lines[6:], range(6, len(rate_lines))):
+    eur, gbp, cad, aud, _, _ = line.split(";;")
+    d: List[Tuple[datetime, float]] = []
+    for curr, usd_per_x_dict in zip((eur, gbp, cad, aud),
+                                    (USD_PER_EUR_DICT, USD_PER_GBP_DICT, USD_PER_CAD_DICT, USD_PER_AUD_DICT)):
+        time_str, price_str = curr.split(";")
+        month, day, year, hour, minute = [int(t) for t in re.split(r"[\/\s:]", time_str)]
+        year = year + 2000 if year < 2000 else year
+        price = float(price_str)
+        d = datetime(year=year, month=month, day=day, hour=hour, minute=minute).timestamp()
+        usd_per_x_dict[d] = price
 
 
 def get_listing_observations(db_session: Session) -> List[tuple]:
@@ -39,11 +52,8 @@ def get_listing_observations(db_session: Session) -> List[tuple]:
                                                 ListingObservation.created_date,
                                                 ListingObservation.price, ListingObservation.fiat_currency,
                                                 ListingObservation.btc_rate, ListingObservation.xmr_rate,
-                                                ListingObservation.ltc_rate).join(ScrapingSession,
-                                                                                  ScrapingSession.id ==
-                                                                                  ListingObservation.session_id).filter(
-        ScrapingSession.market == "EMPIRE_MARKET").all()
-    return [l for l in all_listing_observations if l[5] is not None]
+                                                ListingObservation.ltc_rate).all()
+    return [l for l in all_listing_observations]
 
 
 def get_listings_by_url(results: List[tuple]) -> Dict[str, List[tuple]]:
@@ -57,9 +67,17 @@ def get_listings_by_url(results: List[tuple]) -> Dict[str, List[tuple]]:
     return url_dict
 
 
-def get_rate(usd_per_x_dict: Dict[float, float], date_time: datetime) -> Decimal:
+def closest(sorted_dict, key):
+    "Return closest key in `sorted_dict` to given `key`."
+    assert len(sorted_dict) > 0
+    keys = list(islice(sorted_dict.irange(minimum=key), 1))
+    keys.extend(islice(sorted_dict.irange(maximum=key, reverse=True), 1))
+    return min(keys, key=lambda k: abs(key - k))
+
+
+def get_rate(usd_per_x_dict: SortedDict, date_time: datetime) -> Decimal:
     t = date_time.timestamp()
-    closest_timestamp = min(usd_per_x_dict.keys(), key=lambda k: abs(t - k))
+    closest_timestamp = closest(usd_per_x_dict, t)
     rate = usd_per_x_dict[closest_timestamp]
     return Decimal(rate)
 
@@ -78,11 +96,11 @@ def get_currency_variances(listing_observations: List[Tuple]) -> Optional[Tuple]
     # cleaned_listing_observations = [l for l in listing_observations if l[5] is not None]
     listing = listing_observations[0]
     _, url, date_time, usd_price, _, usd_per_btc, usd_per_xmr, usd_per_ltc = listing
-    usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc = [Decimal(d) for d in
+    usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc = [d if d is None else Decimal(d) for d in
                                                         (usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc)]
     base_btc = usd_price / usd_per_btc
     base_xmr = usd_price / usd_per_xmr
-    base_ltc = usd_price / usd_per_ltc
+    base_ltc = usd_price / usd_per_ltc if usd_per_ltc else None
     base_cad = usd_price / get_rate(USD_PER_CAD_DICT, date_time)
     base_aud = usd_price / get_rate(USD_PER_AUD_DICT, date_time)
     base_gbp = usd_price / get_rate(USD_PER_GBP_DICT, date_time)
@@ -91,26 +109,30 @@ def get_currency_variances(listing_observations: List[Tuple]) -> Optional[Tuple]
 
     for listing in listing_observations:
         _, url, date_time, usd_price, _, usd_per_btc, usd_per_xmr, usd_per_ltc = listing
-        usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc = [Decimal(d) for d in
-                                                            (usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc)]
+        usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc = [d if d is None else Decimal(d) for d in
+                                                        (usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc)]
         btcs.append((usd_price / usd_per_btc) / base_btc)
         xmrs.append((usd_price / usd_per_xmr) / base_xmr)
-        ltcs.append((usd_price / usd_per_ltc) / base_ltc)
         cads.append((usd_price / get_rate(USD_PER_CAD_DICT, date_time)) / base_cad)
         auds.append((usd_price / get_rate(USD_PER_AUD_DICT, date_time)) / base_aud)
         gbps.append((usd_price / get_rate(USD_PER_GBP_DICT, date_time)) / base_gbp)
         eurs.append((usd_price / get_rate(USD_PER_EUR_DICT, date_time)) / base_eur)
         usds.append(usd_price / base_usd)
+        if base_ltc:
+            ltcs.append((usd_price / usd_per_ltc) / base_ltc)
+        else:
+            ltcs.append(1)
 
     is_valid = len(usds) > 1
     for i in range(1, len(usds)):
-        is_valid = is_valid and usds[i] / usds[i-1] < (1+MAX_VALID_PERCENT_CHANGE/100) and usds[i] / usds[i-1] > (1-MAX_VALID_PERCENT_CHANGE/100)
+        is_valid = is_valid and usds[i] / usds[i - 1] < (1 + MAX_VALID_PERCENT_CHANGE / 100) and usds[i] / usds[
+            i - 1] > (1 - MAX_VALID_PERCENT_CHANGE / 100)
 
     return tuple([(n, statistics.variance(t)) for t, n in
                   zip(arrs, ('BTC', 'XMR', 'LTC', 'USD', 'CAD', 'AUD', 'GBP', 'EUR'))]) if is_valid else None
 
 
-def get_line(url, underlying, min_var, second_min_var, btc_var, xmr_var, ltc_var, usd_var, cad_var, aud_var, gbp_var,
+def get_line(url, underlying, min_var, second_min_var, n, btc_var, xmr_var, ltc_var, usd_var, cad_var, aud_var, gbp_var,
              eur_var) -> str:
     btc_var, xmr_var, ltc_var, usd_var, cad_var, aud_var, gbp_var, eur_var = [numpy.format_float_positional(a) for a in
                                                                               (btc_var[1], xmr_var[1], ltc_var[1],
@@ -118,39 +140,75 @@ def get_line(url, underlying, min_var, second_min_var, btc_var, xmr_var, ltc_var
                                                                                gbp_var[1], eur_var[1])]
     return f"('{url}', '{underlying}', {numpy.format_float_positional(-(min_var-second_min_var))}, {btc_var}, " \
            f"{xmr_var}, {ltc_var}, {usd_var}, {cad_var}, " \
-           f"{aud_var}, {gbp_var}, {eur_var}), \n"
+           f"{aud_var}, {gbp_var}, {eur_var}, {n}), \n"
 
+
+def chunkify(lst, n):
+    return [tuple(lst[i::n]) for i in range(n)]
+
+
+queue = multiprocessing.Queue()
+
+
+def generate_lines(url_dict: dict, keys: Tuple[str], queue: Queue, t):
+    for i, url in zip(range(len(keys)), keys):
+        l = len(keys)
+        vars = get_currency_variances(url_dict[url])
+        if vars is not None:
+            min_var, second_min_var = sorted(vars, key=lambda v: v[1])[0:2]
+            queue.put(get_line(url, min_var[0], min_var[1], second_min_var[1], len(url_dict[url]), *vars))
+
+        if i % (max(l // 100, 1)) == 0:
+            sys.stdout.write(f"\r{t} {round(i/len(keys), 2)*100} %")
+            sys.stdout.flush()
+    exit(0)
 
 engine = get_engine()
 
 DB_SESSION = get_db_session(engine)
 
+# assert USD_PER_CAD_DICT.keys() == USD_PER_AUD_DICT.keys() == USD_PER_GBP_DICT.keys() == USD_PER_EUR_DICT.keys()
 
-assert USD_PER_CAD_DICT.keys() == USD_PER_AUD_DICT.keys() == USD_PER_GBP_DICT.keys() == USD_PER_EUR_DICT.keys()
 
-lines = []
 listings = get_listing_observations(DB_SESSION)
 url_dict = get_listings_by_url(listings)
 
-for i, url in zip(range(len(url_dict.keys())), url_dict.keys()):
-    vars = get_currency_variances(url_dict[url])
-    if vars is not None:
-        btc_var, xmr_var, ltc_var, usd_var, cad_var, aud_var, gbp_var, eur_var = vars
-        min_var, second_min_var = sorted(vars, key=lambda v: v[1])[0:2]
-        lines.append(get_line(url, min_var[0], min_var[1], second_min_var[1], *vars))
+nr_of_threads = 8
+keys = [k for k in url_dict.keys()]
+i = 0
+ts = []
 
-    if i % 10000:
-        sys.stdout.write(f"\r{round(i/len(url_dict.keys()), 2)*100} %")
-        sys.stdout.flush()
+for chunk in chunkify(keys, nr_of_threads):
+    new_dict = {}
+    for k in chunk:
+        new_dict[k] = url_dict[k]
+    t = multiprocessing.Process(target=generate_lines, args=(new_dict, chunk, queue, i))
+    ts.append(t)
+    t.start()
+    i += 1
+
+while True:
+    s = queue.qsize()
+    sleep(1)
+    s2 = queue.qsize()
+    if s == s2: break
+print("Threads were joined.")
+
+sql_lines = []
+
+while not queue.empty():
+    sql_lines.append(queue.get())
 
 with open('insert_variances_statement.sql', 'w') as f:
-    # noinspection SqlNoDataSourceInspection,SqlResolve
     f.write(
         r'INSERT INTO `magnublo_scraping`.`listing_observation_currency_variances` (`url`, `underlying`, '
-        r'`next_best_diff`, `btc_var`, `xmr_var`, `ltc_var`, `usd_var`, `cad_var`, `aud_var`, `gbp_var`, `eur_var`) '
+        r'`next_best_diff`, `btc_var`, `xmr_var`, `ltc_var`, `usd_var`, `cad_var`, `aud_var`, `gbp_var`, '
+        r'`eur_var`, '
+        r'`nr_of_observations`) '
         r'VALUES ')
-    f.writelines(lines[:-1])
-    f.writelines(lines[-1].strip()[:-1])
+    # noinspection SqlNoDataSourceInspection,SqlResolve
+    f.writelines(sql_lines[:-1])
+    f.write(sql_lines[-1].strip()[:-1])
 
 DB_SESSION.close()
 
