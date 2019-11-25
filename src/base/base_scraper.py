@@ -442,6 +442,7 @@ class BaseScraper(BaseClassWithLogger):
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
         image_response = self._get_logged_in_web_response(image_url, web_session=web_session).content
         base64_image = base64.b64encode(image_response).decode("utf-8")
+        assert len(base64_image) > 100
         captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
             base64_image)
 
