@@ -168,6 +168,7 @@ class TestUserIsBanned(EmpireBaseTest):
 
 
 class TestGetCategoryUrlsAndNrOfListings(EmpireBaseTest):
+
     def test_get_category_urls_and_nr_of_listings(self):
         soup_html = self._get_page_as_soup_html("saved_empire_category_index_0")
         category_urls_and_nrs_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(soup_html)
@@ -212,7 +213,7 @@ class TestGetListingCategories(EmpireBaseTest):
 
     def test_get_listing_categories_zero(self):
         soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_0")
-        listing_categories = scrapingFunctions.get_listing_categories(soup_html, "empiremktxgjovhm.onion")
+        listing_categories = scrapingFunctions.get_listing_categories(soup_html)
         self.assertTupleEqual((('Digital Products', 5, None, 0), ('Other', 49, 'Digital Products', 1)),
                               listing_categories)
         for category in listing_categories:
@@ -220,14 +221,14 @@ class TestGetListingCategories(EmpireBaseTest):
 
     def test_get_listing_categories_one(self):
         soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_1")
-        listing_categories = scrapingFunctions.get_listing_categories(soup_html, "empiremktxgjovhm.onion")
+        listing_categories = scrapingFunctions.get_listing_categories(soup_html)
         self.assertTupleEqual((('Jewels & Gold', 6, None, 0), ('Gold', 50, 'Jewels & Gold', 1)), listing_categories)
         for category in listing_categories:
             self.assertEqual(category[3], listing_categories.index(category))
 
     def test_get_listing_categories_two(self):
         soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_2")
-        listing_categories = scrapingFunctions.get_listing_categories(soup_html, "empiremktxgjovhm.onion")
+        listing_categories = scrapingFunctions.get_listing_categories(soup_html)
         self.assertTupleEqual((('Drugs & Chemicals', 2, None, 0), ('Stimulants', 26, 'Drugs & Chemicals', 1),
                                ('Cocaine', 105, 'Stimulants', 2)), listing_categories)
         for category in listing_categories:
@@ -235,7 +236,7 @@ class TestGetListingCategories(EmpireBaseTest):
 
     def test_get_listing_categories_three(self):
         soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_3")
-        listing_categories = scrapingFunctions.get_listing_categories(soup_html, "empiremktxgjovhm.onion")
+        listing_categories = scrapingFunctions.get_listing_categories(soup_html)
         self.assertTupleEqual(
             (('Drugs & Chemicals', 2, None, 0), ('Benzos', 19, 'Drugs & Chemicals', 1), ('Pills', 69, 'Benzos', 2)),
             listing_categories)
@@ -244,7 +245,7 @@ class TestGetListingCategories(EmpireBaseTest):
 
     def test_get_listing_categories_four(self):
         soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_4")
-        listing_categories = scrapingFunctions.get_listing_categories(soup_html, "empiremktxgjovhm.onion")
+        listing_categories = scrapingFunctions.get_listing_categories(soup_html)
         self.assertTupleEqual(
             (('Drugs & Chemicals', 2, None, 0), ('Benzos', 19, 'Drugs & Chemicals', 1), ('Pills', 69, 'Benzos', 2)),
             listing_categories)
@@ -253,10 +254,19 @@ class TestGetListingCategories(EmpireBaseTest):
 
     def test_get_listing_categories_five(self):
         soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_5")
-        listing_categories = scrapingFunctions.get_listing_categories(soup_html, "empiremktxgjovhm.onion")
+        listing_categories = scrapingFunctions.get_listing_categories(soup_html)
         self.assertTupleEqual(
             (('Drugs & Chemicals', 2, None, 0), ('Benzos', 19, 'Drugs & Chemicals', 1), ('Pills', 69, 'Benzos', 2)),
             listing_categories)
+        for category in listing_categories:
+            self.assertEqual(category[3], listing_categories.index(category))
+
+    def test_get_listing_categories_twelve(self):
+        soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_12")
+        listing_categories = scrapingFunctions.get_listing_categories(soup_html)
+        self.assertTupleEqual((('Drugs & Chemicals', 2, None, 0), ('Stimulants', 26, 'Drugs & Chemicals', 1),
+                               ('Speed', 98, 'Stimulants', 2)),
+                              listing_categories)
         for category in listing_categories:
             self.assertEqual(category[3], listing_categories.index(category))
 
@@ -369,22 +379,23 @@ class TestGetListingInfos(EmpireBaseTest):
         soup_html = self._get_page_as_soup_html("search_results/saved_empire_search_result_1")
         product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views = \
             scrapingFunctions.get_listing_infos(
-            soup_html)
+                soup_html)
         self.assertTupleEqual((('/product/101040/34/510709', '/product/82/35/56', '/product/101107/34/510709',
                                 '/product/104805/34/105383', '/product/107107/34/537502', '/product/99/35/56',
                                 '/product/101/35/56', '/product/110230/34/573618', '/product/117/35/56',
                                 '/product/122799/34/26307'),
                                (False, False, False, False, False, False, False, False, False, False), (
-                               'Scaning networks for hacking - guide + software', 'How To Make Money With Ringtones',
-                               'HACK ANY WIFI GUARANTEED 100 19',
-                               'Biggest Hacking, Carding and Cracking [2019] Bundle out there!!!!',
-                               'SUCCESSFUL BANK TRANSFER WITH RECEIPT AND DETAILS',
-                               'How To Open Handcuffs Without Keys', 'How To Become An Alpha Male',
-                               'STEAL CRYPTOCURRENCY | PRIVATE GUIDE | +100BTC MADE',
-                               'How To Make $100 A Day (Very Easy)', 'BioHacking Kit for Gene Editing CRISPR'), (
-                               'Venture', 'DrunkDragon', 'Venture', 'SwagQuality', 'StoneBrown', 'DrunkDragon',
-                               'DrunkDragon', 'LouisBitcoin', 'DrunkDragon', 'emeraldgemini'), (
-                               '/u/Venture', '/u/DrunkDragon', '/u/Venture', '/u/SwagQuality', '/u/StoneBrown',
-                               '/u/DrunkDragon', '/u/DrunkDragon', '/u/LouisBitcoin', '/u/DrunkDragon',
-                               '/u/emeraldgemini'), (86, 503, 101, 81, 135, 484, 485, 77, 484, 51)),
+                                   'Scaning networks for hacking - guide + software',
+                                   'How To Make Money With Ringtones',
+                                   'HACK ANY WIFI GUARANTEED 100 19',
+                                   'Biggest Hacking, Carding and Cracking [2019] Bundle out there!!!!',
+                                   'SUCCESSFUL BANK TRANSFER WITH RECEIPT AND DETAILS',
+                                   'How To Open Handcuffs Without Keys', 'How To Become An Alpha Male',
+                                   'STEAL CRYPTOCURRENCY | PRIVATE GUIDE | +100BTC MADE',
+                                   'How To Make $100 A Day (Very Easy)', 'BioHacking Kit for Gene Editing CRISPR'), (
+                                   'Venture', 'DrunkDragon', 'Venture', 'SwagQuality', 'StoneBrown', 'DrunkDragon',
+                                   'DrunkDragon', 'LouisBitcoin', 'DrunkDragon', 'emeraldgemini'), (
+                                   '/u/Venture', '/u/DrunkDragon', '/u/Venture', '/u/SwagQuality', '/u/StoneBrown',
+                                   '/u/DrunkDragon', '/u/DrunkDragon', '/u/LouisBitcoin', '/u/DrunkDragon',
+                                   '/u/emeraldgemini'), (86, 503, 101, 81, 135, 484, 485, 77, 484, 51)),
                               (product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views))

@@ -154,25 +154,22 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert False
 
     @staticmethod
-    def get_listing_categories(soup_html: BeautifulSoup, mirror_base_url: str) -> Tuple[
+    def get_listing_categories(soup_html: BeautifulSoup) -> Tuple[
         Tuple[str, int, Optional[str], Optional[int]]]:
         # each element has name, marketside_id, parent_name and level
 
         listing_categories: List[Tuple[str, int, Optional[str], Optional[int]]] = []
+        a_tags = soup_html.select("body > div:nth-child(2) > div.body-content > div.sub_head_inner_header > h3 > a")
+        for a_tag in a_tags:
+            category = a_tag.text.strip()
+            url = str(a_tag['href'])
+            url_fragments = url.split("/")
+            marketside_category_id = int(url_fragments[-2])
+            parent_category_name = listing_categories[-1][0] if len(listing_categories) > 0 else None
+            listing_categories.append(
+                (category, marketside_category_id, parent_category_name, len(listing_categories)))
 
-        h3s = [div for div in soup_html.findAll('h3')]
-        for h3 in h3s:
-            a_tags = [a_tag for a_tag in h3.findAll('a', href=True)]
-            if len(a_tags) == 1:
-                if a_tags[0]["href"].find(f"{mirror_base_url}/category/") != -1:
-                    category = a_tags[0].text.strip()
-                    url = str(a_tags[0]['href'])
-                    url_fragments = url.split("/")
-                    marketside_category_id = int(url_fragments[-2])
-                    parent_category_name = listing_categories[-1][0] if len(listing_categories) > 0 else None
-                    listing_categories.append(
-                        (category, marketside_category_id, parent_category_name, len(listing_categories)))
-                    # TODO: Ignoring parent name and level for now
+        assert len(listing_categories) > 0
 
         return tuple(listing_categories)
 

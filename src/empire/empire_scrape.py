@@ -205,7 +205,7 @@ class EmpireScrapingSession(BaseScraper):
             else:
                 raise e
 
-        listing_categories = self.scraping_funcs.get_listing_categories(soup_html, self.mirror_base_url)
+        listing_categories = self.scraping_funcs.get_listing_categories(soup_html)
         accepts_BTC, accepts_LTC, accepts_XMR = self.scraping_funcs.accepts_currencies(soup_html)
         nr_sold, nr_sold_since_date = self.scraping_funcs.get_nr_sold_since_date(soup_html)
         fiat_currency, price = self.scraping_funcs.get_fiat_currency_and_price(soup_html)
