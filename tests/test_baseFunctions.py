@@ -60,10 +60,17 @@ class TestGetCaptchaPageUrl(BaseTest):
 
 
 class TestGetCaptchaBase64ImageIdTokenAndSolutionPostUrlFromMirrorOverviewPage(BaseTest):
-    def test_get_captcha_base64_image_id_token_and_solution_post_url_from_mirror_overview_page(self):
+    def test_get_captcha_base64_image_id_token_and_solution_post_url_from_mirror_overview_page_zero(self):
         soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_0", html_dir=HTML_DIR)
         base64_image = scrapingFunctions.get_captcha_base64_image_from_mirror_overview_page(soup_html)
-        expected_value = self._get_expected_value("saved_darkfail_base64_captcha_image",
+        expected_value = self._get_expected_value("saved_darkfail_base64_captcha_image_0",
+                                                  expected_values_dir=EXPECTED_VALUES_DIR, bytes=False)
+        self.assertEqual(expected_value, base64_image)
+
+    def test_get_captcha_base64_image_id_token_and_solution_post_url_from_mirror_overview_page_two(self):
+        soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_2", html_dir=HTML_DIR)
+        base64_image = scrapingFunctions.get_captcha_base64_image_from_mirror_overview_page(soup_html)
+        expected_value = self._get_expected_value("saved_darkfail_base64_captcha_image_1",
                                                   expected_values_dir=EXPECTED_VALUES_DIR, bytes=False)
         self.assertEqual(expected_value, base64_image)
 

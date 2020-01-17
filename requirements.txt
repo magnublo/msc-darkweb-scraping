@@ -16,3 +16,4 @@ text2digits==0.0.5
 pycountry==19.8.18
 brotli==1.0.7
 tabulate==0.8.5
+cssutils==1.0.2

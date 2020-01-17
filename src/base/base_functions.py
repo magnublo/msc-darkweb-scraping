@@ -8,6 +8,7 @@ import bs4
 import dateparser
 from bs4 import BeautifulSoup
 from src.base.base_logger import BaseClassWithLogger
+import cssutils
 
 def _find_index_of_h4_with_market_string(h4s: List[BeautifulSoup], market_string: str,
                                          content_soup: BeautifulSoup) -> Optional[int]:
@@ -214,13 +215,27 @@ class BaseFunctions(BaseClassWithLogger):
 
     @staticmethod
     def get_captcha_base64_image_from_mirror_overview_page(soup_html: BeautifulSoup) -> str:
-        imgs = [img for img in soup_html.findAll('img')]
-        assert len(imgs) == 1
-        img = imgs[0]
+        all_imgs = [img for img in soup_html.findAll('img')]
+
+        styles = soup_html.select("head > style")
+        assert len(styles) == 1
+        style = styles[0]
+
+        style: BeautifulSoup
+        sheet = cssutils.parseString(style.text)
+
+        # finding all HTML classes with CSS attribute 'display' set to 'none'
+        invisible_classes = [s.selectorText.split(".")[-1] for s in sheet if s.style.display == "none"]
+
+        # finding all images which are NOT invisible in a typical browser
+        captcha_imgs = [img for img in all_imgs if img['class'][0] not in invisible_classes]
+
+        assert len(captcha_imgs) == 1
+        captcha_img = captcha_imgs[0]
 
         pattern = "data:data:image/png;base64,"
 
-        return img["src"][len(pattern):]
+        return captcha_img["src"][len(pattern):]
 
     @staticmethod
     def get_captcha_solution_payload_to_mirror_overview_page(soup_html: BeautifulSoup, captcha_solution: str) -> Dict[
