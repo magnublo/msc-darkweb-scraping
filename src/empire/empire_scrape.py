@@ -8,6 +8,7 @@ from typing import List, Tuple, Type, Optional
 
 import requests
 from bs4 import BeautifulSoup
+from requests import Response
 
 from definitions import EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_HTTP_HEADERS, \
@@ -58,6 +59,7 @@ def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) 
 
 
 class EmpireScrapingSession(BaseScraper):
+
     __mirror_manager_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
@@ -70,6 +72,25 @@ class EmpireScrapingSession(BaseScraper):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
                          session_id=session_id)
 
+    def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
+        if response.text.find(self._get_successful_login_phrase()) != -1:
+            return False
+
+        for history_response in response.history:
+            if history_response.is_redirect:
+                if history_response.headers.get('location') == login_url:
+                    return True
+
+        if response.text.find(login_page_phrase) != -1:
+            return True
+
+        soup_html = get_page_as_soup_html(response.text)
+        body = soup_html.select_one("body")
+        if body and body.text == "404 error":
+            return True
+
+        return False
+
     def _handle_custom_server_error(self) -> None:
         raise NotImplementedError('')
 
@@ -78,9 +99,6 @@ class EmpireScrapingSession(BaseScraper):
 
     def _get_mirror_failure_lock(self) -> Lock:
         return self.__mirror_failure_lock__
-
-    def _has_successful_login_phrase(self) -> bool:
-        return False
 
     def _get_successful_login_phrase(self) -> str:
         return ""

@@ -631,20 +631,6 @@ class BaseScraper(BaseClassWithLogger):
         else:
             return f"[t-ID {self.thread_id} prx {self.proxy_port}] {msg}"
 
-    def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
-        if self._has_successful_login_phrase():
-            if response.text.find(self._get_successful_login_phrase()) != -1:
-                return False
-        for history_response in response.history:
-            if history_response.is_redirect:
-                if history_response.headers.get('location') == login_url:
-                    return True
-
-        if response.text.find(login_page_phrase) != -1:
-            return True
-
-        return False
-
     def get_temporary_server_error(self, response) -> Optional[HTTPError]:
         if self._is_custom_server_error(response):
             self._handle_custom_server_error()
@@ -704,8 +690,13 @@ class BaseScraper(BaseClassWithLogger):
     def _get_anti_captcha_kwargs(self):
         raise NotImplementedError('')
 
+    @abstractmethod
+    def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
+        raise NotImplementedError('')
+
     def _get_schemaed_url_from_path(self, url_path: str) -> str:
         return f"{get_schemaed_url(self.mirror_base_url, schema='http')}{url_path}"
+
 
     @staticmethod
     def _is_meta_refresh(text) -> bool:
@@ -719,9 +710,6 @@ class BaseScraper(BaseClassWithLogger):
         sleep(remaining_wait)
         return redirect_url
 
-    @abstractmethod
-    def _has_successful_login_phrase(self) -> bool:
-        raise NotImplementedError('')
 
     @abstractmethod
     def _get_successful_login_phrase(self) -> str:

@@ -169,8 +169,13 @@ class TestUserIsBanned(EmpireBaseTest):
 
 class TestGetCategoryUrlsAndNrOfListings(EmpireBaseTest):
 
-    def test_get_category_urls_and_nr_of_listings(self):
+    def test_get_category_urls_and_nr_of_listings_zero(self):
         soup_html = self._get_page_as_soup_html("saved_empire_category_index_0")
+        category_urls_and_nrs_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(soup_html)
+        a = 1
+
+    def test_get_category_urls_and_nr_of_listings_one(self):
+        soup_html = self._get_page_as_soup_html("saved_empire_category_index_1")
         category_urls_and_nrs_of_listings = scrapingFunctions.get_category_urls_and_nr_of_listings(soup_html)
         a = 1
 

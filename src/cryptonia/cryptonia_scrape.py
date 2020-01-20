@@ -43,6 +43,20 @@ class CryptoniaScrapingSession(BaseScraper):
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict, session_id: int):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy, session_id=session_id)
 
+    def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
+        if response.text.find(self._get_successful_login_phrase()) != -1:
+            return False
+
+        for history_response in response.history:
+            if history_response.is_redirect:
+                if history_response.headers.get('location') == login_url:
+                    return True
+
+        if response.text.find(login_page_phrase) != -1:
+            return True
+
+        return False
+
     def _handle_custom_server_error(self) -> None:
         time_since_last_response = time() - self.time_last_received_response
         if time_since_last_response > 300:
@@ -277,9 +291,6 @@ class CryptoniaScrapingSession(BaseScraper):
         if self.mirror_base_url:
             headers["Host"] = self.mirror_base_url
         return headers
-
-    def _has_successful_login_phrase(self) -> bool:
-        return True
 
     def _get_successful_login_phrase(self) -> str:
         return CRYPTONIA_MARKET_SUCCESSFUL_LOGIN_PHRASE
