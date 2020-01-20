@@ -197,6 +197,8 @@ class MirrorManager:
         captcha_base_64_image = self.scraper.scraping_funcs.get_captcha_base64_image_from_mirror_overview_page(
             captcha_page_soup_html)
 
+        captcha_parameter_name = self.scraper.scraping_funcs.get_captcha_post_parameter_name(captcha_page_soup_html)
+
         captcha_solution, solution_response = self.scraper._get_captcha_solution_from_base64_image(
             base64_image=captcha_base_64_image,
             anti_captcha_kwargs={'case': True, 'comment': 'Only type strong colored letters in foreground'})
@@ -204,7 +206,8 @@ class MirrorManager:
         captcha_solution_payload: Dict[str, str] = \
             self.scraper.scraping_funcs.get_captcha_solution_payload_to_mirror_overview_page(
                 captcha_page_soup_html,
-                captcha_solution)
+                captcha_solution,
+                captcha_parameter_name)
 
         captcha_solution_post_url: str = self.scraper.scraping_funcs.get_captcha_solution_post_url(
             captcha_page_soup_html)
@@ -247,9 +250,9 @@ class MirrorManager:
         http_verb = 'POST' if post_data else 'GET'
         kwargs = {"method": http_verb, 'url': url, 'data': post_data, 'headers': headers}
         max_tries = 10
-        if http_verb == 'GET': self.scraper.logger.debug(
+        if http_verb == 'GET': self.scraper.logger.info(
             pretty_print_GET(self.web_session.prepare_request(requests.Request(**kwargs))))
-        if http_verb == 'POST': self.scraper.logger.debug(pretty_print_POST(
+        if http_verb == 'POST': self.scraper.logger.info(pretty_print_POST(
             self.web_session.prepare_request(
                 requests.Request(**kwargs))))
         for _ in range(max_tries):
@@ -275,6 +278,7 @@ class MirrorManager:
         return {
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,"
                       "application/signed-exchange;v=b3",
+            "origin": f"https://{DARKFAIL_URL}",
             "accept-encoding": "gzip, deflate, br",
             "accept-language": "en-US,en;q=0.9,nb;q=0.8",
             "cache-control": "no-cache",

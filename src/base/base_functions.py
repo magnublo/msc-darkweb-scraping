@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from src.base.base_logger import BaseClassWithLogger
 import cssutils
 
+
 def _find_index_of_h4_with_market_string(h4s: List[BeautifulSoup], market_string: str,
                                          content_soup: BeautifulSoup) -> Optional[int]:
     for h4 in h4s:
@@ -91,9 +92,7 @@ def _find_lis_with_mirrors(start_index: int, end_index: int, content_soup: Beaut
     return tuple(lis)
 
 
-
 class BaseFunctions(BaseClassWithLogger):
-
     COMMA_SEPARATED_COUNTRY_REGEX = re.compile(r"([^,])+(,(\s+[a-zA-Z]+)+(\s+of))?")
 
     @abstractstaticmethod
@@ -153,7 +152,7 @@ class BaseFunctions(BaseClassWithLogger):
             url = table_data.contents[1].text
             pattern_index = url.find(url_schema_pattern)
             if pattern_index != -1:
-                cleaned_url = url[pattern_index+len(url_schema_pattern):]
+                cleaned_url = url[pattern_index + len(url_schema_pattern):]
             else:
                 cleaned_url = url
 
@@ -214,9 +213,7 @@ class BaseFunctions(BaseClassWithLogger):
         return a_tag["href"]
 
     @staticmethod
-    def get_captcha_base64_image_from_mirror_overview_page(soup_html: BeautifulSoup) -> str:
-        all_imgs = [img for img in soup_html.findAll('img')]
-
+    def _get_invisible_classes(soup_html: BeautifulSoup) -> Tuple[str]:
         styles = soup_html.select("head > style")
         assert len(styles) == 1
         style = styles[0]
@@ -225,7 +222,15 @@ class BaseFunctions(BaseClassWithLogger):
         sheet = cssutils.parseString(style.text)
 
         # finding all HTML classes with CSS attribute 'display' set to 'none'
-        invisible_classes = [s.selectorText.split(".")[-1] for s in sheet if s.style.display == "none"]
+        invisible_classes = [str(s.selectorText.split(".")[-1]) for s in sheet if s.style.display == "none"]
+
+        return tuple(invisible_classes)
+
+    @staticmethod
+    def get_captcha_base64_image_from_mirror_overview_page(soup_html: BeautifulSoup) -> str:
+        all_imgs = [img for img in soup_html.findAll('img')]
+
+        invisible_classes = BaseFunctions._get_invisible_classes(soup_html)
 
         # finding all images which are NOT invisible in a typical browser
         captcha_imgs = [img for img in all_imgs if img['class'][0] not in invisible_classes]
@@ -234,11 +239,26 @@ class BaseFunctions(BaseClassWithLogger):
         captcha_img = captcha_imgs[0]
 
         pattern = "data:data:image/png;base64,"
+        base64_image = captcha_img["src"][len(pattern):]
 
-        return captcha_img["src"][len(pattern):]
+        return base64_image
 
     @staticmethod
-    def get_captcha_solution_payload_to_mirror_overview_page(soup_html: BeautifulSoup, captcha_solution: str) -> Dict[
+    def get_captcha_post_parameter_name(soup_html: BeautifulSoup) -> str:
+        captcha_input_fields = soup_html.select("body > div.content > form > input[type=text]")
+
+        visible_captcha_input_fields = [i for i in captcha_input_fields if not
+        ('style' in i.attrs.keys() and i.attrs['style'].find("display: none;") != -1)]
+        assert len(visible_captcha_input_fields) == 1
+        visible_captcha_input_field = visible_captcha_input_fields[0]
+
+        name_of_captcha_post_parameter = visible_captcha_input_field['name']
+
+        return name_of_captcha_post_parameter
+
+    @staticmethod
+    def get_captcha_solution_payload_to_mirror_overview_page(soup_html: BeautifulSoup, captcha_solution: str,
+                                                             captcha_parameter_name: str) -> Dict[
         str, str]:
         id_inputs = [input for input in soup_html.findAll('input') if
                      'name' in input.attrs and input.attrs["name"] == 'id']
@@ -246,7 +266,7 @@ class BaseFunctions(BaseClassWithLogger):
         id_input = id_inputs[0]
         id = id_input["value"]
 
-        return {'id': id, 'captcha': captcha_solution}
+        return {'id': id, captcha_parameter_name: captcha_solution}
 
     @staticmethod
     def captcha_solution_was_wrong(soup_html: BeautifulSoup) -> bool:

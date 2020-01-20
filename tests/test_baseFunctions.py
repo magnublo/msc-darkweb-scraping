@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List
+from unittest import TestCase
 
 from definitions import ROOT_DIR, DARKFAIL_MARKET_STRINGS
 from src.base.base_functions import BaseFunctions as scrapingFunctions
@@ -79,7 +80,8 @@ class TestGetCaptchaSolutionPayloadToMirrorOverviewPage(BaseTest):
     def test_get_captcha_solution_payload_to_mirror_overview_page(self):
         soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_0", html_dir=HTML_DIR)
         solution_payload = scrapingFunctions.get_captcha_solution_payload_to_mirror_overview_page(soup_html,
-                                                                                                  "some_solution")
+                                                                                                  "some_solution",
+                                                                                                  "captcha")
         self.assertEqual({'id': '1hT7fR0Su2BGsk4Sj1m8', 'captcha': 'some_solution'}, solution_payload)
 
 
@@ -104,3 +106,9 @@ class TestGetStylesheetUrlFromMirrorSiteCaptchaPage(BaseTest):
             css_link = scrapingFunctions.get_stylesheet_url_from_arbitrary_mirror_overview_site_page(soup_html)
             self.assertEqual("/css/style.css", css_link)
 
+
+class TestGetCaptchaPostParameterName(BaseTest):
+    def test_get_captcha_post_parameter_name_two(self):
+        soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_2", html_dir=HTML_DIR)
+        captcha_post_parameter_name = scrapingFunctions.get_captcha_post_parameter_name(soup_html)
+        self.assertEqual("zooko", captcha_post_parameter_name)
