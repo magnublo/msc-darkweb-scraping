@@ -138,11 +138,15 @@ class TestGetBulkPrices(EmpireBaseTest):
 
 class TestGetCaptchaImageUrlFromMarketPage(EmpireBaseTest):
 
-    def test_get_captcha_image_url_from_market_page(self):
+    def test_get_captcha_image_url_from_market_page_zero(self):
         soup_html = self._get_page_as_soup_html("login_page/saved_empire_login_page_0")
         captcha_image_url = scrapingFunctions.get_captcha_image_url_from_market_page(soup_html)
         self.assertEqual("/public/captchaimg/1569591995.7041.jpg", captcha_image_url)
 
+    def test_get_captcha_image_url_from_market_page_one(self):
+        soup_html = self._get_page_as_soup_html("login_page/saved_empire_login_page_1")
+        captcha_image_url = scrapingFunctions.get_captcha_image_url_from_market_page(soup_html)
+        self.assertEqual("/public/captchaimg/1569591995.7041.jpg", captcha_image_url)
 
 class TestUserIsBanned(EmpireBaseTest):
 

@@ -428,7 +428,7 @@ class BaseScraper(BaseClassWithLogger):
                                                            headers=self.headers, data=post_data)
 
         if self._is_logged_out(response, self.login_url, self.is_logged_out_phrase) and not post_data:
-            web_session = self._login_and_set_cookie(web_session, response)
+            web_session = self._login_and_set_cookie(web_session)
             return self._get_logged_in_web_response(url_path, web_session=web_session)
         else:
             self.pages_counter += 1
@@ -437,8 +437,11 @@ class BaseScraper(BaseClassWithLogger):
             self.web_session = self._rotate_web_session()
             return response
 
-    def _login_and_set_cookie(self, web_session: requests.Session, web_response: Response) -> requests.Session:
+    def _login_and_set_cookie(self, web_session: requests.Session) -> requests.Session:
+        web_response = self._get_web_response_with_error_catch(web_session, 'GET', self._get_login_url(),
+                                                            headers=self.headers, proxies=self.proxy)
         soup_html = get_page_as_soup_html(web_response.text)
+
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
         image_response = self._get_logged_in_web_response(image_url, web_session=web_session).content
         base64_image = base64.b64encode(image_response).decode("utf-8")
@@ -469,7 +472,7 @@ class BaseScraper(BaseClassWithLogger):
                 self._release_user_credentials()
                 self.web_sessions = self._get_web_sessions(order_rand=True)
                 return self.web_sessions[0]
-            return self._login_and_set_cookie(web_session, web_response)
+            return self._login_and_set_cookie(web_session)
         else:
             self._add_captcha_solution(base64_image, captcha_solution, correct=True, username=web_session.username)
             self._add_web_session_cookie_to_db(web_session.cookies)
@@ -697,7 +700,6 @@ class BaseScraper(BaseClassWithLogger):
     def _get_schemaed_url_from_path(self, url_path: str) -> str:
         return f"{get_schemaed_url(self.mirror_base_url, schema='http')}{url_path}"
 
-
     @staticmethod
     def _is_meta_refresh(text) -> bool:
         return text[0:512].find('meta http-equiv="refresh"') != -1
@@ -709,7 +711,6 @@ class BaseScraper(BaseClassWithLogger):
         self.logger.info(f"Waiting remaining {remaining_wait} to circumvent DDoS protection.")
         sleep(remaining_wait)
         return redirect_url
-
 
     @abstractmethod
     def _get_successful_login_phrase(self) -> str:

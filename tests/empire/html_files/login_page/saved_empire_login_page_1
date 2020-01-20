@@ -1,0 +1,139 @@
+<html><head>
+    <title>Empire Market</title>
+    <link rel="stylesheet" type="text/css" href="http://gqa2vbufjvoa56wy.onion/public/css/style.css?v=4">
+    <link rel="stylesheet" href="http://gqa2vbufjvoa56wy.onion/public/css/font-awesome.min.css">
+	<link rel="icon" href="http://gqa2vbufjvoa56wy.onion/favicon.png" type="image/png">
+
+
+
+
+
+</head>
+<body>
+
+<a href="http://gqa2vbufjvoa56wy.onion/login"><img style="padding-bottom: 10px;padding-top: 10px;" src="http://gqa2vbufjvoa56wy.onion/public/image/logo.png"></a>
+<div class="body-content">
+    <div class="nav">
+        <ul>
+            <li><a href="http://gqa2vbufjvoa56wy.onion/login">LOGIN</a></li>
+            <li><a href="http://gqa2vbufjvoa56wy.onion/register">REGISTER</a></li>
+            <li><a href="http://tpo7v66snknyugsf.onion" target="_blank">FORUMS</a></li>
+            <li><a href="http://gqa2vbufjvoa56wy.onion/safe">VERIFY MIRROR</a></li>
+        </ul>
+    </div>
+
+    <div class="body-content">
+
+        <div class="sub_head_inner_header">
+            <i class="fa fa-sign-in fa-fontSet" aria-hidden="true"></i>
+        <div class="check"><p></p></div>
+            <h3> <a href="http://gqa2vbufjvoa56wy.onion/login">Login</a> </h3>
+            <div class="check"><p></p></div>
+            <i class="fa fa-sitemap fa-fontSet sitemap" aria-hidden="true"></i>
+        </div>
+
+
+
+        <style>.container{display:inline-block;position:relative;padding-left:5px;margin-bottom:20px;cursor:pointer;font-size:12px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:300px}.container input{position:absolute;opacity:0;cursor:pointer;height:0;width:0}.checkmark{position:absolute;top:0;left:0;height:25px;width:25px;background-color:#eee}.container:hover input ~ .checkmark {background-color:#ccc}.container input:checked ~ .checkmark {background-color:#c85d06}.checkmark:after{content:"";position:absolute;display:none}.container input:checked ~ .checkmark:after {display:block}.container .checkmark:after{left:9px;top:5px;width:5px;height:10px;border:solid #fff;border-width:0 3px 3px 0;-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}</style>
+
+
+
+        <div class="wrapper">
+
+            <div class="login-page">
+                <div class="login-Head">
+                    <div class="loginHead-logo">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="loginHead-head">
+                        <h3>LOGIN TO EMPIRE MARKET</h3>
+                    </div>
+                </div>
+
+
+
+                <div class="clear"></div>
+
+                 <p>Welcome to Empire Market! Please login to access the marketplace. If you do not have an account, you can  <a href="http://gqa2vbufjvoa56wy.onion/register">register</a> to get access to the listings. Registrations are free and open to everyone. If you have lost your password, please use the <a href="http://gqa2vbufjvoa56wy.onion/index/forgot/password"> forgot password </a> form to reset your password.</p>
+
+                <div class="login-textbox">
+
+                    <form action="http://gqa2vbufjvoa56wy.onion/index/login" method="post" accept-charset="utf-8">
+
+
+                    <div class="">
+
+                        <input placeholder="Username" type="text" name="username" class="login-textbox" value="" autofocus="">
+                                            </div>
+
+                    <div class="">
+
+                        <input placeholder="Password" type="password" autocomplete="off" name="password" class="login-textbox">
+                                              </div>
+
+                    <div class="" style="margin-left:em;">
+                         <div class="image" style="margin-left:px;margin-top:px;"><img src="http://gqa2vbufjvoa56wy.onion/public/captchaimg/1579529663.4504.jpg" style="width: 200; height: 100; border: 0;" alt=" "></div>                    </div>
+
+                    <p class="invalidCaptchaError"></p>
+
+
+
+
+
+                    <div style="padding-top: 10px;">
+
+                        <input style="" placeholder="What's the captcha?" type="text" name="captcha" class="login-textbox">
+                    </div>
+
+
+
+                    <div class="login-wrap">
+                        <input type="hidden" value="Login" name="75e8bdcdbe668788f030f4a635ba9f0d84888ee6">
+                        <input type="hidden" name="token" value="32618e27b9bda7baea4c7dcbb9e5c5dc4097cb38">
+                        <input type="hidden" value="Login" name="74d15c5d1a6b55fe35ad74cdd837c70cf9810464">
+                        <input class="primary_button" type="submit" value="Login" name="submit">
+                        <input type="hidden" value="Login" name="86f9de6e5f9d52bfa4f4cf8d3958cbef98cedc6e">
+                        <input type="hidden" value="Login" name="d730df96412a40a50e4d754bf2a69c9b9f401bd2">
+
+
+                    </div>
+
+
+
+                    </form>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--</div> -->
+        <div class="sub_head_inner_header">
+            <i class="fa fa-sign-in fa-fontSet" aria-hidden="true"></i>
+        <div class="check"><p></p></div>
+            <h3> <a href="http://gqa2vbufjvoa56wy.onion/login">Login</a> </h3>
+            <div class="check"><p></p></div>
+            <i class="fa fa-sitemap fa-fontSet sitemap" aria-hidden="true"></i>
+        </div>
+
+</div>
+
+
+</div>
+<div class="footer">
+    <p><font size="1">
+
+	<span style="float:right;">
+	Server time: Monday, Jan 20, 2020 23:14:23	</span>
+
+
+    <span style="float:left;">Copyright © 2020 Empire Market </span> </font><br>
+
+	</p>
+
+</div>
+</body></html>
