@@ -73,8 +73,6 @@ class EmpireScrapingSession(BaseScraper):
                          session_id=session_id)
 
     def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
-        if response.text.find(self._get_successful_login_phrase()) != -1:
-            return False
 
         for history_response in response.history:
             if history_response.is_redirect:
