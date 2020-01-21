@@ -59,7 +59,6 @@ def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) 
 
 
 class EmpireScrapingSession(BaseScraper):
-
     __mirror_manager_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
@@ -72,12 +71,15 @@ class EmpireScrapingSession(BaseScraper):
         super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
                          session_id=session_id)
 
-    def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
+    def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str,
+                       login_page_phrase: str) -> bool:
 
         for history_response in response.history:
             if history_response.is_redirect:
-                if history_response.headers.get('location') == login_url:
+                if history_response.headers.get('location')[-len(self._get_login_url()):] == self._get_login_url():
                     return True
+                elif history_response.headers.get('location')[-len(self._get_home_url()):] == self._get_home_url():
+                    return False
 
         if response.text.find(login_page_phrase) != -1:
             return True
@@ -85,7 +87,11 @@ class EmpireScrapingSession(BaseScraper):
         soup_html = get_page_as_soup_html(response.text)
         body = soup_html.select_one("body")
         if body and body.text == "404 error":
-            return True
+            # This page is served both when user is successfully logged in, and when user tries to access
+            # logged in resource when logged out. This case warrants an extra web request
+            web_response = self._get_web_response_with_error_catch(web_session, 'GET', self._get_login_url(),
+                                                                   headers=self.headers, proxies=self.proxy)
+            return self._is_logged_out(web_session, web_response, login_url, login_page_phrase)
 
         return False
 
@@ -120,7 +126,10 @@ class EmpireScrapingSession(BaseScraper):
         return EMPIRE_SRC_DIR
 
     def _get_login_url(self) -> str:
-        return "/login"
+        return "/index/login"
+
+    def _get_home_url(self) -> str:
+        return "/home"
 
     def _get_is_logged_out_phrase(self) -> str:
         return EMPIRE_MARKET_LOGIN_PHRASE
@@ -448,7 +457,7 @@ class EmpireScrapingSession(BaseScraper):
         soup_html = get_page_as_soup_html(web_response.text)
         product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views = \
             self.scraping_funcs.get_listing_infos(
-            soup_html)
+                soup_html)
 
         if len(product_page_urls) == 0:
             if soup_html.text.find(EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE) == -1:

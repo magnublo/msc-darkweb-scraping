@@ -427,7 +427,7 @@ class BaseScraper(BaseClassWithLogger):
         response = self._get_web_response_with_error_catch(web_session, http_verb, url_path, proxies=self.proxy,
                                                            headers=self.headers, data=post_data)
 
-        if self._is_logged_out(response, self.login_url, self.is_logged_out_phrase) and not post_data:
+        if self._is_logged_out(web_session, response, self.login_url, self.is_logged_out_phrase) and not post_data:
             web_session = self._login_and_set_cookie(web_session)
             return self._get_logged_in_web_response(url_path, web_session=web_session)
         else:
@@ -455,7 +455,7 @@ class BaseScraper(BaseClassWithLogger):
         web_response = self._get_logged_in_web_response(self._get_login_url(), post_data=login_payload,
                                                         web_session=web_session)
 
-        if self._is_logged_out(web_response, self.login_url, self.is_logged_out_phrase):
+        if self._is_logged_out(web_session, web_response, self.login_url, self.is_logged_out_phrase):
             self.logger.warn(f"INCORRECTLY SOLVED CAPTCHA FOR USER {web_session.username}, TRYING AGAIN...")
             self.failed_captcha_counter += 1
             self.anti_captcha_control.complaint_on_result(int(captcha_solution_response["taskId"]), "image")
@@ -694,7 +694,7 @@ class BaseScraper(BaseClassWithLogger):
         raise NotImplementedError('')
 
     @abstractmethod
-    def _is_logged_out(self, response: Response, login_url: str, login_page_phrase: str) -> bool:
+    def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str, login_page_phrase: str) -> bool:
         raise NotImplementedError('')
 
     def _get_schemaed_url_from_path(self, url_path: str) -> str:
