@@ -120,7 +120,7 @@ class EmpireScrapingSession(BaseScraper):
         return EMPIRE_SRC_DIR
 
     def _get_login_url(self) -> str:
-        return "/index/login"
+        return "/login"
 
     def _get_is_logged_out_phrase(self) -> str:
         return EMPIRE_MARKET_LOGIN_PHRASE
