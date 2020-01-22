@@ -614,7 +614,7 @@ class BaseScraper(BaseClassWithLogger):
                 f"Problem with DBMS connection. Retrying in "
                 f"{seconds_until_next_try} seconds...")
             sleep(seconds_until_next_try)
-            return self._db_error_catch_wrapper(self.db_session, *args, func=func, error_data=error_data,
+            return self._db_error_catch_wrapper(db_session, *args, func=func, error_data=error_data,
                                                 rollback=rollback)
 
     def _generic_error_catch_wrapper(self, *args, func: Callable) -> any:

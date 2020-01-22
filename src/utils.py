@@ -10,14 +10,12 @@ import pycountry
 import requests
 from bs4 import BeautifulSoup
 from text2digits import text2digits
-from urllib3.exceptions import HTTPError
 
-from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, ONE_DAY, ONE_WEEK, ONE_HOUR, WEB_EXCEPTIONS_TUPLE, MIRROR_TEST_TIMEOUT_LIMIT, NR_OF_TRIES_PER_MIRROR
+from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, ONE_DAY, ONE_WEEK, ONE_HOUR, WEB_EXCEPTIONS_TUPLE, \
+    MIRROR_TEST_TIMEOUT_LIMIT, NR_OF_TRIES_PER_MIRROR
 from environment_settings import MAX_MARKET_THREADS_PER_PROXY
 from src.data.continent_dict import CONTINENT_DICTIONARY
 from src.data.country_dict import COUNTRY_DICT
-from src.exceptions import EmptyResponseException, BadGatewayException, InternalServerErrorException, \
-    GatewayTimeoutException
 from src.tor_proxy_check import get_proxy_dict
 
 
@@ -60,6 +58,7 @@ def print_error_to_file(market_id: str, thread_id: int, error_string: str, file_
 
 
 def get_error_string(scraping_object, error_traceback, sys_exec_info) -> str:
+    requests.models.Response.__repr__ = lambda r: str(vars(r)) #TODO: Remove this monkeypatch when debugging Response is no longer strictly necessary
     time_of_error = str(datetime.fromtimestamp(time()))
     tb_last = sys_exec_info[2]
     func_name = str(inspect.getinnerframes(tb_last)[0][3])
