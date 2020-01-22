@@ -34,7 +34,7 @@ from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
     get_column_name
 from src.exceptions import GenericException, InternalServerErrorException, BadGatewayException, \
-    GatewayTimeoutException, EmptyResponseException, CustomServerErrorException
+    GatewayTimeoutException, EmptyResponseException, CustomServerErrorException, ServiceUnavailableException
 from src.mirror_manager import MirrorManager
 from src.models.bulk_price import BulkPrice
 from src.models.captcha_solution import CaptchaSolution
@@ -56,7 +56,7 @@ from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
     pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string, \
-    is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response
+    is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response, is_service_unavailable_error
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -638,6 +638,8 @@ class BaseScraper(BaseClassWithLogger):
         if self._is_custom_server_error(response):
             self._handle_custom_server_error()
             return CustomServerErrorException(response.text)
+        elif is_service_unavailable_error(response):
+            return ServiceUnavailableException(response)
         elif is_internal_server_error(response):
             return InternalServerErrorException(response.text)
         elif is_bad_gateway(response):

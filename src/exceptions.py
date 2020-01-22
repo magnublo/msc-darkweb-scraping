@@ -54,3 +54,10 @@ class GenericException(BaseException):
 
     def __init__(self, text=DEFAULT_TEXT):
         super().__init__(text)
+
+
+class ServiceUnavailableException(HTTPError):
+    DEFAULT_TEXT = "Received response code 500."
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)

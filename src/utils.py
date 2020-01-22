@@ -100,6 +100,8 @@ def is_gateway_timed_out(response) -> bool:
 def is_bad_gateway(response: requests.Response) -> bool:
     return response_history_contains_code(response, 502)
 
+def is_service_unavailable_error(response):
+    return response_history_contains_code(response, 503)
 
 def is_internal_server_error(response: requests.Response) -> bool:
     return response_history_contains_code(response, 500)
