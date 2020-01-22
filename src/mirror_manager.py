@@ -52,7 +52,8 @@ class MirrorManager:
                 self.scraper.logger.info("Released mirror_db lock.")
                 return new_mirror
         else:
-            self.scraper.time_last_received_response = time() - (DEAD_MIRROR_TIMEOUT // 40)
+            self.scraper.time_last_received_response = time() - DEAD_MIRROR_TIMEOUT + 60
+            #if lock was busy and no new mirror could be fetched, go back and retry the old mirror for 60 seconds.
             return self.scraper.mirror_base_url
 
 
@@ -77,6 +78,12 @@ class MirrorManager:
         candidate_mirror = self._get_candidate_mirror(db_session)
 
         last_offline_timestamp = candidate_mirror.last_offline_timestamp if candidate_mirror else time()
+        last_online_timestamp = candidate_mirror.last_online_timestamp if candidate_mirror else time()
+
+        if candidate_mirror and time() - last_online_timestamp > REFRESH_MIRROR_DB_LIMIT:
+            if time() - self.scraper.time_last_refreshed_mirror_db > MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH:
+                self._refresh_mirror_db(db_session)
+                return self._get_new_mirror(db_session)
 
         if (not candidate_mirror) and time() - last_offline_timestamp < REFRESH_MIRROR_DB_LIMIT:
             if time() - self.scraper.time_last_refreshed_mirror_db > MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH:
