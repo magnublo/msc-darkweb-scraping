@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from definitions import REFRESH_MIRROR_DB_LIMIT, MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH, DARKFAIL_URL, \
     DARKFAIL_MARKET_STRINGS, MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR, \
     DARKFAIL_MARKET_SUBURLS, WAIT_INTERVAL_WHEN_NO_MIRRORS_AVAILABLE, WEB_EXCEPTIONS_TUPLE, MIRROR_TEST_TIMEOUT_LIMIT, \
-    NR_OF_TRIES_PER_MIRROR, DEAD_MIRROR_TIMEOUT
+    NR_OF_TRIES_PER_MIRROR, DEAD_MIRROR_TIMEOUT, HARDCODED_MIRRORS
 from src.base.base_functions import BaseFunctions
 from src.db_utils import get_db_session, get_engine
 from src.models.market_mirror import MarketMirror
@@ -47,15 +47,15 @@ class MirrorManager:
                 self.scraper.logger.info("Acquired mirror_db lock.")
                 engine = get_engine()
                 db_session = get_db_session(engine)
-                new_mirror: str = self.scraper._db_error_catch_wrapper(db_session, db_session, func=self._get_new_mirror)
+                new_mirror: str = self.scraper._db_error_catch_wrapper(db_session, db_session,
+                                                                       func=self._get_new_mirror)
                 db_session.close()
                 self.scraper.logger.info("Released mirror_db lock.")
                 return new_mirror
         else:
             self.scraper.time_last_received_response = time() - DEAD_MIRROR_TIMEOUT + 60
-            #if lock was busy and no new mirror could be fetched, go back and retry the old mirror for 60 seconds.
+            # if lock was busy and no new mirror could be fetched, go back and retry the old mirror for 60 seconds.
             return self.scraper.mirror_base_url
-
 
     def _get_new_mirror(self, db_session: Session) -> str:
         # set failure time for current mirror
@@ -71,7 +71,6 @@ class MirrorManager:
             self._refresh_mirror_db(db_session)
             self.tries += 1
             return self._get_new_mirror(db_session)
-
 
         # The candidate mirror is the most recently online mirror that has not failed within the last
         # MINIMUM_WAIT_TO_RECHECK_DEAD_MIRROR seconds.
@@ -238,7 +237,16 @@ class MirrorManager:
         else:
             self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=True,
                                                website="DARKFAIL", username="DARKFAIL")
-            return self.scraper.scraping_funcs.get_market_mirrors_from_final_page(final_page_soup_html)
+
+            market_mirrors_from_final_page: Dict[
+                str, float] = self.scraper.scraping_funcs.get_market_mirrors_from_final_page(final_page_soup_html)
+
+            # E.g. Empire Market has a mirror, http://empiremktxgjovhm.onion/, which is not listed on dark.fail
+            # but is frequently available. Hardcoding such mirrors and concatenating with result.
+            retrieved_market_mirrors_and_hardcoded_mirrors = dict(market_mirrors_from_final_page,
+                                                                  **HARDCODED_MIRRORS[self.scraper.market_id])
+
+            return retrieved_market_mirrors_and_hardcoded_mirrors
 
     def _get_captcha_page_url(self, sub_page_url: str) -> str:
         self.scraper.scraping_funcs: BaseFunctions
@@ -304,7 +312,6 @@ class MirrorManager:
             MarketMirror.url == self.scraper.mirror_base_url).first()
 
         if current_mirror:
-
             current_mirror.last_offline_timestamp = int(time())
 
             current_mirror.last_online_timestamp = max(current_mirror.last_online_timestamp,
@@ -322,7 +329,6 @@ class MirrorManager:
             current_mirror.last_online_timestamp = time()
             db_session.add(current_mirror)
             db_session.commit()
-
 
     def _get_candidate_mirror(self, db_session: Session) -> Optional[MarketMirror]:
         candidate_mirrors: List[MarketMirror] = db_session.query(MarketMirror).filter(

@@ -1,5 +1,6 @@
 import os
 from _mysql_connector import MySQLError
+from time import time
 
 from typing import Tuple, List
 
@@ -177,11 +178,21 @@ DARKFAIL_MARKET_SUBURLS = {
     SAMSARA_MARKET_ID: "samsara",
 }
 
+HARDCODED_MIRRORS = {
+    EMPIRE_MARKET_ID: {
+        "empiremktxgjovhm.onion": time()
+    },
+    CRYPTONIA_MARKET_ID: {
+
+    }
+}
+
 Base = declarative_base()
 MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID)
 
 for market_id in MARKET_IDS:
     assert market_id in DARKFAIL_MARKET_STRINGS.keys()
     assert market_id in DARKFAIL_MARKET_SUBURLS.keys()
+    assert market_id in HARDCODED_MIRRORS.keys()
 WEB_EXCEPTIONS_TUPLE = (requests.HTTPError, urllib3.exceptions.HTTPError, requests.RequestException)
 DB_EXCEPTIONS_TUPLE = (SQLAlchemyError, MySQLError, AttributeError, SystemError, DatabaseError, DeadMirrorException)
