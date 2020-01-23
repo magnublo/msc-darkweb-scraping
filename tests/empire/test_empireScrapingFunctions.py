@@ -418,3 +418,9 @@ class TestEmpireScrapingFunctions(EmpireBaseTest):
         currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
         self.assertEqual(200.0, price)
         self.assertEqual('USD', currency)
+
+    def test_get_fiat_currency_and_price_fourteen(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_14')
+        currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
+        self.assertEqual(1106.71, price)
+        self.assertEqual('USD', currency)

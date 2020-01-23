@@ -78,7 +78,7 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         currency, price_str = currency_and_price_span.text.strip().split()
 
-        price = float(price_str)
+        price = parse_float(price_str)
 
         return currency, price
 
