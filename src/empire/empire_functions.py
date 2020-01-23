@@ -68,15 +68,18 @@ class EmpireScrapingFunctions(BaseFunctions):
         return nr_sold, date
 
     @staticmethod
-    def get_fiat_currency_and_price(soup_html):
-        padps = [div for div in soup_html.findAll('p', attrs={'class': 'padp'})]
-        assert len(padps) == 4
-        text = padps[3].text
-        pattern = "Purchase price: "
-        pattern_index = text.find(pattern)
-        text = text[pattern_index + len(pattern):]
-        currency, price = text.split(" ")
-        price = price.replace(",", "")
+    def get_fiat_currency_and_price(soup_html) -> Tuple[str, float]:
+        currency_and_price_spans = soup_html.select(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div:nth-child(1) > "
+            "div.listDes > div > form > p.padp > span")
+
+        assert len(currency_and_price_spans) == 1
+        currency_and_price_span = currency_and_price_spans[0]
+
+        currency, price_str = currency_and_price_span.text.strip().split()
+
+        price = float(price_str)
+
         return currency, price
 
     @staticmethod
@@ -491,7 +494,6 @@ class EmpireScrapingFunctions(BaseFunctions):
                 return True, quantity_in_stock
         else:
             return False, None
-
 
     @staticmethod
     def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[str, float, str, float, Optional[str], bool]]:

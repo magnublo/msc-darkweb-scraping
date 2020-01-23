@@ -64,7 +64,10 @@ class EmpireScrapingSession(BaseScraper):
     __mirror_failure_lock__ = Lock()
 
     def _get_anti_captcha_kwargs(self) -> dict:
-        return {'numeric': 1}
+        return {
+                'numeric': 1,
+                'comment': 'BLACK numbers only'
+                }
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict,
                  session_id: int):

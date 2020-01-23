@@ -148,6 +148,7 @@ class TestGetCaptchaImageUrlFromMarketPage(EmpireBaseTest):
         captcha_image_url = scrapingFunctions.get_captcha_image_url_from_market_page(soup_html)
         self.assertEqual("/public/captchaimg/1569591995.7041.jpg", captcha_image_url)
 
+
 class TestUserIsBanned(EmpireBaseTest):
 
     def test_user_is_banned_zero(self):
@@ -408,3 +409,12 @@ class TestGetListingInfos(EmpireBaseTest):
                                    '/u/DrunkDragon', '/u/DrunkDragon', '/u/LouisBitcoin', '/u/DrunkDragon',
                                    '/u/emeraldgemini'), (86, 503, 101, 81, 135, 484, 485, 77, 484, 51)),
                               (product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views))
+
+
+class TestEmpireScrapingFunctions(EmpireBaseTest):
+
+    def test_get_fiat_currency_and_price_thirteen(self):
+        soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_13')
+        currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
+        self.assertEqual(200.0, price)
+        self.assertEqual('USD', currency)
