@@ -77,17 +77,11 @@ class EmpireScrapingSession(BaseScraper):
     def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str,
                        login_page_phrase: str) -> bool:
 
-        for history_response in response.history:
-            if history_response.is_redirect:
-                if history_response.headers.get('location')[-len(self._get_login_url()):] == self._get_login_url():
-                    return True
-                elif history_response.headers.get('location')[-len(self._get_home_url()):] == self._get_home_url():
-                    return False
-
-        if response.text.find(login_page_phrase) != -1:
-            return True
-
         soup_html = get_page_as_soup_html(response.text)
+
+        if self.scraping_funcs.is_logged_in(soup_html, web_session.username):
+            return False
+
         body = soup_html.select_one("body")
         if body and body.text == "404 error":
             # This page is served both when user is successfully logged in, and when user tries to access
@@ -98,7 +92,7 @@ class EmpireScrapingSession(BaseScraper):
                                                                    headers=self.headers, proxies=self.proxy)
             return self._is_logged_out(web_session, web_response, login_url, login_page_phrase)
 
-        return False
+        return True
 
     def _handle_custom_server_error(self) -> None:
         raise NotImplementedError('')

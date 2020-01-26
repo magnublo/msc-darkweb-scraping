@@ -411,7 +411,7 @@ class TestGetListingInfos(EmpireBaseTest):
                               (product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views))
 
 
-class TestEmpireScrapingFunctions(EmpireBaseTest):
+class TestGetFiatCurrencyAndPrice(EmpireBaseTest):
 
     def test_get_fiat_currency_and_price_thirteen(self):
         soup_html = self._get_page_as_soup_html('listings/saved_empire_listing_13')
@@ -424,3 +424,16 @@ class TestEmpireScrapingFunctions(EmpireBaseTest):
         currency, price = scrapingFunctions.get_fiat_currency_and_price(soup_html)
         self.assertEqual(1106.71, price)
         self.assertEqual('USD', currency)
+
+
+class TestIsLoggedIn(EmpireBaseTest):
+
+    def test_is_logged_in_true_thirteen(self):
+        soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_13")
+        is_logged_in = scrapingFunctions.is_logged_in(soup_html, "webuba")
+        self.assertTrue(is_logged_in)
+
+    def test_is_logged_in_false_zero(self):
+        soup_html = self._get_page_as_soup_html("login_page/saved_empire_login_page_0")
+        is_logged_in = scrapingFunctions.is_logged_in(soup_html, "webuba")
+        self.assertFalse(is_logged_in)

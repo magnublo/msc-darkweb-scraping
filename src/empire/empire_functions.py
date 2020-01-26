@@ -556,6 +556,13 @@ class EmpireScrapingFunctions(BaseFunctions):
         return span.text == "(BANNED)"
 
     @staticmethod
+    def is_logged_in(soup_html: BeautifulSoup, username: str) -> bool:
+        username_href = soup_html.select_one(
+            "#right-session-information > div.right-session-text > p:nth-child(1) > b > a:nth-child(1)")
+
+        return username_href and username_href.text == username
+
+    @staticmethod
     def get_listing_infos(soup_html: BeautifulSoup) -> Tuple[
         Tuple[str], Tuple[bool], Tuple[str], Tuple[str], Tuple[str], Tuple[int]]:
 
