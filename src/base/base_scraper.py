@@ -454,7 +454,7 @@ class BaseScraper(BaseClassWithLogger):
                                                               web_session.password, captcha_solution)
 
         web_response = self._get_web_response_with_error_catch(web_session, 'POST', self._get_login_url(),
-                                                               post_data=login_payload, headers=self.headers,
+                                                               data=login_payload, headers=self.headers,
                                                                proxies=self.proxy)
 
         if self._is_logged_out(web_session, web_response, self.login_url, self.is_logged_out_phrase):
