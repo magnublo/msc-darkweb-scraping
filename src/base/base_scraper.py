@@ -439,11 +439,11 @@ class BaseScraper(BaseClassWithLogger):
 
     def _login_and_set_cookie(self, web_session: requests.Session) -> requests.Session:
         web_response = self._get_web_response_with_error_catch(web_session, 'GET', self._get_login_url(),
-                                                            headers=self.headers, proxies=self.proxy)
+                                                               headers=self.headers, proxies=self.proxy)
         soup_html = get_page_as_soup_html(web_response.text)
 
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
-        image_response = self._get_logged_in_web_response(image_url, web_session=web_session).content
+        image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url).content
         base64_image = base64.b64encode(image_response).decode("utf-8")
         assert len(base64_image) > 100
         captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
@@ -452,8 +452,8 @@ class BaseScraper(BaseClassWithLogger):
         login_payload = self.scraping_funcs.get_login_payload(soup_html, web_session.username,
                                                               web_session.password, captcha_solution)
 
-        web_response = self._get_logged_in_web_response(self._get_login_url(), post_data=login_payload,
-                                                        web_session=web_session)
+        web_response = self._get_web_response_with_error_catch(web_session, 'POST', self._get_login_url(),
+                                                               post_data=login_payload)
 
         if self._is_logged_out(web_session, web_response, self.login_url, self.is_logged_out_phrase):
             self.logger.warn(f"INCORRECTLY SOLVED CAPTCHA FOR USER {web_session.username}, TRYING AGAIN...")
@@ -696,7 +696,8 @@ class BaseScraper(BaseClassWithLogger):
         raise NotImplementedError('')
 
     @abstractmethod
-    def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str, login_page_phrase: str) -> bool:
+    def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str,
+                       login_page_phrase: str) -> bool:
         raise NotImplementedError('')
 
     def _get_schemaed_url_from_path(self, url_path: str) -> str:
