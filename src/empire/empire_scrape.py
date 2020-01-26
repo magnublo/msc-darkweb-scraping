@@ -1,4 +1,5 @@
 import hashlib
+import io
 from datetime import datetime
 from math import ceil
 from multiprocessing import Queue
@@ -7,6 +8,7 @@ from threading import Lock
 from typing import List, Tuple, Type, Optional
 
 import requests
+from PIL import Image, ImageDraw, ImageFont
 from bs4 import BeautifulSoup
 from requests import Response
 
@@ -14,7 +16,7 @@ from definitions import EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_HTTP_HEADERS, \
     FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
     EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, MD5_HASH_STRING_ENCODING, EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH, \
-    EMPIRE_MIN_CREDENTIALS_PER_THREAD
+    EMPIRE_MIN_CREDENTIALS_PER_THREAD, ROOT_DIR, EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
 from src.base.base_functions import BaseFunctions
 from src.base.base_scraper import BaseScraper
 from src.db_utils import get_column_name
@@ -59,6 +61,29 @@ def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) 
 
 
 class EmpireScrapingSession(BaseScraper):
+
+    def _captcha_instruction_is_generic(self, captcha_instruction: str) -> bool:
+        return captcha_instruction in EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
+
+    def _apply_processing_to_captcha_image(self, image_response: bytes, captcha_instruction: str) -> bytes:
+        imageStream = io.BytesIO(image_response)
+
+        imageFile = Image.open(imageStream)
+
+        new_height = int(imageFile.height * 1.2)
+
+        new_size = (imageFile.width, new_height)
+        new_im = Image.new("RGB", new_size, color=(255, 255, 255))
+        new_im.paste(imageFile, (0, new_height - imageFile.height))
+
+        draw = ImageDraw.Draw(new_im)
+        font = ImageFont.truetype(f'{ROOT_DIR}times-new-roman.ttf', int(0.07 * new_height))
+        draw.text((0, 0), captcha_instruction, fill='black', font=font,
+                  align="center")
+        output = io.BytesIO()
+        new_im.save(output, format="png")
+        return output.getvalue()
+
     __mirror_manager_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()

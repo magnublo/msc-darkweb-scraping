@@ -32,6 +32,15 @@ def _parse_external_market_rating(titled_span: BeautifulSoup, remaining_external
 class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
+    def get_captcha_instruction(soup_html: BeautifulSoup) -> str:
+        input_field: BeautifulSoup
+        input_field = soup_html.select_one(
+            "body > div.body-content > div.body-content > div.wrapper > div > div.login-textbox > form > "
+            "div:nth-child(5) > input")
+
+        return input_field.attrs["placeholder"]
+
+    @staticmethod
     def accepts_currencies(soup_html):
         soup_html_as_string = str(soup_html)
 

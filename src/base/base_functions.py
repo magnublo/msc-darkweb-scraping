@@ -107,6 +107,10 @@ class BaseFunctions(BaseClassWithLogger):
     def get_meta_refresh_interval(soup_html: BeautifulSoup) -> Tuple[int, str]:
         pass
 
+    @abstractstaticmethod
+    def get_captcha_instruction(soup_html: BeautifulSoup) -> str:
+        pass
+
     @staticmethod
     def get_sub_url_with_all_market_mirrors(soup_html: BeautifulSoup, market_string: str) -> Optional[str]:
         content_soups = soup_html.select(".content")

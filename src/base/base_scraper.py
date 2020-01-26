@@ -427,12 +427,17 @@ class BaseScraper(BaseClassWithLogger):
         response = self._get_web_response_with_error_catch(web_session, http_verb, url_path, proxies=self.proxy,
                                                            headers=self.headers, data=post_data)
 
-        if self._is_logged_out(web_session, response, self.login_url, self.is_logged_out_phrase) and not post_data:
+        if self._is_logged_out(web_session, response, self.login_url, self.is_logged_out_phrase) and http_verb == 'GET':
             web_session = self._login_and_set_cookie(web_session)
             return self._get_logged_in_web_response(url_path, web_session=web_session)
         else:
             self.pages_counter += 1
-            if not post_data:
+            if http_verb == 'GET':
+                if response.headers.get("location"):
+                    self.logger.info(
+                        f"GET request to {url_path} returned response with location header to "
+                        f"{response.headers.get('location')}. Retrying {url_path}...")
+                    return self._get_logged_in_web_response(url_path, post_data, web_session)
                 web_session.headers.update({"Origin": self._get_schemaed_url_from_path(url_path)})
             self.web_session = self._rotate_web_session()
             return response
@@ -445,10 +450,17 @@ class BaseScraper(BaseClassWithLogger):
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
         image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url, headers=self.headers,
                                                                  proxies=self.proxy).content
+        captcha_instruction = self.scraping_funcs.get_captcha_instruction(soup_html)
+        if not self._captcha_instruction_is_generic(captcha_instruction):
+            altered_image = self._apply_processing_to_captcha_image(image_response, captcha_instruction)
+        else:
+            altered_image = image_response
         base64_image = base64.b64encode(image_response).decode("utf-8")
+        altered_base64_image = base64.b64encode(altered_image).decode("utf-8")
         assert len(base64_image) > 100
+
         captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
-            base64_image)
+            altered_base64_image)
 
         login_payload = self.scraping_funcs.get_login_payload(soup_html, web_session.username,
                                                               web_session.password, captcha_solution)
@@ -743,6 +755,14 @@ class BaseScraper(BaseClassWithLogger):
 
     @abstractmethod
     def _is_custom_server_error(self, response) -> bool:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _apply_processing_to_captcha_image(self, image_response, captcha_instruction):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _captcha_instruction_is_generic(self, captcha_instruction: str) -> bool:
         raise NotImplementedError('')
 
     def _get_captcha_solution_from_base64_image(self, base64_image: str, anti_captcha_kwargs: Dict[str, int] = None) \
