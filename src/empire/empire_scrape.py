@@ -88,8 +88,8 @@ class EmpireScrapingSession(BaseScraper):
             # logged in resource when logged out. This case warrants an extra web request to verify logged-in-logged-out
             # status.
             self.logger.info(f"Got 404. Ambiguous authorization state. Retrieving {self._get_login_url()}...")
-            web_response = self._get_web_response_with_error_catch(web_session, 'GET', self._get_login_url(),
-                                                                   headers=self.headers, proxies=self.proxy, timeout=7)
+            web_response = self._get_web_response_with_error_catch(web_session, 'GET', '/',
+                                                                   headers=self.headers, proxies=self.proxy)
             return self._is_logged_out(web_session, web_response, login_url, login_page_phrase)
 
         return True
