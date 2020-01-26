@@ -443,7 +443,8 @@ class BaseScraper(BaseClassWithLogger):
         soup_html = get_page_as_soup_html(web_response.text)
 
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
-        image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url).content
+        image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url, headers=self.headers,
+                                                                 proxies=self.proxy).content
         base64_image = base64.b64encode(image_response).decode("utf-8")
         assert len(base64_image) > 100
         captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
@@ -453,7 +454,8 @@ class BaseScraper(BaseClassWithLogger):
                                                               web_session.password, captcha_solution)
 
         web_response = self._get_web_response_with_error_catch(web_session, 'POST', self._get_login_url(),
-                                                               post_data=login_payload)
+                                                               post_data=login_payload, headers=self.headers,
+                                                               proxies=self.proxy)
 
         if self._is_logged_out(web_session, web_response, self.login_url, self.is_logged_out_phrase):
             self.logger.warn(f"INCORRECTLY SOLVED CAPTCHA FOR USER {web_session.username}, TRYING AGAIN...")
