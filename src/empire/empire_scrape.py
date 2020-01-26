@@ -89,7 +89,7 @@ class EmpireScrapingSession(BaseScraper):
             # status.
             self.logger.info(f"Got 404. Ambiguous authorization state. Retrieving {self._get_login_url()}...")
             web_response = self._get_web_response_with_error_catch(web_session, 'GET', self._get_login_url(),
-                                                                   headers=self.headers, proxies=self.proxy)
+                                                                   headers=self.headers, proxies=self.proxy, timeout=7)
             return self._is_logged_out(web_session, web_response, login_url, login_page_phrase)
 
         return True
