@@ -56,7 +56,8 @@ from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
     pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string, \
-    is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response, is_service_unavailable_error
+    is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response, is_service_unavailable_error, \
+    PageType
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -418,7 +419,8 @@ class BaseScraper(BaseClassWithLogger):
                 f"{self.mirror_base_url}")
 
     def _get_logged_in_web_response(self, url_path: str, post_data: dict = None,
-                                    web_session: requests.Session = None) -> Response:
+                                    web_session: requests.Session = None,
+                                    expected_page_type: PageType = PageType.UNDEFINED) -> Response:
         web_session = web_session if web_session else self.web_session
         if not web_session:
             raise AssertionError
@@ -429,15 +431,16 @@ class BaseScraper(BaseClassWithLogger):
 
         if self._is_logged_out(web_session, response, self.login_url, self.is_logged_out_phrase) and http_verb == 'GET':
             web_session = self._login_and_set_cookie(web_session)
-            return self._get_logged_in_web_response(url_path, web_session=web_session)
+            return self._get_logged_in_web_response(url_path, web_session=web_session,
+                                                    expected_page_type=expected_page_type)
         else:
             self.pages_counter += 1
             if http_verb == 'GET':
-                if response.headers.get("location"):
+                if not self._is_expected_page(response, expected_page_type):
                     self.logger.info(
-                        f"GET request to {url_path} returned response with location header to "
-                        f"{response.headers.get('location')}. Retrying {url_path}...")
-                    return self._get_logged_in_web_response(url_path, post_data, web_session)
+                        f"GET request to {url_path} should have returned {expected_page_type.value}, but "
+                        f"failed test. Retrying {url_path}...")
+                    return self._get_logged_in_web_response(url_path, post_data, web_session, expected_page_type)
                 web_session.headers.update({"Origin": self._get_schemaed_url_from_path(url_path)})
             self.web_session = self._rotate_web_session()
             return response
@@ -874,3 +877,7 @@ class BaseScraper(BaseClassWithLogger):
         else:
             self.url_failure_counts[url_path] += 1
         return self.url_failure_counts[url_path] > MAX_TEMPORARY_ERRORS_PER_URL
+
+    @abstractmethod
+    def _is_expected_page(self, response: requests.Response, expected_page_type: PageType) -> bool:
+        raise NotImplementedError('')

@@ -27,7 +27,7 @@ from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
 from src.models.seller_observation import SellerObservation
 from src.models.verified_external_account import VerifiedExternalAccount
-from src.utils import get_page_as_soup_html, get_standardized_listing_type, ListingType
+from src.utils import get_page_as_soup_html, get_standardized_listing_type, ListingType, PageType
 
 
 def _parse_payment_type(payment_type: str) -> Tuple[bool, bool]:
@@ -77,7 +77,7 @@ class EmpireScrapingSession(BaseScraper):
         new_im.paste(imageFile, (0, new_height - imageFile.height))
 
         draw = ImageDraw.Draw(new_im)
-        font = ImageFont.truetype(f'{ROOT_DIR}times-new-roman.ttf', int(0.07 * new_height))
+        font = ImageFont.truetype(f'{ROOT_DIR}times-new-roman.ttf', int(new_height - imageFile.height))
         draw.text((0, 0), captcha_instruction, fill='black', font=font,
                   align="center")
         output = io.BytesIO()
@@ -90,9 +90,8 @@ class EmpireScrapingSession(BaseScraper):
 
     def _get_anti_captcha_kwargs(self) -> dict:
         return {
-                'numeric': 1,
-                'comment': 'BLACK numbers only'
-                }
+            'numeric': 1
+        }
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict,
                  session_id: int):
@@ -170,7 +169,8 @@ class EmpireScrapingSession(BaseScraper):
 
     def populate_queue(self):
         self.logger.info(f"Fetching {EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH} and creating task queue...")
-        web_response = self._get_logged_in_web_response(EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH)
+        web_response = self._get_logged_in_web_response(EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH,
+                                                        expected_page_type=PageType.CATEGORY_INDEX)
         soup_html = get_page_as_soup_html(web_response.text)
         pairs_of_category_base_urls_and_nr_of_listings = self.scraping_funcs.get_category_urls_and_nr_of_listings(
             soup_html)
@@ -243,7 +243,7 @@ class EmpireScrapingSession(BaseScraper):
 
         self.print_crawling_debug_message(url=product_page_url)
 
-        web_response = self._get_logged_in_web_response(product_page_url)
+        web_response = self._get_logged_in_web_response(product_page_url, expected_page_type=PageType.LISTING)
         soup_html = get_page_as_soup_html(web_response.text)
 
         try:
@@ -315,7 +315,7 @@ class EmpireScrapingSession(BaseScraper):
     def _scrape_seller(self, seller_url, seller, is_new_seller):
         self.print_crawling_debug_message(url=seller_url)
 
-        web_response = self._get_logged_in_web_response(seller_url)
+        web_response = self._get_logged_in_web_response(seller_url, expected_page_type=PageType.SELLER)
         soup_html = get_page_as_soup_html(web_response.text)
 
         seller_name = seller.name
@@ -413,7 +413,7 @@ class EmpireScrapingSession(BaseScraper):
 
         self.print_crawling_debug_message(url=url)
 
-        web_response = self._get_logged_in_web_response(url)
+        web_response = self._get_logged_in_web_response(url, expected_page_type=PageType.FEEDBACK)
 
         soup_html = get_page_as_soup_html(web_response.text)
 
@@ -466,7 +466,7 @@ class EmpireScrapingSession(BaseScraper):
         scrape_pgp_this_session = self._should_scrape_pgp_key_this_session(seller, is_new_seller)
 
         if scrape_pgp_this_session:
-            web_response = self._get_logged_in_web_response(url)
+            web_response = self._get_logged_in_web_response(url, expected_page_type=PageType.PGP)
             soup_html = get_page_as_soup_html(web_response.text)
             pgp_key_content = self.scraping_funcs.get_pgp_key(soup_html)
             self._add_pgp_key(seller, pgp_key_content)
@@ -474,7 +474,7 @@ class EmpireScrapingSession(BaseScraper):
     def _scrape_queue_item(self, search_result_url: str):
         self.scraping_funcs: EmpireScrapingFunctions
 
-        web_response = self._get_logged_in_web_response(search_result_url)
+        web_response = self._get_logged_in_web_response(search_result_url, expected_page_type=PageType.SEARCH_RESULT)
         if hasattr(web_response, 'do_continue'):
             return
 
@@ -513,3 +513,29 @@ class EmpireScrapingSession(BaseScraper):
                     confirmed_sales=sales, rating=rating, free_text=free_text)
             )
             self.db_session.flush()
+
+    def _is_expected_page(self, response: requests.Response, expected_page_type: PageType) -> bool:
+        # LISTING = "listing",
+        # SELLER = "seller",
+        # FEEDBACK = "feedback",
+        # PGP = "PGP key",
+        # SEARCH_RESULT = "search result",
+        # UNDEFINED = "arbitrary"
+        soup_html = get_page_as_soup_html(response.text)
+
+        self.scraping_funcs: EmpireScrapingFunctions
+
+        if expected_page_type == expected_page_type.LISTING:
+            return self.scraping_funcs.is_listing(soup_html)
+        elif expected_page_type == expected_page_type.SELLER:
+            return self.scraping_funcs.is_seller(soup_html)
+        elif expected_page_type == expected_page_type.FEEDBACK:
+            return self.scraping_funcs.is_feedback(soup_html)
+        elif expected_page_type == expected_page_type.PGP:
+            return self.scraping_funcs.is_pgp_key(soup_html)
+        elif expected_page_type == expected_page_type.SEARCH_RESULT:
+            return self.scraping_funcs.is_search_result(soup_html)
+        elif expected_page_type == expected_page_type.CATEGORY_INDEX:
+            return self.scraping_funcs.is_category_index(soup_html)
+        elif expected_page_type == expected_page_type.UNDEFINED:
+            return True

@@ -614,3 +614,53 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         return tuple(product_page_urls), tuple(urls_is_sticky), tuple(titles), tuple(sellers), tuple(
             seller_urls), tuple(nrs_of_views)
+
+    @staticmethod
+    def is_listing(soup_html: BeautifulSoup) -> bool:
+        if soup_html.select_one(
+                "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div:nth-child("
+                "1) > div.listDes > table"):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def is_seller(soup_html: BeautifulSoup) -> bool:
+        tab_link = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div.tab > "
+            "a.tablinks.focus")
+        return tab_link and tab_link.text == "About"
+
+    @staticmethod
+    def is_feedback(soup_html: BeautifulSoup) -> bool:
+        tab_link = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div.tab > "
+            "a.tablinks.focus")
+        return tab_link and tab_link.text in (
+            "Positive Feedback", "Negative Feedback", "Neutral Feedback", "Left Feedback")
+
+    @staticmethod
+    def is_pgp_key(soup_html: BeautifulSoup) -> bool:
+        tab_link = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div.tab > "
+            "a.tablinks.focus")
+        return tab_link and tab_link.text == "PGP"
+
+    @staticmethod
+    def is_search_result(soup_html: BeautifulSoup) -> bool:
+        seller_href_of_first_result = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div:nth-child(3) > "
+            "div.col-1centre > div > p > a")
+
+        if seller_href_of_first_result:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def is_category_index(soup_html: BeautifulSoup) -> bool:
+        search_form = soup_html.select_one("#information > form")
+        if search_form:
+            return True
+        else:
+            return False

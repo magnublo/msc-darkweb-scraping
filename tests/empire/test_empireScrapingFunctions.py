@@ -437,3 +437,60 @@ class TestIsLoggedIn(EmpireBaseTest):
         soup_html = self._get_page_as_soup_html("login_page/saved_empire_login_page_0")
         is_logged_in = scrapingFunctions.is_logged_in(soup_html, "webuba")
         self.assertFalse(is_logged_in)
+
+
+class TestIsListing(EmpireBaseTest):
+
+    def test_is_listing_should_be_true(self):
+        soup_html = self._get_page_as_soup_html("listings/saved_empire_listing_14")
+        is_listing = scrapingFunctions.is_listing(soup_html)
+        self.assertTrue(is_listing)
+
+    def test_is_listing_but_is_actually_seller(self):
+        soup_html = self._get_page_as_soup_html("users/saved_empire_user_5")
+        is_listing = scrapingFunctions.is_listing(soup_html)
+        self.assertFalse(is_listing)
+
+    def test_is_listing_but_is_actually_pgp(self):
+        soup_html = self._get_page_as_soup_html("pgp/saved_empire_pgp_0")
+        is_listing = scrapingFunctions.is_listing(soup_html)
+        self.assertTrue(is_listing)
+
+    def test_is_pgp_key_but_is_front_page(self):
+        soup_html = self._get_page_as_soup_html("saved_empire_category_index_0")
+        is_listing = scrapingFunctions.is_listing(soup_html)
+        self.assertFalse(is_listing)
+
+
+class TestIsPGPKey(EmpireBaseTest):
+    def test_is_pgp_key_should_be_true(self):
+        soup_html = self._get_page_as_soup_html("pgp/saved_empire_pgp_0")
+        is_pgp = scrapingFunctions.is_pgp_key(soup_html)
+        self.assertTrue(is_pgp)
+
+    def test_is_pgp_key_but_is_seller(self):
+        soup_html = self._get_page_as_soup_html("users/saved_empire_user_5")
+        is_pgp = scrapingFunctions.is_pgp_key(soup_html)
+        self.assertFalse(is_pgp)
+
+    def test_is_pgp_key_but_is_front_page(self):
+        soup_html = self._get_page_as_soup_html("saved_empire_category_index_0")
+        is_pgp = scrapingFunctions.is_pgp_key(soup_html)
+        self.assertFalse(is_pgp)
+
+
+class TestIsSearchResult(EmpireBaseTest):
+    def test_is_search_result_but_is_actually_category_index(self):
+        soup_html = self._get_page_as_soup_html("saved_empire_category_index_0")
+        is_search_result = scrapingFunctions.is_search_result(soup_html)
+        self.assertFalse(is_search_result)
+
+    def test_is_search_result_should_be_true_zero(self):
+        soup_html = self._get_page_as_soup_html("search_results/saved_empire_search_result_0")
+        is_search_result = scrapingFunctions.is_search_result(soup_html)
+        self.assertTrue(is_search_result)
+
+    def test_is_search_result_should_be_true_one(self):
+        soup_html = self._get_page_as_soup_html("search_results/saved_empire_search_result_1")
+        is_search_result = scrapingFunctions.is_search_result(soup_html)
+        self.assertTrue(is_search_result)

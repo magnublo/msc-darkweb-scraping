@@ -25,6 +25,16 @@ class ListingType(Enum):
     MANUAL_DIGITAL = 3
 
 
+class PageType(Enum):
+    LISTING = "listing",
+    SELLER = "seller",
+    FEEDBACK = "feedback",
+    PGP = "PGP key",
+    SEARCH_RESULT = "search result",
+    CATEGORY_INDEX = "category index",
+    UNDEFINED = "arbitrary"
+
+
 def pretty_print_GET(req) -> str:
     return '{}\n{}\r\n{}\r\n\r'.format(
         '-----------START-----------',
