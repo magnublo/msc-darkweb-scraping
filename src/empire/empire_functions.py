@@ -32,6 +32,17 @@ def _parse_external_market_rating(titled_span: BeautifulSoup, remaining_external
 class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
+    def get_meta_refresh_interval(soup_html: BeautifulSoup) -> Tuple[int, str]:
+        # TODO: wrong method name, should be get_meta_refresh_interval_and_redir_url etc.
+        meta = soup_html.select_one("head > meta")
+        refresh_interval_and_redir_url = meta.attrs["content"]
+        refresh_interval_str, redir_url = [s.strip() for s in refresh_interval_and_redir_url.split(";")]
+        refresh_interval = int(refresh_interval_str)
+        assert redir_url[0:4] == "URL="
+        return refresh_interval, redir_url[4:]
+
+
+    @staticmethod
     def get_captcha_instruction(soup_html: BeautifulSoup) -> str:
         input_field: BeautifulSoup
         input_field = soup_html.select_one(

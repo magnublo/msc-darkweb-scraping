@@ -724,7 +724,7 @@ class BaseScraper(BaseClassWithLogger):
 
     @staticmethod
     def _is_meta_refresh(text) -> bool:
-        return text[0:512].find('meta http-equiv="refresh"') != -1
+        return text[0:512].lower().find('http-equiv="refresh"') != -1
 
     def _wait_out_meta_refresh_and_get_redirect_url(self, web_response: Response) -> str:
         soup_html = get_page_as_soup_html(web_response.text)
