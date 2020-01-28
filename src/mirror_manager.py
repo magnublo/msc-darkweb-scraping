@@ -126,7 +126,13 @@ class MirrorManager:
         self.scraper.logger.info(f"Refreshing mirror db...")
         enter_method_time = time()
 
-        mirror_status_dict: dict = self._get_mirror_status_dict_from_external_overview()  # key: url, val: is_online
+        externally_retrieved_mirror_status_dict: dict = self._get_mirror_status_dict_from_external_overview()  # key: url, val: is_online
+
+        # E.g. Empire Market has a mirror, http://empiremktxgjovhm.onion/, which is not listed on dark.fail
+        # but is frequently available. Hardcoding such mirrors and concatenating with result.
+        mirror_status_dict = dict(externally_retrieved_mirror_status_dict,
+                                                              **HARDCODED_MIRRORS[self.scraper.market_id])
+
         urls_in_retrieved_mirrors: List[str] = [key for key in mirror_status_dict.keys()]
         if not urls_in_retrieved_mirrors:
             self.scraper.time_last_refreshed_mirror_db = time()
@@ -238,15 +244,7 @@ class MirrorManager:
             self.scraper._add_captcha_solution(captcha_base_64_image, captcha_solution, correct=True,
                                                website="DARKFAIL", username="DARKFAIL")
 
-            market_mirrors_from_final_page: Dict[
-                str, float] = self.scraper.scraping_funcs.get_market_mirrors_from_final_page(final_page_soup_html)
-
-            # E.g. Empire Market has a mirror, http://empiremktxgjovhm.onion/, which is not listed on dark.fail
-            # but is frequently available. Hardcoding such mirrors and concatenating with result.
-            retrieved_market_mirrors_and_hardcoded_mirrors = dict(market_mirrors_from_final_page,
-                                                                  **HARDCODED_MIRRORS[self.scraper.market_id])
-
-            return retrieved_market_mirrors_and_hardcoded_mirrors
+            return self.scraper.scraping_funcs.get_market_mirrors_from_final_page(final_page_soup_html)
 
     def _get_captcha_page_url(self, sub_page_url: str) -> str:
         self.scraper.scraping_funcs: BaseFunctions
