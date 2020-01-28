@@ -77,7 +77,7 @@ class EmpireScrapingSession(BaseScraper):
         new_im.paste(imageFile, (0, new_height - imageFile.height))
 
         draw = ImageDraw.Draw(new_im)
-        font = ImageFont.truetype(f'{ROOT_DIR}times-new-roman.ttf', int(new_height - imageFile.height))
+        font = ImageFont.truetype(f'{ROOT_DIR}times-new-roman.ttf', int(0.75*(new_height - imageFile.height)))
         draw.text((0, 0), captcha_instruction, fill='black', font=font,
                   align="center")
         output = io.BytesIO()

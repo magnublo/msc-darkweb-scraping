@@ -454,8 +454,10 @@ class BaseScraper(BaseClassWithLogger):
         image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url, headers=self.headers,
                                                                  proxies=self.proxy).content
         captcha_instruction = self.scraping_funcs.get_captcha_instruction(soup_html)
+        anti_captcha_kwargs: Dict[str, any] = self._get_anti_captcha_kwargs()
         if not self._captcha_instruction_is_generic(captcha_instruction):
             altered_image = self._apply_processing_to_captcha_image(image_response, captcha_instruction)
+            anti_captcha_kwargs['comment'] = captcha_instruction
         else:
             altered_image = image_response
         base64_image = base64.b64encode(image_response).decode("utf-8")
@@ -463,7 +465,7 @@ class BaseScraper(BaseClassWithLogger):
         assert len(base64_image) > 100
 
         captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
-            altered_base64_image)
+            altered_base64_image, anti_captcha_kwargs=anti_captcha_kwargs)
 
         login_payload = self.scraping_funcs.get_login_payload(soup_html, web_session.username,
                                                               web_session.password, captcha_solution)
