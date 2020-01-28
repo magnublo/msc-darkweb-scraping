@@ -182,7 +182,8 @@ DARKFAIL_MARKET_SUBURLS = {
 
 HARDCODED_MIRRORS = {
     EMPIRE_MARKET_ID: {
-        "empiremktxgjovhm.onion": time()
+        "empiremktxgjovhm.onion": time(),
+        "empiremktw5g6njb.onion": time()
     },
     CRYPTONIA_MARKET_ID: {
 
