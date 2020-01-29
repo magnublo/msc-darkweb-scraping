@@ -1,4 +1,6 @@
+import inspect
 import os
+from sys import getrecursionlimit
 from threading import Lock
 from time import time, sleep
 from typing import List, Dict, Optional
@@ -66,6 +68,10 @@ class MirrorManager:
         # recurse
         # test mirror
         # if test failed, recurse
+
+        if len(inspect.stack()) > 0.95 * getrecursionlimit():
+            # Ensuring recursion doesn't get too deep. Thread will re-enter method anyway.
+            return self.scraper.mirror_base_url
 
         if self.tries % self.tries_per_forced_db_refresh == 0:
             self._refresh_mirror_db(db_session)
