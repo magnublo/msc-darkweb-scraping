@@ -58,5 +58,9 @@ class ListingObservation(Base):
     minimum_order_unit_amount = Column(Integer, default=1)
     unit_type = Column(CHAR(8))
 
+    # apollon
+    bch = Column(Boolean)
+    bch_rate = Column(Float)
+
 
 

@@ -266,3 +266,4 @@ environment_settings.py
 
 test.py
 *.pickle
+**.csv
