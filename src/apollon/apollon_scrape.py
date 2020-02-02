@@ -116,7 +116,7 @@ class ApollonScrapingSession(BaseScraper):
         return requests.session()
 
     def populate_queue(self) -> None:
-        task_list: List[Tuple[str, str]] = []
+        task_list: List[Tuple[any, str]] = []
 
         self.logger.info(f"Fetching {APOLLON_MARKET_CATEGORY_INDEX_URL_PATH} and creating task queue...")
         web_response = self._get_logged_in_web_response(APOLLON_MARKET_CATEGORY_INDEX_URL_PATH,
@@ -138,7 +138,7 @@ class ApollonScrapingSession(BaseScraper):
                 task_list.append(t)
 
         for main_category_index_url in main_category_index_urls:
-            self.logger.info(f"Fetching {self.mirror_base_url}{parent_sub_category_index_url}...")
+            self.logger.info(f"Fetching {self.mirror_base_url}{main_category_index_url}...")
             web_response = self._get_logged_in_web_response(main_category_index_url)
             soup_html = get_page_as_soup_html(web_response.text)
             tasks = self.scraping_funcs.get_task_list_from_main_category_page(soup_html)
@@ -158,7 +158,6 @@ class ApollonScrapingSession(BaseScraper):
 
     def _scrape_queue_item(self, category_pair: Tuple[Tuple[str, int, str, int]],
                            search_result_url: str) -> None:
-        return
         self.scraping_funcs: ApollonScrapingFunctions
 
         web_response = self._get_logged_in_web_response(search_result_url, expected_page_type=PageType.SEARCH_RESULT)
@@ -174,7 +173,7 @@ class ApollonScrapingSession(BaseScraper):
             else:
                 return
 
-        btc_rate, ltc_rate, xmr_rate = self.scraping_funcs.get_cryptocurrency_rates(soup_html)
+        btc_rate, xmr_rate, bch_rate, ltc_rate = self.scraping_funcs.get_cryptocurrency_rates(soup_html)
 
         assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky) == len(
             nrs_of_views)
