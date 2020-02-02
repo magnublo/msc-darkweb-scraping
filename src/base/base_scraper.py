@@ -450,17 +450,20 @@ class BaseScraper(BaseClassWithLogger):
                                                                headers=self.headers, proxies=self.proxy)
         soup_html = get_page_as_soup_html(web_response.text)
 
+        captcha_image_request_headers: dict = self._get_captcha_image_request_headers(self.headers)
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
-        image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url, headers=self.headers,
-                                                                 proxies=self.proxy).content
+        image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url,
+                                                                 headers=captcha_image_request_headers,
+                                                                 proxies=self.proxy)
+        image_bytes = image_response.content
         captcha_instruction = self.scraping_funcs.get_captcha_instruction(soup_html)
         anti_captcha_kwargs: Dict[str, any] = self._get_anti_captcha_kwargs()
         if not self._captcha_instruction_is_generic(captcha_instruction):
-            altered_image = self._apply_processing_to_captcha_image(image_response, captcha_instruction)
+            altered_image = self._apply_processing_to_captcha_image(image_bytes, captcha_instruction)
             anti_captcha_kwargs['comment'] = captcha_instruction
         else:
-            altered_image = image_response
-        base64_image = base64.b64encode(image_response).decode("utf-8")
+            altered_image = image_bytes
+        base64_image = base64.b64encode(image_bytes).decode("utf-8")
         altered_base64_image = base64.b64encode(altered_image).decode("utf-8")
         assert len(base64_image) > 100
 
@@ -735,16 +738,8 @@ class BaseScraper(BaseClassWithLogger):
         return redirect_url
 
     @abstractmethod
-    def _get_successful_login_phrase(self) -> str:
-        raise NotImplementedError('')
-
-    @abstractmethod
     def _get_min_credentials_per_thread(self) -> int:
         raise NotImplementedError('')
-
-    @staticmethod
-    def _is_successful_login_response(response: Response) -> bool:
-        return False
 
     @abstractmethod
     def _get_mirror_db_lock(self) -> Lock:
@@ -882,4 +877,8 @@ class BaseScraper(BaseClassWithLogger):
 
     @abstractmethod
     def _is_expected_page(self, response: requests.Response, expected_page_type: PageType) -> bool:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _get_captcha_image_request_headers(self, headers: dict) -> dict:
         raise NotImplementedError('')

@@ -62,6 +62,9 @@ def _is_redirect_to_home(mirror_base_url: str, web_response: requests.Response) 
 
 class EmpireScrapingSession(BaseScraper):
 
+    def _get_captcha_image_request_headers(self, headers: dict) -> dict:
+        return headers
+
     def _captcha_instruction_is_generic(self, captcha_instruction: str) -> bool:
         return captcha_instruction in EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
 
