@@ -506,3 +506,5 @@ class TestGetMetaRefreshInterval(EmpireBaseTest):
     def test_get_meta_refresh_interval_zero(self):
         soup_html = self._get_page_as_soup_html("meta_refresh/saved_empire_meta_refresh_0")
         meta_refresh_interval, redir_url = scrapingFunctions.get_meta_refresh_interval(soup_html)
+        self.assertEqual(0, meta_refresh_interval)
+        self.assertEqual('/index/logindtf=1', redir_url)
