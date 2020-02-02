@@ -32,6 +32,26 @@ def _parse_external_market_rating(titled_span: BeautifulSoup, remaining_external
 class EmpireScrapingFunctions(BaseFunctions):
 
     @staticmethod
+    def get_meta_refresh_interval(soup_html: BeautifulSoup) -> Tuple[int, str]:
+        # TODO: wrong method name, should be get_meta_refresh_interval_and_redir_url etc.
+        meta = soup_html.select_one("head > meta")
+        refresh_interval_and_redir_url = meta.attrs["content"]
+        refresh_interval_str, redir_url = [s.strip() for s in refresh_interval_and_redir_url.split(";")]
+        refresh_interval = int(refresh_interval_str)
+        assert redir_url[0:4].lower() == "url="
+        return refresh_interval, redir_url[4:]
+
+
+    @staticmethod
+    def get_captcha_instruction(soup_html: BeautifulSoup) -> str:
+        input_field: BeautifulSoup
+        input_field = soup_html.select_one(
+            "body > div.body-content > div.body-content > div.wrapper > div > div.login-textbox > form > "
+            "div:nth-child(5) > input")
+
+        return input_field.attrs["placeholder"]
+
+    @staticmethod
     def accepts_currencies(soup_html):
         soup_html_as_string = str(soup_html)
 
@@ -605,3 +625,53 @@ class EmpireScrapingFunctions(BaseFunctions):
 
         return tuple(product_page_urls), tuple(urls_is_sticky), tuple(titles), tuple(sellers), tuple(
             seller_urls), tuple(nrs_of_views)
+
+    @staticmethod
+    def is_listing(soup_html: BeautifulSoup) -> bool:
+        if soup_html.select_one(
+                "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div:nth-child("
+                "1) > div.listDes > table"):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def is_seller(soup_html: BeautifulSoup) -> bool:
+        tab_link = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div.tab > "
+            "a.tablinks.focus")
+        return tab_link and tab_link.text == "About"
+
+    @staticmethod
+    def is_feedback(soup_html: BeautifulSoup) -> bool:
+        tab_link = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div.tab > "
+            "a.tablinks.focus")
+        return tab_link and tab_link.text in (
+            "Positive Feedback", "Negative Feedback", "Neutral Feedback", "Left Feedback")
+
+    @staticmethod
+    def is_pgp_key(soup_html: BeautifulSoup) -> bool:
+        tab_link = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div.tab > "
+            "a.tablinks.focus")
+        return tab_link and tab_link.text == "PGP"
+
+    @staticmethod
+    def is_search_result(soup_html: BeautifulSoup) -> bool:
+        seller_href_of_first_result = soup_html.select_one(
+            "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > div:nth-child(3) > "
+            "div.col-1centre > div > p > a")
+
+        if seller_href_of_first_result:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def is_category_index(soup_html: BeautifulSoup) -> bool:
+        search_form = soup_html.select_one("#information > form")
+        if search_form:
+            return True
+        else:
+            return False
