@@ -126,6 +126,8 @@ EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (WALL_STREET_MARKET_ID, "Wall Street Market")
 ]
 
+EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS = ("What's the captcha?",)
+
 
 #CRYPTONIA MARKET
 CRYPTONIA_MARKET_ID = "CRYPTONIA_MARKET"
@@ -180,7 +182,8 @@ DARKFAIL_MARKET_SUBURLS = {
 
 HARDCODED_MIRRORS = {
     EMPIRE_MARKET_ID: {
-        "empiremktxgjovhm.onion": time()
+        "empiremktxgjovhm.onion": time(),
+        "empiremktw5g6njb.onion": time()
     },
     CRYPTONIA_MARKET_ID: {
 

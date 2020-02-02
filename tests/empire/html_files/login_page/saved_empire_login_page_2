@@ -1,0 +1,83 @@
+<html><head>
+<title>Empire Market</title>
+<link href="/public/css/style.css?v=4" rel="stylesheet" type="text/css">
+<link href="/public/css/font-awesome.min.css" rel="stylesheet">
+<link href="/favicon.png" rel="icon" type="image/png">
+</head>
+<body>
+<a href="/login"><img src="/public/image/logo.png" style="padding-bottom: 10px;padding-top: 10px;"></a>
+<div class="body-content">
+<div class="nav">
+<ul>
+<li><a href="/login">LOGIN</a></li>
+<li><a href="/register">REGISTER</a></li>
+<li><a href="http://tpo7v66snknyugsf.onion" target="_blank">FORUMS</a></li>
+<li><a href="/safe">VERIFY MIRROR</a></li>
+</ul>
+</div>
+<div class="body-content">
+<div class="sub_head_inner_header">
+<i aria-hidden="true" class="fa fa-sign-in fa-fontSet"></i>
+<div class="check"><p></p></div>
+<h3> <a href="/login">Login</a> </h3>
+<div class="check"><p></p></div>
+<i aria-hidden="true" class="fa fa-sitemap fa-fontSet sitemap"></i>
+</div>
+<style>.container{display:inline-block;position:relative;padding-left:5px;margin-bottom:20px;cursor:pointer;font-size:12px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;width:300px}.container input{position:absolute;opacity:0;cursor:pointer;height:0;width:0}.checkmark{position:absolute;top:0;left:0;height:25px;width:25px;background-color:#eee}.container:hover input ~ .checkmark {background-color:#ccc}.container input:checked ~ .checkmark {background-color:#c85d06}.checkmark:after{content:"";position:absolute;display:none}.container input:checked ~ .checkmark:after {display:block}.container .checkmark:after{left:9px;top:5px;width:5px;height:10px;border:solid #fff;border-width:0 3px 3px 0;-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}</style>
+<div class="wrapper">
+<div class="login-page">
+<div class="login-Head">
+<div class="loginHead-logo">
+<i aria-hidden="true" class="fa fa-sign-in"></i>
+</div>
+<div class="loginHead-head">
+<h3>LOGIN TO EMPIRE MARKET</h3>
+</div>
+</div>
+<div class="clear"></div>
+<p>Welcome to Empire Market! Please login to access the marketplace. If you do not have an account, you can  <a href="/register">register</a> to get access to the listings. Registrations are free and open to everyone. If you have lost your password, please use the <a href="/index/forgot/password"> forgot password </a> form to reset your password.</p>
+<div class="login-textbox">
+<form accept-charset="utf-8" action="/index/login" method="post">
+<div class="">
+<input autofocus="" class="login-textbox" name="username" placeholder="Username" type="text" value="">
+</div>
+<div class="">
+<input autocomplete="off" class="login-textbox" name="password" placeholder="Password" type="password">
+</div>
+<div class="" style="margin-left:em;">
+<div class="image" style="margin-left:px;margin-top:px;"><img alt=" " src="/public/captchaimg/1580224702.3679.jpg" style="width: 200; height: 100; border: 0;"></div> </div>
+<p class="invalidCaptchaError"></p>
+<div style="padding-top: 10px;">
+<input class="login-textbox" name="captcha" placeholder="Captcha: Black numbers only." style="" type="text">
+</div>
+<div class="login-wrap">
+<input name="ae68e6d7b5702ffeba4d45c0fe1321e434efb1bc" type="hidden" value="Login">
+<input name="token" type="hidden" value="3eccd3875987c6542abdbcb0285c6555ae1ad641">
+<input name="e665d2906b3713b8bc4f34341c084ce91b7bfd58" type="hidden" value="Login">
+<input class="primary_button" name="submit" type="submit" value="Login">
+<input name="9b798ccc2ba91065a38fd42c080ded6f15d42acb" type="hidden" value="Login">
+<input name="88ec9644918f92c2428569df92b34b5ec7701073" type="hidden" value="Login">
+</div>
+</form>
+</div>
+</div>
+</div>
+<!--</div> -->
+<div class="sub_head_inner_header">
+<i aria-hidden="true" class="fa fa-sign-in fa-fontSet"></i>
+<div class="check"><p></p></div>
+<h3> <a href="/login">Login</a> </h3>
+<div class="check"><p></p></div>
+<i aria-hidden="true" class="fa fa-sitemap fa-fontSet sitemap"></i>
+</div>
+</div>
+</div>
+<div class="footer">
+<p><font size="1">
+<span style="float:right;">
+	Server time: Wednesday, Jan 29, 2020 00:18:22	</span>
+<span style="float:left;">Copyright © 2020 Empire Market empiremktw5g6njb.onion</span> </font><br>
+</p>
+</div>
+
+</body></html>

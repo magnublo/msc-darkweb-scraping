@@ -56,7 +56,8 @@ from src.models.web_session_cookie import WebSessionCookie
 from src.utils import pretty_print_GET, get_error_string, print_error_to_file, error_is_sqlalchemy_error, \
     get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
     pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string, \
-    is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response, is_service_unavailable_error
+    is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response, is_service_unavailable_error, \
+    PageType
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -418,7 +419,8 @@ class BaseScraper(BaseClassWithLogger):
                 f"{self.mirror_base_url}")
 
     def _get_logged_in_web_response(self, url_path: str, post_data: dict = None,
-                                    web_session: requests.Session = None) -> Response:
+                                    web_session: requests.Session = None,
+                                    expected_page_type: PageType = PageType.UNDEFINED) -> Response:
         web_session = web_session if web_session else self.web_session
         if not web_session:
             raise AssertionError
@@ -427,33 +429,50 @@ class BaseScraper(BaseClassWithLogger):
         response = self._get_web_response_with_error_catch(web_session, http_verb, url_path, proxies=self.proxy,
                                                            headers=self.headers, data=post_data)
 
-        if self._is_logged_out(web_session, response, self.login_url, self.is_logged_out_phrase) and not post_data:
+        if self._is_logged_out(web_session, response, self.login_url, self.is_logged_out_phrase) and http_verb == 'GET':
             web_session = self._login_and_set_cookie(web_session)
-            return self._get_logged_in_web_response(url_path, web_session=web_session)
+            return self._get_logged_in_web_response(url_path, web_session=web_session,
+                                                    expected_page_type=expected_page_type)
         else:
             self.pages_counter += 1
-            if not post_data:
+            if http_verb == 'GET':
+                if not self._is_expected_page(response, expected_page_type):
+                    self.logger.info(
+                        f"GET request to {url_path} should have returned {expected_page_type.value}, but "
+                        f"failed test. Retrying {url_path}...")
+                    return self._get_logged_in_web_response(url_path, post_data, web_session, expected_page_type)
                 web_session.headers.update({"Origin": self._get_schemaed_url_from_path(url_path)})
             self.web_session = self._rotate_web_session()
             return response
 
     def _login_and_set_cookie(self, web_session: requests.Session) -> requests.Session:
         web_response = self._get_web_response_with_error_catch(web_session, 'GET', self._get_login_url(),
-                                                            headers=self.headers, proxies=self.proxy)
+                                                               headers=self.headers, proxies=self.proxy)
         soup_html = get_page_as_soup_html(web_response.text)
 
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
-        image_response = self._get_logged_in_web_response(image_url, web_session=web_session).content
+        image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url, headers=self.headers,
+                                                                 proxies=self.proxy).content
+        captcha_instruction = self.scraping_funcs.get_captcha_instruction(soup_html)
+        anti_captcha_kwargs: Dict[str, any] = self._get_anti_captcha_kwargs()
+        if not self._captcha_instruction_is_generic(captcha_instruction):
+            altered_image = self._apply_processing_to_captcha_image(image_response, captcha_instruction)
+            anti_captcha_kwargs['comment'] = captcha_instruction
+        else:
+            altered_image = image_response
         base64_image = base64.b64encode(image_response).decode("utf-8")
+        altered_base64_image = base64.b64encode(altered_image).decode("utf-8")
         assert len(base64_image) > 100
+
         captcha_solution, captcha_solution_response = self._get_captcha_solution_from_base64_image(
-            base64_image)
+            altered_base64_image, anti_captcha_kwargs=anti_captcha_kwargs)
 
         login_payload = self.scraping_funcs.get_login_payload(soup_html, web_session.username,
                                                               web_session.password, captcha_solution)
 
-        web_response = self._get_logged_in_web_response(self._get_login_url(), post_data=login_payload,
-                                                        web_session=web_session)
+        web_response = self._get_web_response_with_error_catch(web_session, 'POST', self._get_login_url(),
+                                                               data=login_payload, headers=self.headers,
+                                                               proxies=self.proxy)
 
         if self._is_logged_out(web_session, web_response, self.login_url, self.is_logged_out_phrase):
             self.logger.warn(f"INCORRECTLY SOLVED CAPTCHA FOR USER {web_session.username}, TRYING AGAIN...")
@@ -696,7 +715,8 @@ class BaseScraper(BaseClassWithLogger):
         raise NotImplementedError('')
 
     @abstractmethod
-    def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str, login_page_phrase: str) -> bool:
+    def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str,
+                       login_page_phrase: str) -> bool:
         raise NotImplementedError('')
 
     def _get_schemaed_url_from_path(self, url_path: str) -> str:
@@ -704,7 +724,7 @@ class BaseScraper(BaseClassWithLogger):
 
     @staticmethod
     def _is_meta_refresh(text) -> bool:
-        return text[0:512].find('meta http-equiv="refresh"') != -1
+        return text[0:512].lower().find('http-equiv="refresh"') != -1
 
     def _wait_out_meta_refresh_and_get_redirect_url(self, web_response: Response) -> str:
         soup_html = get_page_as_soup_html(web_response.text)
@@ -740,6 +760,14 @@ class BaseScraper(BaseClassWithLogger):
 
     @abstractmethod
     def _is_custom_server_error(self, response) -> bool:
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _apply_processing_to_captcha_image(self, image_response, captcha_instruction):
+        raise NotImplementedError('')
+
+    @abstractmethod
+    def _captcha_instruction_is_generic(self, captcha_instruction: str) -> bool:
         raise NotImplementedError('')
 
     def _get_captcha_solution_from_base64_image(self, base64_image: str, anti_captcha_kwargs: Dict[str, int] = None) \
@@ -851,3 +879,7 @@ class BaseScraper(BaseClassWithLogger):
         else:
             self.url_failure_counts[url_path] += 1
         return self.url_failure_counts[url_path] > MAX_TEMPORARY_ERRORS_PER_URL
+
+    @abstractmethod
+    def _is_expected_page(self, response: requests.Response, expected_page_type: PageType) -> bool:
+        raise NotImplementedError('')
