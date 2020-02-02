@@ -49,12 +49,12 @@
 	<li class="dropdown">
 	<a href="#"><b>My Profile<span class="caret"></span></b></a>
 	<ul class="dropdown-menu" role="menu">
-	<li><a href="profile.php"><big>usingPython1</big> <img src="uploads/users/default2.png" class="img-circle" width="48px" height="48px"></a></li>
+	<li><a href="profile.php"><big>usingPython1</big> <img src="uploads/users/b7b7f86a40df6807bad6107224d06d6e.png" class="img-circle" width="48px" height="48px"></a></li>
         <li><a href="deposit.php">Deposit &amp; Withdrawal BTC</a></li>
         <li><a href="depositXMR.php">Deposit &amp; Withdrawal XMR</a></li>
         <li><a href="depositLTC.php">Deposit &amp; Withdrawal LTC</a></li>
         <li><a href="depositBCH.php">Deposit &amp; Withdrawal BCH</a></li>
-	
+
 	<li><a href="autoshop.php">AutoShop</a></li>
 	<li><a href="affiliate.php">Affiliates</a></li>
 	<li><a href="myfavourites.php">My Favorites</a></li>
@@ -80,7 +80,7 @@
                                 <a href="home.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Home [-]</b></a>
 								<a href="imsg.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Inbox [-]</b></a>
 								<a href="orders.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Orders [-]</b></a>
-                                                                
+
 								<a href="deposit.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BTC [-]</b></a>
 								<a href="depositXMR.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal XMR [-]</b></a>
 								<a href="depositLTC.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal LTC [-]</b></a>
@@ -93,7 +93,7 @@
                             </div>
                     </div>
 
-				
+
 
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -110,11 +110,11 @@
 							<div class="panel-body">
 								<div class="list-group">
 									<div class="list-group-item">
-									<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9270.36</span>
-									<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8420.20</span>
-									<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7127.43</span>
-									<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">13748.93</span>
-									<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12226.66</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9379.98</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8469.57</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7120.44</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">14024.36</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12415.71</span>
 									</div>
 								</div>
 							</div>
@@ -123,11 +123,11 @@
                         <div class="panel-body">
                             <div class="list-group">
                                 <div class="list-group-item">
-								<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">68.74</span>
-								<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">62.31</span>
-								<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">52.81</span>
-								<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">101.89</span>
-								<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">88.61</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">75.70</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">68.30</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">57.27</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">112.49</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">98.94</span>
 								</div>
                             </div>
                     </div>
@@ -135,29 +135,29 @@
                         <div class="panel-body">
                             <div class="list-group">
                                 <div class="list-group-item">
-								<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">378.86</span>
-								<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">343.70</span>
-								<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">291.02</span>
-								<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">561.49</span>
-								<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">488.31</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">381.32</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">343.78</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">289.83</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">567.24</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">498.77</span>
 								</div>
                             </div>
                     </div>
-					
-					
+
+
                         <div class="panel-body">
                             <div class="list-group">
                                 <div class="list-group-item">
-								<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">59.63</span>
-								<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">54.08</span>
-								<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">45.72</span>
-								<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">88.88</span>
-								<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">77.03</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">71.13</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">64.19</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">53.78</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">105.94</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">93.38</span>
 								</div>
                             </div>
                     </div>
-					
-					
+
+
 					</div>
 			</div>
 
@@ -171,145 +171,281 @@
 
 							<div class="panel panel-default">
 								<div class="panel-body">
-								
+
 									<div class="col-sm-12">
-									
-										<div class="col-sm-1" style="width:100%"> 
+
+										<div class="col-sm-1" style="width:100%">
 											 <img src="uploads/users/733ec2ce1feb9cfa26b3898c6168b108.jpg" class="img-responsive img-rounded" height="80px" width="80px">
 										</div>
 
 										<div class="col-sm-5">
-											<small><a href=""><b>dutch-skills (100%)</b></a> <small><span class="badge" style="background-color:#5cb85c;font-size:10px;">Seller Level 1 (91)</span></small> <small><span class="badge" style="background-color:#f0ad4e;font-size:10px;">Trust Level 3 </span></small></small><br><small><span><b>Verified Seller : </b><img src="uploads/icons/yes_verified.png"></span></small> / <small><span><b>Trusted Seller : </b><img src="uploads/icons/not_trusted.png"></span></small><br>
+											<small><a href=""><b>dutch-skills (100%)</b></a> <small><span class="badge" style="background-color:#5cb85c;font-size:10px;">Seller Level 1 (93)</span></small> <small><span class="badge" style="background-color:#f0ad4e;font-size:10px;">Trust Level 3 </span></small></small><br><small><span><b>Verified Seller : </b><img src="uploads/icons/yes_verified.png"></span></small> / <small><span><b>Trusted Seller : </b><img src="uploads/icons/not_trusted.png"></span></small><br>
 											<small><span><b>Positive Feedback : </b>(100%)</span></small><br>
 											<small><span><b>Member since : </b>Dec 05, 2019</span></small><br>
-											<small><span><b>Last Login : </b>Jan 29, 2020</span></small><br>
+											<small><span><b>Last Login : </b>Feb 03, 2020</span></small><br>
 										</div>
-										
-										<div class="col-sm-2"><small><span><b>Sales : </b>91</span></small><br>
+
+										<div class="col-sm-2"><small><span><b>Sales : </b>93</span></small><br>
 											<small><span><b>Orders : </b>0</span></small><br>
 											<small><span><b>Won/Lost Disputes : </b><span style="color:green;">0</span>/<span style="color:red;">0</span></span></small><br>
 											<small><span><b>User Type : </b>Seller</span></small><br>
-											
+
 												<small><span><b>FE : </b>Not Allowed</span></small><br>
 
 										</div>
 
-										<div class="col-sm-4" align="left"> 
+										<div class="col-sm-4" align="left">
 											<div class="input-group">
 												<a href="home.php?cid=0&amp;csid=0&amp;ss_usr=dutch-skills"><button class="btn btn-info btn-xs">Store of <b>dutch-skills</b></button></a>
 												<a href="smsg.php?ms_receiver=dutch-skills"><button class="btn btn-success btn-xs">Send a Message</button></a><br><br>
 												<a style="text-decoration:none;" href="user.php?u_id=dutch-skills&amp;fvusr=1"> <button class="btn btn-warning btn-xs">Add Seller To Favourites</button></a>
 											</div>
-						
+
 
 										</div>
 
 									</div>
 
 								</div>
-							
+
 							</div>
 
-                                                        
+
 							<div class="panel panel-default">
 								<div class="panel-body">
-									<div class="col-sm-6" align="left"> 
+									<div class="col-sm-6" align="left">
 									<h4><b>Imported Feedback : </b></h4>
 										<div>
 
 										</div>
-									
+
 									</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
 								<div class="panel-body">
-									<div class="col-sm-6" align="left"> 
+									<div class="col-sm-6" align="left">
 									<h4><b>Feedback Ratings : </b></h4>
 										<div>
-										<button type="button" class="btn btn-success btn-xs" style="background-color:#5cb85c;color:#fff;"><b>Positive : 43</b></button>
+										<button type="button" class="btn btn-success btn-xs" style="background-color:#5cb85c;color:#fff;"><b>Positive : 44</b></button>
 										<button type="button" class="btn btn-default btn-xs" style="background-color:#777;color:#fff;"><b>Neutral : 0</b></button>
 										<button type="button" class="btn btn-danger btn-xs" style="background-color:#d9534f;color:#fff;"><b>Negative : 0</b></button>
 										</div>
-									<h4><b>Latest Feedback : </b></h4><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>very fast delivery, received different ones and extra amount, all good ty</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Great shipping time! Received in multiple letters, great stealth, not the usual one. 8,8g overweight! best vendor on market for sure, my go-to vendor!</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Great</span><br>
+									<h4><b>Latest Feedback : </b></h4><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>It's a really fast shipping and really good stuff! I will come back defenatly and thank for really secure shippment!!!</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>very fast delivery, received different ones and extra amount, all good ty</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Great shipping time! Received in multiple letters, great stealth, not the usual one. 8,8g overweight! best vendor on market for sure, my go-to vendor!</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br>
 									</div>
 								</div>
 							</div>
 
 								<ul class="nav nav-tabs">
-									<li><a href="user.php?u_id=dutch-skills&amp;tab=1" data-toggle="tab">Profile</a></li>
+									<li class="active"><a href="user.php?u_id=dutch-skills&amp;tab=1" data-toggle="tab">Profile</a></li>
 									<li><a href="user.php?u_id=dutch-skills&amp;tab=2" data-toggle="tab">Positive Feedback</a></li>
 									<li><a href="user.php?u_id=dutch-skills&amp;tab=3" data-toggle="tab">Neutral Feedback</a></li>
 									<li><a href="user.php?u_id=dutch-skills&amp;tab=4" data-toggle="tab">Negative Feedback</a></li>
-									
-									<li class="active"><a href="user.php?u_id=dutch-skills&amp;tab=6" data-toggle="tab">Public PGP Key</a></li>
+
+									<li><a href="user.php?u_id=dutch-skills&amp;tab=6" data-toggle="tab">Public PGP Key</a></li>
 								</ul>
 											<div class="tab-content">
 												<div class="tab-pane fade in active">
-													<h4>User Public PGP Key : </h4>
+													<h4>About Me : </h4>
 													<div class="col-lg-13">
 															<div class="panel panel-default">
 																<div class="panel-body">
 																<div class="col-sm-5" style="text-align:left;">
-																<pre>-----BEGIN PGP PUBLIC KEY BLOCK-----
-
-
-
-mQENBF3axEUBCADfSLjrftvYe8staq8bzMLENxjO7AFzWC2FRekW35s1b3hS937U
-
-BfqIO3ZFLPtY2FDnXRWIlWZsXOz0FamQ9jvwEHywT/A0xhuF4AKLsAuYSyrS88vl
-
-xFfog8cynfSLj/bvmONBnV2+xLtjNnJwAn69UU7maRhhtEB3NqBP9UagcZhcDPZU
-
-kEUuA+Pt370fSkqHYddYHQlH+NaTsrruN818ozbbXefgnB/IzGEd8ur62e3PxAZi
-
-rAYzvff/QniNdSDG8qyV84JeIzfS+AWVpIJ9TWfaHRBrE8AacWCcW8O0tTsUwbwN
-
-d4BcG45qtA9oEX5KI8m39Z+9iA6/DL3a2xvxABEBAAG0G0phc29uIDxqYXNvbjIy
-
-QG91dGxvb2suY29tPokBTgQTAQgAOAIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIX
-
-gBYhBKagKilScAKU3Pb0AoMcsBmqNGf/BQJd2sZ8AAoJEIMcsBmqNGf/ijEIAK+U
-
-MMkpMX+LbTdEciTnYoKAlwqfzbH2TuwHkTr2ICCVap+QCiD/6zdKtg51Jlw/+q8D
-
-6iuIp68G2f2wXbKzGx5QKnE14BeR4VbmvvWyrOpxo7lPnX4aKLoa/YjrImKVlRLv
-
-k2FYnzDZ28kMCq030PZK7MX0W5nVFWUEqH4pqNJ2GL6lvh8xwsDM4KglnXAGoYSx
-
-gjHNuZdN/I8YTAiwkGq5pD1/HznSGw7/vWtP2LFZkIk3ziLuFhWVPoFEryOpY5zG
-
-ouAuFNUqmwpDeKtQWxZEgALGAGSZoq1HR7Lf+66lFAlyPOSSTTeOb0jXHwV+59ls
-
-j4lJPBpm7TZgI/S4WjO5AQ0EXdrERQEIAMThCDCC1cRbTPmVpnihc4S3EOQigE0J
-
-uYTmPFH4PLDm2pk+tkELfgjQLDZefPL3gUokd5R4glgoaU46zBlQRs0clYDU64OO
-
-FYN6VP3Iv/Y7UNmOG5MfUzDPKkoJRfxX4g9++3y3a9LCTbsEaP6+Qnr9/7aY/kpt
-
-jgr/SCv9lAuoMnpLHgfiUwo9gRw0kEd6wh1H7lTy7Wx8XrNbCsqQ5PYk6C53wvni
-
-hsIDdZm22HEn4QkFNcVyWYaSaGcENNQl9eRW+Fa45ba9/R3wMYoY7APwvR5Bccfo
-
-i9XZEfrjfmBjWWpq66n4BhEMc7OSuI0il/M1B6lVCvOL6gU/zbaLrxsAEQEAAYkB
-
-PAQYAQgAJhYhBKagKilScAKU3Pb0AoMcsBmqNGf/BQJd2sRFAhsMBQkDw9V7AAoJ
-
-EIMcsBmqNGf/xygIAMw2ylnYyZ/TmATSrvozQerCM3joDf57E7mZRp6ewnGMm/A/
-
-JVt7c/M4JJdKGTCEd7jnnwYHMjel8FA2lp0TLKM2lDBvke+7MgOLLvyyBEJ1lNa7
-
-Qrtuu64o/s8HSpXnvVBVYwsrt9rX8R3iqEVlM0Cy1yoRvB8krSLjZSG+th1zrIGq
-
-km3/LD+1ERA6lscUvxxDOLNOGJ2pTqGiXoXTfED7zKKLrv8ub7AwWpTDoIYR26+t
-
-xbFqSmObbDQItS4QUZHPcToUhJaht7TDGhFJP4WaAdEWVJbyHuE+8bHdRzcTTW1u
-
-cRGsKhwR6b9LSRGWgs/dbpKePR6MGOTr8tKK8yk=
-
-=EmIg
-
------END PGP PUBLIC KEY BLOCK-----</pre>
+																	<span><b>Jabber : </b></span><br>
+																	<span><b>E-Mail : </b>joris127@torbox3uiot6wchz.onion</span><br>
+																</div>
+																<div class="col-sm-8" style="text-align:left;word-wrap: break-word;"><span style="color:purple;">PLEASE READ OUR PROFILE INFORMATION</span><br>
+<br>
+<span style="color:red;"><b>ALL MY CUSTOMERS, I WISH YOU A HAPPY AND SAFE NEW YEAR !!!!!<br>
+<br>
+If you have ordered and your package is not there yet, do not grieve because of the public holidays in our country, it will take a little longer !![b]</b></span><b><br>
+<br>
+We are a Trusted vendor from Wallstreet Market &amp; Dream Market.<br>
+<br>
+100% reship or 50 % refund after 3 positive sales!!!!!!<br>
+<br>
+<span style="color:red;">E-Mail : joris127@torbox3uiot6wchz.onion</span> <h1></h1><br>
+<span style="color:blue;">ENCRO : just ask me</span> <h1></h1><br>
+<span style="color:purple;">WiCKR : just ask me</span> <h1></h1><br>
+<br>
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>
+<span style="font-size:20px;">DUTCH-SKiLLS Welcomes You!!!</span><br>
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>
+<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+[b]📅 Updates 📅</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+- For Bulk contact me <br>
+<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>✏ Address Format ✏</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ Always encrypt sensitive information<br>
+<br>
+Please include a first name or initial and a surname (Title optional)<br>
+Examples: (Mr) John Smith or (Mr) J. Smith<br>
+<br>
+✔ Please make sure to check you have entered your address correctly and to use a real name<br>
+✔ We cannot be held responsible for any errors on your end so please double check<br>
+✔ Please refrain from using special characters<br>
+✔ If a name is missing or there are any mistakes with the address format we will ask you to resent which will probably result in a delay<br>
+<br>
+Example format (Germany):<br>
+<br>
+("Title") "Name" "Surname"<br>
+"Street Name" "House Number"<br>
+"Postal/Zip Code" "City"<br>
+"Country"<br>
+<br>
+Example Address (Germany)<br>
+<br>
+Mr John Smith<br>
+Hauptstrasse 12<br>
+12345 Berlin<br>
+Germany<br>
+<br>
+✔ We do ship to packing stations and hotels but at your own risk<br>
+✔ I will not re-ship if you use a fake packstation<br>
+<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>✈ Shipping Options ✈</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ All regular/small orders are shipped from The Netherlands and without track and trace<br>
+✔ Bulk orders are shipped with track and trace, we can ship these from multiple countries<br>
+✔ Contact us for all the possibilities<br>
+<br>
+<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>✈ Stealth ✈</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ Sufficient stealth will be used depending on the order size and receipt-ants country so different<br>
+methods will be applied for different countries<br>
+✔ Customer data is destroyed right after the order is processed<br>
+✔ Always encrypt sensitive information<br>
+<br>
+All regular orders will be:<br>
+✔ Vacuum sealed<br>
+✔ Inside a Mylar bag<br>
+✔ Alcohol cleaned<br>
+✔ Fit trough a regular sized mailbox<br>
+✔ (depending on the country) a decoy<br>
+<br>
+✔ Bulk order will have custom decoy and paperwork<br>
+<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>✈ Shipping times ✈</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ Orders placed on business days will always ship the following day when placed before the evening<br>
+✔ Orders placed in the weekend (before Sunday evening) will ship out on Monday<br>
+✔ The following shipping times are estimates, please do not contact us about missing orders till the estimated shipping times for your<br>
+country has passed plus an additional 5 business days<br>
+<br>
+<br>
+<span style="color:blue;"><b>Western Europe</b>t</span><br>
+<br>
+✔ The Netherlands 1-2 Business days<br>
+✔ Germany 1-4 business days<br>
+✔ United Kingdom 3-7 business days<br>
+✔ France 2-6 business days<br>
+✔ Belgium 2-6 business days<br>
+✔ Ireland 3-8 business days<br>
+✔ Austria 2-6 business days<br>
+✔ Switzerland 2-6 business days<br>
+✔ Luxembourg 2-6 business days<br>
+✔ Liechtenstein 2-7 business days<br>
+✔ Andorra 3-7 business days<br>
+✔ Monaco 3-7 business days<br>
+<br>
+<span style="color:blue;"><b>Northern Europe</b></span><br>
+<br>
+✔ Denmark 3-7 business days<br>
+✔ Estonia 3-7 business days<br>
+✔ Finland 4-8 business days<br>
+✔ Iceland 5-10 business days<br>
+✔ Latvia 4-8 business days<br>
+✔ Lithuania 3-8 business days<br>
+✔ Norway 3-8 business days<br>
+✔ Sweden 4-9 business days<br>
+<br>
+<span style="color:blue;"><b>Southern Europe</b></span><br>
+<br>
+✔ Italy 3-7 business days<br>
+✔ Spain 3-8 business days<br>
+✔ Serbia 3-7 business days<br>
+✔ Slovenia 3-7 business days<br>
+✔ San Marino 4-8 business days<br>
+✔ Portugal 4-9 business days<br>
+✔ Montenegro 4-8 business days<br>
+✔ Malta 4-10 business days<br>
+✔ Macedonia 4-9 business days<br>
+✔ Croatia 4-8 business days<br>
+✔ Greece 5-9 business days<br>
+✔ Cyprus 5-9 business days<br>
+✔ Bosnia and Herzegovina 4-9 business days<br>
+✔ Albania 4-8 business days<br>
+<br>
+<span style="color:blue;"><b>Eastern Europe</b></span><br>
+<br>
+✔ Ukraine 4-9 business days<br>
+✔ Bulgaria 3-8 business days<br>
+✔ Hungary 4-7 business days<br>
+✔ Moldavia 4-8 business days<br>
+✔ Poland 3-7 business days<br>
+✔ Romania 3-7 business days<br>
+✔ Slovakia 3-8 business days<br>
+✔ Czech Republic 3-7 business days<br>
+✔ Armenia 4-9 business days<br>
+✔ Azerbaijan 4-10 business days<br>
+✔ Georgia 4-9 business days<br>
+✔ Kazakhstan 5-9 business days<br>
+<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>💰 Refund/Reship Policy💰</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ Please be advised that leaving a negative feedback instantly voids your rights at a reship/refund<br>
+✔ Please wait the average shipping time for your country + 5 additional business days before contacting us about a missing order<br>
+✔ Orders will arrive 99% of the time<br>
+✔ For the 1% of non arriving orders we offer a 50% reship OR a 50% refund this choice is up to the customer<br>
+✔ Customers with suspicious feedback/order history will be blacklisted and won't be eligible for a reship/refund<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>💰 Full Escrow 💰</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ We offer full escrow on all orders<br>
+✔ Please make sure to finalize your order when you've received it though<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>★ Feedback ★</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ Feedback is very important for us so please leave one after receiving your order<br>
+✔ Before leaving anything less than 5 stars please contact us to see if we can make you change your mind<br>
+✔ Please be advised that leaving a negative feedback instantly voids your rights at a reship/refund<br>
+<br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<b>Contact Us</b><br>
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅<br>
+<br>
+✔ You can always contact us with any questions or requests you might have<br>
+✔ We will always respond to your inquiry within 24 hours<br>
+✔ Custom contact options available for bulk buyers<br>
+✔ Please treat us with respect and we will do the same<br>
+<br>
+<br>
+<b><span style="color:red;">KingRegards, DUTCH-SKiLLS TEAM!!!</span></b>
 																</div>
 																</div>
 															</div>

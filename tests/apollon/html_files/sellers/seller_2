@@ -1,0 +1,571 @@
+<html lang="en"><head>
+
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="">
+				<meta name="author" content="">
+
+				<title>hundredsandthousands - User Profile - Apollon Market</title>
+
+
+    <link href="dist/css/rs7exe7.min.css" rel="stylesheet">
+    <link href="dist/css/rs7exe7.css" rel="stylesheet">
+
+			</head>
+
+			<body>
+
+				<div id="wrapper">
+			<link rel="icon" href="/favicon.ico">
+	<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+       <a class="navbar-brand" href="/"><span style="background-color:black;font-size:20px;color:#000;"><img src="sidebar.png" alt="context" height="35" width="114" style="border-radius:0px;"></span></a>
+    </div>
+
+	<ul class="nav navbar-nav">
+<li><a href="home.php">Home</a></li>
+
+<li faq=""><a href="faq.php">FAQ</a></li>
+
+<li pgp=""><a href="pgp.txt">PGP</a></li>
+<li><a href="seller.php"><font color="green">Become a seller</font></a></li>
+		<li><a href="imsg.php">Inbox <span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+
+		<li><a href="tickets.php?tab=1">Tickets/Disputes<span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+
+			<li><a href="orders.php?tab=1">Orders <span class="badge" style="background-color:#5bc0de;">0</span></a></li>
+
+	    <li night="" mode=""><a href="home.php?ndm=1">Night Mode</a></li>
+
+<li chglng=""><a href="chglang.php">Change Language</a></li>
+<li verify=""><a href="verify.php">Verify Mirror</a></li>
+
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+        <li><a><b>BTC <label>0.00 / XMR 0.00 / LTC 0.00 / BCH 0.00 / USD 0</label></b></a></li>
+
+	<li class="dropdown">
+	<a href="#"><b>My Profile<span class="caret"></span></b></a>
+	<ul class="dropdown-menu" role="menu">
+	<li><a href="profile.php"><big>usingPython1</big> <img src="uploads/users/b7b7f86a40df6807bad6107224d06d6e.png" class="img-circle" width="48px" height="48px"></a></li>
+        <li><a href="deposit.php">Deposit &amp; Withdrawal BTC</a></li>
+        <li><a href="depositXMR.php">Deposit &amp; Withdrawal XMR</a></li>
+        <li><a href="depositLTC.php">Deposit &amp; Withdrawal LTC</a></li>
+        <li><a href="depositBCH.php">Deposit &amp; Withdrawal BCH</a></li>
+
+	<li><a href="autoshop.php">AutoShop</a></li>
+	<li><a href="affiliate.php">Affiliates</a></li>
+	<li><a href="myfavourites.php">My Favorites</a></li>
+	<li><a href="myblacklist.php">My Blacklist</a></li>
+	  <li class="divider"></li>
+	  <li><a href="support.php">Support</a></li>
+	  <li><a href="logout.php">Logout</a></li>
+	</ul>
+	</li>
+
+	<li><a href="logout.php">Logout</a></li>
+	</ul>
+  </div>
+</nav>
+
+            <div class="navbar-default sidebar" role="navigation">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Profile Actions
+                        </div>
+                            <div class="list-group">
+                                <a href="home.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Home [-]</b></a>
+								<a href="imsg.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Inbox [-]</b></a>
+								<a href="orders.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Orders [-]</b></a>
+
+								<a href="deposit.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BTC [-]</b></a>
+								<a href="depositXMR.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal XMR [-]</b></a>
+								<a href="depositLTC.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal LTC [-]</b></a>
+								<a href="depositBCH.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BCH [-]</b></a>
+								<a href="profile.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Profile [-]</b></a>
+                                <a href="user.php?u_id=usingPython1&amp;tab=2" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Feedback [-]</b></a>
+								<a href="myblacklist.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Blacklist [-]</b></a>
+                                <a href="myfavourites.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Favorites [-]</b></a>
+                                <a href="support.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Support [-]</b></a>
+                            </div>
+                    </div>
+
+
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<i class="fa fa-bell fa-fw"></i>Hidden Sites
+							</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<a href="http://t7tb43a7gvl6wb7j.onion/" target="_blank" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Dark Eye [-]</b></a>
+									<a href="http://guardday6e5nxblpojbhmx5ws2avautr7eswu3qg7gynh52rh744anyd.onion" target="_blank" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>DarkGuard [-]</b></a>
+									</div></div></div>
+
+					<div class="panel panel-default">
+                        <div class="panel-heading">Exchange Rates</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<div class="list-group-item">
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9388.40</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8469.14</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7119.44</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">14036.96</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12426.87</span>
+									</div>
+								</div>
+							</div>
+
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">76.09</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">68.09</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">57.72</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">113.24</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">99.49</span>
+								</div>
+                            </div>
+                    </div>
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">380.70</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">343.65</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">289.05</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">567.06</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">498.27</span>
+								</div>
+                            </div>
+                    </div>
+
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">70.86</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">63.91</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">53.75</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">105.50</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">92.63</span>
+								</div>
+                            </div>
+                    </div>
+
+
+					</div>
+			</div>
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+							<div class="page-header">
+							<h3>User Profile : </h3>
+							</div>
+
+						<div class="col-lg-12 left">
+
+							<div class="panel panel-default">
+								<div class="panel-body">
+
+									<div class="col-sm-12">
+
+										<div class="col-sm-1" style="width:100%">
+											 <img src="uploads/users/3b0305728b41d97a278ec366616fa284.jpeg" class="img-responsive img-rounded" height="80px" width="80px">
+										</div>
+
+										<div class="col-sm-5">
+											<small><a href=""><b>hundredsandthousands (99%)</b></a> <small><span class="badge" style="background-color:#0275d8;font-size:10px;">Seller Level 2 (216)</span></small> <small><span class="badge" style="background-color:#cc3300;font-size:10px;">Trust Level 5 </span></small></small><br><small><span><b>Verified Seller : </b><img src="uploads/icons/yes_verified.png"></span></small> / <small><span><b>Trusted Seller : </b><img src="uploads/icons/yes_trusted.png"></span></small><br>
+											<small><span><b>Positive Feedback : </b>(99%)</span></small><br>
+											<small><span><b>Member since : </b>Oct 05, 2019</span></small><br>
+											<small><span><b>Last Login : </b>Feb 03, 2020</span></small><br>
+										</div>
+
+										<div class="col-sm-2"><small><span><b>Sales : </b>216</span></small><br>
+											<small><span><b>Orders : </b>0</span></small><br>
+											<small><span><b>Won/Lost Disputes : </b><span style="color:green;">0</span>/<span style="color:red;">0</span></span></small><br>
+											<small><span><b>User Type : </b>Seller</span></small><br>
+
+												<small><span><b>FE : </b>Allowed</span></small><br>
+
+										</div>
+
+										<div class="col-sm-4" align="left">
+											<div class="input-group">
+												<a href="home.php?cid=0&amp;csid=0&amp;ss_usr=hundredsandthousands"><button class="btn btn-info btn-xs">Store of <b>hundredsandthousands</b></button></a>
+												<a href="smsg.php?ms_receiver=hundredsandthousands"><button class="btn btn-success btn-xs">Send a Message</button></a><br><br>
+												<a style="text-decoration:none;" href="user.php?u_id=hundredsandthousands&amp;fvusr=1"> <button class="btn btn-warning btn-xs">Add Seller To Favourites</button></a>
+											</div>
+
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left">
+									<h4><b>Imported Feedback : </b></h4>
+										<div>
+<p></p>
+<img src="images/dream.jpg" height="25" width="25"> <b><big>:</big></b> 1450 <b>(</b><span style="color:#008000">4.95</span><b>)</b>
+
+<p></p>
+<img src="images/empire.jpg" height="20" width="20"> <b><big>:</big></b> 1040 <b>Sales</b> | <a style="color:green">706</a><b>/</b><a style="color:grey">17</a><b>/</b><a style="color:red">10</a>
+
+<p></p>
+<img src="images/nightmare.png" height="25" width="25"> <b><big>:</big></b> 547 <b>Sales</b> | <a style="color:green">334</a><b>/</b><a style="color:grey">0</a><b>/</b><a style="color:red">3</a>
+
+<p></p>
+<img src="images/cryptonia.png" height="20" width="20"> <b><big>:</big></b> 47 <b>Sales</b> <b>(</b><a style="color:green">91%</a><b>)</b>
+
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left">
+									<h4><b>Feedback Ratings : </b></h4>
+										<div>
+										<button type="button" class="btn btn-success btn-xs" style="background-color:#5cb85c;color:#fff;"><b>Positive : 135</b></button>
+										<button type="button" class="btn btn-default btn-xs" style="background-color:#777;color:#fff;"><b>Neutral : 1</b></button>
+										<button type="button" class="btn btn-danger btn-xs" style="background-color:#d9534f;color:#fff;"><b>Negative : 1</b></button>
+										</div>
+									<h4><b>Latest Feedback : </b></h4><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Vendor shipped wrong product, but compensated properly! Good vendor, genuine product, nice comms if you´re patient - 5stars!</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Fast shipping good pressed pills</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Fe with trust</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br>
+									</div>
+								</div>
+							</div>
+
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="user.php?u_id=hundredsandthousands&amp;tab=1" data-toggle="tab">Profile</a></li>
+									<li><a href="user.php?u_id=hundredsandthousands&amp;tab=2" data-toggle="tab">Positive Feedback</a></li>
+									<li><a href="user.php?u_id=hundredsandthousands&amp;tab=3" data-toggle="tab">Neutral Feedback</a></li>
+									<li><a href="user.php?u_id=hundredsandthousands&amp;tab=4" data-toggle="tab">Negative Feedback</a></li>
+
+									<li><a href="user.php?u_id=hundredsandthousands&amp;tab=6" data-toggle="tab">Public PGP Key</a></li>
+								</ul>
+											<div class="tab-content">
+												<div class="tab-pane fade in active">
+													<h4>About Me : </h4>
+													<div class="col-lg-13">
+															<div class="panel panel-default">
+																<div class="panel-body">
+																<div class="col-sm-5" style="text-align:left;">
+																	<span><b>Jabber : </b>diego-hundreds@xmpp.jp</span><br>
+																	<span><b>E-Mail : </b></span><br>
+																</div>
+																<div class="col-sm-8" style="text-align:left;word-wrap: break-word;">PLEASE VISIT DARK.FAIL FOR VERIFIED MIRROR LINKS,<br>
+CATCH US ON APOLLON<br>
+<br>
+ADD OUR NEW WICKR SENORHATS<br>
+<br>
+WE WILL BE BACK 27TH JAN, SORRY FOR ANY SHORT NOTICES. ALL MESSAGES HAVE BEEN REPLIED TO, THANKS <br>
+<br>
+-------------------------------------------------------------------------------<br>
+WE ARE NOW ONLINE ON APOLLON - HUNDREDSANDTHOUSANDS<br>
+<br>
+SPECIAL APOLLON DEALS CHECK THEM OUT FULL ESCROW SHOP<br>
+--------------------------------------------------------------------------------<br>
+WELCOME TO HUNDREDS AND THOUSANDS! WE ARE BACK!<br>
+<br>
+UPDATE: MDMA SOLD OUT FIRST DAY OF OPENING YOU HUNGRY ANIMALS, WE WILL GET MORE IN PRONTO.<br>
+<br>
+KET IS OUT OF STOCK FOR NOW.<br>
+<br>
+AWAITING ON FRESH DELIVERY OF K AND MDMA MORE SUPER DEALS<br>
+<br>
+GALENIKA STRIPS BACK INSTOCK<br>
+<br>
+DUO COLOUR PRESSES *LOW STOCK LEFT*<br>
+<br>
+LSD OUT OF STOCK, NEW BLOTTERS AND ARTWORK COMING SOON<br>
+<br>
+AWAKENINGS<br>
+(RUNNING LOW ON STOCK)<br>
+<br>
+SPEED PASTE BULK INSTOCK UNBEATABLE PRICES, HIGH QUALITY<br>
+<br>
+<br>
+<br>
+<br>
+DARK.FAIL FOR ALL VERIFIED MARKET LINKSDONT GET PHISHED!<br>
+<br>
+MARKETS WE ARE ON<br>
+<br>
+EMPIRE - HUNDREDSUK<br>
+APOLLON - HUNDREDSANDTHOUSANDS<br>
+AVARIS - HUNDREDSANDTHOUSANDS<br>
+<br>
+contact:<br>
+JABBER- diego-hundreds@xmpp.jp<br>
+<br>
+BEFORE ORDERING MAKE SURE YOU READ MY TERMS AND CONDITIONS.<br>
+-----------------------------------------------------------------<br>
+<br>
+LOTS OF NEW PRODUCTS IN STORE!<br>
+<br>
+DUO COLOUR PILLS;<br>
+QDANCE *OUT OF STOCK*<br>
+M&amp;M *OUT OF STOCK*<br>
+SKPKES *OUT OF STOCK* <br>
+AWAKENINGS<br>
+<br>
+<br>
+NEW BENZOS INSTOCK IN BLISTER PACKS<br>
+<br>
+10MG DIAZEPAM/BENSIDEN PHARMA BLISTER PACKS <br>
+1MG ALPRAZOLAM/KSALOL PHARMA BLISTER PACKS <br>
+2MG CLONAZEPAM/RIVOTRIL PHARMA BLISTER PACKS <br>
+10MG DIAZEPAM/DIZY PHARMA BLISTER (CHEAP DEALS!) <br>
+2MG ALPRAZOLAM/ALMEE-2 PHARMA BLISTERS (CHEAP DEALS!) <br>
+<br>
+2MG ALPRAZOLAM BARS <br>
+<br>
+-----------------------------------------------------------------<br>
+SEE A PRICE YOU LIKE ON ANOTHER PAGE? GIVE US A MESSAGE AND WE WILL PRICE MATCH OT BEAT IT!<br>
+-----------------------------------------------------------------<br>
+<br>
+TRACKING &amp; SHIPPING:<br>
+WE WORK A DAY IN HAND, SO PLEASE PLACE THE ORDER THE DAY BEFORE YOU NEED IT DISPATCHED.<br>
+<br>
+ALL ORDER WORTH OVER 300GBP+ WILL BE SENT WITH TRACKING (WW PLEASE SPECIFY IF NO SIG IS REQUIRED ON HIGH VALUE ORDERS OF 300GBP+), ANYTHING UNDER THAT AMOUNT IS SENT STANDARD 1ST CLASS WITH ROYALMAIL.<br>
+<br>
+UK AND IRE DELIVERIES - YOU CAN REQUEST THE TRACKING IF NOTHING HAS SHOWN UP WITHIN 3DD<br>
+<br>
+NEW POLICY DUE TO OPSEC<br>
+<br>
+EU AND INTERNATIONAL, ARE NOT ENTITLED TO REQUEST TRACKING WHEN THEY PLEASE YOU CAN GET THE TRACKING IF IT PASSES THE 14 BUSINESS DAYS POINT. THIS IS FOR OPSEC REASONS.<br>
+<br>
+IF YOU WANT A BULK ORDER PLEASE MESSAGE BEFORE ORDERING AS T&amp;C'S HAVE CHANGED DUE TO OPSEC.<br>
+SO PLEASE DO NOT GIVE ME THE LINE<br>
+<br>
+"I NEEDD THE TRACKING TO INTERCEPT IT."<br>
+"MY DOG WILL EAT THE MAIL IF I CAN'T TRACK IT"<br>
+"I LIVE 40MILES AWAY FROM MY DROP SO I NEED TO BE ABLE TO CHECK IF IT IS THERE"<br>
+<br>
+,SADLY A SMALL FEW SPOILT THIS AND MADE ME CHANGE MY POLICY FOR SECUIRTY<br>
+AND ALL OF THE ABOVE.<br>
+<br>
+DISCUSS WITH ME BEFORE BUYING AND WITHOUT THEN HAVING A TEMPER TANTRUM BECAUSE OF MY POLICY CHANGE<br>
+<br>
+<br>
+-----------------------------------------------------------------<br>
+SEE A PRICE YOU LIKE ON ANOTHER PAGE? GIVE US A MESSAGE AND WE WILL PRICE MATCH OR BEAT IT!<br>
+-----------------------------------------------------------------<br>
+<br>
+!!!!!STOCK ALERT!!!!!<br>
+<br>
+<br>
+- XTC RUNNING LOW <br>
+AWAKENINGS 300MG <br>
+<br>
+- MDMA FULL STOCK!<br>
+AMAZING PRICES AND DEALS TO MATCH ITS HIGH QUALITY!<br>
+- FINEST CHAMPAGNE CRYSTAL ABOUT (OUT OF STOCK)<br>
+<br>
+- KETAMINE<br>
+- SUGAR K ISOMER-S (OUT OF STOCK)<br>
+<br>
+- LSD<br>
+AMAZING BLOTTERS!!!<br>
+NEW BLOTTERS COMING SOON <br>
+<br>
+<br>
+- BENZOS<br>
+- RIVOTRIL/CLONAZEPAM 2MG (IN ORIGINAL PACKAGING)<br>
+- KSALOL/ALPRAZOLAM 1MG (IN ORIGINAL PACKAGING)RESTOCKED 21ST JAN<br>
+- BENSIDEN/DIAZEPAM 10MG (IN ORIGINAL PACKAGING)RESTOCKED 21ST JAN<br>
+- DIZY-10 10MG DIAZEPAM *FULL STOCK*<br>
+- ALMEE-2 2MG ALPRAZOLAM *FULL STOCK*<br>
+<br>
+<br>
+SEE A PRICE YOU LIKE ON ANOTHER PAGE? GIVE US A MESSAGE AND WE WILL PRICE MATCH OR BEAT IT!<br>
+<br>
+<br>
+<br>
+-----------------------------------------------------------------<br>
+BENZOS:<br>
+10MG DIAZEPAM/BENSIDEN PHARMA BLISTER PACKS *restocked next week*<br>
+1MG ALPRAZOLAM/KSALOL PHARMA BLISTER PACKS *restocked next week*<br>
+2MG CLONAZEPAM/RIVOTRIL PHARMA BLISTER PACKS *full stock*<br>
+10MG DIAZEPAM/DIZY PHARMA BLISTER (CHEAP DEALS!) *coming soon*<br>
+2MG ALPRAZOLAM/ALMEE-2 PHARMA BLISTERS (CHEAP DEALS!) *coming soon*<br>
+<br>
+2MG ALPRAZOLAM BARS *restocked next week*<br>
+<br>
+-----------------------------------------------------------------<br>
+MDMA: FULL STOCK<br>
+<br>
+<br>
+-CHAMPAGNE CRYSTAL FRESH FROM NL, HIGH PURITY. LOW IMPURITIES.<br>
+<br>
+<br>
+(PLEASE HANDLE WITH CARE AND DO NOT MIX WITH ALCOHOL!<br>
+LESS IS MORE ON MDMA AND XTC. HARM REDUCTION CAN BE FOUND ON EROWID.COM)<br>
+<br>
+----------------------------------------------------------------<br>
+XTC: FULL STOCK, SAME QUALITY BETTER PRICES!<br>
+<br>
+- SMALL AMOUNT OF DUO COLOUR PRESSES LEFT<br>
+- AWAKENINGS STILL IN STOCK<br>
+<br>
+MORE OF THE FINEST DUTCH DISCO BISCUITS<br>
+WILL BE ADDED OVER TIME TO THE COLLECTION.<br>
+<br>
+(PLEASE HANDLE WITH CARE AND DO NOT MIX WITH ALCOHOL!<br>
+LESS IS MORE ON MDMA AND XTC. HARM REDUCTION CAN BE FOUND ON EROWID.COM)<br>
+<br>
+----------------------------------------------------------------<br>
+KETAMINE - COMING BACK VERY SOON!<br>
+<br>
+<br>
+- MICROCRYSTAL/GRANULE ISOMER-S K<br>
+(VERY PURE ONE OF BEST BATCHES YET), FULL STOCK. BULK AVAILABLE!!!<br>
+- ROCK ISOMER-S K<br>
+(VERY PURE ONE OF BEST BATCHES TODATE ALSO), FULL STOCK. BULK AVAILABLE!!!<br>
+<br>
+- COMING SOON TBC, NEEDLE ISOMER-S K AND RACEMIC K!!!<br>
+<br>
+FINEST KETAMINE YOU CAN GET DIRECT FROM INDIA FROM SOURCE TO SHELF,<br>
+THE FINEST SPECIAL K YOU CAN GET.<br>
+<br>
+(PLEASE HANDLE WITH CARE AND DO NOT MIX WITH ALCOHOL!<br>
+HARM REDUCTION CAN BE FOUND ON EROWID.COM)<br>
+<br>
+----------------------------------------------------------------<br>
+LSD - MADE BY THE FINEST CHEMIST IN HOLLAND STRAIGHT FROM SOURCE<br>
+<br>
+- MAYAN 200uq<br>
+- CHAKRA 250uq<br>
+<br>
+(PLEASE HANDLE WITH CARE AND DO NOT MIX WITH ALCOHOL!<br>
+HARM REDUCTION CAN BE FOUND ON EROWID.COM)<br>
+<br>
+----------------------------------------------------------------<br>
+----------------------------------------------------------------<br>
+<br>
+PLENTY MORE NEW STOCK ARRIVING AS THE WEEKS COMMENCE<br>
+<br>
+ORDERS ON BULK IS NO PROBLEM JUST GIVE ME A MESSAGE I WOULD LOVE TO HELP.<br>
+<br>
+SEE A PRICE YOU LIKE ON ANOTHER PAGE? GIVE US A MESSAGE AND WE WILL PRICE MATCH OR BEAT IT!<br>
+<br>
+-----------------------------------------------<br>
+<br>
+TERMS AND CONDITIONS, ALL PACKS WILL BE RECORDED FOR OVER 300GBP. IF YOU CHOOSE TO OPT OUT RECORDED DELIVERY YOU WILL BE EXEMPT FROM ANY RESHIP OR REFUND.<br>
+<br>
+TRACKING &amp; SHIPPING:<br>
+WE WORK A DAY IN HAND, SO PLEASE PLACE THE ORDER THE DAY BEFORE YOU NEED IT DISPATCHED.<br>
+<br>
+ALL ORDER WORTH OVER 300GBP+ WILL BE SENT WITH TRACKING (WW PLEASE SPECIFY IF NO SIG IS REQUIRED ON HIGH VALUE ORDERS OF 300GBP+), ANYTHING UNDER THAT AMOUNT IS SENT STANDARD 1ST CLASS WITH ROYALMAIL.<br>
+<br>
+UK AND IRE DELIVERIES - YOU CAN REQUEST THE TRACKING IF NOTHING HAS SHOWN UP WITHIN 3DD<br>
+<br>
+NEW POLICY DUE TO OPSEC<br>
+<br>
+EU AND INTERNATIONAL, ARE NOT ENTITLED TO REQUEST TRACKING WHEN THEY PLEASE YOU CAN GET THE TRACKING IF IT PASSES THE 14 BUSINESS DAYS POINT. THIS IS FOR OPSEC REASONS.<br>
+<br>
+IF YOU WANT A BULK ORDER PLEASE MESSAGE BEFORE ORDERING AS T&amp;C'S HAVE CHANGED DUE TO OPSEC.<br>
+SO PLEASE DO NOT GIVE ME THE LINE<br>
+<br>
+"I NEEDD THE TRACKING TO INTERCEPT IT."<br>
+"MY DOG WILL EAT THE MAIL IF I CAN TRACK IT"<br>
+"I LIVE 40MILES AWAY FROM MY DROP SO I NEED TO BE ABLE TO CHECK IF IT IS THERE"<br>
+<br>
+,SADLY A SMALL FEW SPOILT THIS AND MADE ME CHANGE MY POLICY FOR SECUIRTY<br>
+AND ALL OF THE ABOVE.<br>
+<br>
+DISCUSS WITH ME BEFORE BUYING AND THEN HAVING A TEMPER TANTRUM BECAUSE OF MY POLICY CHANGE<br>
+<br>
+<br>
+ALL UK AND IRE RECORDED - POST NOT ARRIVED WILL BE 100% REPLACED.<br>
+<br>
+EU AND INTERNATIONAL - LOST OF SEIZED DELIVERIES WILL BE DEALT ON CASE BY CASE. PLEASE MESSAGE FIRST TO ENQUIRE WHAT RESHIP AND REFUND IS FOR YOUR COUNTRY.<br>
+<br>
+<br>
+PLEASE NOTE WHEN YOU ORDER WITH US: IF YOU LEAVE POOR FEEDBACK STRAIGHT AWAY WITHOUT LETTING ME RESOLVE SUCH ISSUE I WILL NOT RESOLVE THE CASE. PLEASE BE PATIENT AND CLEAR WITH ORDER ID, ORDER DATE AND ORDER SENT.<br>
+AND ONE OF US WILL BE BACK TO YOU WITHIN 24HOURS WITH A REPLY.<br>
+<br>
+<br>
+SHIPPING:<br>
+(SHIPPING NAME, ADDRESS, SPELLING, ALL CURCIAL PARTS TO MAKING A SAFE DELIVERY BARE DOWN THE BUY, THIS IS YOUR RESPONSIBILITY TO MAKE SURE DELIVERY INFO IS CORRECT.)<br>
+<br>
+WE DO HAVE A RESHIP POLICY BUT FOR THE COUNTRIES STATED BELOW THEY ARE EXEMPT. YOU CAN STILL SHIP THESE COUNTRIES BUT A RESHIP MIGHT NOT BE OFFERED DUE TO IT BEING A HIGH SIEZURE RISK COUNTRY.<br>
+<br>
+INTERNATIONAL ORDERS - PLEASE MESSAGE FIRST BEFORE ORDERING AT HOW RESHIPS AND REFUNDS MAY AFFECT YOU. IF YOU ORDER FROM ONE OF THE NO RESHIP COUNTRIES YOU DO NOT QUALIFY FOR REFUND OR RESHIP<br>
+<br>
+UK<br>
+- 1ST CLASS 1-3DD AVG.<br>
+- RECORDED 1-3DD<br>
+- SPECIAL NDD<br>
+<br>
+EU<br>
+- CENTRAL, GERMANY, POLAND, CZECH, 2-5DD<br>
+- SOUTH, FRANCE, ITALY, SPAIN, PORTUGAL, GREECE 3-7DD<br>
+- EASTEARN EUROPE 4-7DAYS<br>
+- SCANDINAVIA SWEDEN, NORWAY, DENMARK, FINLAND 3-7DD<br>
+<br>
+NORTH AMERICA<br>
+- EASTCOAST USA 4-10DD<br>
+- WESTCOAST USA 3-14DD<br>
+- SOUTH &amp; MID COUNTRY 7-21DD<br>
+- CANADA 5-14DD<br>
+(PLEASE NOTE THE TIMES ABOVE ARE AVERAGES AND NOT EXACT ETA FOR YOUR PACKAGE.)<br>
+<br>
+(IF NO SIGN PLEASE SEND MESSAGE WITH ORDER ID)<br>
+(IF NO SIGN PLEASE SEND MESSAGE WITH ORDER ID)<br>
+PLEASE MESSAGE FIRST BEFORE ORDERING TO SEE WHAT RESHIP OR REFUND PERCENTAGES I OFFER<br>
+<br>
+NO RESHIPS:<br>
+AUS<br>
+NZ<br>
+INDIA<br>
+CANADA<br>
+PAKISTAN<br>
+ISREAL<br>
+BRAZIL<br>
+<br>
+IF YOU ORDER FROM THESE COUNTRIES YOU ARE EXEMPT FROM REFUND OR RESHIP PLEASE MESSAGE IF YOU HAVE ANY QUESTIONS BEFORE ORDERING<br>
+<br>
+ALL NO SHOWS ON THESE DELIVERIES WILL BE DEALT BASE BY BASIS.<br>
+<br>
+<br>
+PEACE AND LOVE<br>
+
+																</div>
+																</div>
+															</div>
+
+													</div>
+												</div>
+											</div>
+
+						</div>
+				</div>
+			</div>
+				<div class="footer">
+					<div class="footer-inner">
+						<div class="footer-content">
+							<span class="bigger-90">Apollon Market © 2019</span>
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+
+
+
+	</body></html>

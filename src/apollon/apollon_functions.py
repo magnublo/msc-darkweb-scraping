@@ -1,14 +1,15 @@
 import datetime
 import re
 from math import ceil
-from typing import Tuple, Set, List
+from typing import Tuple, Set, List, Optional
 
 import dateparser
 from bs4 import BeautifulSoup
 
 from definitions import APOLLON_MARKET_CATEGORY_INDEX_URL_PATH
 from src.base.base_functions import BaseFunctions
-from src.utils import parse_int
+from src.db_utils import shorten_and_sanitize_for_text_column
+from src.utils import parse_int, ListingType, parse_float
 
 
 class ApollonScrapingFunctions(BaseFunctions):
@@ -122,7 +123,8 @@ class ApollonScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_sub_sub_categories_urls_and_nrs_of_listings(soup_html: BeautifulSoup) -> Tuple[Tuple[Tuple, str, int]]:
-        sub_sub_category_hrefs = soup_html.select("#wrapper > div.navbar-default.sidebar > div:nth-child(1) > ul > ul > li > ul > li > a")
+        sub_sub_category_hrefs = soup_html.select(
+            "#wrapper > div.navbar-default.sidebar > div:nth-child(1) > ul > ul > li > ul > li > a")
         sub_sub_categories_urls_and_nrs_of_listings: List[Tuple[Tuple, str, int]] = []
         a: BeautifulSoup
         for a in sub_sub_category_hrefs:
@@ -186,7 +188,7 @@ class ApollonScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_listing_infos(soup_html: BeautifulSoup):
-        # product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views, publication_dates, categories
+        # product_page_urls, titles, urls_is_sticky, sellers, seller_urls, nrs_of_views, publication_dates, categories
         product_divs = soup_html.select("#page-wrapper > div > div > div > table > tbody > tr > td > div")
         product_urls = []
         titles = []
@@ -235,3 +237,154 @@ class ApollonScrapingFunctions(BaseFunctions):
         assert len(usd_rates) == 4
         # noinspection PyTypeChecker
         return tuple(usd_rates)
+
+    @staticmethod
+    def accepts_currencies(soup_html: BeautifulSoup) -> Tuple[bool, bool, bool]:
+        buttons = soup_html.select(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > form > div > div > button")
+        accepts_XMR, accepts_BCH, accepts_LTC = (False, False, False)
+        for b in buttons[1:]:
+            curr = b.text.strip().split()[-1]
+            if curr == "XMR":
+                accepts_XMR = True
+                continue
+            elif curr == "BCH":
+                accepts_BCH = True
+                continue
+            elif curr == "LTC":
+                accepts_LTC = True
+                continue
+            else:
+                raise AssertionError(f"Unknown currency '{curr}'.")
+
+        return accepts_XMR, accepts_BCH, accepts_LTC
+
+    @staticmethod
+    def get_sales(soup_html: BeautifulSoup) -> int:
+        sales_i = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3) > small:nth-child(1) > span > i")
+        assert sales_i is not None
+        return int(sales_i.text)
+
+    @staticmethod
+    def get_fiat_price(soup_html: BeautifulSoup) -> float:
+        price_span = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > form > div > h5:nth-child(1) > span")
+        assert price_span is not None
+        fiat_price = float(price_span.text.split("/")[0].split(":")[-1].strip().split()[0])
+        return fiat_price
+
+    @staticmethod
+    def get_origin_country(soup_html: BeautifulSoup) -> str:
+        origin_country_span = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3) > small:nth-child(3)")
+        assert origin_country_span is not None
+        return origin_country_span.text.split(":")[-1].strip()
+
+    @staticmethod
+    def get_destination_countries(soup_html: BeautifulSoup) -> Tuple[str]:
+        listing_div = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+        listing_div_text = listing_div.text
+        start_index = listing_div_text.find("Ship to : ") + len("Ship to : ")
+        end_index = listing_div_text.find("Payment :")
+        dests_string = listing_div_text[start_index:end_index].strip()
+        destination_countries: List[str] = [dests_string[a.regs[0][0]:a.regs[0][1]].strip() for a in
+                                            BaseFunctions.COMMA_SEPARATED_COUNTRY_REGEX.finditer(dests_string)]
+        return tuple(destination_countries)
+
+    @staticmethod
+    def get_payment_method(soup_html: BeautifulSoup) -> Tuple[bool, bool]:
+        # return boolean tuple escrow, fifty_percent_finalize_early
+        listing_div = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+        listing_div_text = listing_div.text
+        start_index = listing_div_text.find("Payment : ") + len("Payment : ")
+        end_index = listing_div_text.find("Product class :")
+        payment_type_str = listing_div_text[start_index:end_index].strip()
+
+        supports_escrow = False
+        supports_fifty_percent_finalize_early = False
+
+        if payment_type_str == "Full Escrow":
+            supports_escrow = True
+        elif payment_type_str == "Finalize Early":
+            pass
+        elif payment_type_str == "50% Finalize Early":
+            supports_fifty_percent_finalize_early = True
+        else:
+            raise AssertionError("Unknown payment type.")
+
+        return supports_escrow, supports_fifty_percent_finalize_early
+
+    @staticmethod
+    def get_standardized_listing_type(soup_html: BeautifulSoup) -> ListingType:
+        listing_div = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+        listing_div_text = listing_div.text
+        start_index = listing_div_text.find("Product class : ") + len("Product class : ")
+        end_index = listing_div_text.find("Quantity :")
+        product_class_str = listing_div_text[start_index:end_index].strip()
+
+        if product_class_str == "Physical Package":
+            listing_type = ListingType.PHYSICAL
+        elif product_class_str == "Digital Goods":
+            listing_type = ListingType.MANUAL_DIGITAL
+        else:
+            raise AssertionError(f"Unknown product class {product_class_str}.")
+        return listing_type
+
+    @staticmethod
+    def get_quantity_in_stock(soup_html: BeautifulSoup) -> Optional[int]:
+        listing_div = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+        listing_div_text = listing_div.text
+        start_index = listing_div_text.find("Quantity : ") + len("Quantity : ")
+        quantity_str = listing_div_text[start_index:].strip()
+        quantity_in_stock = parse_int(quantity_str) if quantity_str != "Unlimited Available" else None
+        return quantity_in_stock
+
+    @staticmethod
+    def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[str, int, str, float, Optional[str], bool]]:
+        # description, days_shipping_time, fiat_currency, price, quantity_unit_name, price_is_per_unit
+        shipping_methods: List[Tuple[str, int, str, float, Optional[str], bool]] = []
+        option_texts = [s.text.strip() for s in soup_html.select(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > form > div > div.form-group.form-inline > select > option")]
+        for o in option_texts:
+            description, time_str, price_str = [s.strip() for s in o.split(" - ")]
+            nr_of_days_str, day_str = [s for s in time_str.strip().split()]
+            assert day_str[0:3] == "Day"
+            days = parse_int(nr_of_days_str)
+            fiat_price_str, crypto_price_str = [s.strip() for s in price_str.strip().split("/")]
+            fiat_price_str, fiat_currency = [s for s in fiat_price_str.split()]
+            fiat_price = parse_float(fiat_price_str)
+            quantity_unit_name, price_is_per_unit = (None, False)
+            shipping_methods.append(
+                (description, days, fiat_currency, fiat_price, quantity_unit_name, price_is_per_unit))
+
+        return tuple(shipping_methods)
+
+    @staticmethod
+    def get_listing_text(soup_html: BeautifulSoup) -> str:
+        listing_text_pre = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(2) > td > div > div > div > div > div > pre")
+        assert listing_text_pre is not None
+        return shorten_and_sanitize_for_text_column(listing_text_pre.text)
+
+    @staticmethod
+    def get_seller_about_description(soup_html: BeautifulSoup) -> str:
+        description_div = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div.tab-content > div > div > div > div > div.col-sm-8")
+        assert description_div is not None
+        return shorten_and_sanitize_for_text_column(description_div.text)
+
+    @staticmethod
+    def get_email_and_jabber_id(soup_html: BeautifulSoup) -> Tuple[Optional[str], Optional[str]]:
+        jabber_span, email_span = soup_html.select("#page-wrapper > div > div.col-lg-12.left > div.tab-content > div > div > div > div > div.col-sm-5 > span")
+        jabber_id = jabber_span.text.split(":")[-1].strip()
+        email = email_span.text.split(":")[-1].strip()
+
+        email = email if email else None
+        jabber_id = jabber_id if jabber_id else None
+
+        return email, jabber_id

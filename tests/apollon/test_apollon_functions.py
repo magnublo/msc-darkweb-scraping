@@ -1,6 +1,7 @@
 import datetime
 from unittest import TestCase
 
+from src.utils import ListingType
 from tests.apollon.apollon_base_test import ApollonBaseTest
 from src.apollon.apollon_functions import ApollonScrapingFunctions as scrapingFunctions
 
@@ -208,3 +209,131 @@ class TestGetSubSubCategoriesUrlsAndNrsOfListings(ApollonBaseTest):
                                (('Other', None, 'Opiates', 2), '/home.php?cid=2&csid=77&ssid=80', 303),
                                (('Opiates Substitutes', None, 'Opiates', 2), '/home.php?cid=2&csid=77&ssid=105', 134)),
                               sub_sub_categories_urls_and_nrs_of_listings)
+
+
+class TestAcceptsCurrencies(ApollonBaseTest):
+    def test_accepts_currencies_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        XMR, BCH, LTC = scrapingFunctions.accepts_currencies(soup_html)
+        self.assertTupleEqual((True, True, True), (XMR, BCH, LTC))
+
+
+class TestGetSales(ApollonBaseTest):
+    def test_get_sales_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        sales = scrapingFunctions.get_sales(soup_html)
+        self.assertEqual(17, sales)
+
+
+class TestGetFiatPrice(ApollonBaseTest):
+    def test_get_fiat_price_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        fiat_price = scrapingFunctions.get_fiat_price(soup_html)
+        self.assertEqual(4.00, fiat_price)
+
+
+class TestGetDestinationCountries(ApollonBaseTest):
+
+    def test_get_destination_countries_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        destination_countries = scrapingFunctions.get_destination_countries(soup_html)
+        self.assertTupleEqual(('United States',), destination_countries)
+
+    def test_get_destination_countries_one(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_1")
+        destination_countries = scrapingFunctions.get_destination_countries(soup_html)
+        self.assertTupleEqual(('World Wide', 'Europe', 'Netherlands', 'United Kingdom', 'Germany'),
+                              destination_countries)
+
+
+class TestGetPaymentMethod(ApollonBaseTest):
+
+    def test_get_payment_method_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        escrow, fifty_percent_finalize_early = scrapingFunctions.get_payment_method(soup_html)
+        self.assertTupleEqual((True, False), (escrow, fifty_percent_finalize_early))
+
+    def test_get_payment_method_one(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_1")
+        escrow, fifty_percent_finalize_early = scrapingFunctions.get_payment_method(soup_html)
+        self.assertTupleEqual((True, False), (escrow, fifty_percent_finalize_early))
+
+
+class TestGetStandardizedListingType(ApollonBaseTest):
+
+    def test_get_standardized_listing_type_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        listing_type = scrapingFunctions.get_standardized_listing_type(soup_html)
+        self.assertEqual(ListingType.PHYSICAL, listing_type)
+
+    def test_get_standardized_listing_type_one(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_1")
+        listing_type = scrapingFunctions.get_standardized_listing_type(soup_html)
+        self.assertEqual(ListingType.PHYSICAL, listing_type)
+
+
+class TestGetQuantityInStock(ApollonBaseTest):
+
+    def test_get_quantity_in_stock_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        quantity_in_stock = scrapingFunctions.get_quantity_in_stock(soup_html)
+        self.assertEqual(None, quantity_in_stock)
+
+    def test_get_quantity_in_stock_one(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_1")
+        quantity_in_stock = scrapingFunctions.get_quantity_in_stock(soup_html)
+        self.assertEqual(None, quantity_in_stock)
+
+    def test_get_quantity_in_stock_two(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_2")
+        quantity_in_stock = scrapingFunctions.get_quantity_in_stock(soup_html)
+        self.assertEqual(97, quantity_in_stock)
+
+
+class TestGetShippingMethods(ApollonBaseTest):
+
+    def test_get_shipping_methods_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('free USPS letter UNTRACKED no reships or refunds', 9, 'USD', 0.0, None, False),
+                               ('USPS Priority TRACKED', 10, 'USD', 11.0, None, False),
+                               ('USPS Package TRACKED', 14, 'USD', 5.0, None, False)),
+                              shipping_methods)
+
+    def test_get_shipping_methods_one(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_1")
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('Default', 1, 'USD', 0.0, None, False),), shipping_methods)
+
+    def test_get_shipping_methods_two(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_2")
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual(
+            (('UK Free Shipping', 3, 'USD', 0.0, None, False), ('EU Shipping', 10, 'USD', 5.27, None, False)),
+            shipping_methods)
+
+
+class TestGetListingText(ApollonBaseTest):
+
+    def test_get_listing_text_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_1")
+        listing_text = scrapingFunctions.get_listing_text(soup_html)
+        self.assertTrue(len(listing_text) > 10)
+
+
+class TestGetEmailAndJabberId(ApollonBaseTest):
+
+    def test_get_email_and_jabber_id_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        email, jabber_id = scrapingFunctions.get_email_and_jabber_id(soup_html)
+        self.assertEqual(("joris127@torbox3uiot6wchz.onion", None), (email, jabber_id))
+
+    def test_get_email_and_jabber_id_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        email, jabber_id = scrapingFunctions.get_email_and_jabber_id(soup_html)
+        self.assertEqual(("raca@fakemail.com", None), (email, jabber_id))
+
+    def test_get_email_and_jabber_id_two(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_2")
+        email, jabber_id = scrapingFunctions.get_email_and_jabber_id(soup_html)
+        self.assertEqual((None, 'diego-hundreds@xmpp.jp'), (email, jabber_id))

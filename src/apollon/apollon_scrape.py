@@ -1,6 +1,7 @@
+import datetime
 from random import shuffle
 from threading import Lock
-from typing import Type, Tuple, List
+from typing import Type, Tuple, List, Optional
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,13 +14,13 @@ from src.apollon.apollon_functions import ApollonScrapingFunctions
 from src.base.base_functions import BaseFunctions
 from src.base.base_scraper import BaseScraper
 from src.db_utils import get_column_name
+from src.models.listing_observation import ListingObservation
 from src.models.scraping_session import ScrapingSession
-from src.utils import PageType, get_page_as_soup_html
+from src.models.seller import Seller
+from src.utils import PageType, get_page_as_soup_html, ListingType
 
 
 class ApollonScrapingSession(BaseScraper):
-
-
     __mirror_manager_lock__ = Lock()
     __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
@@ -163,7 +164,7 @@ class ApollonScrapingSession(BaseScraper):
         web_response = self._get_logged_in_web_response(search_result_url, expected_page_type=PageType.SEARCH_RESULT)
 
         soup_html: BeautifulSoup = get_page_as_soup_html(web_response.text)
-        product_page_urls, urls_is_sticky, titles, sellers, seller_urls, nrs_of_views = \
+        listing_info = product_page_urls, titles, urls_is_sticky, sellers, seller_urls, nrs_of_views, publication_dates, categories = \
             self.scraping_funcs.get_listing_infos(
                 soup_html)
 
@@ -175,14 +176,221 @@ class ApollonScrapingSession(BaseScraper):
 
         btc_rate, xmr_rate, bch_rate, ltc_rate = self.scraping_funcs.get_cryptocurrency_rates(soup_html)
 
-        assert len(titles) == len(sellers) == len(seller_urls) == len(product_page_urls) == len(urls_is_sticky) == len(
-            nrs_of_views)
+        for i in range(len(listing_info[1:])):
+            assert len(listing_info[i]) == len(listing_info[i - 1])
 
-        for title, seller_name, seller_url, product_page_url, is_sticky, nr_of_views in zip(titles, sellers,
-                                                                                            seller_urls,
-                                                                                            product_page_urls,
-                                                                                            urls_is_sticky,
-                                                                                            nrs_of_views):
-            self._db_error_catch_wrapper(self.db_session, title, seller_name, seller_url, product_page_url,
-                                         is_sticky, nr_of_views, btc_rate, ltc_rate, xmr_rate,
-                                         func=self._scrape_listing)
+        for product_url, title, is_sticky, seller, seller_url, nr_of_views, publication_date, category_pair in listing_info:
+            self._db_error_catch_wrapper(self.db_session, product_url, title, is_sticky, seller, seller_url,
+                                         nr_of_views, publication_date, category_pair, btc_rate, xmr_rate, bch_rate,
+                                         ltc_rate, func=self._scrape_listing)
+
+    def _scrape_listing(self, product_url: str, title: str, is_sticky: bool, seller_name: str,
+                        seller_url: str, nr_of_views: int, publication_date: datetime, category_pair: Tuple[Tuple],
+                        btc_rate: float, xmr_rate: float, bch_rate: float, ltc_rate: float):
+        seller: Seller
+        is_new_seller: bool
+        listing_observation: ListingObservation
+        is_new_listing_observation: bool
+        is_new_seller_observation: bool
+        web_response: requests.Response
+        soup_html: BeautifulSoup
+        listing_text: str
+        listing_categories: Tuple[Tuple[str, int, Optional[str], Optional[int]]]
+        website_category_ids: List[int]
+        accepts_BTC: bool
+        accepts_LTC: bool
+        accepts_XMR: bool
+        nr_sold: int
+        nr_sold_since_date: datetime
+        fiat_currency: str
+        price: float
+        origin_country: str
+        destination_countries: Tuple[str]
+        payment_type: str
+        accepts_BTC_multisig: bool
+        escrow: bool
+        non_standardized_listing_type: str
+        first_quantity_in_stock: int
+        second_quantity_in_stock: int
+        ends_in: Optional[str]
+        is_auto_dispatch: bool
+        self.scraping_funcs: ApollonScrapingFunctions
+        shipping_methods: Tuple[Tuple[str, int, str, float, Optional[str], bool]]
+
+        seller, is_new_seller = self._get_seller(seller_name)
+
+        listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
+
+        if not is_new_listing_observation:
+            if listing_observation.promoted_listing != is_sticky:
+                listing_observation.promoted_listing = True
+                self.db_session.flush()
+            return
+
+        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
+
+        if is_new_seller_observation:
+            self._scrape_seller(seller_url, seller, is_new_seller)
+
+        self.print_crawling_debug_message(url=product_url)
+
+        web_response = self._get_logged_in_web_response(product_url, expected_page_type=PageType.LISTING)
+        soup_html = get_page_as_soup_html(web_response.text)
+
+        accepts_BTC = True  # appears mandatory to support BTC on Apollon
+        fiat_currency = "USD"  # very safely assuming displayed fiat is always in USD
+        accepts_BTC_multisig = False  # not supported on Apollon
+        ends_in = None  # no sign that Apollon supports time limited listings
+
+        accepts_XMR, accepts_BCH, accepts_LTC = self.scraping_funcs.accepts_currencies(soup_html)
+        nr_sold = self.scraping_funcs.get_sales(soup_html)
+        fiat_price = self.scraping_funcs.get_fiat_price(soup_html)
+        origin_country = self.scraping_funcs.get_origin_country(soup_html)
+        destination_countries = self.scraping_funcs.get_destination_countries(soup_html)
+        escrow, fifty_percent_finalize_early = self.scraping_funcs.get_payment_method(soup_html)
+        quantity_in_stock = self.scraping_funcs.get_quantity_in_stock(soup_html)
+        standardized_listing_type: ListingType = self.scraping_funcs.get_standardized_listing_type(soup_html)
+        shipping_methods = self.scraping_funcs.get_shipping_methods(soup_html)
+        listing_text = self.scraping_funcs.get_listing_text(soup_html)
+
+        self._add_shipping_methods(listing_observation.id, shipping_methods)
+        self._add_category_junctions(listing_observation.id, category_pair)
+
+        listing_text_id: int = self._add_text(listing_text)
+
+        country_ids: Tuple[int] = self._add_countries(origin_country, *destination_countries)
+        destination_country_ids = country_ids[1:]
+        self._add_country_junctions(destination_country_ids, listing_observation.id)
+
+        listing_observation.listing_text_id = listing_text_id
+        listing_observation.btc = accepts_BTC
+        listing_observation.ltc = accepts_LTC
+        listing_observation.xmr = accepts_XMR
+        listing_observation.btc_multisig = accepts_BTC_multisig
+        listing_observation.nr_sold = nr_sold
+        listing_observation.nr_sold_since_date = publication_date
+        listing_observation.promoted_listing = is_sticky
+        listing_observation.url = product_url
+        listing_observation.btc_rate = btc_rate
+        listing_observation.ltc_rate = ltc_rate
+        listing_observation.xmr_rate = xmr_rate
+        listing_observation.fiat_currency = fiat_currency
+        listing_observation.price = fiat_price
+        listing_observation.origin_country = country_ids[0]
+        listing_observation.escrow = escrow
+        listing_observation.listing_type = standardized_listing_type.name
+        listing_observation.quantity_in_stock = quantity_in_stock
+        listing_observation.ends_in = ends_in
+        listing_observation.nr_of_views = nr_of_views
+        listing_observation.bch_rate = bch_rate
+        listing_observation.bch = accepts_BCH
+        listing_observation.fifty_percent_finalize_early = fifty_percent_finalize_early
+
+        self.db_session.flush()
+
+    def _scrape_seller(self, seller_url, seller, is_new_seller):
+        self.scraping_funcs: ApollonScrapingFunctions
+        self.print_crawling_debug_message(url=seller_url)
+
+        web_response = self._get_logged_in_web_response(seller_url, expected_page_type=PageType.SELLER)
+        soup_html = get_page_as_soup_html(web_response.text)
+
+        description = self.scraping_funcs.get_seller_about_description(soup_html)
+        email, jabber_id = self.scraping_funcs.get_email_and_jabber_id(soup_html)
+
+        disputes, orders, spendings, feedback_left, \
+        feedback_percent_positive, last_online = self.scraping_funcs.get_buyer_statistics(soup_html)
+
+        seller_level, trust_level = self.scraping_funcs.get_seller_and_trust_level(soup_html)
+        positive_feedback_received_percent = self.scraping_funcs.get_positive_feedback_percent(soup_html)
+        registration_date = self.scraping_funcs.get_registration_date(soup_html)
+        last_login = self.scraping_funcs.get_last_login(soup_html)
+        sales = self.scraping_funcs.get_sales_by_seller(soup_html)
+        orders = self.scraping_funcs.get_orders(soup_html)
+        disputes_won, disputes_lost = self.scraping_funcs.get_disputes(soup_html)
+        fe_enabled = self.scraping_funcs.get_fe_allowed(soup_html)
+
+        positive_1m, positive_6m, positive_12m, \
+        neutral_1m, neutral_6m, neutral_12m, \
+        negative_1m, negative_6m, negative_12m = self.scraping_funcs.get_seller_statistics(soup_html)
+
+        stealth_rating, quality_rating, value_price_rating = self.scraping_funcs.get_star_ratings(soup_html)
+        is_banned: bool = self.scraping_funcs.user_is_banned(soup_html)
+
+        parenthesis_number, vendor_level, trust_level = \
+            self.scraping_funcs.get_parenthesis_number_and_vendor_and_trust_level(
+                soup_html)
+
+        positive_feedback_received_percent, registration_date = self.scraping_funcs.get_mid_user_info(soup_html)
+
+        external_market_verifications: Tuple[
+            Tuple[str, int, float, str]] = self.scraping_funcs.get_external_market_ratings(
+            soup_html)
+
+        seller_observation_description = self._add_text(description)
+
+        previous_seller_observation = self.db_session.query(
+            SellerObservation).join(Seller, SellerObservation.seller_id == Seller.id, isouter=False).filter(
+            Seller.id == seller.id,
+            Seller.market == self.market_id
+        ).order_by(SellerObservation.created_date.desc()).first()
+
+        if previous_seller_observation:
+            new_positive_feedback = previous_seller_observation.positive_1m < positive_1m
+            new_neutral_feedback = previous_seller_observation.neutral_1m < neutral_1m
+            new_negative_feedback = previous_seller_observation.negative_1m < negative_1m
+            new_left_feedback = previous_seller_observation.feedback_left < feedback_left
+            category_contains_new_feedback = [new_positive_feedback, new_neutral_feedback, new_negative_feedback,
+                                              new_left_feedback]
+        else:
+            category_contains_new_feedback = [True, True, True, True]
+
+        feedback_categories, feedback_urls, pgp_url = \
+            self.scraping_funcs.get_feedback_categories_and_feedback_urls_and_pgp_url(
+                soup_html)
+
+        assert len(feedback_urls) == len(feedback_categories) == len(category_contains_new_feedback)
+
+        for i in range(0, len(feedback_categories)):
+            if category_contains_new_feedback[i]:
+                self._scrape_feedback(seller, is_new_seller, feedback_categories[i], feedback_urls[i])
+
+        self._scrape_pgp_key(seller, is_new_seller, pgp_url)
+
+        seller_observation = SellerObservation(
+            seller_id=seller.id,
+            session_id=self.session_id,
+            description=seller_observation_description,
+            url=seller_url,
+            disputes=disputes,
+            orders=orders,
+            spendings=spendings,
+            feedback_left=feedback_left,
+            feedback_percent_positive=feedback_percent_positive,
+            last_online=last_online,
+            parenthesis_number=sales,
+            positive_feedback_received_percent=positive_feedback_received_percent,
+            positive_1m=positive_1m,
+            positive_6m=positive_6m,
+            positive_12m=positive_12m,
+            neutral_1m=neutral_1m,
+            neutral_6m=neutral_6m,
+            neutral_12m=neutral_12m,
+            negative_1m=negative_1m,
+            negative_6m=negative_6m,
+            negative_12m=negative_12m,
+            stealth_rating=stealth_rating,
+            quality_rating=quality_rating,
+            value_price_rating=value_price_rating,
+            vendor_level=vendor_level,
+            trust_level=trust_level,
+            banned=is_banned
+        )
+
+        if is_new_seller:
+            seller.registration_date = registration_date
+
+        self.db_session.add(seller_observation)
+        self.db_session.flush()
+
+        self._add_external_market_verifications(seller_observation.id, external_market_verifications)
