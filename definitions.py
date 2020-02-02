@@ -167,8 +167,19 @@ APOLLON_WORLD_COUNTRY = "World Wide"
 APOLLON_MARKET_LOGIN_PHRASE = "Login - Apollon Market" #HTML <title> of page
 APOLLON_SRC_DIR = ROOT_SRC_DIR + "apollon/"
 
+APOLLON_HTTP_HEADERS = {
+    'Host': 'apollon2tclejj73.onion',
+    'Connection': 'keep-alive',
+    'Pragma': 'no-cache',
+    'Cache-Control': 'no-cache',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'nb-NO,nb;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6,no;q=0.5,nn;q=0.4'
+}
 
-
+APOLLON_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS = ("Captcha Code",)
 
 NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT = 10
 
@@ -185,11 +196,13 @@ DARKFAIL_MARKET_STRINGS = {
     EMPIRE_MARKET_ID: "Empire Market",
     CRYPTONIA_MARKET_ID: "Cryptonia Market",
     SAMSARA_MARKET_ID: "Samsara Market",
+    APOLLON_MARKET_ID: "Apollon Market"
 }
 DARKFAIL_MARKET_SUBURLS = {
     EMPIRE_MARKET_ID: "empire",
     CRYPTONIA_MARKET_ID: "cryptonia",
     SAMSARA_MARKET_ID: "samsara",
+    APOLLON_MARKET_ID: "apollon"
 }
 
 HARDCODED_MIRRORS = {
@@ -197,13 +210,16 @@ HARDCODED_MIRRORS = {
         "empiremktxgjovhm.onion": time(),
         "empiremktw5g6njb.onion": time()
     },
+    APOLLON_MARKET_ID: {
+        "apollon2tclejj73.onion": time()
+    },
     CRYPTONIA_MARKET_ID: {
 
     }
 }
 
 Base = declarative_base()
-MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID)
+MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, APOLLON_MARKET_ID)
 
 for market_id in MARKET_IDS:
     assert market_id in DARKFAIL_MARKET_STRINGS.keys()

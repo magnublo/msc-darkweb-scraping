@@ -1,15 +1,13 @@
 import hashlib
 import re
 from datetime import datetime, date
-from typing import Tuple, Union, Callable, Any, Optional, List
+from typing import Tuple, Union, Callable, Optional, List
 
 import dateparser
 from bs4 import BeautifulSoup
 
 from definitions import CRYPTONIA_WORLD_COUNTRY, CRYPTONIA_MARKET_EXTERNAL_MARKET_STRINGS, \
-    DREAM_MARKET_ID, WALL_STREET_MARKET_ID, NUCLEUS_MARKET_ID, ALPHA_BAY_MARKET_ID, CGMC_MARKET_ID, HANSA_MARKET_ID, \
-    BLACK_BANK_MARKET_ID, AGORA_MARKET_ID, BLACK_MARKET_RELOADED_ID, ABRAXAS_MARKET_ID, MIDDLE_EARTH_MARKET_ID, \
-    FEEDBACK_TEXT_HASH_COLUMN_LENGTH, MD5_HASH_STRING_ENCODING, EMPIRE_MARKET_ID
+    FEEDBACK_TEXT_HASH_COLUMN_LENGTH, MD5_HASH_STRING_ENCODING
 from src.base.base_functions import BaseFunctions
 from src.db_utils import shorten_and_sanitize_for_text_column
 from src.utils import parse_float, parse_int, parse_time_delta_from_string

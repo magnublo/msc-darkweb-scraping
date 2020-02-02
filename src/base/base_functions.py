@@ -96,6 +96,10 @@ class BaseFunctions(BaseClassWithLogger):
     COMMA_SEPARATED_COUNTRY_REGEX = re.compile(r"([^,])+(,(\s+[a-zA-Z]+)+(\s+of))?")
 
     @abstractstaticmethod
+    def is_logged_in(soup_html: BeautifulSoup, username: str) -> bool:
+        raise NotImplementedError('')
+
+    @abstractstaticmethod
     def get_captcha_image_url_from_market_page(soup_html: BeautifulSoup) -> str:
         raise NotImplementedError('')
 

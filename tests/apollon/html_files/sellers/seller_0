@@ -1,0 +1,337 @@
+<html lang="en"><head>
+
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="">
+				<meta name="author" content="">
+
+				<title>dutch-skills - User Profile - Apollon Market</title>
+
+				
+    <link href="dist/css/rs7exe7.min.css" rel="stylesheet">
+    <link href="dist/css/rs7exe7.css" rel="stylesheet">
+
+			</head>
+
+			<body>
+
+				<div id="wrapper">
+			<link rel="icon" href="/favicon.ico">
+	<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+       <a class="navbar-brand" href="/"><span style="background-color:black;font-size:20px;color:#000;"><img src="sidebar.png" alt="context" height="35" width="114" style="border-radius:0px;"></span></a>
+    </div>
+
+	<ul class="nav navbar-nav">
+<li><a href="home.php">Home</a></li>
+
+<li faq=""><a href="faq.php">FAQ</a></li>
+
+<li pgp=""><a href="pgp.txt">PGP</a></li>
+<li><a href="seller.php"><font color="green">Become a seller</font></a></li>
+		<li><a href="imsg.php">Inbox <span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+		
+		<li><a href="tickets.php?tab=1">Tickets/Disputes<span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+		
+			<li><a href="orders.php?tab=1">Orders <span class="badge" style="background-color:#5bc0de;">0</span></a></li>
+			
+	    <li night="" mode=""><a href="home.php?ndm=1">Night Mode</a></li>
+		
+<li chglng=""><a href="chglang.php">Change Language</a></li>
+<li verify=""><a href="verify.php">Verify Mirror</a></li>
+
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+        <li><a><b>BTC <label>0.00 / XMR 0.00 / LTC 0.00 / BCH 0.00 / USD 0</label></b></a></li>
+
+	<li class="dropdown">
+	<a href="#"><b>My Profile<span class="caret"></span></b></a>
+	<ul class="dropdown-menu" role="menu">
+	<li><a href="profile.php"><big>usingPython1</big> <img src="uploads/users/default2.png" class="img-circle" width="48px" height="48px"></a></li>
+        <li><a href="deposit.php">Deposit &amp; Withdrawal BTC</a></li>
+        <li><a href="depositXMR.php">Deposit &amp; Withdrawal XMR</a></li>
+        <li><a href="depositLTC.php">Deposit &amp; Withdrawal LTC</a></li>
+        <li><a href="depositBCH.php">Deposit &amp; Withdrawal BCH</a></li>
+	
+	<li><a href="autoshop.php">AutoShop</a></li>
+	<li><a href="affiliate.php">Affiliates</a></li>
+	<li><a href="myfavourites.php">My Favorites</a></li>
+	<li><a href="myblacklist.php">My Blacklist</a></li>
+	  <li class="divider"></li>
+	  <li><a href="support.php">Support</a></li>
+	  <li><a href="logout.php">Logout</a></li>
+	</ul>
+	</li>
+
+	<li><a href="logout.php">Logout</a></li>
+	</ul>
+  </div>
+</nav>
+
+            <div class="navbar-default sidebar" role="navigation">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Profile Actions
+                        </div>
+                            <div class="list-group">
+                                <a href="home.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Home [-]</b></a>
+								<a href="imsg.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Inbox [-]</b></a>
+								<a href="orders.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Orders [-]</b></a>
+                                                                
+								<a href="deposit.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BTC [-]</b></a>
+								<a href="depositXMR.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal XMR [-]</b></a>
+								<a href="depositLTC.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal LTC [-]</b></a>
+								<a href="depositBCH.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BCH [-]</b></a>
+								<a href="profile.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Profile [-]</b></a>
+                                <a href="user.php?u_id=usingPython1&amp;tab=2" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Feedback [-]</b></a>
+								<a href="myblacklist.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Blacklist [-]</b></a>
+                                <a href="myfavourites.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Favorites [-]</b></a>
+                                <a href="support.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Support [-]</b></a>
+                            </div>
+                    </div>
+
+				
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<i class="fa fa-bell fa-fw"></i>Hidden Sites
+							</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<a href="http://t7tb43a7gvl6wb7j.onion/" target="_blank" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Dark Eye [-]</b></a>
+									<a href="http://guardday6e5nxblpojbhmx5ws2avautr7eswu3qg7gynh52rh744anyd.onion" target="_blank" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>DarkGuard [-]</b></a>
+									</div></div></div>
+
+					<div class="panel panel-default">
+                        <div class="panel-heading">Exchange Rates</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<div class="list-group-item">
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9270.36</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8420.20</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7127.43</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">13748.93</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12226.66</span>
+									</div>
+								</div>
+							</div>
+
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">68.74</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">62.31</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">52.81</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">101.89</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">88.61</span>
+								</div>
+                            </div>
+                    </div>
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">378.86</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">343.70</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">291.02</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">561.49</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">488.31</span>
+								</div>
+                            </div>
+                    </div>
+					
+					
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">59.63</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">54.08</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">45.72</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">88.88</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">77.03</span>
+								</div>
+                            </div>
+                    </div>
+					
+					
+					</div>
+			</div>
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+							<div class="page-header">
+							<h3>User Profile : </h3>
+							</div>
+
+						<div class="col-lg-12 left">
+
+							<div class="panel panel-default">
+								<div class="panel-body">
+								
+									<div class="col-sm-12">
+									
+										<div class="col-sm-1" style="width:100%"> 
+											 <img src="uploads/users/733ec2ce1feb9cfa26b3898c6168b108.jpg" class="img-responsive img-rounded" height="80px" width="80px">
+										</div>
+
+										<div class="col-sm-5">
+											<small><a href=""><b>dutch-skills (100%)</b></a> <small><span class="badge" style="background-color:#5cb85c;font-size:10px;">Seller Level 1 (91)</span></small> <small><span class="badge" style="background-color:#f0ad4e;font-size:10px;">Trust Level 3 </span></small></small><br><small><span><b>Verified Seller : </b><img src="uploads/icons/yes_verified.png"></span></small> / <small><span><b>Trusted Seller : </b><img src="uploads/icons/not_trusted.png"></span></small><br>
+											<small><span><b>Positive Feedback : </b>(100%)</span></small><br>
+											<small><span><b>Member since : </b>Dec 05, 2019</span></small><br>
+											<small><span><b>Last Login : </b>Jan 29, 2020</span></small><br>
+										</div>
+										
+										<div class="col-sm-2"><small><span><b>Sales : </b>91</span></small><br>
+											<small><span><b>Orders : </b>0</span></small><br>
+											<small><span><b>Won/Lost Disputes : </b><span style="color:green;">0</span>/<span style="color:red;">0</span></span></small><br>
+											<small><span><b>User Type : </b>Seller</span></small><br>
+											
+												<small><span><b>FE : </b>Not Allowed</span></small><br>
+
+										</div>
+
+										<div class="col-sm-4" align="left"> 
+											<div class="input-group">
+												<a href="home.php?cid=0&amp;csid=0&amp;ss_usr=dutch-skills"><button class="btn btn-info btn-xs">Store of <b>dutch-skills</b></button></a>
+												<a href="smsg.php?ms_receiver=dutch-skills"><button class="btn btn-success btn-xs">Send a Message</button></a><br><br>
+												<a style="text-decoration:none;" href="user.php?u_id=dutch-skills&amp;fvusr=1"> <button class="btn btn-warning btn-xs">Add Seller To Favourites</button></a>
+											</div>
+						
+
+										</div>
+
+									</div>
+
+								</div>
+							
+							</div>
+
+                                                        
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left"> 
+									<h4><b>Imported Feedback : </b></h4>
+										<div>
+
+										</div>
+									
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left"> 
+									<h4><b>Feedback Ratings : </b></h4>
+										<div>
+										<button type="button" class="btn btn-success btn-xs" style="background-color:#5cb85c;color:#fff;"><b>Positive : 43</b></button>
+										<button type="button" class="btn btn-default btn-xs" style="background-color:#777;color:#fff;"><b>Neutral : 0</b></button>
+										<button type="button" class="btn btn-danger btn-xs" style="background-color:#d9534f;color:#fff;"><b>Negative : 0</b></button>
+										</div>
+									<h4><b>Latest Feedback : </b></h4><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>very fast delivery, received different ones and extra amount, all good ty</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Great shipping time! Received in multiple letters, great stealth, not the usual one. 8,8g overweight! best vendor on market for sure, my go-to vendor!</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>Great</span><br>
+									</div>
+								</div>
+							</div>
+
+								<ul class="nav nav-tabs">
+									<li><a href="user.php?u_id=dutch-skills&amp;tab=1" data-toggle="tab">Profile</a></li>
+									<li><a href="user.php?u_id=dutch-skills&amp;tab=2" data-toggle="tab">Positive Feedback</a></li>
+									<li><a href="user.php?u_id=dutch-skills&amp;tab=3" data-toggle="tab">Neutral Feedback</a></li>
+									<li><a href="user.php?u_id=dutch-skills&amp;tab=4" data-toggle="tab">Negative Feedback</a></li>
+									
+									<li class="active"><a href="user.php?u_id=dutch-skills&amp;tab=6" data-toggle="tab">Public PGP Key</a></li>
+								</ul>
+											<div class="tab-content">
+												<div class="tab-pane fade in active">
+													<h4>User Public PGP Key : </h4>
+													<div class="col-lg-13">
+															<div class="panel panel-default">
+																<div class="panel-body">
+																<div class="col-sm-5" style="text-align:left;">
+																<pre>-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+
+
+mQENBF3axEUBCADfSLjrftvYe8staq8bzMLENxjO7AFzWC2FRekW35s1b3hS937U
+
+BfqIO3ZFLPtY2FDnXRWIlWZsXOz0FamQ9jvwEHywT/A0xhuF4AKLsAuYSyrS88vl
+
+xFfog8cynfSLj/bvmONBnV2+xLtjNnJwAn69UU7maRhhtEB3NqBP9UagcZhcDPZU
+
+kEUuA+Pt370fSkqHYddYHQlH+NaTsrruN818ozbbXefgnB/IzGEd8ur62e3PxAZi
+
+rAYzvff/QniNdSDG8qyV84JeIzfS+AWVpIJ9TWfaHRBrE8AacWCcW8O0tTsUwbwN
+
+d4BcG45qtA9oEX5KI8m39Z+9iA6/DL3a2xvxABEBAAG0G0phc29uIDxqYXNvbjIy
+
+QG91dGxvb2suY29tPokBTgQTAQgAOAIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIX
+
+gBYhBKagKilScAKU3Pb0AoMcsBmqNGf/BQJd2sZ8AAoJEIMcsBmqNGf/ijEIAK+U
+
+MMkpMX+LbTdEciTnYoKAlwqfzbH2TuwHkTr2ICCVap+QCiD/6zdKtg51Jlw/+q8D
+
+6iuIp68G2f2wXbKzGx5QKnE14BeR4VbmvvWyrOpxo7lPnX4aKLoa/YjrImKVlRLv
+
+k2FYnzDZ28kMCq030PZK7MX0W5nVFWUEqH4pqNJ2GL6lvh8xwsDM4KglnXAGoYSx
+
+gjHNuZdN/I8YTAiwkGq5pD1/HznSGw7/vWtP2LFZkIk3ziLuFhWVPoFEryOpY5zG
+
+ouAuFNUqmwpDeKtQWxZEgALGAGSZoq1HR7Lf+66lFAlyPOSSTTeOb0jXHwV+59ls
+
+j4lJPBpm7TZgI/S4WjO5AQ0EXdrERQEIAMThCDCC1cRbTPmVpnihc4S3EOQigE0J
+
+uYTmPFH4PLDm2pk+tkELfgjQLDZefPL3gUokd5R4glgoaU46zBlQRs0clYDU64OO
+
+FYN6VP3Iv/Y7UNmOG5MfUzDPKkoJRfxX4g9++3y3a9LCTbsEaP6+Qnr9/7aY/kpt
+
+jgr/SCv9lAuoMnpLHgfiUwo9gRw0kEd6wh1H7lTy7Wx8XrNbCsqQ5PYk6C53wvni
+
+hsIDdZm22HEn4QkFNcVyWYaSaGcENNQl9eRW+Fa45ba9/R3wMYoY7APwvR5Bccfo
+
+i9XZEfrjfmBjWWpq66n4BhEMc7OSuI0il/M1B6lVCvOL6gU/zbaLrxsAEQEAAYkB
+
+PAQYAQgAJhYhBKagKilScAKU3Pb0AoMcsBmqNGf/BQJd2sRFAhsMBQkDw9V7AAoJ
+
+EIMcsBmqNGf/xygIAMw2ylnYyZ/TmATSrvozQerCM3joDf57E7mZRp6ewnGMm/A/
+
+JVt7c/M4JJdKGTCEd7jnnwYHMjel8FA2lp0TLKM2lDBvke+7MgOLLvyyBEJ1lNa7
+
+Qrtuu64o/s8HSpXnvVBVYwsrt9rX8R3iqEVlM0Cy1yoRvB8krSLjZSG+th1zrIGq
+
+km3/LD+1ERA6lscUvxxDOLNOGJ2pTqGiXoXTfED7zKKLrv8ub7AwWpTDoIYR26+t
+
+xbFqSmObbDQItS4QUZHPcToUhJaht7TDGhFJP4WaAdEWVJbyHuE+8bHdRzcTTW1u
+
+cRGsKhwR6b9LSRGWgs/dbpKePR6MGOTr8tKK8yk=
+
+=EmIg
+
+-----END PGP PUBLIC KEY BLOCK-----</pre>
+																</div>
+																</div>
+															</div>
+
+													</div>
+												</div>
+											</div>
+										
+						</div>
+				</div>
+			</div>
+				<div class="footer">
+					<div class="footer-inner">
+						<div class="footer-content">
+							<span class="bigger-90">Apollon Market © 2019</span>
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+	
+
+	
+	</body></html>
