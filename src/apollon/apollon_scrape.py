@@ -332,19 +332,18 @@ class ApollonScrapingSession(BaseScraper):
 
         sub_query = self.db_session.query(func.max(Feedback.date_published).label('max_t')).filter(
             Feedback.seller_id == 5).subquery('sub_query')
-        most_recent_feedbacks = self.db_session.query(Feedback).filter(Feedback.seller_id == 5,
+        most_recent_stored_feedbacks = self.db_session.query(Feedback).filter(Feedback.seller_id == 5,
                                                 Feedback.date_published == sub_query.c.max_t).all()
 
         feedback_categories, feedback_urls = self.scraping_funcs.get_feedback_categories_and_urls(soup_html)
         pgp_url = self.scraping_funcs.get_pgp_url(soup_html)
 
         assert len(feedback_urls) == len(feedback_categories)
-
-        for recent_feedback in most_recent_feedbacks:
-            recent_feedback: Feedback
-            if recent_feedback.feedback_message_text == most_recent_feedback_text:
-                for i in range(0, len(feedback_categories)):
-                    self._scrape_feedback(seller, is_new_seller, feedback_categories[i], feedback_urls[i])
+        
+        most_recent_stored_feedback_texts = [f.text for f in most_recent_stored_feedbacks]
+        if most_recent_feedback_text in most_recent_stored_feedback_texts:
+            for category, feedback_url in zip(feedback_categories, feedback_urls):
+                self._scrape_feedback(seller, is_new_seller, category, feedback_url)
 
         self._scrape_pgp_key(seller, is_new_seller, pgp_url)
 
