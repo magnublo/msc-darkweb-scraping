@@ -339,9 +339,10 @@ class ApollonScrapingSession(BaseScraper):
         pgp_url = self.scraping_funcs.get_pgp_url(soup_html)
 
         assert len(feedback_urls) == len(feedback_categories)
-        
-        most_recent_stored_feedback_texts = [f.text for f in most_recent_stored_feedbacks]
-        if most_recent_feedback_text in most_recent_stored_feedback_texts:
+
+        f: Feedback
+        most_recent_stored_feedback_texts = [f.feedback_message_text for f in most_recent_stored_feedbacks]
+        if most_recent_feedback_text not in most_recent_stored_feedback_texts:
             for category, feedback_url in zip(feedback_categories, feedback_urls):
                 self._scrape_feedback(seller, is_new_seller, category, feedback_url)
 
