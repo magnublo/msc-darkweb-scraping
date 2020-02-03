@@ -216,11 +216,8 @@ class ApollonScrapingSession(BaseScraper):
         accepts_BTC_multisig: bool
         escrow: bool
         non_standardized_listing_type: str
-        first_quantity_in_stock: int
-        second_quantity_in_stock: int
-        ends_in: Optional[str]
-        is_auto_dispatch: bool
         self.scraping_funcs: ApollonScrapingFunctions
+
         shipping_methods: Tuple[Tuple[str, int, str, float, Optional[str], bool]]
 
         seller, is_new_seller = self._get_seller(seller_name)
@@ -288,6 +285,7 @@ class ApollonScrapingSession(BaseScraper):
         listing_observation.quantity_in_stock = quantity_in_stock
         listing_observation.ends_in = ends_in
         listing_observation.nr_of_views = nr_of_views
+
         listing_observation.bch_rate = bch_rate
         listing_observation.bch = accepts_BCH
         listing_observation.fifty_percent_finalize_early = fifty_percent_finalize_early
@@ -308,10 +306,18 @@ class ApollonScrapingSession(BaseScraper):
         positive_feedback_received_percent = self.scraping_funcs.get_positive_feedback_percent(soup_html)
         registration_date = self.scraping_funcs.get_registration_date(soup_html)
         last_login = self.scraping_funcs.get_last_login(soup_html)
-        sales = self.scraping_funcs.get_sales_by_seller(soup_html)
+        is_seller = self.scraping_funcs.get_is_seller(soup_html)
+        if is_seller:
+            sales = self.scraping_funcs.get_sales_by_seller(soup_html)
+            fe_enabled = self.scraping_funcs.get_fe_allowed(soup_html)
+            autofinalized_orders = None
+        else:
+            sales = None
+            fe_enabled = None
+            autofinalized_orders = self.scraping_funcs.get_autofinalized_orders(soup_html)
         orders = self.scraping_funcs.get_orders(soup_html)
         disputes_won, disputes_lost = self.scraping_funcs.get_disputes(soup_html)
-        fe_enabled = self.scraping_funcs.get_fe_allowed(soup_html)
+
 
         most_recent_feedback_text = self.scraping_funcs.get_most_recent_feedback(soup_html)
 
@@ -358,7 +364,8 @@ class ApollonScrapingSession(BaseScraper):
             trust_level=trust_level,
             email=email,
             xmpp_jabber_id=jabber_id,
-            fe_enabled=fe_enabled
+            fe_enabled=fe_enabled,
+            autofinalized_orders=autofinalized_orders
         )
 
         if is_new_seller:

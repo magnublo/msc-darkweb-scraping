@@ -1,9 +1,8 @@
 import datetime
-from unittest import TestCase
 
+from src.apollon.apollon_functions import ApollonScrapingFunctions as scrapingFunctions
 from src.utils import ListingType
 from tests.apollon.apollon_base_test import ApollonBaseTest
-from src.apollon.apollon_functions import ApollonScrapingFunctions as scrapingFunctions
 
 
 class TestApollonScrapingFunctions(ApollonBaseTest):
@@ -191,50 +190,53 @@ class TestGetListingInfos(ApollonBaseTest):
                                 '/listing.php?ls_id=68429', '/listing.php?ls_id=70221', '/listing.php?ls_id=28237',
                                 '/listing.php?ls_id=47181', '/listing.php?ls_id=47437', '/listing.php?ls_id=79694',
                                 '/listing.php?ls_id=80974', '/listing.php?ls_id=86094', '/listing.php?ls_id=87118'), (
-                               'Silver Haze - 20g - Weed', '10g ✿ CANNALOPE ✿ (OUTDOOR) "With Seeds"',
-                               '[£27 INTRO OFFER] 3.5G GREEN CRACK CALI HIGH GRADE AAA+ UK NDD ESCROW',
-                               '7g Snoop OG Medical Grade Indica', '1G WEDDING CAKE / TOP QUALITY',
-                               '!SALE! 40g AUTO DAIQUIRI LIME Weed / Gras | Outdoor',
-                               'LEMON HAZE >TOP<GERMAN>1G<QUALITY [FAST SHIPPING]',
-                               'PROMO **** 15 Gram Super WEED *** Top Holland WEED',
-                               '3.5g ** CHANNEL + ** - AAA+++ TOP SHELF', '4g Kosher Kush Medical Grade Indica',
-                               '5g//TROPIMANGO', '*****$125 oz Indoor/Topshelf Flower "Pre-98 Bubba Kush"****',
-                               '25gr Purple Haze B-grade (Outdoor & Organic & Fermented/Cured)',
-                               '7G | GRINDED BUD - BATCH NO.2 | FREE POST', 'Green Gelato Flower Greenhouse 8oz'), (
-                               False, False, False, False, False, False, False, False, False, False, False, False, False, False,
-                               False), ('DrSommer', 'MARLEYS-SHOP', 'mad_max', 'green_usa', 'kwayuk', 'Hobby_Gaertner',
-                                       'German-Quality', 'AndyMacht', 'GreenConnection', 'green_usa', 'thegreenrobots',
-                                       'TrueVape', 'GoldenCamel', 'BookFace', 'Seedless'), (
-                               '/user.php?u_id=DrSommer', '/user.php?u_id=MARLEYS-SHOP', '/user.php?u_id=mad_max',
-                               '/user.php?u_id=green_usa', '/user.php?u_id=kwayuk', '/user.php?u_id=Hobby_Gaertner',
-                               '/user.php?u_id=German-Quality', '/user.php?u_id=AndyMacht',
-                               '/user.php?u_id=GreenConnection', '/user.php?u_id=green_usa',
-                               '/user.php?u_id=thegreenrobots', '/user.php?u_id=TrueVape', '/user.php?u_id=GoldenCamel',
-                               '/user.php?u_id=BookFace', '/user.php?u_id=Seedless'),
+                                   'Silver Haze - 20g - Weed', '10g ✿ CANNALOPE ✿ (OUTDOOR) "With Seeds"',
+                                   '[£27 INTRO OFFER] 3.5G GREEN CRACK CALI HIGH GRADE AAA+ UK NDD ESCROW',
+                                   '7g Snoop OG Medical Grade Indica', '1G WEDDING CAKE / TOP QUALITY',
+                                   '!SALE! 40g AUTO DAIQUIRI LIME Weed / Gras | Outdoor',
+                                   'LEMON HAZE >TOP<GERMAN>1G<QUALITY [FAST SHIPPING]',
+                                   'PROMO **** 15 Gram Super WEED *** Top Holland WEED',
+                                   '3.5g ** CHANNEL + ** - AAA+++ TOP SHELF', '4g Kosher Kush Medical Grade Indica',
+                                   '5g//TROPIMANGO', '*****$125 oz Indoor/Topshelf Flower "Pre-98 Bubba Kush"****',
+                                   '25gr Purple Haze B-grade (Outdoor & Organic & Fermented/Cured)',
+                                   '7G | GRINDED BUD - BATCH NO.2 | FREE POST', 'Green Gelato Flower Greenhouse 8oz'), (
+                                   False, False, False, False, False, False, False, False, False, False, False, False,
+                                   False, False,
+                                   False),
+                               ('DrSommer', 'MARLEYS-SHOP', 'mad_max', 'green_usa', 'kwayuk', 'Hobby_Gaertner',
+                                'German-Quality', 'AndyMacht', 'GreenConnection', 'green_usa', 'thegreenrobots',
+                                'TrueVape', 'GoldenCamel', 'BookFace', 'Seedless'), (
+                                   '/user.php?u_id=DrSommer', '/user.php?u_id=MARLEYS-SHOP', '/user.php?u_id=mad_max',
+                                   '/user.php?u_id=green_usa', '/user.php?u_id=kwayuk', '/user.php?u_id=Hobby_Gaertner',
+                                   '/user.php?u_id=German-Quality', '/user.php?u_id=AndyMacht',
+                                   '/user.php?u_id=GreenConnection', '/user.php?u_id=green_usa',
+                                   '/user.php?u_id=thegreenrobots', '/user.php?u_id=TrueVape',
+                                   '/user.php?u_id=GoldenCamel',
+                                   '/user.php?u_id=BookFace', '/user.php?u_id=Seedless'),
                                (372, 173, 186, 230, 40, 343, 128, 131, 716, 230, 160, 107, 148, 30, 85), (
-                               datetime.datetime(2019, 11, 12, 0, 0), datetime.datetime(2019, 11, 21, 0, 0),
-                               datetime.datetime(2019, 12, 19, 0, 0), datetime.datetime(2019, 11, 24, 0, 0),
-                               datetime.datetime(2020, 1, 19, 0, 0), datetime.datetime(2019, 10, 4, 0, 0),
-                               datetime.datetime(2019, 12, 22, 0, 0), datetime.datetime(2019, 12, 25, 0, 0),
-                               datetime.datetime(2019, 6, 22, 0, 0), datetime.datetime(2019, 11, 24, 0, 0),
-                               datetime.datetime(2019, 11, 24, 0, 0), datetime.datetime(2020, 1, 7, 0, 0),
-                               datetime.datetime(2020, 1, 9, 0, 0), datetime.datetime(2019, 11, 26, 0, 0),
-                               datetime.datetime(2019, 11, 22, 0, 0)), (
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
-                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)))), listing_info)
+                                   datetime.datetime(2019, 11, 12, 0, 0), datetime.datetime(2019, 11, 21, 0, 0),
+                                   datetime.datetime(2019, 12, 19, 0, 0), datetime.datetime(2019, 11, 24, 0, 0),
+                                   datetime.datetime(2020, 1, 19, 0, 0), datetime.datetime(2019, 10, 4, 0, 0),
+                                   datetime.datetime(2019, 12, 22, 0, 0), datetime.datetime(2019, 12, 25, 0, 0),
+                                   datetime.datetime(2019, 6, 22, 0, 0), datetime.datetime(2019, 11, 24, 0, 0),
+                                   datetime.datetime(2019, 11, 24, 0, 0), datetime.datetime(2020, 1, 7, 0, 0),
+                                   datetime.datetime(2020, 1, 9, 0, 0), datetime.datetime(2019, 11, 26, 0, 0),
+                                   datetime.datetime(2019, 11, 22, 0, 0)), (
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                                   (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)))), listing_info)
 
 
 class TestGetSubSubCategoriesUrlsAndNrsOfListings(ApollonBaseTest):
@@ -285,6 +287,11 @@ class TestGetFiatPrice(ApollonBaseTest):
         soup_html = self._get_page_as_soup_html("listings/listing_0")
         fiat_price = scrapingFunctions.get_fiat_price(soup_html)
         self.assertEqual(4.00, fiat_price)
+
+    def test_get_fiat_price_four(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_4")
+        fiat_price = scrapingFunctions.get_fiat_price(soup_html)
+        self.assertEqual(None, fiat_price)
 
 
 class TestGetDestinationCountries(ApollonBaseTest):
@@ -371,8 +378,17 @@ class TestGetShippingMethods(ApollonBaseTest):
         soup_html = self._get_page_as_soup_html("listings/listing_3")
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
         self.assertTupleEqual(
-            (('UK Free Shipping', 3, 'USD', 0.0, None, False), ('EU Shipping', 10, 'USD', 5.27, None, False)),
+            (('US- (Domestic) Free Shipping', 7, 'USD', 0.0, None, False),
+             ('INTERNATIONAL - Free Shipping', 14, 'USD', 0.0, None, False)),
             shipping_methods)
+
+    def test_get_shipping_methods_five(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_5")
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual((('Free P&P', 1, 'USD', 0.0, None, False), (None, 1, 'USD', 0.0, None, False),
+                               (None, 1, 'USD', 0.0, None, False)),
+                              shipping_methods)
+
 
 class TestGetListingText(ApollonBaseTest):
 
@@ -481,6 +497,14 @@ class TestGetSalesBySeller(ApollonBaseTest):
         soup_html = self._get_page_as_soup_html("sellers/seller_2")
         sales = scrapingFunctions.get_sales_by_seller(soup_html)
         self.assertEqual(216, sales)
+
+    def test_get_sales_by_seller_six(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_6")
+        try:
+            scrapingFunctions.get_sales_by_seller(soup_html)
+        except AttributeError:
+            return
+        self.fail()
 
 
 class TestGetOrders(ApollonBaseTest):
@@ -686,3 +710,22 @@ class TestGetNextFeedbackUrl(ApollonBaseTest):
         soup_html = self._get_page_as_soup_html("feedbacks/negative_feedback_0")
         next_feedback_url = scrapingFunctions.get_next_feedback_url(soup_html)
         self.assertEqual(None, next_feedback_url)
+
+
+class TestGetIsSeller(ApollonBaseTest):
+    def test_get_is_seller_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        is_seller = scrapingFunctions.get_is_seller(soup_html)
+        self.assertEqual(True, is_seller)
+
+    def test_get_is_seller_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        is_seller = scrapingFunctions.get_is_seller(soup_html)
+        self.assertEqual(False, is_seller)
+
+
+class TestGetAutofinalizedOrders(ApollonBaseTest):
+    def test_get_autofinalized_orders_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        autofinalized_orders = scrapingFunctions.get_autofinalized_orders(soup_html)
+        self.assertEqual(0, autofinalized_orders)

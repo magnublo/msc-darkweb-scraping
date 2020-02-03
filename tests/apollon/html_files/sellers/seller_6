@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<title>21Savage - User Profile - Apollon Market</title>
+<link href="dist/css/rs7exe7.min.css" rel="stylesheet"/>
+<link href="dist/css/rs7exe7.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="wrapper">
+<link href="/favicon.ico" rel="icon"/>
+<nav class="navbar navbar-inverse navbar-static-top">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/"><span style="background-color:black;font-size:20px;color:#000;"><img alt="context" height="35" src="sidebar.png" style="border-radius:0px;" width="114"/></span></a>
+</div>
+<ul class="nav navbar-nav">
+<li><a href="home.php">Home</a></li>
+<li faq=""><a href="faq.php">FAQ</a></li>
+<li pgp=""><a href="pgp.txt">PGP</a></li>
+<li><a href="seller.php"><font color="green">Become a seller</font></a></li>
+<li><a href="imsg.php">Inbox <span class="badge" style="background-color:#ff3333;">1</span></a></li>
+<li><a href="tickets.php?tab=1">Tickets/Disputes<span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+<li><a href="orders.php?tab=1">Orders <span class="badge" style="background-color:#5bc0de;">0</span></a></li>
+<li mode="" night=""><a href="home.php?ndm=1">Night Mode</a></li>
+<li chglng=""><a href="chglang.php">Change Language</a></li>
+<li verify=""><a href="verify.php">Verify Mirror</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li><a><b>BTC <label>0.00 / XMR 0.00 / LTC 0.00 / BCH 0.00 / USD 0</label></b></a></li>
+<li class="dropdown">
+<a href="#"><b>My Profile<span class="caret"></span></b></a>
+<ul class="dropdown-menu" role="menu">
+<li><a href="profile.php"><big>04taeisha1</big> <img class="img-circle" height="48px" src="uploads/users/default2.png" width="48px"/></a></li>
+<li><a href="deposit.php">Deposit &amp; Withdrawal BTC</a></li>
+<li><a href="depositXMR.php">Deposit &amp; Withdrawal XMR</a></li>
+<li><a href="depositLTC.php">Deposit &amp; Withdrawal LTC</a></li>
+<li><a href="depositBCH.php">Deposit &amp; Withdrawal BCH</a></li>
+<li><a href="autoshop.php">AutoShop</a></li>
+<li><a href="affiliate.php">Affiliates</a></li>
+<li><a href="myfavourites.php">My Favorites</a></li>
+<li><a href="myblacklist.php">My Blacklist</a></li>
+<li class="divider"></li>
+<li><a href="support.php">Support</a></li>
+<li><a href="logout.php">Logout</a></li>
+</ul>
+</li>
+<li><a href="logout.php">Logout</a></li>
+</ul>
+</div>
+</nav>
+<div class="navbar-default sidebar" role="navigation">
+<div class="panel panel-default">
+<div class="panel-heading">
+<i class="fa fa-bell fa-fw"></i> Profile Actions
+                        </div>
+<div class="list-group">
+<a class="list-group-item" href="home.php"><i class="fa fa-comment fa-fw"></i><b>Home [-]</b></a>
+<a class="list-group-item" href="imsg.php"><i class="fa fa-comment fa-fw"></i><b>Inbox [-]</b></a>
+<a class="list-group-item" href="orders.php"><i class="fa fa-comment fa-fw"></i><b>Orders [-]</b></a>
+<a class="list-group-item" href="deposit.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BTC [-]</b></a>
+<a class="list-group-item" href="depositXMR.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal XMR [-]</b></a>
+<a class="list-group-item" href="depositLTC.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal LTC [-]</b></a>
+<a class="list-group-item" href="depositBCH.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BCH [-]</b></a>
+<a class="list-group-item" href="profile.php"><i class="fa fa-comment fa-fw"></i><b>My Profile [-]</b></a>
+<a class="list-group-item" href="user.php?u_id=04taeisha1&amp;tab=2"><i class="fa fa-comment fa-fw"></i><b>My Feedback [-]</b></a>
+<a class="list-group-item" href="myblacklist.php"><i class="fa fa-comment fa-fw"></i><b>My Blacklist [-]</b></a>
+<a class="list-group-item" href="myfavourites.php"><i class="fa fa-comment fa-fw"></i><b>My Favorites [-]</b></a>
+<a class="list-group-item" href="support.php"><i class="fa fa-comment fa-fw"></i><b>Support [-]</b></a>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<i class="fa fa-bell fa-fw"></i>Hidden Sites
+							</div>
+<div class="panel-body">
+<div class="list-group">
+</div></div></div>
+<div class="panel panel-default">
+<div class="panel-heading">Exchange Rates</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9237.06</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8357.92</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7097.45</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">13797.36</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12236.56</span>
+</div>
+</div>
+</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">77.14</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">69.90</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">59.09</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">115.83</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">101.47</span>
+</div>
+</div>
+</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">380.12</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">344.10</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">292.19</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">571.10</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">500.31</span>
+</div>
+</div>
+</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">68.79</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">62.24</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">52.90</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">103.25</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">90.69</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="page-wrapper">
+<div class="container-fluid">
+<div class="page-header">
+<h3>User Profile : </h3>
+</div>
+<div class="col-lg-12 left">
+<div class="panel panel-default">
+<div class="panel-body">
+<div class="col-sm-12">
+<div class="col-sm-1" style="width:100%">
+<img class="img-responsive img-rounded" height="80px" src="uploads/users/9830cbe828684ffc6ae2d109c0f3bf4f.jpg" width="80px"/>
+</div>
+<div class="col-sm-5">
+<small><a href=""><b>21Savage (100%)</b></a> <small><span class="badge" style="background-color:#cacaca;font-size:10px;"> Member Level 0 (0)</span></small> <small><span class="badge" style="background-color:#dddddd;font-size:10px;">Trust Level 0 </span></small></small><br/>
+<small><span><b>Positive Feedback : </b>(100%)</span></small><br/>
+<small><span><b>Member since : </b>Jul 10, 2018</span></small><br/>
+<small><span><b>Last Login : </b>Aug 03, 2019</span></small><br/>
+</div>
+<div class="col-sm-2">
+<small><span><b>Orders : </b>0</span></small><br/>
+<small><span><b>Disputes : </b>0</span></small><br/>
+<small><span><b>AutoFinalized Orders : </b>0</span></small><br/>
+<small><span><b>Won/Lost Disputes : </b><span style="color:green;">0</span>/<span style="color:red;">0</span></span></small><br/>
+<small><span><b>User Type : </b>Buyer</span></small><br/>
+</div>
+<div align="left" class="col-sm-4">
+<div class="input-group">
+<a href="home.php?cid=0&amp;csid=0&amp;ss_usr=21Savage"><button class="btn btn-info btn-xs">Store of <b>21Savage</b></button></a>
+<a href="smsg.php?ms_receiver=21Savage"><button class="btn btn-success btn-xs">Send a Message</button></a><br/><br/>
+<a href="user.php?u_id=21Savage&amp;fvusr=1" style="text-decoration:none;"> <button class="btn btn-warning btn-xs">Add Buyer To Favourites</button></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-body">
+<div align="left" class="col-sm-6">
+<h4><b>Feedback Ratings : </b></h4>
+<div>
+<button class="btn btn-success btn-xs" style="background-color:#5cb85c;color:#fff;" type="button"><b>Positive : 0</b></button>
+<button class="btn btn-default btn-xs" style="background-color:#777;color:#fff;" type="button"><b>Neutral : 0</b></button>
+<button class="btn btn-danger btn-xs" style="background-color:#d9534f;color:#fff;" type="button"><b>Negative : 0</b></button>
+</div>
+<h4><b>Latest Feedback : </b></h4>
+</div>
+</div>
+</div>
+<ul class="nav nav-tabs">
+<li class="active"><a data-toggle="tab" href="user.php?u_id=21Savage&amp;tab=1">Profile</a></li>
+<li><a data-toggle="tab" href="user.php?u_id=21Savage&amp;tab=2">Positive Feedback</a></li>
+<li><a data-toggle="tab" href="user.php?u_id=21Savage&amp;tab=3">Neutral Feedback</a></li>
+<li><a data-toggle="tab" href="user.php?u_id=21Savage&amp;tab=4">Negative Feedback</a></li>
+<li><a data-toggle="tab" href="user.php?u_id=21Savage&amp;tab=6">Public PGP Key</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane fade in active">
+<h4>About Me : </h4>
+<div class="col-lg-13">
+<div class="panel panel-default">
+<div class="panel-body">
+<div class="col-sm-5" style="text-align:left;">
+<span><b>Jabber : </b></span><br/>
+<span><b>E-Mail : </b></span><br/>
+</div>
+<div class="col-sm-8" style="text-align:left;word-wrap: break-word;"><i>No Signature</i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="footer-inner">
+<div class="footer-content">
+<span class="bigger-90">Apollon Market © 2019</span>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

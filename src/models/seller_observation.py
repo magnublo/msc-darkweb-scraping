@@ -65,5 +65,6 @@ class SellerObservation(Base):
 
     # apollon
     email = Column(String(255))  # confirmed maximum length
+    autofinalized_orders = Column(Integer)
 
     UniqueConstraint(session_id, url)

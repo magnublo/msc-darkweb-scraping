@@ -272,13 +272,14 @@ class ApollonScrapingFunctions(BaseFunctions):
         return int(sales_i.text)
 
     @staticmethod
-    def get_fiat_price(soup_html: BeautifulSoup) -> float:
+    def get_fiat_price(soup_html: BeautifulSoup) -> Optional[float]:
         price_span = soup_html.select_one(
             "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
             "div:nth-child(2) > form > div > h5:nth-child(1) > span")
-        assert price_span is not None
-        fiat_price = float(price_span.text.split("/")[0].split(":")[-1].strip().split()[0])
-        return fiat_price
+        if price_span:
+            return float(price_span.text.split("/")[0].split(":")[-1].strip().split()[0])
+        else:
+            return None
 
     @staticmethod
     def get_origin_country(soup_html: BeautifulSoup) -> str:
@@ -361,14 +362,15 @@ class ApollonScrapingFunctions(BaseFunctions):
         return quantity_in_stock
 
     @staticmethod
-    def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[str, int, str, float, Optional[str], bool]]:
+    def get_shipping_methods(soup_html: BeautifulSoup) -> Tuple[Tuple[Optional[str], int, str, float, Optional[str], bool]]:
         # description, days_shipping_time, fiat_currency, price, quantity_unit_name, price_is_per_unit
-        shipping_methods: List[Tuple[str, int, str, float, Optional[str], bool]] = []
+        shipping_methods: List[Tuple[Optional[str], int, str, float, Optional[str], bool]] = []
         option_texts = [s.text.strip() for s in soup_html.select(
             "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
             "div:nth-child(2) > form > div > div.form-group.form-inline > select > option")]
         for o in option_texts:
-            description, time_str, price_str = [s.strip() for s in o.rsplit(" - ", maxsplit=2)]
+            description_str, time_str, price_str = [s.strip() for s in f" {o} ".rsplit(" - ", maxsplit=2)]
+            description = description_str if description_str else None
             nr_of_days_str, day_str = [s for s in time_str.strip().split()]
             assert day_str[0:3] == "Day"
             days = parse_int(nr_of_days_str)
@@ -611,3 +613,29 @@ class ApollonScrapingFunctions(BaseFunctions):
             return pre.text
         else:
             return None
+
+    @staticmethod
+    def get_is_seller(soup_html: BeautifulSoup) -> bool:
+        right_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-2")
+        assert right_card is not None
+        right_card_text = right_card.text
+        match = re.search(r"User\sType\s:\s([A-z]+)", right_card_text)
+        user_type = right_card_text[match.regs[1][0]:match.regs[1][1]]
+        if user_type == "Buyer":
+            is_seller = False
+        elif user_type == "Seller":
+            is_seller = True
+        else:
+            raise AssertionError(f"Unknown user type '{user_type}'.")
+        return is_seller
+
+    @staticmethod
+    def get_autofinalized_orders(soup_html: BeautifulSoup) -> int:
+        right_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-2")
+        assert right_card is not None
+        right_card_text = right_card.text
+        match = re.search(r"AutoFinalized\sOrders\s:\s([0-9]+)", right_card_text)
+        nr_of_autofinalized_orders = parse_int(right_card_text[match.regs[1][0]:match.regs[1][1]])
+        return nr_of_autofinalized_orders

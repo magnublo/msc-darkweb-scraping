@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<title>Custom Listing for SWNAG69 - Apollon Market</title>
+<link href="dist/css/rs7exe7.min.css" rel="stylesheet"/>
+<link href="dist/css/rs7exe7.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="wrapper">
+<link href="/favicon.ico" rel="icon"/>
+<nav class="navbar navbar-inverse navbar-static-top">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/"><span style="background-color:black;font-size:20px;color:#000;"><img alt="context" height="35" src="sidebar.png" style="border-radius:0px;" width="114"/></span></a>
+</div>
+<ul class="nav navbar-nav">
+<li><a href="home.php">Home</a></li>
+<li faq=""><a href="faq.php">FAQ</a></li>
+<li pgp=""><a href="pgp.txt">PGP</a></li>
+<li><a href="seller.php"><font color="green">Become a seller</font></a></li>
+<li><a href="imsg.php">Inbox <span class="badge" style="background-color:#ff3333;">1</span></a></li>
+<li><a href="tickets.php?tab=1">Tickets/Disputes<span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+<li><a href="orders.php?tab=1">Orders <span class="badge" style="background-color:#5bc0de;">0</span></a></li>
+<li mode="" night=""><a href="home.php?ndm=1">Night Mode</a></li>
+<li chglng=""><a href="chglang.php">Change Language</a></li>
+<li verify=""><a href="verify.php">Verify Mirror</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li><a><b>BTC <label>0.00 / XMR 0.00 / LTC 0.00 / BCH 0.00 / USD 0</label></b></a></li>
+<li class="dropdown">
+<a href="#"><b>My Profile<span class="caret"></span></b></a>
+<ul class="dropdown-menu" role="menu">
+<li><a href="profile.php"><big>18ivanjayma7</big> <img class="img-circle" height="48px" src="uploads/users/default2.png" width="48px"/></a></li>
+<li><a href="deposit.php">Deposit &amp; Withdrawal BTC</a></li>
+<li><a href="depositXMR.php">Deposit &amp; Withdrawal XMR</a></li>
+<li><a href="depositLTC.php">Deposit &amp; Withdrawal LTC</a></li>
+<li><a href="depositBCH.php">Deposit &amp; Withdrawal BCH</a></li>
+<li><a href="autoshop.php">AutoShop</a></li>
+<li><a href="affiliate.php">Affiliates</a></li>
+<li><a href="myfavourites.php">My Favorites</a></li>
+<li><a href="myblacklist.php">My Blacklist</a></li>
+<li class="divider"></li>
+<li><a href="support.php">Support</a></li>
+<li><a href="logout.php">Logout</a></li>
+</ul>
+</li>
+<li><a href="logout.php">Logout</a></li>
+</ul>
+</div>
+</nav>
+<div class="navbar-default sidebar" role="navigation">
+<div class="panel panel-default">
+<div class="panel-heading">
+<i class="fa fa-bell fa-fw"></i> Profile Actions
+                        </div>
+<div class="list-group">
+<a class="list-group-item" href="home.php"><i class="fa fa-comment fa-fw"></i><b>Home [-]</b></a>
+<a class="list-group-item" href="imsg.php"><i class="fa fa-comment fa-fw"></i><b>Inbox [-]</b></a>
+<a class="list-group-item" href="orders.php"><i class="fa fa-comment fa-fw"></i><b>Orders [-]</b></a>
+<a class="list-group-item" href="deposit.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BTC [-]</b></a>
+<a class="list-group-item" href="depositXMR.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal XMR [-]</b></a>
+<a class="list-group-item" href="depositLTC.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal LTC [-]</b></a>
+<a class="list-group-item" href="depositBCH.php"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BCH [-]</b></a>
+<a class="list-group-item" href="profile.php"><i class="fa fa-comment fa-fw"></i><b>My Profile [-]</b></a>
+<a class="list-group-item" href="user.php?u_id=18ivanjayma7&amp;tab=2"><i class="fa fa-comment fa-fw"></i><b>My Feedback [-]</b></a>
+<a class="list-group-item" href="myblacklist.php"><i class="fa fa-comment fa-fw"></i><b>My Blacklist [-]</b></a>
+<a class="list-group-item" href="myfavourites.php"><i class="fa fa-comment fa-fw"></i><b>My Favorites [-]</b></a>
+<a class="list-group-item" href="support.php"><i class="fa fa-comment fa-fw"></i><b>Support [-]</b></a>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<i class="fa fa-bell fa-fw"></i>Hidden Sites
+							</div>
+<div class="panel-body">
+<div class="list-group">
+</div></div></div>
+<div class="panel panel-default">
+<div class="panel-heading">Exchange Rates</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9237.06</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8357.92</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7097.45</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">13797.36</span>
+<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12236.56</span>
+</div>
+</div>
+</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">77.14</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">69.90</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">59.09</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">115.83</span>
+<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">101.47</span>
+</div>
+</div>
+</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">380.12</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">344.10</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">292.19</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">571.10</span>
+<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">500.31</span>
+</div>
+</div>
+</div>
+<div class="panel-body">
+<div class="list-group">
+<div class="list-group-item">
+<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">68.79</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">62.24</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">52.90</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">103.25</span>
+<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">90.69</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="page-wrapper">
+<div class="container-fluid">
+<div class="page-header">
+<div class="input-group">
+<a href="smsg.php?ms_subject=Custom Listing for SWNAG69&amp;ms_receiver=NDD-DMT"><button class="btn btn-info btn-xs">Contact Seller</button></a> <a href="listing.php?ls_id=45015&amp;fvlst=1"><button class="btn btn-success btn-xs">Add Listing To Favourites</button></a> <a href="listing.php?ls_id=45015&amp;fvusr=1"><button class="btn btn-success btn-xs">Add seller to favorites</button></a>
+<a href="listing.php?ls_id=45015&amp;report=1"><button class="btn btn-danger btn-xs">Report Listing</button></a>
+</div>
+</div>
+<div class="col-lg-12 left">
+<div class="panel panel-default">
+<div class="panel-body">
+<div class="table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th align="left" width="2px">
+<span style="color:#d9534f;"><b></b></span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<div class="col-sm-12">
+<a href="?ls_id=45015">Custom Listing for SWNAG69</a>
+</div>
+<div class="col-sm-12" style="border: 1px solid #e7e7e7;padding:5px;">
+<div align="left" class="col-sm-3" style="padding:5px;border-radius: 25px;border: 0px solid gray;">
+<img class="img-responsive inline-block img-rounded" height="350px" src="uploads/534bd036d54b31addc48e27470321ed1_350_350.jpg" width="350px"/><br/>
+<a href="listing.php?ls_id=45015&amp;imgid=1"><img class="pull-left" height="80px" src="uploads/6da4871ac442eb01cfd6c6b6acb0c9ee_100_100.jpg" width="80px"/></a><a href="listing.php?ls_id=45015&amp;imgid=2"><img class="pull-left" height="80px" src="uploads/534bd036d54b31addc48e27470321ed1_100_100.jpg" width="80px"/></a></div>
+<div align="left" class="col-sm-3">
+<small><a href="user.php?u_id=NDD-DMT"><b>NDD-DMT (77%)</b></a> <small><span class="badge" style="background-color:#d9534f;font-size:10px;">Seller Level 4 (534)</span></small> <small><span class="badge" style="background-color:#cc3300;font-size:10px;">Trust Level 5 </span></small></small><br/><small><span><b>Verified Seller : </b><img src="uploads/icons/yes_verified.png"/></span></small> / <small><span><b>Trusted Seller : </b><img src="uploads/icons/yes_trusted.png"/></span></small><br/>
+<small><span><b>Positive Feedback : </b>(77%)</span></small><br/>
+<small><span><b>Member since : </b>May 19, 2019</span></small><br/>
+<small><span><b>Last Login : </b>Feb 03, 2020</span></small><br/>
+<small><span><b>Sales : </b>534</span></small><br/>
+<small><span><b>Orders : </b>0</span></small><br/></div>
+<div class="col-sm-3">
+<small><span><b>Sold : </b><i>2</i> Times</span></small><br/>
+<small><label><b>Origin Country : </b></label> United Kingdom </small><br/>
+<small><label><b>Ship to : </b></label></small>
+<small> United Kingdom </small><small> , Europe </small><small> , World Wide </small><br/><small><label><b>Payment :</b></label> <font color="green">Full Escrow</font></small><br/>
+<small><label><b>Product class :</b></label> Physical Package</small><br/>
+<small><label><b>Quantity :</b></label> 1 Item Available</small><br/>
+</div>
+<div class="col-sm-8">
+<div style="padding: 8px;line-height: 1.42857143;vertical-align: top;border-top: 1px solid #ddd;"></div>
+</div>
+<form action="purchase.php?ls_id=45015" method="POST" role="form">
+<div class="col-sm-6"><h5><span class="label label-info">Sale Price : 193.92 <b>USD</b> / 0.02099346 <b>BTC</b></span></h5>
+<h5><span class="label label-info">Sale Price : 193.92 <b>USD</b> / 2.52157726 <b>XMR</b></span></h5>
+<h5><span class="label label-info">Sale Price : 193.92 <b>USD</b> / 2.81663516 <b>LTC</b></span></h5>
+<h5><span class="label label-info">Sale Price : 193.92 <b>USD</b> / 0.50994216 <b>BCH</b></span></h5>
+<label><small><b> Shipping Options : </b></small></label>
+<div class="form-group form-inline">
+<select class="form-control input-sm" name="p_psg"><option value="1">Free P&amp;P - 1 Day - 0.00 USD / 0.00000000 BTC</option><option value="2">  - 1 Day - 0.00 USD / 0.00000000 BTC</option><option value="3">  - 1 Day - 0.00 USD / 0.00000000 BTC</option>
+</select><br/><br/>
+<label><small><b> Quantity : </b></small></label>
+<input class="form-control input-sm" name="p_qty" size="2px" value="1"/>
+<label><small><b> Current Secure PIN (6-Digit) : </b></small></label>
+<input class="form-control input-sm" maxlength="6" name="scp_cpin" size="5px" type="password" value=""/>
+<a href="forgotpin.php"><span class="btn btn-warning btn-xs" value="Forgot Secure PIN (6-Digit) ?">Forgot Secure PIN (6-Digit) ?</span></a>
+</div>
+<div class="input-group"><button class="btn btn-success btn-md" type="submit">Purchase with BTC</button></div>
+<div class="input-group"><button class="btn btn-success btn-md" formaction="purchaseXMR.php?ls_id=45015" type="submit">Purchase with XMR</button></div>
+<div class="input-group"><button class="btn btn-success btn-md" formaction="purchaseLTC.php?ls_id=45015" type="submit">Purchase with LTC</button></div>
+<div class="input-group"><button class="btn btn-success btn-md" formaction="purchaseBCH.php?ls_id=45015" type="submit">Purchase with BCH</button></div>
+</div>
+</form></div>
+</td>
+</tr>
+<tr>
+<td>
+<ul class="nav nav-tabs">
+<li class="active"><a data-toggle="tab" href="listing.php?ls_id=45015&amp;tab=1">Product Description</a></li>
+<li><a data-toggle="tab" href="listing.php?ls_id=45015&amp;tab=2">Refund Policy</a></li>
+<li><a data-toggle="tab" href="listing.php?ls_id=45015&amp;tab=3">Product Tags</a></li>
+<li><a data-toggle="tab" href="listing.php?ls_id=45015&amp;tab=4">Feedback</a></li>
+<li><a data-toggle="tab" href="user.php?u_id=NDD-DMT&amp;tab=6">Public PGP Key</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane fade in active">
+<h4></h4>
+<div class="col-lg-13">
+<sub><b></b></sub>
+<div class="panel panel-default">
+<div class="panel-body"><pre>0.5g Jungle Spice + 0.5g DMT + 0.5g Changa + 4 x Ayehuasca capsules</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="footer-inner">
+<div class="footer-content">
+<span class="bigger-90">Apollon Market © 2019</span>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
