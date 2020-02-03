@@ -63,4 +63,7 @@ class SellerObservation(Base):
     fe_enabled = Column(Boolean)
     xmpp_jabber_id = Column(String(XMPP_JABBER_ID_COLUMN_LENGTH))
 
+    # apollon
+    email = Column(String(255))  # confirmed maximum length
+
     UniqueConstraint(session_id, url)

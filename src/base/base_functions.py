@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup
 from src.base.base_logger import BaseClassWithLogger
 import cssutils
 
+from src.utils import parse_int, parse_float
+
 
 def _find_index_of_h4_with_market_string(h4s: List[BeautifulSoup], market_string: str,
                                          content_soup: BeautifulSoup) -> Optional[int]:
@@ -309,3 +311,73 @@ class BaseFunctions(BaseClassWithLogger):
         assert len(links) <= 1
         if links:
             return links[0]["href"]
+
+
+def get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
+    str, Optional[int], Optional[float], Optional[float], Optional[int], Optional[int], Optional[int], Optional[str]]:
+    sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text = (
+        None, None, None, None, None, None, None)
+
+    if info_string == "":
+        pass  # empty string
+        free_text = "No seller stats associated with this verification."
+    elif re.match(r"^\d+\/\d+\/\d+$", info_string):
+        pass  # good neutral bad tuple, 11/2/44
+        good_reviews, neutral_reviews, bad_reviews = [int(a) for a in info_string.split("/")]
+    elif re.match(r"^\d+,?\d+\+?\s+deals,?\s+\d+(\.\d+)*\/\d+(\.\d+)*%?$", info_string):
+        pass  # deals tuple, sales nr is lower estimate, '123 deals, 2.44/5'
+        whitespace_parts = info_string.split()
+        if whitespace_parts[0][-1] == "+":
+            free_text = 'nr of sales is lower estimate'
+        slash_parts = whitespace_parts[-1].split("/")
+        sales, rating, max_rating = (parse_int(whitespace_parts[0]), float(slash_parts[0]), parse_float(slash_parts[1]))
+    elif re.match(r"^\d+,?\d+\+?\s+deals,?\s+\d+(\.\d+)*$", info_string):
+        pass  # deals tuple, sales nr is lower estimate, '123 deals, 2.44'
+        whitespace_parts = info_string.split()
+        slash_parts = whitespace_parts[-1].split("/")
+        sales, rating = (parse_int(whitespace_parts[0]), float(slash_parts[0]))
+    elif re.match(r"^\d+(\.\d+)*\/\d+(\.\d+)*$", info_string):
+        pass  # rating, max_rating tuple, '2.44/5'
+        rating, max_rating = [float(f) for f in info_string.split("/")]
+    elif re.match(r"^\d+,?\d+\s+\d+(\.\d+)*\/\d+(\.\d+)*$", info_string):
+        pass  # sales, rating, max_rating tuple, '123 2.44/5'
+        parts = re.split(r"\s+|\/", info_string)
+        sales, rating, max_rating = (int(parts[0]), float(parts[1]), float(parts[2]))
+    elif re.match(r"^\d+,?\d+\s+ deals,?$", info_string):
+        pass  # sales, '123 deals'
+        sales = int(info_string.split()[0])
+    elif re.match(r"^\d+,?\d+$", info_string):
+        pass  # sales without deals keyword, 123
+        sales = int(info_string)
+    elif re.match(r"^\d+\.\d+$", info_string):
+        pass  # rating only
+        rating = float(info_string)
+    elif re.match(r"^\d+,?\d+\+?~\d+,?\d+\+?\s+deals,?\s+\d+(\.\d+)*\/\d+(\.\d+)*%?$", info_string):
+        pass  # deals tuple, sales is a range, '12~22 deals, 2.44/5'
+        whitespace_parts = info_string.split()
+        lower_bound, upper_bound = [parse_int(i) for i in whitespace_parts[0].split("~")]
+        free_text = f"Sales is somewhere between {lower_bound} and {upper_bound}."
+        slash_parts = whitespace_parts[-1].split("/")
+        sales, rating, max_rating = (
+        int(sum((upper_bound, lower_bound)) / 2), float(slash_parts[0]), parse_float(slash_parts[1]))
+    elif re.match(r"([0-9]+)\s\(([0-9\,\.]+)\)", info_string):
+        pass  # 1400 (4.96)
+        re_match = re.match(r"([0-9]+)\s\(([0-9\,\.]+)\)", info_string)
+        sales = parse_int(info_string[re_match.regs[1][0]:re_match.regs[1][1]])
+        rating = parse_float(info_string[re_match.regs[2][0]:re_match.regs[2][1]])
+    elif re.match(r"([0-9]+)\sSales\s\|\s([0-9]+)\/([0-9]+)\/([0-9]+)", info_string):
+        pass  # 410 Sales | 350/4/0
+        re_match = re.match(r"([0-9]+)\sSales\s\|\s([0-9]+)\/([0-9]+)\/([0-9]+)", info_string)
+        sales = parse_int(info_string[re_match.regs[1][0]:re_match.regs[1][1]])
+        good_reviews = parse_int(info_string[re_match.regs[2][0]:re_match.regs[2][1]])
+        neutral_reviews = parse_int(info_string[re_match.regs[3][0]:re_match.regs[3][1]])
+        bad_reviews = parse_int(info_string[re_match.regs[4][0]:re_match.regs[4][1]])
+    elif re.match(r"([0-9]+)\sSales\s\(([0-9]{1,2})%\)$", info_string):
+        re_match = re.match(r"([0-9]+)\sSales\s\(([0-9]{1,2})%\)$", info_string)
+        sales = parse_int(info_string[re_match.regs[1][0]:re_match.regs[1][1]])
+        rating = parse_float(info_string[re_match.regs[2][0]:re_match.regs[2][1]])
+        pass  # 47 Sales (91%)
+    else:
+        free_text = info_string
+
+    return market_id, sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text

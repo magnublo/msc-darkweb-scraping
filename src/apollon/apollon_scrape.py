@@ -6,6 +6,7 @@ from typing import Type, Tuple, List, Optional
 import requests
 from bs4 import BeautifulSoup
 from requests import Response
+from sqlalchemy import func
 
 from definitions import APOLLON_MARKET_ID, APOLLON_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS, APOLLON_SRC_DIR, \
     APOLLON_HTTP_HEADERS, APOLLON_MIN_CREDENTIALS_PER_THREAD, APOLLON_MARKET_CATEGORY_INDEX_URL_PATH, \
@@ -14,9 +15,12 @@ from src.apollon.apollon_functions import ApollonScrapingFunctions
 from src.base.base_functions import BaseFunctions
 from src.base.base_scraper import BaseScraper
 from src.db_utils import get_column_name
+from src.models.feedback import Feedback
 from src.models.listing_observation import ListingObservation
 from src.models.scraping_session import ScrapingSession
 from src.models.seller import Seller
+from src.models.seller_observation import SellerObservation
+from src.models.verified_external_account import VerifiedExternalAccount
 from src.utils import PageType, get_page_as_soup_html, ListingType
 
 
@@ -164,7 +168,8 @@ class ApollonScrapingSession(BaseScraper):
         web_response = self._get_logged_in_web_response(search_result_url, expected_page_type=PageType.SEARCH_RESULT)
 
         soup_html: BeautifulSoup = get_page_as_soup_html(web_response.text)
-        listing_info = product_page_urls, titles, urls_is_sticky, sellers, seller_urls, nrs_of_views, publication_dates, categories = \
+        listing_info = product_page_urls, titles, urls_is_sticky, sellers, seller_urls, nrs_of_views, \
+                       publication_dates, categories = \
             self.scraping_funcs.get_listing_infos(
                 soup_html)
 
@@ -179,7 +184,8 @@ class ApollonScrapingSession(BaseScraper):
         for i in range(len(listing_info[1:])):
             assert len(listing_info[i]) == len(listing_info[i - 1])
 
-        for product_url, title, is_sticky, seller, seller_url, nr_of_views, publication_date, category_pair in listing_info:
+        for product_url, title, is_sticky, seller, seller_url, nr_of_views, publication_date, category_pair in \
+                zip(*listing_info):
             self._db_error_catch_wrapper(self.db_session, product_url, title, is_sticky, seller, seller_url,
                                          nr_of_views, publication_date, category_pair, btc_rate, xmr_rate, bch_rate,
                                          ltc_rate, func=self._scrape_listing)
@@ -298,9 +304,6 @@ class ApollonScrapingSession(BaseScraper):
         description = self.scraping_funcs.get_seller_about_description(soup_html)
         email, jabber_id = self.scraping_funcs.get_email_and_jabber_id(soup_html)
 
-        disputes, orders, spendings, feedback_left, \
-        feedback_percent_positive, last_online = self.scraping_funcs.get_buyer_statistics(soup_html)
-
         seller_level, trust_level = self.scraping_funcs.get_seller_and_trust_level(soup_html)
         positive_feedback_received_percent = self.scraping_funcs.get_positive_feedback_percent(soup_html)
         registration_date = self.scraping_funcs.get_registration_date(soup_html)
@@ -310,50 +313,32 @@ class ApollonScrapingSession(BaseScraper):
         disputes_won, disputes_lost = self.scraping_funcs.get_disputes(soup_html)
         fe_enabled = self.scraping_funcs.get_fe_allowed(soup_html)
 
-        positive_1m, positive_6m, positive_12m, \
-        neutral_1m, neutral_6m, neutral_12m, \
-        negative_1m, negative_6m, negative_12m = self.scraping_funcs.get_seller_statistics(soup_html)
+        most_recent_feedback_text = self.scraping_funcs.get_most_recent_feedback(soup_html)
 
-        stealth_rating, quality_rating, value_price_rating = self.scraping_funcs.get_star_ratings(soup_html)
-        is_banned: bool = self.scraping_funcs.user_is_banned(soup_html)
-
-        parenthesis_number, vendor_level, trust_level = \
-            self.scraping_funcs.get_parenthesis_number_and_vendor_and_trust_level(
-                soup_html)
-
-        positive_feedback_received_percent, registration_date = self.scraping_funcs.get_mid_user_info(soup_html)
+        # is_banned: bool = self.scraping_funcs.user_is_banned(soup_html) # TODO: Investigate whether users can have
+        # this status on Apollon
 
         external_market_verifications: Tuple[
-            Tuple[str, int, float, str]] = self.scraping_funcs.get_external_market_ratings(
+            Tuple[str, int, float, float, int, int, int, str]] = self.scraping_funcs.get_external_market_ratings(
             soup_html)
 
         seller_observation_description = self._add_text(description)
 
-        previous_seller_observation = self.db_session.query(
-            SellerObservation).join(Seller, SellerObservation.seller_id == Seller.id, isouter=False).filter(
-            Seller.id == seller.id,
-            Seller.market == self.market_id
-        ).order_by(SellerObservation.created_date.desc()).first()
+        sub_query = self.db_session.query(func.max(Feedback.date_published).label('max_t')).filter(
+            Feedback.seller_id == 5).subquery('sub_query')
+        most_recent_feedbacks = self.db_session.query(Feedback).filter(Feedback.seller_id == 5,
+                                                Feedback.date_published == sub_query.c.max_t).all()
 
-        if previous_seller_observation:
-            new_positive_feedback = previous_seller_observation.positive_1m < positive_1m
-            new_neutral_feedback = previous_seller_observation.neutral_1m < neutral_1m
-            new_negative_feedback = previous_seller_observation.negative_1m < negative_1m
-            new_left_feedback = previous_seller_observation.feedback_left < feedback_left
-            category_contains_new_feedback = [new_positive_feedback, new_neutral_feedback, new_negative_feedback,
-                                              new_left_feedback]
-        else:
-            category_contains_new_feedback = [True, True, True, True]
+        feedback_categories, feedback_urls = self.scraping_funcs.get_feedback_categories_and_urls(soup_html)
+        pgp_url = self.scraping_funcs.get_pgp_url(soup_html)
 
-        feedback_categories, feedback_urls, pgp_url = \
-            self.scraping_funcs.get_feedback_categories_and_feedback_urls_and_pgp_url(
-                soup_html)
+        assert len(feedback_urls) == len(feedback_categories)
 
-        assert len(feedback_urls) == len(feedback_categories) == len(category_contains_new_feedback)
-
-        for i in range(0, len(feedback_categories)):
-            if category_contains_new_feedback[i]:
-                self._scrape_feedback(seller, is_new_seller, feedback_categories[i], feedback_urls[i])
+        for recent_feedback in most_recent_feedbacks:
+            recent_feedback: Feedback
+            if recent_feedback.feedback_message_text == most_recent_feedback_text:
+                for i in range(0, len(feedback_categories)):
+                    self._scrape_feedback(seller, is_new_seller, feedback_categories[i], feedback_urls[i])
 
         self._scrape_pgp_key(seller, is_new_seller, pgp_url)
 
@@ -362,29 +347,18 @@ class ApollonScrapingSession(BaseScraper):
             session_id=self.session_id,
             description=seller_observation_description,
             url=seller_url,
-            disputes=disputes,
+            disputes_won=disputes_won,
+            disputes_lost=disputes_lost,
+            disputes=disputes_lost+disputes_won,
             orders=orders,
-            spendings=spendings,
-            feedback_left=feedback_left,
-            feedback_percent_positive=feedback_percent_positive,
-            last_online=last_online,
+            last_online=last_login,
             parenthesis_number=sales,
             positive_feedback_received_percent=positive_feedback_received_percent,
-            positive_1m=positive_1m,
-            positive_6m=positive_6m,
-            positive_12m=positive_12m,
-            neutral_1m=neutral_1m,
-            neutral_6m=neutral_6m,
-            neutral_12m=neutral_12m,
-            negative_1m=negative_1m,
-            negative_6m=negative_6m,
-            negative_12m=negative_12m,
-            stealth_rating=stealth_rating,
-            quality_rating=quality_rating,
-            value_price_rating=value_price_rating,
-            vendor_level=vendor_level,
+            vendor_level=seller_level,
             trust_level=trust_level,
-            banned=is_banned
+            email=email,
+            xmpp_jabber_id=jabber_id,
+            fe_enabled=fe_enabled
         )
 
         if is_new_seller:
@@ -394,3 +368,78 @@ class ApollonScrapingSession(BaseScraper):
         self.db_session.flush()
 
         self._add_external_market_verifications(seller_observation.id, external_market_verifications)
+
+    def _scrape_feedback(self, seller, is_new_seller, category, url):
+
+        self.scraping_funcs: ApollonScrapingFunctions
+
+        if url:
+            self.print_crawling_debug_message(url=url)
+            web_response = self._get_logged_in_web_response(url)
+            soup_html = get_page_as_soup_html(web_response.text)
+        else:
+            return
+
+        feedbacks = self.scraping_funcs.get_feedbacks(soup_html)
+        # publication_date, title, msg, text_hash, buyer, currency, price, url))
+        for publication_date, title, feedback_message_text, text_hash, buyer, currency, price, product_url in feedbacks:
+            if not is_new_seller:
+                existing_feedback = self.db_session.query(Feedback).filter_by(
+                    date_published=publication_date,
+                    buyer=buyer,
+                    category=category,
+                    text_hash=text_hash,
+                    currency=currency,
+                    market=self.market_id) \
+                    .join(Seller, Seller.id == Feedback.seller_id) \
+                    .first()
+
+                if existing_feedback:
+                    self.db_session.flush()
+                    return
+
+            db_feedback = Feedback(
+                date_published=publication_date,
+                category=category,
+                market=self.market_id,
+                seller_id=seller.id,
+                session_id=self.session_id,
+                product_title=title,
+                feedback_message_text=feedback_message_text,
+                text_hash=text_hash,
+                buyer=buyer,
+                currency=currency,
+                price=price,
+                product_url=product_url
+            )
+            self.db_session.add(db_feedback)
+
+        self.db_session.flush()
+
+        next_feedback_url = self.scraping_funcs.get_next_feedback_url(soup_html)
+
+        if next_feedback_url:
+            self._scrape_feedback(seller, is_new_seller, category=category, url=next_feedback_url)
+
+    def _scrape_pgp_key(self, seller, is_new_seller, pgp_url):
+        self.scraping_funcs: ApollonScrapingFunctions
+        scrape_pgp_this_session = self._should_scrape_pgp_key_this_session(seller, is_new_seller)
+        if scrape_pgp_this_session:
+            web_response = self._get_logged_in_web_response(pgp_url, expected_page_type=PageType.PGP)
+            soup_html = get_page_as_soup_html(web_response.text)
+            pgp_key_content = self.scraping_funcs.get_pgp_key(soup_html)
+            if pgp_key_content:
+                self._add_pgp_key(seller, pgp_key_content)
+
+    def _add_external_market_verifications(self, seller_observation_id: int, external_market_verifications: Tuple[
+        Tuple[str, int, float, float, int, int, int, str]]) -> None:
+
+        for market_id, sales, rating, max_rating, good_reviews, neutral_reviews, bad_reviews, free_text in \
+                external_market_verifications:
+            self.db_session.add(
+                VerifiedExternalAccount(
+                    seller_observation_id=seller_observation_id, market_id=market_id,
+                    confirmed_sales=sales, rating=rating, max_rating=max_rating, nr_of_good_reviews=good_reviews,
+                    nr_of_neutral_reviews=neutral_reviews, nr_of_bad_reviews=bad_reviews, free_text=free_text)
+            )
+            self.db_session.flush()

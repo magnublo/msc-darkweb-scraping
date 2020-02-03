@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 import re
 from math import ceil
 from typing import Tuple, Set, List, Optional
@@ -6,10 +7,12 @@ from typing import Tuple, Set, List, Optional
 import dateparser
 from bs4 import BeautifulSoup
 
-from definitions import APOLLON_MARKET_CATEGORY_INDEX_URL_PATH
+from definitions import APOLLON_MARKET_CATEGORY_INDEX_URL_PATH, APOLLON_MARKET_EXTERNAL_MARKET_STRINGS, \
+    MD5_HASH_STRING_ENCODING, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
 from src.base.base_functions import BaseFunctions
 from src.db_utils import shorten_and_sanitize_for_text_column
 from src.utils import parse_int, ListingType, parse_float
+from src.base.base_functions import BaseFunctions, get_external_rating_tuple
 
 
 class ApollonScrapingFunctions(BaseFunctions):
@@ -129,7 +132,7 @@ class ApollonScrapingFunctions(BaseFunctions):
         a: BeautifulSoup
         for a in sub_sub_category_hrefs:
             stripped_text = a.text.strip()
-            match = re.match(r"^(.+)\s*\[(\s*[0-9]+\s*)\]$", stripped_text)
+            match = re.match(r"^(.+)\s+\[(\s+[0-9]+\s+)\]$", stripped_text)
             assert match
             category_name = stripped_text[match.regs[1][0]:match.regs[1][1]].strip()
             parent_category_name = ApollonScrapingFunctions.get_currently_selected_parent_sub_category(soup_html)
@@ -149,7 +152,7 @@ class ApollonScrapingFunctions(BaseFunctions):
         a: BeautifulSoup
         for a in parent_sub_category_hrefs:
             stripped_text = a.text.strip()
-            match = re.match(r"^(.+)\s*\[(\s*[0-9]+\s*)\]$", stripped_text)
+            match = re.match(r"^(.+)\s+\[(\s+[0-9]+\s+)\]$", stripped_text)
             assert match
             nr_of_listings = parse_int(stripped_text[match.regs[2][0]:match.regs[2][1]].strip())
             parent_sub_categories_urls_and_nrs_of_listings.append((None, f"{HOME}{a['href']}", nr_of_listings))
@@ -165,7 +168,7 @@ class ApollonScrapingFunctions(BaseFunctions):
             next_child = children[i + 1]
             if child.name == "li" and next_child.name != "li":
                 stripped_text = child.text.strip()
-                match = re.match(r"^(.+)\s*\[(\s*[0-9]+\s*)\]$", stripped_text)
+                match = re.match(r"^(.+)\s+\[(\s+[0-9]+\s+)\]$", stripped_text)
                 assert match
                 return stripped_text[match.regs[1][0]:match.regs[1][1]].strip()
 
@@ -180,7 +183,7 @@ class ApollonScrapingFunctions(BaseFunctions):
             sub_uls = sub_li.select("ul")
             if len(sub_uls) > 0:
                 stripped_text = sub_category.text.strip().split("\n", maxsplit=1)[0].strip()
-                match = re.match(r"^(.+)\s*\[(\s*[0-9]+\s*)\]$", stripped_text)
+                match = re.match(r"^(.+)\s+\[(\s+[0-9]+\s+)\]$", stripped_text)
                 assert match
                 return stripped_text[match.regs[1][0]:match.regs[1][1]].strip()
 
@@ -205,7 +208,7 @@ class ApollonScrapingFunctions(BaseFunctions):
             product_url = '/' + product_a_tag["href"]
             product_title = product_a_tag.text.strip()
             is_sticky_b = div.select_one("div.col-sm-8 > small:nth-child(1) > b")
-            is_sticky = is_sticky_b and is_sticky_b.text.strip() == "[Sticky]"
+            is_sticky = is_sticky_b.text.strip() == "[Sticky]" if is_sticky_b else False
             _, created_date_str, category_str, _ = div.select_one("div.col-sm-8 > small:nth-child(3)").text.split("-|-")
             created_date = dateparser.parse("".join(created_date_str.split()[1:]))
             main_category_name, sub_category_name = [s.strip() for s in category_str.split("/")]
@@ -213,10 +216,9 @@ class ApollonScrapingFunctions(BaseFunctions):
             seller_a_tag = div.select_one("div.col-sm-8 > small:nth-child(3) > a:nth-child(4)")
             seller_url = '/' + seller_a_tag["href"]
             seller = seller_a_tag.text.strip()
-            nr_of_views = int(
-                div.select_one("div.col-sm-8 > small:nth-child(10) > span").text.split("/")[-1].split(":")[
-                    -1].strip())
-
+            t = div.text
+            match = re.search(r"Sold\s:\s[0-9]+\s\/\sViews\s:\s([0-9]+)", div.text)
+            nr_of_views = parse_int(div.text[match.regs[1][0]:match.regs[1][1]])
             product_urls.append(product_url)
             urls_is_sticky.append(is_sticky)
             titles.append(product_title)
@@ -233,7 +235,8 @@ class ApollonScrapingFunctions(BaseFunctions):
     def get_cryptocurrency_rates(soup_html: BeautifulSoup) -> Tuple[float, float, float, float]:
         # #wrapper > div.navbar-default.sidebar > div.navbar-default.sidebar > div:nth-child(2)
         usd_rates = [float(f.text) for f in soup_html.select(
-            "#wrapper > div.navbar-default.sidebar > div.navbar-default.sidebar > div:nth-child(2) > div > div > div > span:nth-child(2)")]
+            "#wrapper > div.navbar-default.sidebar > div.navbar-default.sidebar > div:nth-child(2) > div > div > div "
+            "> span:nth-child(2)")]
         assert len(usd_rates) == 4
         # noinspection PyTypeChecker
         return tuple(usd_rates)
@@ -241,7 +244,8 @@ class ApollonScrapingFunctions(BaseFunctions):
     @staticmethod
     def accepts_currencies(soup_html: BeautifulSoup) -> Tuple[bool, bool, bool]:
         buttons = soup_html.select(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > form > div > div > button")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > form > div > div > button")
         accepts_XMR, accepts_BCH, accepts_LTC = (False, False, False)
         for b in buttons[1:]:
             curr = b.text.strip().split()[-1]
@@ -262,14 +266,16 @@ class ApollonScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_sales(soup_html: BeautifulSoup) -> int:
         sales_i = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3) > small:nth-child(1) > span > i")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > div:nth-child(3) > small:nth-child(1) > span > i")
         assert sales_i is not None
         return int(sales_i.text)
 
     @staticmethod
     def get_fiat_price(soup_html: BeautifulSoup) -> float:
         price_span = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > form > div > h5:nth-child(1) > span")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > form > div > h5:nth-child(1) > span")
         assert price_span is not None
         fiat_price = float(price_span.text.split("/")[0].split(":")[-1].strip().split()[0])
         return fiat_price
@@ -277,14 +283,16 @@ class ApollonScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_origin_country(soup_html: BeautifulSoup) -> str:
         origin_country_span = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3) > small:nth-child(3)")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > div:nth-child(3) > small:nth-child(3)")
         assert origin_country_span is not None
         return origin_country_span.text.split(":")[-1].strip()
 
     @staticmethod
     def get_destination_countries(soup_html: BeautifulSoup) -> Tuple[str]:
         listing_div = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > div:nth-child(3)")
         listing_div_text = listing_div.text
         start_index = listing_div_text.find("Ship to : ") + len("Ship to : ")
         end_index = listing_div_text.find("Payment :")
@@ -297,7 +305,8 @@ class ApollonScrapingFunctions(BaseFunctions):
     def get_payment_method(soup_html: BeautifulSoup) -> Tuple[bool, bool]:
         # return boolean tuple escrow, fifty_percent_finalize_early
         listing_div = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > div:nth-child(3)")
         listing_div_text = listing_div.text
         start_index = listing_div_text.find("Payment : ") + len("Payment : ")
         end_index = listing_div_text.find("Product class :")
@@ -320,7 +329,8 @@ class ApollonScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_standardized_listing_type(soup_html: BeautifulSoup) -> ListingType:
         listing_div = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > div:nth-child(3)")
         listing_div_text = listing_div.text
         start_index = listing_div_text.find("Product class : ") + len("Product class : ")
         end_index = listing_div_text.find("Quantity :")
@@ -337,11 +347,17 @@ class ApollonScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_quantity_in_stock(soup_html: BeautifulSoup) -> Optional[int]:
         listing_div = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > div:nth-child(3)")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > div:nth-child(3)")
         listing_div_text = listing_div.text
         start_index = listing_div_text.find("Quantity : ") + len("Quantity : ")
         quantity_str = listing_div_text[start_index:].strip()
-        quantity_in_stock = parse_int(quantity_str) if quantity_str != "Unlimited Available" else None
+        if quantity_str == "This item is out of stock !!!":
+            quantity_in_stock = 0
+        elif quantity_str == "Unlimited Available":
+            quantity_in_stock = None
+        else:
+            quantity_in_stock = parse_int(quantity_str)
         return quantity_in_stock
 
     @staticmethod
@@ -349,9 +365,10 @@ class ApollonScrapingFunctions(BaseFunctions):
         # description, days_shipping_time, fiat_currency, price, quantity_unit_name, price_is_per_unit
         shipping_methods: List[Tuple[str, int, str, float, Optional[str], bool]] = []
         option_texts = [s.text.strip() for s in soup_html.select(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > div:nth-child(2) > form > div > div.form-group.form-inline > select > option")]
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(1) > td > "
+            "div:nth-child(2) > form > div > div.form-group.form-inline > select > option")]
         for o in option_texts:
-            description, time_str, price_str = [s.strip() for s in o.split(" - ")]
+            description, time_str, price_str = [s.strip() for s in o.rsplit(" - ", maxsplit=2)]
             nr_of_days_str, day_str = [s for s in time_str.strip().split()]
             assert day_str[0:3] == "Day"
             days = parse_int(nr_of_days_str)
@@ -367,7 +384,8 @@ class ApollonScrapingFunctions(BaseFunctions):
     @staticmethod
     def get_listing_text(soup_html: BeautifulSoup) -> str:
         listing_text_pre = soup_html.select_one(
-            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(2) > td > div > div > div > div > div > pre")
+            "#page-wrapper > div > div.col-lg-12.left > div > div > div > table > tbody > tr:nth-child(2) > td > div "
+            "> div > div > div > div > pre")
         assert listing_text_pre is not None
         return shorten_and_sanitize_for_text_column(listing_text_pre.text)
 
@@ -380,7 +398,8 @@ class ApollonScrapingFunctions(BaseFunctions):
 
     @staticmethod
     def get_email_and_jabber_id(soup_html: BeautifulSoup) -> Tuple[Optional[str], Optional[str]]:
-        jabber_span, email_span = soup_html.select("#page-wrapper > div > div.col-lg-12.left > div.tab-content > div > div > div > div > div.col-sm-5 > span")
+        jabber_span, email_span = soup_html.select(
+            "#page-wrapper > div > div.col-lg-12.left > div.tab-content > div > div > div > div > div.col-sm-5 > span")
         jabber_id = jabber_span.text.split(":")[-1].strip()
         email = email_span.text.split(":")[-1].strip()
 
@@ -388,3 +407,207 @@ class ApollonScrapingFunctions(BaseFunctions):
         jabber_id = jabber_id if jabber_id else None
 
         return email, jabber_id
+
+    @staticmethod
+    def get_seller_and_trust_level(soup_html: BeautifulSoup) -> Tuple[int, int]:
+        level_smalls = soup_html.select(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-5 > "
+            "small:nth-child(1) > small")
+        assert len(level_smalls) == 2
+        seller_level = int(level_smalls[0].text.strip().split()[2])
+        trust_level = int(level_smalls[1].text.strip().split()[2])
+        return seller_level, trust_level
+
+    @staticmethod
+    def get_positive_feedback_percent(soup_html: BeautifulSoup) -> float:
+        username_b = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-5 > "
+            "small:nth-child(1) > a > b")
+        assert username_b is not None
+        return parse_float(username_b.text.strip().split()[
+                               -1][1:-2])
+
+    @staticmethod
+    def get_registration_date(soup_html: BeautifulSoup):
+        left_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-5")
+        assert left_card is not None
+        left_card_text = left_card.text
+        match = re.search(r"Member\ssince\s:\s([A-Z][a-z]{2}\s[0-9]{2},\s[0-9]{4})", left_card_text)
+        date_str = left_card_text[match.regs[1][0]:match.regs[1][1]]
+        registration_date = dateparser.parse(date_str)
+        return registration_date
+
+    @staticmethod
+    def get_last_login(soup_html: BeautifulSoup):
+        left_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-5")
+        assert left_card is not None
+        left_card_text = left_card.text
+        match = re.search(r"Last\sLogin\s:\s([A-Z][a-z]{2}\s[0-9]{2},\s[0-9]{4})", left_card_text)
+        date_str = left_card_text[match.regs[1][0]:match.regs[1][1]]
+        last_login = dateparser.parse(date_str)
+        return last_login
+
+    @staticmethod
+    def get_sales_by_seller(soup_html: BeautifulSoup) -> int:
+
+        right_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-2")
+        assert right_card is not None
+        right_card_text = right_card.text
+        match = re.search(r"Sales\s:\s([^A-z]+)", right_card_text)
+        sales_str = right_card_text[match.regs[1][0]:match.regs[1][1]]
+        nr_of_sales = parse_int(sales_str)
+        return nr_of_sales
+
+    @staticmethod
+    def get_orders(soup_html: BeautifulSoup) -> int:
+
+        right_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-2")
+        assert right_card is not None
+        right_card_text = right_card.text
+        match = re.search(r"Orders\s:\s([^A-z]+)", right_card_text)
+        orders_str = right_card_text[match.regs[1][0]:match.regs[1][1]]
+        nr_of_orders = parse_int(orders_str)
+        return nr_of_orders
+
+    @staticmethod
+    def get_disputes(soup_html: BeautifulSoup) -> Tuple[int, int]:
+
+        right_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-2")
+        assert right_card is not None
+        right_card_text = right_card.text
+        match = re.search(r"Won\/Lost\sDisputes\s:\s([0-9]+)\/([0-9]+)", right_card_text)
+        disputes_won_str = right_card_text[match.regs[1][0]:match.regs[1][1]]
+        disputes_lost_str = right_card_text[match.regs[2][0]:match.regs[2][1]]
+        won, lost = (parse_int(disputes_won_str), parse_int(disputes_lost_str))
+        return won, lost
+
+    @staticmethod
+    def get_fe_allowed(soup_html: BeautifulSoup) -> bool:
+
+        right_card = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div:nth-child(1) > div > div > div.col-sm-2")
+        assert right_card is not None
+        right_card_text = right_card.text
+        match = re.search(r"FE\s:\s([A-z]+)", right_card_text)
+        fe_allowed_str = right_card_text[match.regs[1][0]:match.regs[1][1]]
+        is_allowed = fe_allowed_str == "Allowed"
+        return is_allowed
+
+    @staticmethod
+    def get_most_recent_feedback(soup_html: BeautifulSoup) -> Optional[str]:
+        div_cols = soup_html.select("#page-wrapper > div > div.col-lg-12.left > div > div > div")
+
+        for div_col in div_cols:
+            h4 = div_col.select_one("h4:nth-child(1)")
+            if h4 and h4.text.strip() == "Feedback Ratings :":
+                latest_feedback_span = div_col.select_one("span:nth-child(5)")
+                if latest_feedback_span:
+                    return latest_feedback_span.text
+                else:
+                    return None
+
+        raise AssertionError("Could not find div with feedback.")
+
+    @staticmethod
+    def get_external_market_ratings(soup_html: BeautifulSoup) -> Tuple[
+        Tuple[str, int, float, float, int, int, int, str]]:
+        div_cols = soup_html.select("#page-wrapper > div > div.col-lg-12.left > div > div > div")
+        external_market_verifications: List[Tuple[str, int, float, float, int, int, int, str]] = []
+        div_col: BeautifulSoup
+        for div_col in div_cols:
+            h4 = div_col.select_one("h4:nth-child(1)")
+            div_with_ratings = div_col.select_one("div:nth-child(2)")
+            if h4 and h4.text.strip() == "Imported Feedback :" and div_with_ratings:
+                rating_lines = [s.strip() for s in str(div_with_ratings).split("<p></p>")[1:]]
+                remaining_external_market_ratings = list(APOLLON_MARKET_EXTERNAL_MARKET_STRINGS)
+                for rating_line in rating_lines:
+                    match = re.search(r"images\/([A-Za-z0-9]+)\.[A-Za-z0-9]{0,4}", rating_line)
+                    market_handle = rating_line[match.regs[1][0]:match.regs[1][1]]
+                    for market_id, market_string in remaining_external_market_ratings:
+                        if market_handle == market_string:
+                            rating_line_soup = BeautifulSoup(rating_line)
+                            rating_tuple_str = rating_line_soup.text.strip()[1:].strip()
+                            nr_match = re.search(r"[0-9]", rating_tuple_str)
+                            if nr_match:
+                                external_rating_tuple = get_external_rating_tuple(market_id, rating_tuple_str)
+                                external_market_verifications.append(external_rating_tuple)
+                            remaining_external_market_ratings.remove((market_id, market_string))
+                            break
+
+        return tuple(external_market_verifications)
+
+    @staticmethod
+    def get_feedback_categories_and_urls(soup_html: BeautifulSoup) -> Tuple[Tuple[str], Tuple[str]]:
+        tab_links = soup_html.select("#page-wrapper > div > div.col-lg-12.left > ul > li > a")
+        assert len(tab_links) == 5
+        categories: List[str] = []
+        urls: List[str] = []
+        for link in tab_links[1:-1]:
+            link: BeautifulSoup
+            category = link.text.strip().split()[0]
+            url = f"/{link['href']}"
+            categories.append(category)
+            urls.append(url)
+        return tuple(categories), tuple(urls)
+
+    @staticmethod
+    def get_pgp_url(soup_html: BeautifulSoup) -> str:
+        pgp_link = soup_html.select_one("#page-wrapper > div > div.col-lg-12.left > ul > li:nth-child(5) > a")
+        assert pgp_link is not None
+        return f"/{pgp_link['href']}"
+
+    @staticmethod
+    def get_feedbacks(soup_html: BeautifulSoup) -> Tuple[Tuple[datetime.datetime, str, str, str, str, str, float, str]]:
+        feedbacks: List[Tuple[datetime.datetime, str, str, str, str, str, float, str]] = []
+
+        table_rows = soup_html.select(
+            "#page-wrapper > div > div.col-lg-12.left > div.tab-content > div > div > div > div > div > table > tbody "
+            "> tr ")
+
+        for row in table_rows:
+            _, msg_and_title_td, buyer_td, price_td, date_td = row.select("td")
+            msg = msg_and_title_td.select_one("small").text.strip()
+            title = msg_and_title_td.select_one("sub").text.strip()
+            buyer = buyer_td.select_one("small > a").text.strip()
+            currency = "USD"
+            price = price_td.select_one("small").text.strip()
+            date_small_text = date_td.select_one("small").text.strip()
+            match = re.search(r"[A-Z][a-z]{2}\s[0-9]{2},\s[0-9]{4}\s[0-2][0-9]:[0-5][0-9]", date_small_text)
+            publication_date = dateparser.parse(date_small_text[match.regs[0][0]:match.regs[0][1]])
+            text_hash = hashlib.md5(
+                msg.encode(MD5_HASH_STRING_ENCODING)
+            ).hexdigest()[:FEEDBACK_TEXT_HASH_COLUMN_LENGTH]
+            url = f'/{date_td.select_one("small > a")["href"]}'
+            feedbacks.append((publication_date, title, msg, text_hash, buyer, currency, price, url))
+        return tuple(feedbacks)
+
+    @staticmethod
+    def get_next_feedback_url(soup_html: BeautifulSoup) -> Optional[str]:
+        pagination_lis = soup_html.select(
+            "#page-wrapper > div > div.col-lg-12.left > div.tab-content > div > div > div > div > ul > li")
+        if not pagination_lis:
+            return None
+        for i in range(len(pagination_lis)):
+            if "active" in pagination_lis[i].attrs["class"]:
+                next_pagination_li = pagination_lis[i + 1]
+                if next_pagination_li.text == "»":
+                    return None
+                else:
+                    a_tag = next_pagination_li.select_one("a")
+                    return f'/{a_tag["href"]}'
+
+        raise AssertionError("No active pagination button.")
+
+    @staticmethod
+    def get_pgp_key(soup_html: BeautifulSoup) -> Optional[str]:
+        pre = soup_html.select_one(
+            "#page-wrapper > div > div.col-lg-12.left > div.tab-content > div > div > div > div > div > pre")
+        if pre:
+            return pre.text
+        else:
+            return None

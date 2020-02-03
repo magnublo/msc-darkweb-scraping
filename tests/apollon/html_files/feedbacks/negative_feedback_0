@@ -1,0 +1,383 @@
+<html lang="en"><head>
+
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="">
+				<meta name="author" content="">
+
+				<title>UKNEXTDAY - User Profile - Apollon Market</title>
+
+
+    <link href="dist/css/rs7exe7.min.css" rel="stylesheet">
+    <link href="dist/css/rs7exe7.css" rel="stylesheet">
+
+			</head>
+
+			<body>
+
+				<div id="wrapper">
+			<link rel="icon" href="/favicon.ico">
+	<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+       <a class="navbar-brand" href="/"><span style="background-color:black;font-size:20px;color:#000;"><img src="sidebar.png" alt="context" height="35" width="114" style="border-radius:0px;"></span></a>
+    </div>
+
+	<ul class="nav navbar-nav">
+<li><a href="home.php">Home</a></li>
+
+<li faq=""><a href="faq.php">FAQ</a></li>
+
+<li pgp=""><a href="pgp.txt">PGP</a></li>
+<li><a href="seller.php"><font color="green">Become a seller</font></a></li>
+		<li><a href="imsg.php">Inbox <span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+
+		<li><a href="tickets.php?tab=1">Tickets/Disputes<span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+
+			<li><a href="orders.php?tab=1">Orders <span class="badge" style="background-color:#5bc0de;">0</span></a></li>
+
+	    <li night="" mode=""><a href="home.php?ndm=1">Night Mode</a></li>
+
+<li chglng=""><a href="chglang.php">Change Language</a></li>
+<li verify=""><a href="verify.php">Verify Mirror</a></li>
+
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+        <li><a><b>BTC <label>0.00 / XMR 0.00 / LTC 0.00 / BCH 0.00 / USD 0</label></b></a></li>
+
+	<li class="dropdown">
+	<a href="#"><b>My Profile<span class="caret"></span></b></a>
+	<ul class="dropdown-menu" role="menu">
+	<li><a href="profile.php"><big>usingPython1</big> <img src="uploads/users/b7b7f86a40df6807bad6107224d06d6e.png" class="img-circle" width="48px" height="48px"></a></li>
+        <li><a href="deposit.php">Deposit &amp; Withdrawal BTC</a></li>
+        <li><a href="depositXMR.php">Deposit &amp; Withdrawal XMR</a></li>
+        <li><a href="depositLTC.php">Deposit &amp; Withdrawal LTC</a></li>
+        <li><a href="depositBCH.php">Deposit &amp; Withdrawal BCH</a></li>
+
+	<li><a href="autoshop.php">AutoShop</a></li>
+	<li><a href="affiliate.php">Affiliates</a></li>
+	<li><a href="myfavourites.php">My Favorites</a></li>
+	<li><a href="myblacklist.php">My Blacklist</a></li>
+	  <li class="divider"></li>
+	  <li><a href="support.php">Support</a></li>
+	  <li><a href="logout.php">Logout</a></li>
+	</ul>
+	</li>
+
+	<li><a href="logout.php">Logout</a></li>
+	</ul>
+  </div>
+</nav>
+
+            <div class="navbar-default sidebar" role="navigation">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Profile Actions
+                        </div>
+                            <div class="list-group">
+                                <a href="home.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Home [-]</b></a>
+								<a href="imsg.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Inbox [-]</b></a>
+								<a href="orders.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Orders [-]</b></a>
+
+								<a href="deposit.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BTC [-]</b></a>
+								<a href="depositXMR.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal XMR [-]</b></a>
+								<a href="depositLTC.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal LTC [-]</b></a>
+								<a href="depositBCH.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BCH [-]</b></a>
+								<a href="profile.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Profile [-]</b></a>
+                                <a href="user.php?u_id=usingPython1&amp;tab=2" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Feedback [-]</b></a>
+								<a href="myblacklist.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Blacklist [-]</b></a>
+                                <a href="myfavourites.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Favorites [-]</b></a>
+                                <a href="support.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Support [-]</b></a>
+                            </div>
+                    </div>
+
+
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<i class="fa fa-bell fa-fw"></i>Hidden Sites
+							</div>
+							<div class="panel-body">
+								<div class="list-group">
+									</div></div></div>
+
+					<div class="panel panel-default">
+                        <div class="panel-heading">Exchange Rates</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<div class="list-group-item">
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9330.17</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8443.72</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7157.42</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">13928.44</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12349.60</span>
+									</div>
+								</div>
+							</div>
+
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">77.61</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">70.21</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">59.52</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">115.94</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">100.97</span>
+								</div>
+                            </div>
+                    </div>
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">382.87</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">346.15</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">293.53</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">571.18</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">497.42</span>
+								</div>
+                            </div>
+                    </div>
+
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">69.79</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">63.17</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">53.50</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">103.55</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">90.85</span>
+								</div>
+                            </div>
+                    </div>
+
+
+					</div>
+			</div>
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+							<div class="page-header">
+							<h3>User Profile : </h3>
+							</div>
+
+						<div class="col-lg-12 left">
+
+							<div class="panel panel-default">
+								<div class="panel-body">
+
+									<div class="col-sm-12">
+
+										<div class="col-sm-1" style="width:100%">
+											 <img src="uploads/users/e5c42e00aa2d3338ff2c1e2d009ae66a.jpg" class="img-responsive img-rounded" height="80px" width="80px">
+										</div>
+
+										<div class="col-sm-5">
+											<small><a href=""><b>UKNEXTDAY (98%)</b></a> <small><span class="badge" style="background-color:#d9534f;font-size:10px;">Seller Level 4 (767)</span></small> <small><span class="badge" style="background-color:#6106e8;font-size:10px;">Trust Level 7 </span></small></small><br><small><span><b>Verified Seller : </b><img src="uploads/icons/yes_verified.png"></span></small> / <small><span><b>Trusted Seller : </b><img src="uploads/icons/yes_trusted.png"></span></small><br>
+											<small><span><b>Positive Feedback : </b>(98%)</span></small><br>
+											<small><span><b>Member since : </b>Jul 13, 2019</span></small><br>
+											<small><span><b>Last Login : </b>Feb 03, 2020</span></small><br>
+										</div>
+
+										<div class="col-sm-2"><small><span><b>Sales : </b>767</span></small><br>
+											<small><span><b>Orders : </b>0</span></small><br>
+											<small><span><b>Won/Lost Disputes : </b><span style="color:green;">0</span>/<span style="color:red;">0</span></span></small><br>
+											<small><span><b>User Type : </b>Seller</span></small><br>
+
+												<small><span><b>FE : </b>Allowed</span></small><br>
+
+										</div>
+
+										<div class="col-sm-4" align="left">
+											<div class="input-group">
+												<a href="home.php?cid=0&amp;csid=0&amp;ss_usr=UKNEXTDAY"><button class="btn btn-info btn-xs">Store of <b>UKNEXTDAY</b></button></a>
+												<a href="smsg.php?ms_receiver=UKNEXTDAY"><button class="btn btn-success btn-xs">Send a Message</button></a><br><br>
+												<a style="text-decoration:none;" href="user.php?u_id=UKNEXTDAY&amp;fvusr=1"> <button class="btn btn-warning btn-xs">Add Seller To Favourites</button></a>
+											</div>
+
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left">
+									<h4><b>Imported Feedback : </b></h4>
+										<div>
+<p></p>
+<img src="images/empire.jpg" height="20" width="20"> <b><big>:</big></b> 1233 <b>Sales</b> | <a style="color:green">976</a><b>/</b><a style="color:grey">15</a><b>/</b><a style="color:red">4</a>
+
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left">
+									<h4><b>Feedback Ratings : </b></h4>
+										<div>
+										<button type="button" class="btn btn-success btn-xs" style="background-color:#5cb85c;color:#fff;"><b>Positive : 433</b></button>
+										<button type="button" class="btn btn-default btn-xs" style="background-color:#777;color:#fff;"><b>Neutral : 16</b></button>
+										<button type="button" class="btn btn-danger btn-xs" style="background-color:#d9534f;color:#fff;"><b>Negative : 11</b></button>
+										</div>
+									<h4><b>Latest Feedback : </b></h4><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>10.10 for price and quality will be back for more</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#777;font-size:20px;">☐</span></span> <span>Im angry beyond belief, I order shit for NDD if a vendor claims NDD. Today is fucking saturday and still nothing came. Today is my day off and the 4th day of me waiting on this shit to come, I had a lot planned based on this shit arriving 2 DAYS AGO but i</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>5*</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>5*</span><br>
+									</div>
+								</div>
+							</div>
+
+								<ul class="nav nav-tabs">
+									<li><a href="user.php?u_id=UKNEXTDAY&amp;tab=1" data-toggle="tab">Profile</a></li>
+									<li><a href="user.php?u_id=UKNEXTDAY&amp;tab=2" data-toggle="tab">Positive Feedback</a></li>
+									<li><a href="user.php?u_id=UKNEXTDAY&amp;tab=3" data-toggle="tab">Neutral Feedback</a></li>
+									<li class="active"><a href="user.php?u_id=UKNEXTDAY&amp;tab=4" data-toggle="tab">Negative Feedback</a></li>
+
+									<li><a href="user.php?u_id=UKNEXTDAY&amp;tab=6" data-toggle="tab">Public PGP Key</a></li>
+								</ul>
+											<div class="tab-content">
+												<div class="tab-pane fade in active">
+												<h4>Negative Feedback : </h4>
+													<div class="col-lg-13">
+															<div class="panel panel-default">
+																<div class="panel-body">
+																<sub><b>Total Negative Feedback : 11</b></sub>
+																	<div class="table-responsive">
+																		<table class="table">
+																			<thead>
+																				<tr>
+																					<th width="0px" align="left"><small>#</small></th>
+																					<th width="950px" align="left"><small>Feedback</small></th>
+																					<th width="200px" align="left"><small>Buyer</small></th>
+																					<th width="200px" align="left"><small>Price</small></th>
+																					<th width="200px" align="left"><small>Date Time</small></th>
+																				</tr>
+																			</thead>
+																			<tbody>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small> People do not buy products this vendor. work without responsibility. never accept ''Finalize Early'' I lost an ounce of cocaine. And this vendor is irresponsible. $ 1,400. </small><br><sub style="color:#7f7f7f;">Intro Top Colombian 93% Cocaine 28g </sub></td>
+																				<td><small><a href="#">s...t</a></small></td>
+																				<td><small>1,108.00</small></td>
+																				<td><small>Jan 29, 2020 02:01<br><a href="listing.php?ls_id=23322">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>I still haven't receved my order a full month after it was placed and finalised, and now the vedor has stopped responding to my messages. I've been very patient up until now, but enough is enough. I've ordered with this vendor before on other markets with</small><br><sub style="color:#7f7f7f;">NEW FIRE BATCH Top Columbian Cocaine 3.5G </sub></td>
+																				<td><small><a href="#">t...t</a></small></td>
+																				<td><small>168.00</small></td>
+																				<td><small>Jan 20, 2020 02:03<br><a href="listing.php?ls_id=23682">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>AVOID AVOID keep saying they will sort out missing order but never do anything, or refund. Will change if they ever decide to do something about my missing hundreds.</small><br><sub style="color:#7f7f7f;">Intro Top Colombian 93% Cocaine 4G </sub></td>
+																				<td><small><a href="#">t...t</a></small></td>
+																				<td><small>208.00</small></td>
+																				<td><small>Jan 18, 2020 06:01<br><a href="listing.php?ls_id=23278">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>NEVER RECEIVED ANYTHING. Has been 1 month now! I understood the whole xmas delays thing and spoke with the vendor, he promised to deliver it and has still not. If you are reading this UKNEXTDAY can we sort it out? Messages are just being ignored now!</small><br><sub style="color:#7f7f7f;">NEW FIRE BATCH Top Columbian Cocaine 3.5G </sub></td>
+																				<td><small><a href="#">d...n</a></small></td>
+																				<td><small>168.00</small></td>
+																				<td><small>Jan 17, 2020 08:09<br><a href="listing.php?ls_id=23682">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>nothingz arrived and no response from seller. will change review when i get response </small><br><sub style="color:#7f7f7f;">NEW FIRE BATCH Top Columbian Cocaine 0.25g</sub></td>
+																				<td><small><a href="#">h...3</a></small></td>
+																				<td><small>17.00</small></td>
+																				<td><small>Jan 08, 2020 09:40<br><a href="listing.php?ls_id=23678">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>THIS SELLER SELL NOT COKE , WE HAVE TEST WHAT HE HAS SEND NOT EVEN 1% OF COKE , I THINK HE SELL PARACETAMOL , BE AWERE .</small><br><sub style="color:#7f7f7f;">Intro Top Colombian 93% Cocaine 0.75G</sub></td>
+																				<td><small><a href="#">t...0</a></small></td>
+																				<td><small>42.00</small></td>
+																				<td><small>Jan 06, 2020 09:21<br><a href="listing.php?ls_id=23261">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>took two weeks to come no response would not recommend meant to be columbian but was same as the social stuff avoid</small><br><sub style="color:#7f7f7f;">NEW FIRE BATCH Top Columbian Cocaine 3.5G </sub></td>
+																				<td><small><a href="#">n...r</a></small></td>
+																				<td><small>162.00</small></td>
+																				<td><small>Jan 01, 2020 10:58<br><a href="listing.php?ls_id=23682">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>Well.......After nearly 4 weeks &amp; many messages, I finally got my order.Unfortunately, my order for 3g weighed in at 2.46g. Ive told the vendor im not going to chase him for the rest as ive lost the will.I'm pleased to see he's put things right for a lot </small><br><sub style="color:#7f7f7f;">Intro Top Colombian 93% Cocaine 2G </sub></td>
+																				<td><small><a href="#">I...6</a></small></td>
+																				<td><small>118.00</small></td>
+																				<td><small>Dec 28, 2019 02:14<br><a href="listing.php?ls_id=23268">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>took10 days to arrive and was 35% at best avoid this vendormate</small><br><sub style="color:#7f7f7f;">INTRO 3.5G BOLIVIAN 72�% £150  new stock </sub></td>
+																				<td><small><a href="#">p...3</a></small></td>
+																				<td><small>158.00</small></td>
+																				<td><small>Dec 24, 2019 06:13<br><a href="listing.php?ls_id=49285">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>claims 72%+ lucky to be 30! absolutely awful. messaged vendor, obvs no reply. Will change feedback if they try to resolve the issue</small><br><sub style="color:#7f7f7f;">INTRO 3.5G BOLIVIAN 72�% £150  new stock </sub></td>
+																				<td><small><a href="#">M...k</a></small></td>
+																				<td><small>152.00</small></td>
+																				<td><small>Dec 23, 2019 07:18<br><a href="listing.php?ls_id=49285">View Item</a></small></td>
+																			</tr>
+
+																			<tr>
+																				<td><span style="color:#d70b05;font-size:20px;">☒</span></td>
+																				<td><small>Definetely not 93%, weak product and overpriced</small><br><sub style="color:#7f7f7f;">Intro Top Colombian 93% Cocaine 0.75G</sub></td>
+																				<td><small><a href="#">d...d</a></small></td>
+																				<td><small>42.00</small></td>
+																				<td><small>Dec 18, 2019 11:04<br><a href="listing.php?ls_id=23261">View Item</a></small></td>
+																			</tr>
+
+																			</tbody>
+																		</table>
+																	</div>
+																	<ul class="pagination pagination-sm"><li class="page-item"><a class="page-link" href="user.php?u_id=UKNEXTDAY&amp;tab=4&amp;pg=1"><span>«</span></a></li><li class="page-item active"><a class="page-link" href="user.php?u_id=UKNEXTDAY&amp;tab=4&amp;pg=1">1</a></li><li class="page-item"><a class="page-link" href="user.php?u_id=UKNEXTDAY&amp;tab=4&amp;pg=1"><span>»</span></a></li></ul>
+																</div>
+															</div>
+
+													</div>
+												</div>
+											</div>
+
+						</div>
+				</div>
+			</div>
+				<div class="footer">
+					<div class="footer-inner">
+						<div class="footer-content">
+							<span class="bigger-90">Apollon Market © 2019</span>
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+
+
+
+	</body></html>

@@ -71,8 +71,9 @@ class TestGetCurrentlySelectedParentSubCategory(ApollonBaseTest):
 class TestGetParentSubCategoryUrlsAndNrsOfListings(ApollonBaseTest):
     def test_get_parent_sub_category_urls_and_nrs_of_listings(self):
         soup_html = self._get_page_as_soup_html("sub_category_indexes/sub_category_index_1")
-        parent_sub_category_urls_and_nrs_of_listings = scrapingFunctions.get_parent_sub_category_urls_and_nrs_of_listings(
-            soup_html)
+        parent_sub_category_urls_and_nrs_of_listings = \
+            scrapingFunctions.get_parent_sub_category_urls_and_nrs_of_listings(
+                soup_html)
         self.assertEquals((None, '/home.php?cid=2&csid=95', 1141), parent_sub_category_urls_and_nrs_of_listings[8])
 
 
@@ -135,7 +136,8 @@ class TestGetListingInfos(ApollonBaseTest):
                                    'MDMA - Champagne - 88%', '25x 200µg LSD Blotters',
                                    'Iranian Heroin Pure [87%]  ★ 1GR ★ [❆Intro Sale❆]',
                                    '10GR Moroccan Hash HQ | Ketama | #1 | A+++ | Free shipping',
-                                   '100 x Yellow Batman 2C-B (20mg) - 10th week of January; is it pay-day yet?!?! SPECIAL!!!',
+                                   '100 x Yellow Batman 2C-B (20mg) - 10th week of January; is it pay-day yet?!?! '
+                                   'SPECIAL!!!',
                                    'Zopiclone 7.5mg x 10 Sleeping Tablets Pharma',
                                    '5G Pure Needlepoint S-isomer Ketamine',
                                    'MK-677 [TOP QUALITY] - 5 GRAMS', '1 OZ TIER 1 SHATTER', '3.5g Canadian Meth',
@@ -180,6 +182,59 @@ class TestGetListingInfos(ApollonBaseTest):
                                    (('Drugs', None, None, 0), ('Stimulants', None, 'Drugs', 1)),
                                    (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
                                    (('Drugs', None, None, 0), ('Stimulants', None, 'Drugs', 1)))), listing_info)
+
+    def test_get_listing_infos_one(self):
+        soup_html = self._get_page_as_soup_html("search_results/search_result_1")
+        listing_info = scrapingFunctions.get_listing_infos(soup_html)
+        self.assertTupleEqual((('/listing.php?ls_id=42057', '/listing.php?ls_id=45130', '/listing.php?ls_id=66123',
+                                '/listing.php?ls_id=47179', '/listing.php?ls_id=87628', '/listing.php?ls_id=30284',
+                                '/listing.php?ls_id=68429', '/listing.php?ls_id=70221', '/listing.php?ls_id=28237',
+                                '/listing.php?ls_id=47181', '/listing.php?ls_id=47437', '/listing.php?ls_id=79694',
+                                '/listing.php?ls_id=80974', '/listing.php?ls_id=86094', '/listing.php?ls_id=87118'), (
+                               'Silver Haze - 20g - Weed', '10g ✿ CANNALOPE ✿ (OUTDOOR) "With Seeds"',
+                               '[£27 INTRO OFFER] 3.5G GREEN CRACK CALI HIGH GRADE AAA+ UK NDD ESCROW',
+                               '7g Snoop OG Medical Grade Indica', '1G WEDDING CAKE / TOP QUALITY',
+                               '!SALE! 40g AUTO DAIQUIRI LIME Weed / Gras | Outdoor',
+                               'LEMON HAZE >TOP<GERMAN>1G<QUALITY [FAST SHIPPING]',
+                               'PROMO **** 15 Gram Super WEED *** Top Holland WEED',
+                               '3.5g ** CHANNEL + ** - AAA+++ TOP SHELF', '4g Kosher Kush Medical Grade Indica',
+                               '5g//TROPIMANGO', '*****$125 oz Indoor/Topshelf Flower "Pre-98 Bubba Kush"****',
+                               '25gr Purple Haze B-grade (Outdoor & Organic & Fermented/Cured)',
+                               '7G | GRINDED BUD - BATCH NO.2 | FREE POST', 'Green Gelato Flower Greenhouse 8oz'), (
+                               False, False, False, False, False, False, False, False, False, False, False, False, False, False,
+                               False), ('DrSommer', 'MARLEYS-SHOP', 'mad_max', 'green_usa', 'kwayuk', 'Hobby_Gaertner',
+                                       'German-Quality', 'AndyMacht', 'GreenConnection', 'green_usa', 'thegreenrobots',
+                                       'TrueVape', 'GoldenCamel', 'BookFace', 'Seedless'), (
+                               '/user.php?u_id=DrSommer', '/user.php?u_id=MARLEYS-SHOP', '/user.php?u_id=mad_max',
+                               '/user.php?u_id=green_usa', '/user.php?u_id=kwayuk', '/user.php?u_id=Hobby_Gaertner',
+                               '/user.php?u_id=German-Quality', '/user.php?u_id=AndyMacht',
+                               '/user.php?u_id=GreenConnection', '/user.php?u_id=green_usa',
+                               '/user.php?u_id=thegreenrobots', '/user.php?u_id=TrueVape', '/user.php?u_id=GoldenCamel',
+                               '/user.php?u_id=BookFace', '/user.php?u_id=Seedless'),
+                               (372, 173, 186, 230, 40, 343, 128, 131, 716, 230, 160, 107, 148, 30, 85), (
+                               datetime.datetime(2019, 11, 12, 0, 0), datetime.datetime(2019, 11, 21, 0, 0),
+                               datetime.datetime(2019, 12, 19, 0, 0), datetime.datetime(2019, 11, 24, 0, 0),
+                               datetime.datetime(2020, 1, 19, 0, 0), datetime.datetime(2019, 10, 4, 0, 0),
+                               datetime.datetime(2019, 12, 22, 0, 0), datetime.datetime(2019, 12, 25, 0, 0),
+                               datetime.datetime(2019, 6, 22, 0, 0), datetime.datetime(2019, 11, 24, 0, 0),
+                               datetime.datetime(2019, 11, 24, 0, 0), datetime.datetime(2020, 1, 7, 0, 0),
+                               datetime.datetime(2020, 1, 9, 0, 0), datetime.datetime(2019, 11, 26, 0, 0),
+                               datetime.datetime(2019, 11, 22, 0, 0)), (
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)),
+                               (('Drugs', None, None, 0), ('Cannabis & Hashish', None, 'Drugs', 1)))), listing_info)
 
 
 class TestGetSubSubCategoriesUrlsAndNrsOfListings(ApollonBaseTest):
@@ -312,6 +367,12 @@ class TestGetShippingMethods(ApollonBaseTest):
             (('UK Free Shipping', 3, 'USD', 0.0, None, False), ('EU Shipping', 10, 'USD', 5.27, None, False)),
             shipping_methods)
 
+    def test_get_shipping_methods_three(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_3")
+        shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
+        self.assertTupleEqual(
+            (('UK Free Shipping', 3, 'USD', 0.0, None, False), ('EU Shipping', 10, 'USD', 5.27, None, False)),
+            shipping_methods)
 
 class TestGetListingText(ApollonBaseTest):
 
@@ -337,3 +398,291 @@ class TestGetEmailAndJabberId(ApollonBaseTest):
         soup_html = self._get_page_as_soup_html("sellers/seller_2")
         email, jabber_id = scrapingFunctions.get_email_and_jabber_id(soup_html)
         self.assertEqual((None, 'diego-hundreds@xmpp.jp'), (email, jabber_id))
+
+
+class TestGetSellerAndTrustLevel(ApollonBaseTest):
+
+    def test_get_seller_and_trust_level_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        seller_level, trust_level = scrapingFunctions.get_seller_and_trust_level(soup_html)
+        self.assertEqual(1, seller_level)
+        self.assertEqual(3, trust_level)
+
+    def test_get_seller_and_trust_level_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        seller_level, trust_level = scrapingFunctions.get_seller_and_trust_level(soup_html)
+        self.assertEqual(3, seller_level)
+        self.assertEqual(5, trust_level)
+
+    def test_get_seller_and_trust_level_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        seller_level, trust_level = scrapingFunctions.get_seller_and_trust_level(soup_html)
+        self.assertEqual(0, seller_level)
+        self.assertEqual(0, trust_level)
+
+
+class TestGetPositiveFeedbackPercent(ApollonBaseTest):
+
+    def test_get_positive_feedback_percent_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        positive_feedback_percent = scrapingFunctions.get_positive_feedback_percent(soup_html)
+        self.assertEqual(100, positive_feedback_percent)
+
+    def test_get_positive_feedback_percent_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        positive_feedback_percent = scrapingFunctions.get_positive_feedback_percent(soup_html)
+        self.assertEqual(100, positive_feedback_percent)
+
+    def test_get_positive_feedback_percent_two(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_2")
+        positive_feedback_percent = scrapingFunctions.get_positive_feedback_percent(soup_html)
+        self.assertEqual(99, positive_feedback_percent)
+
+    def test_get_positive_feedback_percent_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        positive_feedback_percent = scrapingFunctions.get_positive_feedback_percent(soup_html)
+        self.assertEqual(100, positive_feedback_percent)
+
+
+class TestGetRegistrationDate(ApollonBaseTest):
+
+    def test_get_registration_date_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        registration_date = scrapingFunctions.get_registration_date(soup_html)
+        self.assertEqual("2019-12-05 00:00:00", str(registration_date))
+
+    def test_get_registration_date_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        registration_date = scrapingFunctions.get_registration_date(soup_html)
+        self.assertEqual("2019-09-30 00:00:00", str(registration_date))
+
+
+class TestGetLastLogin(ApollonBaseTest):
+
+    def test_get_last_login_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        last_login = scrapingFunctions.get_last_login(soup_html)
+        self.assertEqual("2020-02-03 00:00:00", str(last_login))
+
+    def test_get_last_login_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        last_login = scrapingFunctions.get_last_login(soup_html)
+        self.assertEqual("2020-02-03 00:00:00", str(last_login))
+
+
+class TestGetSalesBySeller(ApollonBaseTest):
+
+    def test_get_sales_by_seller_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        sales = scrapingFunctions.get_sales_by_seller(soup_html)
+        self.assertEqual(93, sales)
+
+    def test_get_sales_by_seller_two(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_2")
+        sales = scrapingFunctions.get_sales_by_seller(soup_html)
+        self.assertEqual(216, sales)
+
+
+class TestGetOrders(ApollonBaseTest):
+
+    def test_get_orders_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        orders = scrapingFunctions.get_orders(soup_html)
+        self.assertEqual(0, orders)
+
+    def test_get_orders_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        orders = scrapingFunctions.get_orders(soup_html)
+        self.assertEqual(0, orders)
+
+    def test_get_orders_two(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_2")
+        orders = scrapingFunctions.get_orders(soup_html)
+        self.assertEqual(0, orders)
+
+
+class TestGetDisputes(ApollonBaseTest):
+    def test_get_disputes_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        disputes_won, disputes_lost = scrapingFunctions.get_disputes(soup_html)
+        self.assertTupleEqual((0, 0), (disputes_won, disputes_lost))
+
+    def test_get_disputes_four(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_4")
+        disputes_won, disputes_lost = scrapingFunctions.get_disputes(soup_html)
+        self.assertTupleEqual((2, 0), (disputes_won, disputes_lost))
+
+
+class TestGetFeAllowed(ApollonBaseTest):
+
+    def test_get_fe_allowed_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        fe_is_allowed = scrapingFunctions.get_fe_allowed(soup_html)
+        self.assertEqual(fe_is_allowed, False)
+
+    def test_get_fe_allowed_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        fe_is_allowed = scrapingFunctions.get_fe_allowed(soup_html)
+        self.assertEqual(fe_is_allowed, True)
+
+
+class TestGetMostRecentFeedback(ApollonBaseTest):
+    def test_get_most_recent_feedback_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        latest_feedback_text = scrapingFunctions.get_most_recent_feedback(soup_html)
+        self.assertEqual(
+            'It\'s a really fast shipping and really good stuff! I will come back defenatly and thank for really '
+            'secure shippment!!!',
+            latest_feedback_text)
+
+    def test_get_most_recent_feedback_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        latest_feedback_text = scrapingFunctions.get_most_recent_feedback(soup_html)
+        self.assertEqual(None, latest_feedback_text)
+
+
+class TestGetExternalMarketRatings(ApollonBaseTest):
+
+    def test_get_external_market_ratings_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((), external_market_ratings)
+
+    def test_get_external_market_ratings_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1")
+        external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((('DREAM_MARKET', 1400, 4.96, None, None, None, None, None),
+                               ('EMPIRE_MARKET', 410, None, None, 350, 4, 0, None),
+                               ('BERLUSCONI_MARKET', 1685, None, None, 1094, 10, 7, None)), external_market_ratings)
+
+    def test_get_external_market_ratings_two(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_2")
+        external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertEqual((('DREAM_MARKET', 1450, 4.95, None, None, None, None, None),
+                          ('EMPIRE_MARKET', 1040, None, None, 706, 17, 10, None),
+                          ('NIGHTMARE_MARKET', 547, None, None, 334, 0, 3, None),
+                          ('CRYPTONIA_MARKET', 47, 91.0, None, None, None, None, None)), external_market_ratings)
+
+    def test_get_external_market_ratings_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((), external_market_ratings)
+
+    def test_get_external_market_ratings_four(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_4")
+        external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((('DREAM_MARKET', 8400, 4.88, None, None, None, None, None),
+                               ('EMPIRE_MARKET', 7694, None, None, 5778, 200, 113, None)), external_market_ratings)
+
+    def test_get_external_market_ratings_five(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_5")
+        external_market_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((), external_market_ratings)
+
+
+class TestGetFeedbackCategoriesAndUrls(ApollonBaseTest):
+    def test_get_feedback_categories_and_urls_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        categories, urls = scrapingFunctions.get_feedback_categories_and_urls(soup_html)
+        self.assertTupleEqual(('Positive', 'Neutral', 'Negative'), categories)
+        self.assertTupleEqual(('/user.php?u_id=dutch-skills&tab=2', '/user.php?u_id=dutch-skills&tab=3',
+                               '/user.php?u_id=dutch-skills&tab=4'), urls)
+
+    def test_get_feedback_categories_and_urls_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        categories, urls = scrapingFunctions.get_feedback_categories_and_urls(soup_html)
+        self.assertTupleEqual(('Positive', 'Neutral', 'Negative'), categories)
+        self.assertTupleEqual(('/user.php?u_id=usingPython1&tab=2', '/user.php?u_id=usingPython1&tab=3',
+                               '/user.php?u_id=usingPython1&tab=4'), urls)
+
+
+class TestGetPgpUrl(ApollonBaseTest):
+    def test_get_pgp_url_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        pgp_url = scrapingFunctions.get_pgp_url(soup_html)
+        self.assertEqual('/user.php?u_id=dutch-skills&tab=6', pgp_url)
+
+    def test_get_pgp_url_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3")
+        pgp_url = scrapingFunctions.get_pgp_url(soup_html)
+        self.assertEqual('/user.php?u_id=usingPython1&tab=6', pgp_url)
+
+
+class TestApollonGetFeedbacks(ApollonBaseTest):
+    def test_get_feedbacks_zero(self):
+        soup_html = self._get_page_as_soup_html("feedbacks/positive_feedback_0")
+        feedbacks = scrapingFunctions.get_feedbacks(soup_html)
+        self.assertTupleEqual(((datetime.datetime(2020, 2, 3, 2, 59), 'Diffidence',
+                                '10.10 for price and quality will be back for more', 'd35dba05', 'D...e', 'USD',
+                                '850.00', '/listing.php?ls_id=90422'), (datetime.datetime(2020, 2, 2, 3, 49),
+                                                                        'INTRO 7G BOLIVIAN 72�% £250 Check our new '
+                                                                        'brick stock 10/10',
+                                                                        'No Comment', '3099c443', 'y...e', 'USD',
+                                                                        '252.00', '/listing.php?ls_id=23290'), (
+                                   datetime.datetime(2020, 1, 31, 5, 19),
+                                   'Powerful sociable Cocaine intro sale! 60% - 1G £30', '5*', '3c26f6ea', 'a...d',
+                                   'USD',
+                                   '33.00', '/listing.php?ls_id=29703'), (datetime.datetime(2020, 1, 31, 5, 19),
+                                                                          'Powerful sociable Cocaine intro sale! 60% '
+                                                                          '- 1G '
+                                                                          '£30',
+                                                                          '5*', '3c26f6ea', 'a...d', 'USD', '33.00',
+                                                                          '/listing.php?ls_id=29703'), (
+                                   datetime.datetime(2020, 1, 31, 3, 4), 'Intro Top Colombian 93% Cocaine 10g',
+                                   "Had similar problems to others over xmas with this guy, but he's sound and will "
+                                   "get "
+                                   "it sorted.  Great CS, ok stealth, not tried the product yet, but it's fat, "
+                                   "well overweight to make up for the wait.  Will def use again, just hope I can find "
+                                   "him if this s",
+                                   '86229c36', 'm...s', 'USD', '502.00', '/listing.php?ls_id=23295'), (
+                                   datetime.datetime(2020, 1, 31, 12, 7),
+                                   'Powerful sociable Cocaine intro sale! 60% - 3.5G £100', '3.7g, perfect as always',
+                                   '03a83169', 'b...8', 'USD', '103.00', '/listing.php?ls_id=29704'), (
+                                   datetime.datetime(2020, 1, 30, 11, 54),
+                                   'Powerful sociable Cocaine intro sale! 60% - 1G £30', 'No Comment', '3099c443',
+                                   's...t',
+                                   'USD', '33.00', '/listing.php?ls_id=29703'), (
+                                   datetime.datetime(2020, 1, 30, 10, 24), 'NEW FIRE BATCH Top Columbian Cocaine 1G',
+                                   'OPretty good, fast delivery', 'bd9158e5', 'w...t', 'USD', '62.00',
+                                   '/listing.php?ls_id=23681'), (datetime.datetime(2020, 1, 30, 5, 36),
+                                                                 'INTRO 7G BOLIVIAN 72�% £250 Check our new brick '
+                                                                 'stock '
+                                                                 '10/10',
+                                                                 'No Comment', '3099c443', 'y...e', 'USD', '265.00',
+                                                                 '/listing.php?ls_id=23290'), (
+                                   datetime.datetime(2020, 1, 29, 3, 28),
+                                   'Powerful sociable Cocaine intro sale! 60% - 3.5G £100',
+                                   'cheers buddy, nice and quick.',
+                                   '61a10a8b', 's...y', 'USD', '110.00', '/listing.php?ls_id=29704'), (
+                                   datetime.datetime(2020, 1, 29, 2, 12), 'Intro Top Colombian 93% Cocaine 0.5g',
+                                   'top team', 'afc10835', 'B...1', 'USD', '32.00', '/listing.php?ls_id=23260'), (
+                                   datetime.datetime(2020, 1, 29, 3, 17), 'Intro Top Colombian 93% Cocaine 0.25g',
+                                   'Great. thanks!', 'e71066e7', 'c...r', 'USD', '17.00', '/listing.php?ls_id=23258'), (
+                                   datetime.datetime(2020, 1, 29, 2, 10), 'Intro Top Colombian 93% Cocaine 14g',
+                                   'BRILIANT VENDOR BEST ON HERE OVERWEIGHT PRIE GREAT PRODUCT AMAZING', 'b2716b1a',
+                                   'm...5', 'USD', '608.00', '/listing.php?ls_id=23304'), (
+                                   datetime.datetime(2020, 1, 28, 10, 8), 'Intro Top Colombian 93% Cocaine 7g',
+                                   'Came 1g+ overweight to make up for xmas mixup - lovely gear NDD - UKNK pluggy.',
+                                   '39df41f5', 'J...1', 'USD', '302.00', '/listing.php?ls_id=23288'), (
+                                   datetime.datetime(2020, 1, 28, 9, 52),
+                                   'Powerful sociable Cocaine intro sale! 60% - 1G £30', '4DD to UK', 'e3e2da4e',
+                                   'p...5',
+                                   'USD', '33.00', '/listing.php?ls_id=29703')), feedbacks)
+
+
+class TestGetNextFeedbackUrl(ApollonBaseTest):
+
+    def test_get_next_feedback_url_zero(self):
+        soup_html = self._get_page_as_soup_html("feedbacks/positive_feedback_0")
+        next_feedback_url = scrapingFunctions.get_next_feedback_url(soup_html)
+        self.assertEqual('/user.php?u_id=UKNEXTDAY&tab=2&pg=2', next_feedback_url)
+
+    def test_get_next_feedback_url_three(self):
+        soup_html = self._get_page_as_soup_html("feedbacks/positive_feedback_3")
+        next_feedback_url = scrapingFunctions.get_next_feedback_url(soup_html)
+        self.assertEqual(None, next_feedback_url)
+
+    def test_get_next_feedback_url_zero_3(self):
+        soup_html = self._get_page_as_soup_html("feedbacks/negative_feedback_0")
+        next_feedback_url = scrapingFunctions.get_next_feedback_url(soup_html)
+        self.assertEqual(None, next_feedback_url)

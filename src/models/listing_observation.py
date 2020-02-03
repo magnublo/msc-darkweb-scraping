@@ -62,6 +62,5 @@ class ListingObservation(Base):
     bch = Column(Boolean)
     bch_rate = Column(Float)
     fifty_percent_finalize_early = Column(Boolean)
-    email = Column(String(255))  # confirmed maximum length
 
 

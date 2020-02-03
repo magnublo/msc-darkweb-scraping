@@ -1,0 +1,356 @@
+<html lang="en"><head>
+
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="">
+				<meta name="author" content="">
+
+				<title>SharkHash - User Profile - Apollon Market</title>
+
+
+    <link href="dist/css/rs7exe7.min.css" rel="stylesheet">
+    <link href="dist/css/rs7exe7.css" rel="stylesheet">
+
+			</head>
+
+			<body>
+
+				<div id="wrapper">
+			<link rel="icon" href="/favicon.ico">
+	<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+       <a class="navbar-brand" href="/"><span style="background-color:black;font-size:20px;color:#000;"><img src="sidebar.png" alt="context" height="35" width="114" style="border-radius:0px;"></span></a>
+    </div>
+
+	<ul class="nav navbar-nav">
+<li><a href="home.php">Home</a></li>
+
+<li faq=""><a href="faq.php">FAQ</a></li>
+
+<li pgp=""><a href="pgp.txt">PGP</a></li>
+<li><a href="seller.php"><font color="green">Become a seller</font></a></li>
+		<li><a href="imsg.php">Inbox <span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+
+		<li><a href="tickets.php?tab=1">Tickets/Disputes<span class="badge" style="background-color:#f0ad4e;">0</span></a></li>
+
+			<li><a href="orders.php?tab=1">Orders <span class="badge" style="background-color:#5bc0de;">0</span></a></li>
+
+	    <li night="" mode=""><a href="home.php?ndm=1">Night Mode</a></li>
+
+<li chglng=""><a href="chglang.php">Change Language</a></li>
+<li verify=""><a href="verify.php">Verify Mirror</a></li>
+
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+        <li><a><b>BTC <label>0.00 / XMR 0.00 / LTC 0.00 / BCH 0.00 / USD 0</label></b></a></li>
+
+	<li class="dropdown">
+	<a href="#"><b>My Profile<span class="caret"></span></b></a>
+	<ul class="dropdown-menu" role="menu">
+	<li><a href="profile.php"><big>usingPython1</big> <img src="uploads/users/b7b7f86a40df6807bad6107224d06d6e.png" class="img-circle" width="48px" height="48px"></a></li>
+        <li><a href="deposit.php">Deposit &amp; Withdrawal BTC</a></li>
+        <li><a href="depositXMR.php">Deposit &amp; Withdrawal XMR</a></li>
+        <li><a href="depositLTC.php">Deposit &amp; Withdrawal LTC</a></li>
+        <li><a href="depositBCH.php">Deposit &amp; Withdrawal BCH</a></li>
+
+	<li><a href="autoshop.php">AutoShop</a></li>
+	<li><a href="affiliate.php">Affiliates</a></li>
+	<li><a href="myfavourites.php">My Favorites</a></li>
+	<li><a href="myblacklist.php">My Blacklist</a></li>
+	  <li class="divider"></li>
+	  <li><a href="support.php">Support</a></li>
+	  <li><a href="logout.php">Logout</a></li>
+	</ul>
+	</li>
+
+	<li><a href="logout.php">Logout</a></li>
+	</ul>
+  </div>
+</nav>
+
+            <div class="navbar-default sidebar" role="navigation">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Profile Actions
+                        </div>
+                            <div class="list-group">
+                                <a href="home.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Home [-]</b></a>
+								<a href="imsg.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Inbox [-]</b></a>
+								<a href="orders.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Orders [-]</b></a>
+
+								<a href="deposit.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BTC [-]</b></a>
+								<a href="depositXMR.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal XMR [-]</b></a>
+								<a href="depositLTC.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal LTC [-]</b></a>
+								<a href="depositBCH.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Deposit &amp; Withdrawal BCH [-]</b></a>
+								<a href="profile.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Profile [-]</b></a>
+                                <a href="user.php?u_id=usingPython1&amp;tab=2" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Feedback [-]</b></a>
+								<a href="myblacklist.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Blacklist [-]</b></a>
+                                <a href="myfavourites.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>My Favorites [-]</b></a>
+                                <a href="support.php" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Support [-]</b></a>
+                            </div>
+                    </div>
+
+
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<i class="fa fa-bell fa-fw"></i>Hidden Sites
+							</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<a href="http://t7tb43a7gvl6wb7j.onion/" target="_blank" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>Dark Eye [-]</b></a>
+									<a href="http://guardday6e5nxblpojbhmx5ws2avautr7eswu3qg7gynh52rh744anyd.onion" target="_blank" class="list-group-item"><i class="fa fa-comment fa-fw"></i><b>DarkGuard [-]</b></a>
+									</div></div></div>
+
+					<div class="panel panel-default">
+                        <div class="panel-heading">Exchange Rates</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<div class="list-group-item">
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">9323.81</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">8427.79</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">7165.42</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">13925.57</span>
+									<span style="width:90px;display:inline-block;text-align:left;">BTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">12346.49</span>
+									</div>
+								</div>
+							</div>
+
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/USD</span><span style="width:90px;display:inline-block;text-align:right;">77.56</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/EUR</span><span style="width:90px;display:inline-block;text-align:right;">70.22</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/GBP</span><span style="width:90px;display:inline-block;text-align:right;">59.33</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/AUD</span><span style="width:90px;display:inline-block;text-align:right;">115.49</span>
+								<span style="width:90px;display:inline-block;text-align:left;">XMR/CAD</span><span style="width:90px;display:inline-block;text-align:right;">101.39</span>
+								</div>
+                            </div>
+                    </div>
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/USD</span><span style="width:90px;display:inline-block;text-align:right;">383.20</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/EUR</span><span style="width:90px;display:inline-block;text-align:right;">345.93</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/GBP</span><span style="width:90px;display:inline-block;text-align:right;">293.52</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/AUD</span><span style="width:90px;display:inline-block;text-align:right;">571.38</span>
+								<span style="width:90px;display:inline-block;text-align:left;">BCH/CAD</span><span style="width:90px;display:inline-block;text-align:right;">501.76</span>
+								</div>
+                            </div>
+                    </div>
+
+
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <div class="list-group-item">
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/USD</span><span style="width:90px;display:inline-block;text-align:right;">70.14</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/EUR</span><span style="width:90px;display:inline-block;text-align:right;">63.40</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/GBP</span><span style="width:90px;display:inline-block;text-align:right;">53.73</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/AUD</span><span style="width:90px;display:inline-block;text-align:right;">104.69</span>
+								<span style="width:90px;display:inline-block;text-align:left;">LTC/CAD</span><span style="width:90px;display:inline-block;text-align:right;">92.46</span>
+								</div>
+                            </div>
+                    </div>
+
+
+					</div>
+			</div>
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+							<div class="page-header">
+							<h3>User Profile : </h3>
+							</div>
+
+						<div class="col-lg-12 left">
+
+							<div class="panel panel-default">
+								<div class="panel-body">
+
+									<div class="col-sm-12">
+
+										<div class="col-sm-1" style="width:100%">
+											 <img src="uploads/users/25ca7eac491ef0407a8a33331b6da82c.jpg" class="img-responsive img-rounded" height="80px" width="80px">
+										</div>
+
+										<div class="col-sm-5">
+											<small><a href=""><b>SharkHash (100%)</b></a> <small><span class="badge" style="background-color:#5cb85c;font-size:10px;">Seller Level 1 (21)</span></small> <small><span class="badge" style="background-color:#0275d8;font-size:10px;">Trust Level 2 </span></small></small><br><small><span><b>Verified Seller : </b><img src="uploads/icons/yes_verified.png"></span></small> / <small><span><b>Trusted Seller : </b><img src="uploads/icons/yes_trusted.png"></span></small><br>
+											<small><span><b>Positive Feedback : </b>(100%)</span></small><br>
+											<small><span><b>Member since : </b>Aug 31, 2019</span></small><br>
+											<small><span><b>Last Login : </b>Feb 03, 2020</span></small><br>
+										</div>
+
+										<div class="col-sm-2"><small><span><b>Sales : </b>21</span></small><br>
+											<small><span><b>Orders : </b>0</span></small><br>
+											<small><span><b>Won/Lost Disputes : </b><span style="color:green;">0</span>/<span style="color:red;">0</span></span></small><br>
+											<small><span><b>User Type : </b>Seller</span></small><br>
+
+												<small><span><b>FE : </b>Not Allowed</span></small><br>
+
+										</div>
+
+										<div class="col-sm-4" align="left">
+											<div class="input-group">
+												<a href="home.php?cid=0&amp;csid=0&amp;ss_usr=SharkHash"><button class="btn btn-info btn-xs">Store of <b>SharkHash</b></button></a>
+												<a href="smsg.php?ms_receiver=SharkHash"><button class="btn btn-success btn-xs">Send a Message</button></a><br><br>
+												<a style="text-decoration:none;" href="user.php?u_id=SharkHash&amp;fvusr=1"> <button class="btn btn-warning btn-xs">Add Seller To Favourites</button></a>
+											</div>
+
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left">
+									<h4><b>Imported Feedback : </b></h4>
+										<div>
+<p></p>
+<img src="images/dream.jpg" height="25" width="25"> <b><big>:</big></b>  <b>(</b><span style="color:#008000"></span><b>)</b>
+
+<p></p>
+<img src="images/empire.jpg" height="20" width="20"> <b><big>:</big></b>
+
+<p></p>
+<img src="images/empire.jpg" height="20" width="20"> <b><big>:</big></b>  <b>Sales</b> | <a style="color:green"></a><b>/</b><a style="color:grey"></a><b>/</b><a style="color:red"></a>
+
+<p></p>
+<img src="images/berlusconi.jpg" height="25" width="25"> <b><big>:</big></b>
+
+<p></p>
+<img src="images/berlusconi.jpg" height="25" width="25"> <b><big>:</big></b>  <b>Sales</b> | <a style="color:green"></a><b>/</b><a style="color:grey"></a><b>/</b><a style="color:red"></a>
+
+<p></p>
+<img src="images/nightmare.png" height="25" width="25"> <b><big>:</big></b>
+
+<p></p>
+<img src="images/nightmare.png" height="25" width="25"> <b><big>:</big></b>  <b>Sales</b> | <a style="color:green"></a><b>/</b><a style="color:grey"></a><b>/</b><a style="color:red"></a>
+
+<p></p>
+<img src="images/cryptonia.png" height="20" width="20"> <b><big>:</big></b>  <b>Sales</b> <b>(</b><a style="color:green">%</a><b>)</b>
+
+<p></p>
+<img src="images/cann.jpg" height="20" width="20"> <b><big>:</big></b> <a style="color:green"></a><b>/</b><a style="color:grey"></a><b>/</b><a style="color:red"></a>
+
+<p></p>
+<img src="images/sam.jpg" height="25" width="25"> <b><big>:</big></b>  <b>(</b><span style="color:#008000"></span><b>)</b>
+
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-sm-6" align="left">
+									<h4><b>Feedback Ratings : </b></h4>
+										<div>
+										<button type="button" class="btn btn-success btn-xs" style="background-color:#5cb85c;color:#fff;"><b>Positive : 15</b></button>
+										<button type="button" class="btn btn-default btn-xs" style="background-color:#777;color:#fff;"><b>Neutral : 0</b></button>
+										<button type="button" class="btn btn-danger btn-xs" style="background-color:#d9534f;color:#fff;"><b>Negative : 0</b></button>
+										</div>
+									<h4><b>Latest Feedback : </b></h4><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>perfect, thanks</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span><i>No Comment</i></span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>good price and good quality</span><br><span><span style="color:#5cb85c;font-size:20px;">☑</span></span> <span>rapide bon ,atos parfait merci</span><br>
+									</div>
+								</div>
+							</div>
+
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="user.php?u_id=SharkHash&amp;tab=1" data-toggle="tab">Profile</a></li>
+									<li><a href="user.php?u_id=SharkHash&amp;tab=2" data-toggle="tab">Positive Feedback</a></li>
+									<li><a href="user.php?u_id=SharkHash&amp;tab=3" data-toggle="tab">Neutral Feedback</a></li>
+									<li><a href="user.php?u_id=SharkHash&amp;tab=4" data-toggle="tab">Negative Feedback</a></li>
+
+									<li><a href="user.php?u_id=SharkHash&amp;tab=6" data-toggle="tab">Public PGP Key</a></li>
+								</ul>
+											<div class="tab-content">
+												<div class="tab-pane fade in active">
+													<h4>About Me : </h4>
+													<div class="col-lg-13">
+															<div class="panel panel-default">
+																<div class="panel-body">
+																<div class="col-sm-5" style="text-align:left;">
+																	<span><b>Jabber : </b></span><br>
+																	<span><b>E-Mail : </b>SharkHash@protonmail.com</span><br>
+																</div>
+																<div class="col-sm-8" style="text-align:left;word-wrap: break-word;"><b>------&gt;SPECIAL OPENING PRICE!!:<br>
+We want to start offering the best price with excellent quality!! Best prices and quality! TRY SHARK HASH </b><br>
+<br>
+<b>SharkHash</b> is a team of girls and boys who love hashish. We want to sell a great hashish at a good price, removing intermediaries, directly to the consumer. We wanted to digitize our business and passion for hashish and offer our product: Shark<br>
+<br>
+We have started our sales in Wallstreet Market, Dream Market, Silk Road 3.1, Yellow Brick (Offline). Now we continue in APOLLON MARKET, BITBAZAAR, AVIOR MARKET, and DARK MARKET.<br>
+<br>
+Our <b>Shark hashish is of great quality</b>. It has a high THC level because it is made from sativa plants. It is prepared in a traditional way, respecting the manufacturing process. The effect of Shark is revitalizing and energetic, laughter and chat among friends is guaranteed. It is also ideal to relax. The flavor is soft and delicate, its smell is strong and its smoke very dense. We only sell hashish of great quality because we only smoke quality.<br>
+<br>
+The goal of the SharkHash team is to get regular customers. We offer a quality product and service for a good price. We suggest our new customers who buy the minimum quantity and try our product.<br>
+<br>
+Our shipments are specially prepared to go unnoticed, without odors, clean packaging, arrive in your mailbox in a letter. <b>We only ship from Spain to the entire Europe. The estimated delivery time is 7-12 business days (maybe less)</b><br>
+<br>
+We understand that stealth is important so we will always handle your personal information with care, all info is deleted after the order is shipped.<br>
+If you wish to communicate with us send your messages encrypted by PGP for important information (address, name,etc).<br>
+<br>
+- Our billing policy guarantees the protection of the buyer through the Escrow system (always). If you do not receive your order within 13 working days from the date of shipment, please contact us, we will offer a replacement or refund depending on the circumstances.<br>
+- Buyer is responsible for address, if there are any mistakes, SharkHash will not reship or refund. Please, check your address twice!.<br>
+- In case of non-arrival, please contact us within 13 days.<br>
+- In case of non-arrival, SharkHash will reship 50% to the same or a new address (or 50% refund).<br>
+- If the first 100% shipment and 50% reship dont arrive, there will be NO refund or extra reship.<br>
+- Our shipments have a 99 percent success, arrive at the mailbox always.<br>
+- Remember ADDRESS FORMATTING (or the address format that you usually use)<br>
+Peter Shark (Name+Surname: Capatilize Every Word)<br>
+25 Bishopthorpe Road (Address Line 1 + Number + Flat Number or Letter (if there is one): Capatilize Every Word)<br>
+TR11 0DF (Post Code: FULL CAPITALS)<br>
+PENJERRICK/CITY (Both Town/City: FULL CAPITALS)<br>
+UNITED KINGDOM (Country: FULL CAPITALS)<br>
+- Advice for novices: put a real address that is under your control. Do not put abandoned houses or pick-up points out of your control, if you do it will be under your responsibility and will not cover the policy of the escrow. You have to be the owner of your mailbox.<br>
+<br>
+<span style="color:red;">---&gt;ATTENTION!</span> <h1></h1> All buyers who kindly release their orders, write a nice opinion and send us the karma, they will always get their next order with overweight!<br>
+<br>
+We will be here for a long time, that's why we appreciate the trust of our most loyal buyers.Thank you very much to this great community, we hope to give our best service.<br>
+Regards,<br>
+<br>
+-APOLLON MARKET (online, SharkHash)<br>
+-BITBAZAAR (online, SharkHash)<br>
+-AVIOR MARKET (online, SharkHash)<br>
+-DARK MARKET (online, SharkHash)<br>
+<br>
+OFFLINE:<br>
+-SILK ROAD 3.1 <br>
+-YELLOW BRICK <br>
+-WALLSTREET MARKET<br>
+-DREAM MARKET
+																</div>
+																</div>
+															</div>
+
+													</div>
+												</div>
+											</div>
+
+						</div>
+				</div>
+			</div>
+				<div class="footer">
+					<div class="footer-inner">
+						<div class="footer-content">
+							<span class="bigger-90">Apollon Market © 2019</span>
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+
+
+
+	</body></html>
