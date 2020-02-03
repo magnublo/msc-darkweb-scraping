@@ -300,6 +300,9 @@ class ApollonScrapingFunctions(BaseFunctions):
         dests_string = listing_div_text[start_index:end_index].strip()
         destination_countries: List[str] = [dests_string[a.regs[0][0]:a.regs[0][1]].strip() for a in
                                             BaseFunctions.COMMA_SEPARATED_COUNTRY_REGEX.finditer(dests_string)]
+        for dest in destination_countries:
+            if len(dest.split()) > 7:
+                raise AssertionError("Something seems wrong with the parsed country name.")
         return tuple(destination_countries)
 
     @staticmethod

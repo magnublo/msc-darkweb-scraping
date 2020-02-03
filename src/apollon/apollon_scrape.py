@@ -222,7 +222,8 @@ class ApollonScrapingSession(BaseScraper):
 
         seller, is_new_seller = self._get_seller(seller_name)
 
-        listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
+        listing_observation, is_new_listing_observation = self._get_listing_observation_from_url(title, seller.id,
+                                                                                                 product_url)
 
         if not is_new_listing_observation:
             if listing_observation.promoted_listing != is_sticky:
@@ -318,7 +319,6 @@ class ApollonScrapingSession(BaseScraper):
         orders = self.scraping_funcs.get_orders(soup_html)
         disputes_won, disputes_lost = self.scraping_funcs.get_disputes(soup_html)
 
-
         most_recent_feedback_text = self.scraping_funcs.get_most_recent_feedback(soup_html)
 
         # is_banned: bool = self.scraping_funcs.user_is_banned(soup_html) # TODO: Investigate whether users can have
@@ -333,7 +333,7 @@ class ApollonScrapingSession(BaseScraper):
         sub_query = self.db_session.query(func.max(Feedback.date_published).label('max_t')).filter(
             Feedback.seller_id == 5).subquery('sub_query')
         most_recent_stored_feedbacks = self.db_session.query(Feedback).filter(Feedback.seller_id == 5,
-                                                Feedback.date_published == sub_query.c.max_t).all()
+                                                                              Feedback.date_published == sub_query.c.max_t).all()
 
         feedback_categories, feedback_urls = self.scraping_funcs.get_feedback_categories_and_urls(soup_html)
         pgp_url = self.scraping_funcs.get_pgp_url(soup_html)
@@ -355,7 +355,7 @@ class ApollonScrapingSession(BaseScraper):
             url=seller_url,
             disputes_won=disputes_won,
             disputes_lost=disputes_lost,
-            disputes=disputes_lost+disputes_won,
+            disputes=disputes_lost + disputes_won,
             orders=orders,
             last_online=last_login,
             parenthesis_number=sales,
@@ -450,3 +450,27 @@ class ApollonScrapingSession(BaseScraper):
                     nr_of_neutral_reviews=neutral_reviews, nr_of_bad_reviews=bad_reviews, free_text=free_text)
             )
             self.db_session.flush()
+
+    def _get_listing_observation_from_url(self, title: str, seller_id: int, url: str) -> Tuple[
+            ListingObservation, bool]:
+        existing_listing_observation = self.db_session.query(ListingObservation) \
+            .filter(ListingObservation.session_id == self.session_id, ListingObservation.url == url).first()
+
+        if existing_listing_observation:
+            if existing_listing_observation.origin_country is None:
+                return existing_listing_observation, True  # This listing is the result of an exception and rollback
+                # mid-scrape
+            self.print_crawling_debug_message(existing_listing_observation=existing_listing_observation)
+            self.duplicates_this_session += 1
+            listing_observation = existing_listing_observation
+            is_new_listing_observation = False
+        else:
+            listing_observation = ListingObservation(session_id=self.session_id,
+                                                     thread_id=self.thread_id,
+                                                     title=title,
+                                                     seller_id=seller_id)
+            is_new_listing_observation = True
+            self.db_session.add(listing_observation)
+            self.db_session.flush()
+
+        return listing_observation, is_new_listing_observation
