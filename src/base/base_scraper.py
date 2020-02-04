@@ -734,7 +734,8 @@ class BaseScraper(BaseClassWithLogger):
         soup_html = get_page_as_soup_html(web_response.text)
         meta_refresh_wait, redirect_url = self.scraping_funcs.get_meta_refresh_interval(soup_html)
         remaining_wait = max(0.0, self.time_last_received_response + meta_refresh_wait - time())
-        self.logger.info(f"Waiting remaining {remaining_wait} to circumvent DDoS protection.")
+        self.logger.info(
+            f"Waiting remaining {remaining_wait} to circumvent DDoS protection. Then accessing {redirect_url}")
         sleep(remaining_wait)
         return redirect_url
 
