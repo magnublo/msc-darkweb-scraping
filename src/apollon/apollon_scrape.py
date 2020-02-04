@@ -365,8 +365,7 @@ class ApollonScrapingSession(BaseScraper):
         if is_new_seller:
             seller.registration_date = registration_date
 
-        self.db_session.add(seller_observation)
-        self.db_session.commit()
+        self.db_session.flush()
 
         self._add_external_market_verifications(seller_observation.id, external_market_verifications)
 
