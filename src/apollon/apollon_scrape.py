@@ -468,7 +468,8 @@ class ApollonScrapingSession(BaseScraper):
             listing_observation = ListingObservation(session_id=self.session_id,
                                                      thread_id=self.thread_id,
                                                      title=title,
-                                                     seller_id=seller_id)
+                                                     seller_id=seller_id,
+                                                     url=url)
             is_new_listing_observation = True
             self.db_session.add(listing_observation)
             self.db_session.flush()
