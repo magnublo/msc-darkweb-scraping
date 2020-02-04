@@ -300,9 +300,6 @@ class ApollonScrapingFunctions(BaseFunctions):
         dests_string = listing_div_text[start_index:end_index].strip()
         destination_countries: List[str] = [dests_string[a.regs[0][0]:a.regs[0][1]].strip() for a in
                                             BaseFunctions.COMMA_SEPARATED_COUNTRY_REGEX.finditer(dests_string)]
-        for dest in destination_countries:
-            if len(dest.split()) > 7:
-                raise AssertionError("Something seems wrong with the parsed country name.")
         return tuple(destination_countries)
 
     @staticmethod
@@ -325,8 +322,10 @@ class ApollonScrapingFunctions(BaseFunctions):
             pass
         elif payment_type_str == "50% Finalize Early":
             supports_fifty_percent_finalize_early = True
+        elif re.search(r"([0-9]+\s)days?\sescrow", payment_type_str, re.IGNORECASE):
+            supports_escrow = True
         else:
-            raise AssertionError("Unknown payment type.")
+            raise AssertionError(f"Unknown payment type {payment_type_str}.")
 
         return supports_escrow, supports_fifty_percent_finalize_early
 

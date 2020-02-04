@@ -14,7 +14,7 @@ from text2digits import text2digits
 from definitions import BEAUTIFUL_SOUP_HTML_PARSER, MARKET_IDS, ONE_DAY, ONE_WEEK, ONE_HOUR, WEB_EXCEPTIONS_TUPLE, \
     MIRROR_TEST_TIMEOUT_LIMIT, NR_OF_TRIES_PER_MIRROR
 from environment_settings import MAX_MARKET_THREADS_PER_PROXY
-from src.data.continent_dict import CONTINENT_DICTIONARY
+from src.data.continent_dict import CONTINENT_DICTIONARY, WORLD_PHRASES
 from src.data.country_dict import COUNTRY_DICT
 from src.tor_proxy_check import get_proxy_dict
 
@@ -291,11 +291,20 @@ def parse_time_delta_from_string(time_string: str) -> timedelta:
 COUNTRY_NAME_SPLIT_REGEX = re.compile(r"\s|\(.*\)")
 
 
+def _contains_world_as_substring(country_name) -> bool:
+    for world_phrase in WORLD_PHRASES:
+        if country_name.lower().find(world_phrase.lower()) != -1:
+            return True
+    return False
+
+
 def determine_real_country(country_name: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     # returns country_name, iso_alpha2_code, iso_alpha3_code, is_continent
     country_name = country_name.strip()
     if country_name in CONTINENT_DICTIONARY.keys():
         return CONTINENT_DICTIONARY[country_name], None, None, True
+    elif _contains_world_as_substring(country_name):
+        return CONTINENT_DICTIONARY['World'], None, None, True
     else:
         if country_name in COUNTRY_DICT.keys():
             country_name = COUNTRY_DICT[country_name]

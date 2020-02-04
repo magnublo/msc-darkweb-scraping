@@ -126,4 +126,9 @@ CONTINENT_DICTIONARY: Dict[str, str] = {'AF': 'Africa', 'NA': 'North America', '
                                         'world (C)': 'World', 'world(c)': 'World',
                                         'world(C)': 'World', 'World': 'World', 'World (c)': 'World',
                                         'World (C)': 'World', 'World(c)': 'World',
-                                        'World(C)': 'World'}
+                                        'World(C)': 'World',
+                                        'World Wide World Wide World Wide World Wide World Wide': "World"}
+
+WORLD_PHRASES = {'world wide', 'worldwide'}  # apollon market has destinations like "world wide world wide world wide".
+# if country name even contains any of these phrases as substring, it is
+# considered to be "World".

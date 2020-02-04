@@ -37,13 +37,15 @@ class TestDetermineRealCoutry(TestCase):
 
     def test_determine_real_country_one(self):
         names = (
-        'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'France',
-        'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'Poland',
-        'Portugal', 'Romania', 'Slovakia', 'Slovenia', 'Spain', 'United Kingdom', 'Ireland', 'Switzerland',
-        'Liechtenstein', 'Andorra', 'Monaco', 'Finland', 'Iceland', 'Norway', 'Sweden', 'Serbia', 'San Marino',
-        'Montenegro', 'Macedonia', 'the Former Yugoslav Republic of', 'Bosnia and Herzegovina', 'Albania', 'Ukraine',
-        'Moldova', 'Republic of', 'Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'European Union', 'Suriname',
-        'Peru')
+            'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'France',
+            'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands',
+            'Poland',
+            'Portugal', 'Romania', 'Slovakia', 'Slovenia', 'Spain', 'United Kingdom', 'Ireland', 'Switzerland',
+            'Liechtenstein', 'Andorra', 'Monaco', 'Finland', 'Iceland', 'Norway', 'Sweden', 'Serbia', 'San Marino',
+            'Montenegro', 'Macedonia', 'the Former Yugoslav Republic of', 'Bosnia and Herzegovina', 'Albania',
+            'Ukraine',
+            'Moldova', 'Republic of', 'Armenia', 'Azerbaijan', 'Georgia', 'Kazakhstan', 'European Union', 'Suriname',
+            'Peru')
         res = []
         names = ('France', 'India', 'Belgium', 'Brazil', 'Thailand', 'Turkey', 'Worldwide', 'Åland Islands', 'Austria',
                  'Anguilla', 'Albania', 'Aruba', 'Egypt', 'China', 'Bangladesh', 'Bolivia', 'Plurinational State of',
@@ -53,3 +55,13 @@ class TestDetermineRealCoutry(TestCase):
 
         b = len(names) == len(set(res))
         a = 1
+
+
+class Test(TestCase):
+    def test__contains_world_as_substring(self):
+        # World Wide  World Wide  World Wide  World Wide  World Wi
+        # World Wide  World Wide  World Wide
+        continent1 = utils.determine_real_country("World Wide  World Wide  World Wide  World Wide  World Wi")
+        self.assertEqual(('World', None, None, True), continent1)
+        continent2 = utils.determine_real_country("World Wide  World Wide  World Wide")
+        self.assertEqual(('World', None, None, True), continent2)
