@@ -28,7 +28,7 @@ from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DAT
     FAILED_CAPTCHAS_PER_PAUSE, \
     TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE, ANTICAPTCHA_ERROR_PER_PAUSE, \
     TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL, WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE, \
-    MAX_TEMPORARY_ERRORS_PER_URL
+    MAX_TEMPORARY_ERRORS_PER_URL, COUNTRY_NAME_COLUMN_LENGTH
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
@@ -314,6 +314,7 @@ class BaseScraper(BaseClassWithLogger):
     def _add_countries(self, *countries: str) -> Tuple[int]:
         country_ids: List[int] = []
         for country_name in countries:
+            country_name = country_name[:COUNTRY_NAME_COLUMN_LENGTH]  # sanitizing extremely long aliases
             # first, check if alias is stored and match with country
             existing_country = self.db_session.query(Country.id).filter(
                 Country.id == self.db_session.query(CountryAlias.country_id).filter(
