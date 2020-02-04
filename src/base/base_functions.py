@@ -276,7 +276,7 @@ class BaseFunctions(BaseClassWithLogger):
         id_input = id_inputs[0]
         id = id_input["value"]
 
-        return {'id': id, captcha_parameter_name: captcha_solution}
+        return {captcha_id_parameter_name: id, captcha_parameter_name: captcha_solution}
 
     @staticmethod
     def captcha_solution_was_wrong(soup_html: BeautifulSoup) -> bool:
