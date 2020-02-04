@@ -62,9 +62,10 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, e
 
 class BaseScraper(BaseClassWithLogger):
     __wrap_up_session_lock__ = Lock()
+    __shared_db_session_lock__ = Lock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
-                 proxy: dict, session_id: int):
+                 proxy: dict, session_id: int, shared_db_session: Session):
         super().__init__()
         self.engine = get_engine()
         self.url_failure_counts: Dict[str, int] = {}
@@ -85,6 +86,7 @@ class BaseScraper(BaseClassWithLogger):
         self.nr_of_threads = nr_of_threads
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
         self.queue = queue
+        self.shared_db_session: Session = shared_db_session
         self.market_id = self._get_market_id()
         self.duplicates_this_session = 0
         self.web_sessions: Tuple[requests.Session] = self._get_web_sessions()
@@ -217,53 +219,67 @@ class BaseScraper(BaseClassWithLogger):
         return seconds_until_next_try
 
     def _get_seller(self, seller_name: str) -> Tuple[Seller, bool]:
-        existing_seller = self.db_session.query(Seller) \
-            .filter_by(name=seller_name, market=self.market_id).first()
 
-        if existing_seller:
-            seller = existing_seller
-            return seller, False
-        else:
-            seller = Seller(name=seller_name, market=self.market_id)
-            self.db_session.add(seller)
-            self.db_session.flush()
-            return seller, True
+        is_new_seller = False
+        with self.__shared_db_session_lock__:
+            existing_seller_shared = self.shared_db_session.query(Seller) \
+                .filter_by(name=seller_name, market=self.market_id).first()
 
-    def _get_listing_observation(self, title: str, seller_id: int) -> Tuple[ListingObservation, bool]:
-        existing_listing_observation = self.db_session.query(ListingObservation) \
-            .filter(ListingObservation.session_id == self.session_id, ListingObservation.title == title,
-                    ListingObservation.seller_id == seller_id).first()
+            if not existing_seller_shared:
+                existing_seller_shared = Seller(name=seller_name, market=self.market_id)
+                self.shared_db_session.add(existing_seller_shared)
+                self.shared_db_session.commit()
+                is_new_seller = True
 
-        if existing_listing_observation:
-            if existing_listing_observation.origin_country is None:
-                return existing_listing_observation, True  # This listing is the result of an exception and rollback
-                # mid-scrape
-            self.print_crawling_debug_message(existing_listing_observation=existing_listing_observation)
-            self.duplicates_this_session += 1
-            listing_observation = existing_listing_observation
-            is_new_listing_observation = False
-        else:
-            listing_observation = ListingObservation(session_id=self.session_id,
-                                                     thread_id=self.thread_id,
-                                                     title=title,
-                                                     seller_id=seller_id)
-            is_new_listing_observation = True
-            self.db_session.add(listing_observation)
-            self.db_session.flush()
+        seller = self.db_session.query(Seller).filter(Seller.id == existing_seller_shared.id).first()
+
+        assert seller is not None
+
+        return seller, is_new_seller
+
+    def _get_listing_observation(self, url: str) -> Tuple[ListingObservation, bool]:
+        with self.__shared_db_session_lock__:
+            listing_observation_shared = self.shared_db_session.query(ListingObservation) \
+                .filter(ListingObservation.session_id == self.session_id, ListingObservation.url == url).first()
+
+            if not listing_observation_shared:
+                self.shared_db_session.rollback()
+                listing_observation_shared = ListingObservation(session_id=self.session_id,
+                                                                thread_id=self.thread_id,
+                                                                url=url)
+                is_new_listing_observation = True
+                self.shared_db_session.add(listing_observation_shared)
+                self.shared_db_session.commit()
+
+        listing_observation = self.db_session.query(ListingObservation).filter(
+            ListingObservation.id == listing_observation_shared.id).first()
+
+        assert listing_observation is not None
 
         return listing_observation, is_new_listing_observation
 
-    def _exists_seller_observation_from_this_session(self, seller_id: int) -> bool:
-        existing_seller_observation = self.db_session.query(SellerObservation.id) \
-            .filter(SellerObservation.session_id == self.session_id) \
-            .join(Seller) \
-            .filter(SellerObservation.seller_id == seller_id) \
-            .first()
+    def _get_seller_observation(self, seller_id: int) -> Tuple[SellerObservation, bool]:
+        is_new_seller_observation = False
 
-        if existing_seller_observation:
-            return False
-        else:
-            return True
+        with self.__shared_db_session_lock__:
+            seller_observation_shared = self.shared_db_session.query(SellerObservation) \
+                .filter(SellerObservation.session_id == self.session_id,
+                        SellerObservation.seller_id == seller_id).first()
+
+            if not seller_observation_shared:
+                self.shared_db_session.rollback()
+                seller_observation_shared = SellerObservation(session_id=self.session_id,
+                                                              seller_id=seller_id)
+                self.shared_db_session.add(seller_observation_shared)
+                self.shared_db_session.commit()
+                is_new_seller_observation = True
+
+        seller_observation = self.db_session.query(SellerObservation).filter(
+            SellerObservation.id == seller_observation_shared.id).first()
+
+        assert seller_observation is not None
+
+        return seller_observation, is_new_seller_observation
 
     def _add_category_junctions(self, listing_observation_id: int, listing_categories: Tuple[
         Tuple[str, Optional[int], Optional[str], Optional[int]]]) -> None:

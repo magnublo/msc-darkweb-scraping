@@ -147,12 +147,12 @@ class CryptoniaScrapingSession(BaseScraper):
                         xmr_rate: float, category_pair: Tuple[Tuple[str, int, str, int]]):
         seller, is_new_seller = self._get_seller(seller_name)
 
-        listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
+        listing_observation, is_new_listing_observation = self._get_listing_observation(product_page_url)
 
         if not is_new_listing_observation:
             return
 
-        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
+        is_new_seller_observation = self._get_seller_observation(seller.id)
 
         if is_new_seller_observation:
             self._scrape_seller(seller_url, seller, is_new_seller)

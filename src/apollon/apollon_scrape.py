@@ -231,10 +231,10 @@ class ApollonScrapingSession(BaseScraper):
                 self.db_session.flush()
             return
 
-        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
+        seller_observation, is_new_seller_observation = self._get_seller_observation(seller.id)
 
         if is_new_seller_observation:
-            self._scrape_seller(seller_url, seller, is_new_seller)
+            self._scrape_seller(seller_url, seller, seller_observation, is_new_seller)
 
         self.print_crawling_debug_message(url=product_url)
 
@@ -293,7 +293,7 @@ class ApollonScrapingSession(BaseScraper):
 
         self.db_session.flush()
 
-    def _scrape_seller(self, seller_url, seller, is_new_seller):
+    def _scrape_seller(self, seller_url, seller, seller_observation: SellerObservation, is_new_seller):
         self.scraping_funcs: ApollonScrapingFunctions
         self.print_crawling_debug_message(url=seller_url)
 
@@ -348,25 +348,23 @@ class ApollonScrapingSession(BaseScraper):
 
         self._scrape_pgp_key(seller, is_new_seller, pgp_url)
 
-        seller_observation = SellerObservation(
-            seller_id=seller.id,
-            session_id=self.session_id,
-            description=seller_observation_description,
-            url=seller_url,
-            disputes_won=disputes_won,
-            disputes_lost=disputes_lost,
-            disputes=disputes_lost + disputes_won,
-            orders=orders,
-            last_online=last_login,
-            parenthesis_number=sales,
-            positive_feedback_received_percent=positive_feedback_received_percent,
-            vendor_level=seller_level,
-            trust_level=trust_level,
-            email=email,
-            xmpp_jabber_id=jabber_id,
-            fe_enabled=fe_enabled,
-            autofinalized_orders=autofinalized_orders
-        )
+        seller_observation.seller_id = seller.id
+        seller_observation.session_id = self.session_id
+        seller_observation.description = seller_observation_description
+        seller_observation.url = seller_url
+        seller_observation.disputes_won = disputes_won
+        seller_observation.disputes_lost = disputes_lost
+        seller_observation.disputes = disputes_lost + disputes_won
+        seller_observation.orders = orders
+        seller_observation.last_online = last_login
+        seller_observation.parenthesis_number = sales
+        seller_observation.positive_feedback_received_percent = positive_feedback_received_percent
+        seller_observation.vendor_level = seller_level
+        seller_observation.trust_level = trust_level
+        seller_observation.email = email
+        seller_observation.xmpp_jabber_id = jabber_id
+        seller_observation.fe_enabled = fe_enabled
+        seller_observation.autofinalized_orders = autofinalized_orders
 
         if is_new_seller:
             seller.registration_date = registration_date

@@ -3,10 +3,12 @@ from multiprocessing import Queue
 from time import sleep
 from typing import List, Tuple, Type, Dict
 
+from sqlalchemy.orm import Session
+
 from definitions import ONE_HOUR
 from src.base.base_logger import BaseClassWithLogger
 from src.base.base_scraper import BaseScraper
-from src.db_utils import get_settings
+from src.db_utils import get_settings, get_engine, get_db_session
 from src.models.settings import Settings
 from src.utils import queue_is_empty, get_seconds_until_midnight, get_utc_datetime_next_midnight
 
@@ -25,6 +27,7 @@ class ScrapingManager(BaseClassWithLogger):
         self.initial_session_id = initial_session_id
         self.scraping_threads: List[threading.Thread] = []
         self.proxies = proxies
+        self.shared_db_session: Session = get_db_session(get_engine())
 
     def run(self, start_immediately: bool) -> None:
         if self.nr_of_threads <= 0:
@@ -38,14 +41,14 @@ class ScrapingManager(BaseClassWithLogger):
                 self._start_new_session()
 
     def _start_new_session(self) -> None:
-        self.scraping_threads = self._spawn_scraping_threads(self.queue, self.nr_of_threads)
+        self._spawn_scraping_threads(self.queue, self.shared_db_session, self.nr_of_threads)
 
-    def _spawn_scraping_threads(self, queue: Queue, nr_of_threads: int):
+    def _spawn_scraping_threads(self, queue: Queue, shared_db_session: Session, nr_of_threads: int):
         scraping_threads: List[threading.Thread] = []
 
         proxy = self._get_scraping_session_parameters(0)
         scraping_session = self.scraper_class(queue, nr_of_threads, thread_id=0, proxy=proxy,
-                                              session_id=self.initial_session_id)
+                                              session_id=self.initial_session_id, shared_db_session=shared_db_session)
         session_id = scraping_session.session_id
 
         self._populate_queue_and_sleep(scraping_session)
@@ -58,7 +61,7 @@ class ScrapingManager(BaseClassWithLogger):
             proxy = self._get_scraping_session_parameters(i)
             sleep(1)
             scraping_session = self.scraper_class(queue, nr_of_threads, thread_id=i,
-                                                  session_id=session_id, proxy=proxy)
+                                                  session_id=session_id, proxy=proxy, shared_db_session=shared_db_session)
             t = threading.Thread(target=scraping_session.scrape)
             scraping_threads.append(t)
             t.start()

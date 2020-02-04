@@ -11,6 +11,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from bs4 import BeautifulSoup
 from requests import Response
+from sqlalchemy.orm import Session
 
 from definitions import EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_HTTP_HEADERS, \
@@ -95,11 +96,6 @@ class EmpireScrapingSession(BaseScraper):
         return {
             'numeric': 1
         }
-
-    def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict,
-                 session_id: int):
-        super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
-                         session_id=session_id)
 
     def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str,
                        login_page_phrase: str) -> bool:
@@ -231,7 +227,7 @@ class EmpireScrapingSession(BaseScraper):
 
         seller, is_new_seller = self._get_seller(seller_name)
 
-        listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
+        listing_observation, is_new_listing_observation = self._get_listing_observation(product_page_url)
 
         if not is_new_listing_observation:
             if listing_observation.promoted_listing != is_sticky:
@@ -239,10 +235,10 @@ class EmpireScrapingSession(BaseScraper):
                 self.db_session.flush()
             return
 
-        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
+        seller_observation, is_new_seller_observation = self._get_seller_observation(seller.id)
 
         if is_new_seller_observation:
-            self._scrape_seller(seller_url, seller, is_new_seller)
+            self._scrape_seller(seller_url, seller, seller_observation, is_new_seller)
 
         self.print_crawling_debug_message(url=product_page_url)
 
@@ -315,7 +311,7 @@ class EmpireScrapingSession(BaseScraper):
 
         self.db_session.flush()
 
-    def _scrape_seller(self, seller_url, seller, is_new_seller):
+    def _scrape_seller(self, seller_url, seller, seller_observation: SellerObservation, is_new_seller):
         self.print_crawling_debug_message(url=seller_url)
 
         web_response = self._get_logged_in_web_response(seller_url, expected_page_type=PageType.SELLER)
@@ -374,35 +370,33 @@ class EmpireScrapingSession(BaseScraper):
 
         self._scrape_pgp_key(seller, is_new_seller, pgp_url)
 
-        seller_observation = SellerObservation(
-            seller_id=seller.id,
-            session_id=self.session_id,
-            description=seller_observation_description,
-            url=seller_url,
-            disputes=disputes,
-            orders=orders,
-            spendings=spendings,
-            feedback_left=feedback_left,
-            feedback_percent_positive=feedback_percent_positive,
-            last_online=last_online,
-            parenthesis_number=parenthesis_number,
-            positive_feedback_received_percent=positive_feedback_received_percent,
-            positive_1m=positive_1m,
-            positive_6m=positive_6m,
-            positive_12m=positive_12m,
-            neutral_1m=neutral_1m,
-            neutral_6m=neutral_6m,
-            neutral_12m=neutral_12m,
-            negative_1m=negative_1m,
-            negative_6m=negative_6m,
-            negative_12m=negative_12m,
-            stealth_rating=stealth_rating,
-            quality_rating=quality_rating,
-            value_price_rating=value_price_rating,
-            vendor_level=vendor_level,
-            trust_level=trust_level,
-            banned=is_banned
-        )
+        seller_observation.seller_id = seller.id
+        seller_observation.session_id = self.session_id
+        seller_observation.description = seller_observation_description
+        seller_observation.url = seller_url
+        seller_observation.disputes = disputes
+        seller_observation.orders = orders
+        seller_observation.spendings = spendings
+        seller_observation.feedback_left = feedback_left
+        seller_observation.feedback_percent_positive = feedback_percent_positive
+        seller_observation.last_online = last_online
+        seller_observation.parenthesis_number = parenthesis_number
+        seller_observation.positive_feedback_received_percent = positive_feedback_received_percent
+        seller_observation.positive_1m = positive_1m
+        seller_observation.positive_6m = positive_6m
+        seller_observation.positive_12m = positive_12m
+        seller_observation.neutral_1m = neutral_1m
+        seller_observation.neutral_6m = neutral_6m
+        seller_observation.neutral_12m = neutral_12m
+        seller_observation.negative_1m = negative_1m
+        seller_observation.negative_6m = negative_6m
+        seller_observation.negative_12m = negative_12m
+        seller_observation.stealth_rating = stealth_rating
+        seller_observation.quality_rating = quality_rating
+        seller_observation.value_price_rating = value_price_rating
+        seller_observation.vendor_level = vendor_level
+        seller_observation.trust_level = trust_level
+        seller_observation.banned = is_banned
 
         if is_new_seller:
             seller.registration_date = registration_date
