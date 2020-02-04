@@ -320,6 +320,11 @@ class TestGetPaymentMethod(ApollonBaseTest):
         escrow, fifty_percent_finalize_early = scrapingFunctions.get_payment_method(soup_html)
         self.assertTupleEqual((True, False), (escrow, fifty_percent_finalize_early))
 
+    def test_get_payment_method_six(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_6")
+        escrow, fifty_percent_finalize_early = scrapingFunctions.get_payment_method(soup_html)
+        self.assertTupleEqual((True, False), (escrow, fifty_percent_finalize_early))
+
 
 class TestGetStandardizedListingType(ApollonBaseTest):
 

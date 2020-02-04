@@ -56,7 +56,7 @@ class ScrapingManager(BaseClassWithLogger):
 
         for i in range(1, self.nr_of_threads):
             proxy = self._get_scraping_session_parameters(i)
-            sleep(i * 2)
+            sleep(1)
             scraping_session = self.scraper_class(queue, nr_of_threads, thread_id=i,
                                                   session_id=session_id, proxy=proxy)
             t = threading.Thread(target=scraping_session.scrape)
@@ -107,5 +107,3 @@ class ScrapingManager(BaseClassWithLogger):
 
     def _populate_queue_and_sleep(self, scraping_session: BaseScraper) -> None:
         scraping_session.populate_queue()
-        print("Sleeping 5 seconds to avoid race conditions...")
-        sleep(5)
