@@ -15,7 +15,7 @@ class TestGetSubUrlWithAllMarketMirrors(BaseTest):
     def test_get_sub_url_with_all_market_mirrors(self):
         sub_urls: List[str] = []
 
-        for market_string in [val for val in DARKFAIL_MARKET_STRINGS.values()] + ['dark.fail']:
+        for market_string in [val for val in [v for v in DARKFAIL_MARKET_STRINGS.values()][:3]] + ['dark.fail']:
             soup_html = self._get_page_as_soup_html("saved_darkfail_main_page", html_dir=HTML_DIR)
             sub_url_with_all_market_mirrors = scrapingFunctions.get_sub_url_with_all_market_mirrors(soup_html,
                                                                                                     market_string)
@@ -36,7 +36,7 @@ class TestGetMarketMirrorsFromFinalPage(BaseTest):
 class TestGetMarketMirrorsFromMainPage(BaseTest):
     def test_get_market_mirrors_from_main_page(self):
         all_market_mirrors = {}
-        for market_string in [s for s in DARKFAIL_MARKET_STRINGS.values()]:
+        for market_string in [s for s in [k for k in DARKFAIL_MARKET_STRINGS.values()][:3]]:
             soup_html = self._get_page_as_soup_html("saved_darkfail_main_page", html_dir=HTML_DIR)
             market_mirrors = scrapingFunctions.get_market_mirrors_from_main_page(soup_html, market_string)
             all_market_mirrors.update(market_mirrors)
@@ -77,12 +77,19 @@ class TestGetCaptchaBase64ImageIdTokenAndSolutionPostUrlFromMirrorOverviewPage(B
 
 
 class TestGetCaptchaSolutionPayloadToMirrorOverviewPage(BaseTest):
-    def test_get_captcha_solution_payload_to_mirror_overview_page(self):
+    def test_get_captcha_solution_payload_to_mirror_overview_page_zero(self):
         soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_0", html_dir=HTML_DIR)
         solution_payload = scrapingFunctions.get_captcha_solution_payload_to_mirror_overview_page(soup_html,
                                                                                                   "some_solution",
-                                                                                                  "captcha")
+                                                                                                  "captcha", 'id')
         self.assertEqual({'id': '1hT7fR0Su2BGsk4Sj1m8', 'captcha': 'some_solution'}, solution_payload)
+
+    def test_get_captcha_solution_payload_to_mirror_overview_page_three(self):
+        soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_3", html_dir=HTML_DIR)
+        solution_payload = scrapingFunctions.get_captcha_solution_payload_to_mirror_overview_page(soup_html,
+                                                                                                  "some_solution",
+                                                                                                  "captcha", 'peace')
+        self.assertEqual({'id': '9BVfAyOV7t6utkz1GyQm', 'captcha': 'some_solution'}, solution_payload)
 
 
 class TestCaptchaSolutionWasWrong(BaseTest):
@@ -112,3 +119,16 @@ class TestGetCaptchaPostParameterName(BaseTest):
         soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_2", html_dir=HTML_DIR)
         captcha_post_parameter_name = scrapingFunctions.get_captcha_post_parameter_name(soup_html)
         self.assertEqual("zooko", captcha_post_parameter_name)
+
+    def test_get_captcha_post_parameter_name_three(self):
+        soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_3", html_dir=HTML_DIR)
+        captcha_post_parameter_name = scrapingFunctions.get_captcha_post_parameter_name(soup_html)
+        self.assertEqual("love", captcha_post_parameter_name)
+
+
+class TestGetCaptchaIdParameterName(BaseTest):
+
+    def test_get_captcha_id_parameter_name_zero(self):
+        soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_3", html_dir=HTML_DIR)
+        id_parameter_name = scrapingFunctions.get_captcha_id_parameter_name(soup_html)
+        self.assertEqual("peace", id_parameter_name)

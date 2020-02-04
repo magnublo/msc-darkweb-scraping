@@ -216,6 +216,7 @@ class MirrorManager:
             captcha_page_soup_html)
 
         captcha_parameter_name = self.scraper.scraping_funcs.get_captcha_post_parameter_name(captcha_page_soup_html)
+        captcha_id_parameter_name = self.scraper.scraping_funcs.get_captcha_id_parameter_name(captcha_page_soup_html)
 
         captcha_solution, solution_response = self.scraper._get_captcha_solution_from_base64_image(
             base64_image=captcha_base_64_image,
@@ -225,7 +226,8 @@ class MirrorManager:
             self.scraper.scraping_funcs.get_captcha_solution_payload_to_mirror_overview_page(
                 captcha_page_soup_html,
                 captcha_solution,
-                captcha_parameter_name)
+                captcha_parameter_name,
+                captcha_id_parameter_name)
 
         captcha_solution_post_url: str = self.scraper.scraping_funcs.get_captcha_solution_post_url(
             captcha_page_soup_html)

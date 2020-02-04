@@ -257,8 +257,8 @@ class BaseFunctions(BaseClassWithLogger):
     def get_captcha_post_parameter_name(soup_html: BeautifulSoup) -> str:
         captcha_input_fields = soup_html.select("body > div.content > form > input[type=text]")
 
-        visible_captcha_input_fields = [i for i in captcha_input_fields if not
-        ('style' in i.attrs.keys() and i.attrs['style'].find("display: none;") != -1)]
+        visible_captcha_input_fields = [i for i in captcha_input_fields if not(
+        ('style' in i.attrs.keys() and i.attrs['style'].find("display: none;") != -1) or (i.attrs["type"] == "hidden"))]
         assert len(visible_captcha_input_fields) == 1
         visible_captcha_input_field = visible_captcha_input_fields[0]
 
@@ -268,10 +268,10 @@ class BaseFunctions(BaseClassWithLogger):
 
     @staticmethod
     def get_captcha_solution_payload_to_mirror_overview_page(soup_html: BeautifulSoup, captcha_solution: str,
-                                                             captcha_parameter_name: str) -> Dict[
+                                                             captcha_parameter_name: str, captcha_id_parameter_name: str) -> Dict[
         str, str]:
         id_inputs = [input for input in soup_html.findAll('input') if
-                     'name' in input.attrs and input.attrs["name"] == 'id']
+                     'name' in input.attrs and input.attrs["name"] == captcha_id_parameter_name]
         assert len(id_inputs) == 1
         id_input = id_inputs[0]
         id = id_input["value"]
@@ -311,6 +311,16 @@ class BaseFunctions(BaseClassWithLogger):
         assert len(links) <= 1
         if links:
             return links[0]["href"]
+
+    @staticmethod
+    def get_captcha_id_parameter_name(soup_html: BeautifulSoup) -> str:
+        inputs = soup_html.select("body > div.content > form > input[type=hidden]")
+
+        for html_input in inputs:
+            if "value" in html_input.attrs.keys() and len(html_input.attrs["value"]) > 3:
+                return html_input["name"]
+
+        raise AssertionError("Could not find ID parameter.")
 
 
 def get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
