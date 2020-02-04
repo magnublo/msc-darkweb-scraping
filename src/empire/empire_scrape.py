@@ -89,7 +89,6 @@ class EmpireScrapingSession(BaseScraper):
         return output.getvalue()
 
     __mirror_manager_lock__ = Lock()
-    __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
 
     def _get_anti_captcha_kwargs(self) -> dict:
@@ -134,9 +133,6 @@ class EmpireScrapingSession(BaseScraper):
 
     def _get_mirror_db_lock(self) -> Lock:
         return self.__mirror_manager_lock__
-
-    def _get_user_credentials_db_lock(self) -> Lock:
-        return self.__user_credentials_db_lock__
 
     def _get_scraping_funcs(self) -> Type[BaseFunctions]:
         return EmpireScrapingFunctions
@@ -348,7 +344,7 @@ class EmpireScrapingSession(BaseScraper):
             Seller.market == self.market_id
         ).order_by(SellerObservation.created_date.desc()).first()
 
-        if previous_seller_observation:
+        if previous_seller_observation and previous_seller_observation.positive_1m is not None:
             new_positive_feedback = previous_seller_observation.positive_1m < positive_1m
             new_neutral_feedback = previous_seller_observation.neutral_1m < neutral_1m
             new_negative_feedback = previous_seller_observation.negative_1m < negative_1m

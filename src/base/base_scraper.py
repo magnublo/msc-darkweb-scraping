@@ -19,7 +19,7 @@ from requests import Response
 from requests.cookies import RequestsCookieJar, CookieConflictError
 from sqlalchemy import func
 from sqlalchemy.exc import ProgrammingError
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, make_transient
 from urllib3.exceptions import HTTPError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
@@ -61,6 +61,7 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, e
 
 
 class BaseScraper(BaseClassWithLogger):
+
     __wrap_up_session_lock__ = Lock()
     __shared_db_session_lock__ = Lock()
 
@@ -73,7 +74,6 @@ class BaseScraper(BaseClassWithLogger):
         self.failed_captcha_counter = 0
         self.mirror_db_lock: Lock = self._get_mirror_db_lock()
         self.current_mirror_failure_lock: Lock = self._get_mirror_failure_lock()
-        self.user_credentials_db_lock: Lock = self._get_user_credentials_db_lock()
         self.proxy_port: int = get_proxy_port(proxy)
         self.time_last_refreshed_mirror_db = 0.0
         self.scraping_funcs = self._get_scraping_funcs()
@@ -86,7 +86,7 @@ class BaseScraper(BaseClassWithLogger):
         self.nr_of_threads = nr_of_threads
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
         self.queue = queue
-        self.shared_db_session: Session = shared_db_session
+        self.SHARED_DB_SESSION: Session = shared_db_session
         self.market_id = self._get_market_id()
         self.duplicates_this_session = 0
         self.web_sessions: Tuple[requests.Session] = self._get_web_sessions()
@@ -156,7 +156,7 @@ class BaseScraper(BaseClassWithLogger):
                           type=error_type, text=error_string, finger_print=finger_print)
             db_session.add(error)
         try:
-            db_session.commit()
+            db_session.flush()
         except ProgrammingError:
             meta_error_string = get_error_string(self, traceback.format_exc(), sys.exc_info())
             print_error_to_file(self.market_id, self.thread_id, meta_error_string, "meta")
@@ -222,39 +222,38 @@ class BaseScraper(BaseClassWithLogger):
 
         is_new_seller = False
         with self.__shared_db_session_lock__:
-            existing_seller_shared = self.shared_db_session.query(Seller) \
+            existing_seller_shared = self.SHARED_DB_SESSION.query(Seller) \
                 .filter_by(name=seller_name, market=self.market_id).first()
 
             if not existing_seller_shared:
                 existing_seller_shared = Seller(name=seller_name, market=self.market_id)
-                self.shared_db_session.add(existing_seller_shared)
-                self.shared_db_session.commit()
+                self.SHARED_DB_SESSION.add(existing_seller_shared)
+                self.SHARED_DB_SESSION.commit()
                 is_new_seller = True
 
-        seller = self.db_session.query(Seller).filter(Seller.id == existing_seller_shared.id).first()
-
-        assert seller is not None
+            seller = self.db_session.merge(existing_seller_shared, load=False)
+            self.SHARED_DB_SESSION.expunge(existing_seller_shared)
 
         return seller, is_new_seller
 
     def _get_listing_observation(self, url: str) -> Tuple[ListingObservation, bool]:
+        is_new_listing_observation = False
+
         with self.__shared_db_session_lock__:
-            listing_observation_shared = self.shared_db_session.query(ListingObservation) \
+            listing_observation_shared = self.SHARED_DB_SESSION.query(ListingObservation) \
                 .filter(ListingObservation.session_id == self.session_id, ListingObservation.url == url).first()
 
             if not listing_observation_shared:
-                self.shared_db_session.rollback()
+                self.SHARED_DB_SESSION.rollback()
                 listing_observation_shared = ListingObservation(session_id=self.session_id,
                                                                 thread_id=self.thread_id,
                                                                 url=url)
                 is_new_listing_observation = True
-                self.shared_db_session.add(listing_observation_shared)
-                self.shared_db_session.commit()
+                self.SHARED_DB_SESSION.add(listing_observation_shared)
+                self.SHARED_DB_SESSION.commit()
 
-        listing_observation = self.db_session.query(ListingObservation).filter(
-            ListingObservation.id == listing_observation_shared.id).first()
-
-        assert listing_observation is not None
+            listing_observation = self.db_session.merge(listing_observation_shared, load=False)
+            self.SHARED_DB_SESSION.expunge(listing_observation_shared)
 
         return listing_observation, is_new_listing_observation
 
@@ -262,22 +261,20 @@ class BaseScraper(BaseClassWithLogger):
         is_new_seller_observation = False
 
         with self.__shared_db_session_lock__:
-            seller_observation_shared = self.shared_db_session.query(SellerObservation) \
+            seller_observation_shared = self.SHARED_DB_SESSION.query(SellerObservation) \
                 .filter(SellerObservation.session_id == self.session_id,
                         SellerObservation.seller_id == seller_id).first()
 
             if not seller_observation_shared:
-                self.shared_db_session.rollback()
+                self.SHARED_DB_SESSION.rollback()
                 seller_observation_shared = SellerObservation(session_id=self.session_id,
                                                               seller_id=seller_id)
-                self.shared_db_session.add(seller_observation_shared)
-                self.shared_db_session.commit()
+                self.SHARED_DB_SESSION.add(seller_observation_shared)
+                self.SHARED_DB_SESSION.commit()
                 is_new_seller_observation = True
 
-        seller_observation = self.db_session.query(SellerObservation).filter(
-            SellerObservation.id == seller_observation_shared.id).first()
-
-        assert seller_observation is not None
+            seller_observation = self.db_session.merge(seller_observation_shared, load=False)
+            self.SHARED_DB_SESSION.expunge(seller_observation_shared)
 
         return seller_observation, is_new_seller_observation
 
@@ -515,7 +512,6 @@ class BaseScraper(BaseClassWithLogger):
         else:
             self._add_captcha_solution(base64_image, captcha_solution, correct=True, username=web_session.username)
             self._add_web_session_cookie_to_db(web_session.cookies)
-            self.db_session.commit()
             return web_session
 
     def _add_captcha_solution(self, image: str, solution: str, correct: bool, website: str = None,
@@ -527,27 +523,34 @@ class BaseScraper(BaseClassWithLogger):
             contains_numbers = contains_numbers or l.isdigit()
             contains_letters = contains_letters or l.isalpha()
         assert contains_numbers or contains_letters
-        self.db_session.add(
-            CaptchaSolution(image=image, solution=solution, website=website, numbers=contains_numbers,
-                            thread_id=self.thread_id, username=username, letters=contains_letters,
-                            solved_correctly=correct))
+        with self.__shared_db_session_lock__:
+            self.db_session.add(
+                CaptchaSolution(image=image, solution=solution, website=website, numbers=contains_numbers,
+                                thread_id=self.thread_id, username=username, letters=contains_letters,
+                                solved_correctly=correct))
+            self.SHARED_DB_SESSION.commit()
+            self.SHARED_DB_SESSION.expunge_all()
 
     def _add_web_session_cookie_to_db(self, cookie_jar: RequestsCookieJar) -> None:
         cookie_object_base64 = base64.b64encode(pickle.dumps(cookie_jar)).decode("utf-8")
         username = self.web_session.username
 
-        existing_cookie: WebSessionCookie = self.db_session.query(WebSessionCookie).filter(
-            WebSessionCookie.username == username,
-            WebSessionCookie.mirror_url == self.mirror_base_url).first()
+        with self.__shared_db_session_lock__:
+            existing_cookie: WebSessionCookie = self.SHARED_DB_SESSION.query(WebSessionCookie).filter(
+                WebSessionCookie.username == username,
+                WebSessionCookie.mirror_url == self.mirror_base_url).first()
 
-        if existing_cookie:
-            existing_cookie.thread_id = self.thread_id
-            existing_cookie.python_object = cookie_object_base64
-        else:
-            self.db_session.add(
-                WebSessionCookie(thread_id=self.thread_id, session_id=self.session_id, username=username,
-                                 mirror_url=self.mirror_base_url, python_object=cookie_object_base64)
-            )
+            if existing_cookie:
+                existing_cookie.thread_id = self.thread_id
+                existing_cookie.python_object = cookie_object_base64
+            else:
+                self.SHARED_DB_SESSION.add(
+                    WebSessionCookie(thread_id=self.thread_id, session_id=self.session_id, username=username,
+                                     mirror_url=self.mirror_base_url, python_object=cookie_object_base64)
+                )
+            self.SHARED_DB_SESSION.commit()
+            self.SHARED_DB_SESSION.expunge_all()
+
         try:
             self.logger.info(
                 "Saved cookie {0} to db for username {1} and url {2}".format(''.join(str(dict(cookie_jar)).split('\n')),
@@ -555,7 +558,7 @@ class BaseScraper(BaseClassWithLogger):
                                                                              f"{self.mirror_base_url[0:5]}..."))
         except CookieConflictError:
             pass
-        self.db_session.commit()
+
 
     def _set_cookie_on_web_sessions(self) -> None:
         for web_session in self.web_sessions:
@@ -764,10 +767,6 @@ class BaseScraper(BaseClassWithLogger):
         raise NotImplementedError('')
 
     @abstractmethod
-    def _get_user_credentials_db_lock(self) -> Lock:
-        raise NotImplementedError('')
-
-    @abstractmethod
     def _get_mirror_failure_lock(self) -> Lock:
         raise NotImplementedError('')
 
@@ -826,22 +825,21 @@ class BaseScraper(BaseClassWithLogger):
 
     def _get_web_session(self, order_rand: bool) -> requests.Session:
         order_criterium = func.rand() if order_rand else WebSessionCookie.updated_date.desc()
-        with self.user_credentials_db_lock:
-            web_session: requests.Session = self._get_web_session_object()
+        web_session: requests.Session = self._get_web_session_object()
 
-            user_credential: UserCredential = self.db_session.query(UserCredential).filter(
+        with self.__shared_db_session_lock__:
+            user_credential: UserCredential = self.SHARED_DB_SESSION.query(UserCredential).filter(
                 UserCredential.market_id == self.market_id, UserCredential.thread_id == -1,
                 UserCredential.is_registered == 1).join(WebSessionCookie,
                                                         WebSessionCookie.username == UserCredential.username,
                                                         isouter=True).order_by(order_criterium).first()
-
             assert user_credential is not None
             assert user_credential.thread_id == -1
             user_credential.thread_id = self.thread_id
             web_session.username = user_credential.username
             web_session.password = user_credential.password
             self.logger.info(f"Loaded username {user_credential.username}")
-            self.db_session.commit()
+            self.SHARED_DB_SESSION.commit()
             return web_session
 
     def _get_web_sessions(self, order_rand: bool = False) -> Tuple[requests.Session]:
@@ -874,12 +872,12 @@ class BaseScraper(BaseClassWithLogger):
         return country.id
 
     def _release_user_credentials(self):
-        with self.user_credentials_db_lock:
+        with self.__shared_db_session_lock__:
             for web_session in self.web_sessions:
-                user_credential = self.db_session.query(UserCredential).filter(
+                user_credential = self.SHARED_DB_SESSION.query(UserCredential).filter(
                     UserCredential.username == web_session.username, UserCredential.market_id == self.market_id).first()
                 user_credential.thread_id = -1
-            self.db_session.commit()
+            self.SHARED_DB_SESSION.commit()
 
     def _clear_all_cookies(self) -> None:
         for web_session in self.web_sessions:

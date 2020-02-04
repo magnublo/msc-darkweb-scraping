@@ -26,7 +26,6 @@ from src.utils import PageType, get_page_as_soup_html, ListingType
 
 class ApollonScrapingSession(BaseScraper):
     __mirror_manager_lock__ = Lock()
-    __user_credentials_db_lock__ = Lock()
     __mirror_failure_lock__ = Lock()
 
     def _apply_processing_to_captcha_image(self, image_response, captcha_instruction):
@@ -107,9 +106,6 @@ class ApollonScrapingSession(BaseScraper):
 
     def _get_mirror_db_lock(self) -> Lock:
         return self.__mirror_manager_lock__
-
-    def _get_user_credentials_db_lock(self) -> Lock:
-        return self.__user_credentials_db_lock__
 
     def _get_mirror_failure_lock(self) -> Lock:
         return self.__mirror_failure_lock__
