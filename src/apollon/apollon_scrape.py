@@ -472,6 +472,6 @@ class ApollonScrapingSession(BaseScraper):
                                                      url=url)
             is_new_listing_observation = True
             self.db_session.add(listing_observation)
-            self.db_session.flush()
+            self.db_session.commit()
 
         return listing_observation, is_new_listing_observation
