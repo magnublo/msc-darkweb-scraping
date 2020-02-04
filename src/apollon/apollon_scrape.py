@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests import Response
 from sqlalchemy import func
+from sqlalchemy.orm import make_transient
 
 from definitions import APOLLON_MARKET_ID, APOLLON_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS, APOLLON_SRC_DIR, \
     APOLLON_HTTP_HEADERS, APOLLON_MIN_CREDENTIALS_PER_THREAD, APOLLON_MARKET_CATEGORY_INDEX_URL_PATH, \
@@ -365,8 +366,8 @@ class ApollonScrapingSession(BaseScraper):
         if is_new_seller:
             seller.registration_date = registration_date
 
+        self.db_session.expire(seller_observation)
         self.db_session.flush()
-
         self._add_external_market_verifications(seller_observation.id, external_market_verifications)
 
     def _scrape_feedback(self, seller, is_new_seller, category, url):
