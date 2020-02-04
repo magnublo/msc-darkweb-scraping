@@ -271,9 +271,9 @@ class MirrorManager:
         http_verb = 'POST' if post_data else 'GET'
         kwargs = {"method": http_verb, 'url': url, 'data': post_data, 'headers': headers}
         max_tries = 10
-        if http_verb == 'GET': self.scraper.logger.info(
+        if http_verb == 'GET': self.scraper.logger.debug(
             pretty_print_GET(self.web_session.prepare_request(requests.Request(**kwargs))))
-        if http_verb == 'POST': self.scraper.logger.info(pretty_print_POST(
+        if http_verb == 'POST': self.scraper.logger.debug(pretty_print_POST(
             self.web_session.prepare_request(
                 requests.Request(**kwargs))))
         for _ in range(max_tries):
