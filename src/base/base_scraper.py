@@ -10,7 +10,7 @@ from random import gauss
 from threading import Lock
 from time import sleep
 from time import time
-from typing import Callable, List, Tuple, Union, Type, Any, Dict, Optional
+from typing import Callable, List, Tuple, Union, Type, Any, Dict, Optional, Set
 
 import requests
 from python3_anticaptcha import AntiCaptchaControl, ImageToTextTask
@@ -61,10 +61,12 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, e
 
 
 class BaseScraper(BaseClassWithLogger):
+
     __wrap_up_session_lock__ = Lock()
+    __current_tasks_lock__ = Lock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
-                 proxy: dict, session_id: int):
+                 proxy: dict, session_id: int, current_tasks: Set[str]):
         super().__init__()
         self.engine = get_engine()
         self.url_failure_counts: Dict[str, int] = {}
@@ -85,6 +87,7 @@ class BaseScraper(BaseClassWithLogger):
         self.nr_of_threads = nr_of_threads
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
         self.queue = queue
+        self.current_tasks = current_tasks
         self.market_id = self._get_market_id()
         self.duplicates_this_session = 0
         self.web_sessions: Tuple[requests.Session] = self._get_web_sessions()
@@ -216,7 +219,8 @@ class BaseScraper(BaseClassWithLogger):
                                      min(nr_of_errors - 1, highest_index)] + self.thread_id * 2
         return seconds_until_next_try
 
-    def _get_seller(self, seller_name: str) -> Tuple[Seller, bool]:
+    def _get_seller(self, seller_name: str) -> Tuple[Optional[Seller], bool]:
+        self.db_session.commit()
         existing_seller = self.db_session.query(Seller) \
             .filter_by(name=seller_name, market=self.market_id).first()
 
@@ -224,15 +228,23 @@ class BaseScraper(BaseClassWithLogger):
             seller = existing_seller
             return seller, False
         else:
+            with self.__current_tasks_lock__:
+                if seller_name in self.current_tasks:
+                    sleep_interval = 15
+                    self.logger.warn(f"Seller is in current tasks set. Sleeping {sleep_interval} and retrying...")
+                    sleep(sleep_interval)
+                    return self._get_seller(seller_name)
+                else:
+                    self.current_tasks.add(seller_name)
             seller = Seller(name=seller_name, market=self.market_id)
             self.db_session.add(seller)
-            self.db_session.flush()
+            self.db_session.commit()
+            self.current_tasks.discard(seller_name)
             return seller, True
 
-    def _get_listing_observation(self, title: str, seller_id: int) -> Tuple[ListingObservation, bool]:
+    def _get_listing_observation(self, url: str) -> Tuple[Optional[ListingObservation], bool]:
         existing_listing_observation = self.db_session.query(ListingObservation) \
-            .filter(ListingObservation.session_id == self.session_id, ListingObservation.title == title,
-                    ListingObservation.seller_id == seller_id).first()
+            .filter(ListingObservation.session_id == self.session_id, ListingObservation.url == url).first()
 
         if existing_listing_observation:
             if existing_listing_observation.origin_country is None:
@@ -243,17 +255,21 @@ class BaseScraper(BaseClassWithLogger):
             listing_observation = existing_listing_observation
             is_new_listing_observation = False
         else:
+            with self.__current_tasks_lock__:
+                if url in self.current_tasks:
+                    return None, False
+                else:
+                    self.current_tasks.add(url)
             listing_observation = ListingObservation(session_id=self.session_id,
                                                      thread_id=self.thread_id,
-                                                     title=title,
-                                                     seller_id=seller_id)
+                                                     url=url)
             is_new_listing_observation = True
             self.db_session.add(listing_observation)
-            self.db_session.flush()
+            self.db_session.commit()
 
         return listing_observation, is_new_listing_observation
 
-    def _exists_seller_observation_from_this_session(self, seller_id: int) -> bool:
+    def _get_is_new_seller_observation(self, seller_id: int) -> bool:
         existing_seller_observation = self.db_session.query(SellerObservation.id) \
             .filter(SellerObservation.session_id == self.session_id) \
             .join(Seller) \
@@ -263,6 +279,11 @@ class BaseScraper(BaseClassWithLogger):
         if existing_seller_observation:
             return False
         else:
+            with self.__current_tasks_lock__:
+                if seller_id in self.current_tasks:
+                    return False
+                else:
+                    self.current_tasks.add(str(seller_id))
             return True
 
     def _add_category_junctions(self, listing_observation_id: int, listing_categories: Tuple[

@@ -152,7 +152,7 @@ class CryptoniaScrapingSession(BaseScraper):
         if not is_new_listing_observation:
             return
 
-        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
+        is_new_seller_observation = self._get_is_new_seller_observation(seller.id)
 
         if is_new_seller_observation:
             self._scrape_seller(seller_url, seller, is_new_seller)

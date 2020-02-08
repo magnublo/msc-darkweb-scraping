@@ -96,11 +96,6 @@ class EmpireScrapingSession(BaseScraper):
             'numeric': 1
         }
 
-    def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict,
-                 session_id: int):
-        super().__init__(queue, nr_of_threads, thread_id=thread_id, proxy=proxy,
-                         session_id=session_id)
-
     def _is_logged_out(self, web_session: requests.Session, response: Response, login_url: str,
                        login_page_phrase: str) -> bool:
 
@@ -231,18 +226,18 @@ class EmpireScrapingSession(BaseScraper):
 
         seller, is_new_seller = self._get_seller(seller_name)
 
-        listing_observation, is_new_listing_observation = self._get_listing_observation(title, seller.id)
+        listing_observation, is_new_listing_observation = self._get_listing_observation(product_page_url)
 
         if not is_new_listing_observation:
-            if listing_observation.promoted_listing != is_sticky:
-                listing_observation.promoted_listing = True
-                self.db_session.flush()
             return
 
-        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
+        is_new_seller_observation = self._get_is_new_seller_observation(seller.id)
 
         if is_new_seller_observation:
             self._scrape_seller(seller_url, seller, is_new_seller)
+
+        with self.__current_tasks_lock__:
+            self.current_tasks.discard(str(seller.id))
 
         self.print_crawling_debug_message(url=product_page_url)
 
@@ -292,6 +287,8 @@ class EmpireScrapingSession(BaseScraper):
         destination_country_ids = country_ids[1:]
         self._add_country_junctions(destination_country_ids, listing_observation.id)
 
+        listing_observation.title = title
+        listing_observation.seller_id = seller.id
         listing_observation.listing_text_id = listing_text_id
         listing_observation.btc = accepts_BTC
         listing_observation.ltc = accepts_LTC
@@ -314,6 +311,9 @@ class EmpireScrapingSession(BaseScraper):
         listing_observation.nr_of_views = nr_of_views
 
         self.db_session.flush()
+
+        with self.__current_tasks_lock__:
+            self.current_tasks.discard(product_page_url)
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
         self.print_crawling_debug_message(url=seller_url)

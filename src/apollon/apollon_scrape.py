@@ -222,19 +222,18 @@ class ApollonScrapingSession(BaseScraper):
 
         seller, is_new_seller = self._get_seller(seller_name)
 
-        listing_observation, is_new_listing_observation = self._get_listing_observation_from_url(title, seller.id,
-                                                                                                 product_url)
+        listing_observation, is_new_listing_observation = self._get_listing_observation(product_url)
 
         if not is_new_listing_observation:
-            if listing_observation.promoted_listing != is_sticky:
-                listing_observation.promoted_listing = True
-                self.db_session.flush()
             return
 
-        is_new_seller_observation = self._exists_seller_observation_from_this_session(seller.id)
+        is_new_seller_observation = self._get_is_new_seller_observation(seller.id)
 
         if is_new_seller_observation:
             self._scrape_seller(seller_url, seller, is_new_seller)
+
+        with self.__current_tasks_lock__:
+            self.current_tasks.discard(str(seller.id))
 
         self.print_crawling_debug_message(url=product_url)
 
@@ -266,6 +265,8 @@ class ApollonScrapingSession(BaseScraper):
         destination_country_ids = country_ids[1:]
         self._add_country_junctions(destination_country_ids, listing_observation.id)
 
+        listing_observation.title = title
+        listing_observation.seller_id = seller.id
         listing_observation.listing_text_id = listing_text_id
         listing_observation.btc = accepts_BTC
         listing_observation.ltc = accepts_LTC
@@ -292,6 +293,9 @@ class ApollonScrapingSession(BaseScraper):
         listing_observation.fifty_percent_finalize_early = fifty_percent_finalize_early
 
         self.db_session.flush()
+
+        with self.__current_tasks_lock__:
+            self.current_tasks.discard(product_url)
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
         self.scraping_funcs: ApollonScrapingFunctions
@@ -450,28 +454,3 @@ class ApollonScrapingSession(BaseScraper):
                     nr_of_neutral_reviews=neutral_reviews, nr_of_bad_reviews=bad_reviews, free_text=free_text)
             )
             self.db_session.flush()
-
-    def _get_listing_observation_from_url(self, title: str, seller_id: int, url: str) -> Tuple[
-            ListingObservation, bool]:
-        existing_listing_observation = self.db_session.query(ListingObservation) \
-            .filter(ListingObservation.session_id == self.session_id, ListingObservation.url == url).first()
-
-        if existing_listing_observation:
-            if existing_listing_observation.origin_country is None:
-                return existing_listing_observation, True  # This listing is the result of an exception and rollback
-                # mid-scrape
-            self.print_crawling_debug_message(existing_listing_observation=existing_listing_observation)
-            self.duplicates_this_session += 1
-            listing_observation = existing_listing_observation
-            is_new_listing_observation = False
-        else:
-            listing_observation = ListingObservation(session_id=self.session_id,
-                                                     thread_id=self.thread_id,
-                                                     title=title,
-                                                     seller_id=seller_id,
-                                                     url=url)
-            is_new_listing_observation = True
-            self.db_session.add(listing_observation)
-            self.db_session.commit()
-
-        return listing_observation, is_new_listing_observation
