@@ -280,7 +280,7 @@ class BaseScraper(BaseClassWithLogger):
             return False
         else:
             with self.__current_tasks_lock__:
-                if seller_id in self.current_tasks:
+                if str(seller_id) in self.current_tasks:
                     return False
                 else:
                     self.current_tasks.add(str(seller_id))
