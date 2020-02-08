@@ -257,6 +257,7 @@ class BaseScraper(BaseClassWithLogger):
         else:
             with self.__current_tasks_lock__:
                 if url in self.current_tasks:
+                    self.logger.warn(f"Other thread already scraping listing with url {url}. Skipping...")
                     return None, False
                 else:
                     self.current_tasks.add(url)
@@ -281,6 +282,7 @@ class BaseScraper(BaseClassWithLogger):
         else:
             with self.__current_tasks_lock__:
                 if str(seller_id) in self.current_tasks:
+                    self.logger.warn(f"Other thread already scraping seller with ID {seller_id}. Skipping...")
                     return False
                 else:
                     self.current_tasks.add(str(seller_id))
