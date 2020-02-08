@@ -64,9 +64,10 @@ class BaseScraper(BaseClassWithLogger):
 
     __wrap_up_session_lock__ = Lock()
     __current_tasks_lock__ = Lock()
+    CURRENT_TASKS: Set[Union[str, int]] = set()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int,
-                 proxy: dict, session_id: int, current_tasks: Set[str]):
+                 proxy: dict, session_id: int):
         super().__init__()
         self.engine = get_engine()
         self.url_failure_counts: Dict[str, int] = {}
@@ -87,7 +88,6 @@ class BaseScraper(BaseClassWithLogger):
         self.nr_of_threads = nr_of_threads
         self.anti_captcha_control = AntiCaptchaControl.AntiCaptchaControl(ANTI_CAPTCHA_ACCOUNT_KEY)
         self.queue = queue
-        self.current_tasks = current_tasks
         self.market_id = self._get_market_id()
         self.duplicates_this_session = 0
         self.web_sessions: Tuple[requests.Session] = self._get_web_sessions()
@@ -229,17 +229,17 @@ class BaseScraper(BaseClassWithLogger):
             return seller, False
         else:
             with self.__current_tasks_lock__:
-                if seller_name in self.current_tasks:
+                if seller_name in self.CURRENT_TASKS:
                     sleep_interval = 15
                     self.logger.warn(f"Seller is in current tasks set. Sleeping {sleep_interval} and retrying...")
                     sleep(sleep_interval)
                     return self._get_seller(seller_name)
                 else:
-                    self.current_tasks.add(seller_name)
+                    self.CURRENT_TASKS.add(seller_name)
             seller = Seller(name=seller_name, market=self.market_id)
             self.db_session.add(seller)
             self.db_session.commit()
-            self.current_tasks.discard(seller_name)
+            self.CURRENT_TASKS.discard(seller_name)
             return seller, True
 
     def _get_listing_observation(self, url: str) -> Tuple[Optional[ListingObservation], bool]:
@@ -256,11 +256,11 @@ class BaseScraper(BaseClassWithLogger):
             is_new_listing_observation = False
         else:
             with self.__current_tasks_lock__:
-                if url in self.current_tasks:
+                if url in self.CURRENT_TASKS:
                     self.logger.warn(f"Other thread already scraping listing with url {url}. Skipping...")
                     return None, False
                 else:
-                    self.current_tasks.add(url)
+                    self.CURRENT_TASKS.add(url)
             listing_observation = ListingObservation(session_id=self.session_id,
                                                      thread_id=self.thread_id,
                                                      url=url)
@@ -281,11 +281,11 @@ class BaseScraper(BaseClassWithLogger):
             return False
         else:
             with self.__current_tasks_lock__:
-                if str(seller_id) in self.current_tasks:
+                if str(seller_id) in self.CURRENT_TASKS:
                     self.logger.warn(f"Other thread already scraping seller with ID {seller_id}. Skipping...")
                     return False
                 else:
-                    self.current_tasks.add(str(seller_id))
+                    self.CURRENT_TASKS.add(str(seller_id))
             return True
 
     def _add_category_junctions(self, listing_observation_id: int, listing_categories: Tuple[

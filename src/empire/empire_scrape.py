@@ -237,7 +237,7 @@ class EmpireScrapingSession(BaseScraper):
             self._scrape_seller(seller_url, seller, is_new_seller)
 
         with self.__current_tasks_lock__:
-            self.current_tasks.discard(str(seller.id))
+            self.CURRENT_TASKS.discard(str(seller.id))
 
         self.print_crawling_debug_message(url=product_page_url)
 
@@ -313,7 +313,7 @@ class EmpireScrapingSession(BaseScraper):
         self.db_session.flush()
 
         with self.__current_tasks_lock__:
-            self.current_tasks.discard(product_page_url)
+            self.CURRENT_TASKS.discard(product_page_url)
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
         self.print_crawling_debug_message(url=seller_url)

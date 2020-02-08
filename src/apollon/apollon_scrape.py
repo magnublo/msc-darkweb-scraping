@@ -233,7 +233,7 @@ class ApollonScrapingSession(BaseScraper):
             self._scrape_seller(seller_url, seller, is_new_seller)
 
         with self.__current_tasks_lock__:
-            self.current_tasks.discard(str(seller.id))
+            self.CURRENT_TASKS.discard(str(seller.id))
 
         self.print_crawling_debug_message(url=product_url)
 
@@ -295,7 +295,7 @@ class ApollonScrapingSession(BaseScraper):
         self.db_session.flush()
 
         with self.__current_tasks_lock__:
-            self.current_tasks.discard(product_url)
+            self.CURRENT_TASKS.discard(product_url)
 
     def _scrape_seller(self, seller_url, seller, is_new_seller):
         self.scraping_funcs: ApollonScrapingFunctions
