@@ -281,11 +281,11 @@ class BaseScraper(BaseClassWithLogger):
             return False
         else:
             with self.__current_tasks_lock__:
-                if str(seller_id) in self.CURRENT_TASKS:
+                if seller_id in self.CURRENT_TASKS:
                     self.logger.warn(f"Other thread already scraping seller with ID {seller_id}. Skipping...")
                     return False
                 else:
-                    self.CURRENT_TASKS.add(str(seller_id))
+                    self.CURRENT_TASKS.add(seller_id)
             return True
 
     def _add_category_junctions(self, listing_observation_id: int, listing_categories: Tuple[
