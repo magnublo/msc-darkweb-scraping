@@ -238,15 +238,25 @@ class BaseFunctions(BaseClassWithLogger):
 
     @staticmethod
     def get_captcha_base64_image_from_mirror_overview_page(soup_html: BeautifulSoup) -> str:
-        all_imgs = [img for img in soup_html.findAll('img')]
+        all_imgs = set([img for img in soup_html.findAll('img')])
 
         invisible_classes = BaseFunctions._get_invisible_classes(soup_html)
 
-        # finding all images which are NOT invisible in a typical browser
-        captcha_imgs = [img for img in all_imgs if img['class'][0] not in invisible_classes]
+        # finding all images which are invisible in a typical browser
+        invisible_imgs = set()
+        for img in all_imgs:
+            img_classes = img.attrs.get("class")
+            for img_class in img_classes:
+                if img_class in invisible_classes:
+                    invisible_imgs.add(img)
+            img_style = img.attrs.get("style")
+            if img_style == "display:none":
+                invisible_imgs.add(img)
+
+        captcha_imgs = all_imgs.difference(invisible_imgs)
 
         assert len(captcha_imgs) == 1
-        captcha_img = captcha_imgs[0]
+        captcha_img = next(iter(captcha_imgs))
 
         pattern = "data:data:image/png;base64,"
         base64_image = captcha_img["src"][len(pattern):]
