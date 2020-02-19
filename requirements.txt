@@ -18,3 +18,4 @@ brotli==1.0.7
 tabulate==0.8.5
 cssutils==1.0.2
 Pillow==7.0.0
+pytest==5.3.5

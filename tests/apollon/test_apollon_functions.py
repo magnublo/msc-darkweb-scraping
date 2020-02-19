@@ -643,19 +643,19 @@ class TestApollonGetFeedbacks(ApollonBaseTest):
         feedbacks = scrapingFunctions.get_feedbacks(soup_html)
         self.assertTupleEqual(((datetime.datetime(2020, 2, 3, 2, 59), 'Diffidence',
                                 '10.10 for price and quality will be back for more', 'd35dba05', 'D...e', 'USD',
-                                '850.00', '/listing.php?ls_id=90422'), (datetime.datetime(2020, 2, 2, 3, 49),
+                                850.00, '/listing.php?ls_id=90422'), (datetime.datetime(2020, 2, 2, 3, 49),
                                                                         'INTRO 7G BOLIVIAN 72�% £250 Check our new '
                                                                         'brick stock 10/10',
                                                                         'No Comment', '3099c443', 'y...e', 'USD',
-                                                                        '252.00', '/listing.php?ls_id=23290'), (
+                                                                        252.00, '/listing.php?ls_id=23290'), (
                                    datetime.datetime(2020, 1, 31, 5, 19),
                                    'Powerful sociable Cocaine intro sale! 60% - 1G £30', '5*', '3c26f6ea', 'a...d',
                                    'USD',
-                                   '33.00', '/listing.php?ls_id=29703'), (datetime.datetime(2020, 1, 31, 5, 19),
+                                   33.00, '/listing.php?ls_id=29703'), (datetime.datetime(2020, 1, 31, 5, 19),
                                                                           'Powerful sociable Cocaine intro sale! 60% '
                                                                           '- 1G '
                                                                           '£30',
-                                                                          '5*', '3c26f6ea', 'a...d', 'USD', '33.00',
+                                                                          '5*', '3c26f6ea', 'a...d', 'USD', 33.00,
                                                                           '/listing.php?ls_id=29703'), (
                                    datetime.datetime(2020, 1, 31, 3, 4), 'Intro Top Colombian 93% Cocaine 10g',
                                    "Had similar problems to others over xmas with this guy, but he's sound and will "
@@ -663,40 +663,78 @@ class TestApollonGetFeedbacks(ApollonBaseTest):
                                    "it sorted.  Great CS, ok stealth, not tried the product yet, but it's fat, "
                                    "well overweight to make up for the wait.  Will def use again, just hope I can find "
                                    "him if this s",
-                                   '86229c36', 'm...s', 'USD', '502.00', '/listing.php?ls_id=23295'), (
+                                   '86229c36', 'm...s', 'USD', 502.00, '/listing.php?ls_id=23295'), (
                                    datetime.datetime(2020, 1, 31, 12, 7),
                                    'Powerful sociable Cocaine intro sale! 60% - 3.5G £100', '3.7g, perfect as always',
-                                   '03a83169', 'b...8', 'USD', '103.00', '/listing.php?ls_id=29704'), (
+                                   '03a83169', 'b...8', 'USD', 103.00, '/listing.php?ls_id=29704'), (
                                    datetime.datetime(2020, 1, 30, 11, 54),
                                    'Powerful sociable Cocaine intro sale! 60% - 1G £30', 'No Comment', '3099c443',
                                    's...t',
-                                   'USD', '33.00', '/listing.php?ls_id=29703'), (
+                                   'USD', 33.00, '/listing.php?ls_id=29703'), (
                                    datetime.datetime(2020, 1, 30, 10, 24), 'NEW FIRE BATCH Top Columbian Cocaine 1G',
-                                   'OPretty good, fast delivery', 'bd9158e5', 'w...t', 'USD', '62.00',
+                                   'OPretty good, fast delivery', 'bd9158e5', 'w...t', 'USD', 62.00,
                                    '/listing.php?ls_id=23681'), (datetime.datetime(2020, 1, 30, 5, 36),
                                                                  'INTRO 7G BOLIVIAN 72�% £250 Check our new brick '
                                                                  'stock '
                                                                  '10/10',
-                                                                 'No Comment', '3099c443', 'y...e', 'USD', '265.00',
+                                                                 'No Comment', '3099c443', 'y...e', 'USD', 265.00,
                                                                  '/listing.php?ls_id=23290'), (
                                    datetime.datetime(2020, 1, 29, 3, 28),
                                    'Powerful sociable Cocaine intro sale! 60% - 3.5G £100',
                                    'cheers buddy, nice and quick.',
-                                   '61a10a8b', 's...y', 'USD', '110.00', '/listing.php?ls_id=29704'), (
+                                   '61a10a8b', 's...y', 'USD', 110.00, '/listing.php?ls_id=29704'), (
                                    datetime.datetime(2020, 1, 29, 2, 12), 'Intro Top Colombian 93% Cocaine 0.5g',
-                                   'top team', 'afc10835', 'B...1', 'USD', '32.00', '/listing.php?ls_id=23260'), (
+                                   'top team', 'afc10835', 'B...1', 'USD', 32.00, '/listing.php?ls_id=23260'), (
                                    datetime.datetime(2020, 1, 29, 3, 17), 'Intro Top Colombian 93% Cocaine 0.25g',
-                                   'Great. thanks!', 'e71066e7', 'c...r', 'USD', '17.00', '/listing.php?ls_id=23258'), (
+                                   'Great. thanks!', 'e71066e7', 'c...r', 'USD', 17.00, '/listing.php?ls_id=23258'), (
                                    datetime.datetime(2020, 1, 29, 2, 10), 'Intro Top Colombian 93% Cocaine 14g',
                                    'BRILIANT VENDOR BEST ON HERE OVERWEIGHT PRIE GREAT PRODUCT AMAZING', 'b2716b1a',
-                                   'm...5', 'USD', '608.00', '/listing.php?ls_id=23304'), (
+                                   'm...5', 'USD', 608.00, '/listing.php?ls_id=23304'), (
                                    datetime.datetime(2020, 1, 28, 10, 8), 'Intro Top Colombian 93% Cocaine 7g',
                                    'Came 1g+ overweight to make up for xmas mixup - lovely gear NDD - UKNK pluggy.',
-                                   '39df41f5', 'J...1', 'USD', '302.00', '/listing.php?ls_id=23288'), (
+                                   '39df41f5', 'J...1', 'USD', 302.00, '/listing.php?ls_id=23288'), (
                                    datetime.datetime(2020, 1, 28, 9, 52),
                                    'Powerful sociable Cocaine intro sale! 60% - 1G £30', '4DD to UK', 'e3e2da4e',
                                    'p...5',
-                                   'USD', '33.00', '/listing.php?ls_id=29703')), feedbacks)
+                                   'USD', 33.00, '/listing.php?ls_id=29703')), feedbacks)
+
+    def test_get_feedbacks_four(self):
+        soup_html = self._get_page_as_soup_html("feedbacks/positive_feedback_4")
+        feedbacks = scrapingFunctions.get_feedbacks(soup_html)
+        self.assertTupleEqual(((datetime.datetime(2020, 2, 17, 3, 14), '25g COCAINE FISHSCALE PURE FLAKE 90%',
+                                'BEST VENDOR AAAA++++', '0539226b', 'r...n', 'USD', 1340.0, '/listing.php?ls_id=30534'),
+                               (datetime.datetime(2020, 2, 17, 3, 14),
+                                '20g Crystal Meth Mexican Cartell REAL EPHEDRINE UNCUT Quality', 'BEST VENDOR AAA+++',
+                                '50d876af', 'r...n', 'USD', 940.0, '/listing.php?ls_id=30561'), (
+                               datetime.datetime(2020, 2, 14, 3, 33),
+                               'SAMPLE 0.5g Crystal Meth Mexican Cartell REAL EPHEDRINE UNCUT Quality',
+                               'not received yet', '3dafff86', 'k...1', 'USD', 44.0, '/listing.php?ls_id=30554'), (
+                               datetime.datetime(2020, 2, 14, 1, 18),
+                               'SAMPLE 0.5g Uncut Heroin AFGHANISTAN Import HIGH PURITY', "'com?-HmasT,100......?",
+                               '341411c2', 'U...7', 'USD', 37.0, '/listing.php?ls_id=30545'), (
+                               datetime.datetime(2020, 2, 12, 1, 51), '2g COCAINE FISHSCALE PURE FLAKE 90%', 'Perfect',
+                               '56cdd7e9', 'A...S', 'USD', 138.0, '/listing.php?ls_id=30512'), (
+                               datetime.datetime(2020, 2, 12, 1, 51), '2g COCAINE FISHSCALE PURE FLAKE 90%', 'Perfect',
+                               '56cdd7e9', 'A...S', 'USD', 138.0, '/listing.php?ls_id=30512'), (
+                               datetime.datetime(2020, 2, 10, 9, 31), '7g COCAINE FISHSCALE PURE FLAKE 90%',
+                               'No Comment', '3099c443', 'n...7', 'USD', 815.0, '/listing.php?ls_id=30527'), (
+                               datetime.datetime(2020, 2, 9, 2, 32), '5g COCAINE FISHSCALE PURE FLAKE 90%',
+                               'No Comment', '3099c443', 'B...s', 'USD', 315.0, '/listing.php?ls_id=30526'), (
+                               datetime.datetime(2020, 2, 9, 2, 31), '5g COCAINE FISHSCALE PURE FLAKE 90%',
+                               'No Comment', '3099c443', 'B...s', 'USD', 315.0, '/listing.php?ls_id=30526'), (
+                               datetime.datetime(2020, 2, 8, 4, 26),
+                               '3g Crystal Meth Mexican Cartell REAL EPHEDRINE UNCUT Quality', 'No Comment', '3099c443',
+                               'p...9', 'USD', 179.0, '/listing.php?ls_id=30558'), (
+                               datetime.datetime(2020, 2, 8, 4, 26), '5g COCAINE FISHSCALE PURE FLAKE 90%',
+                               'No Comment', '3099c443', 'p...9', 'USD', 315.0, '/listing.php?ls_id=30526'), (
+                               datetime.datetime(2020, 2, 4, 12, 32), '1g Uncut Heroin AFGHANISTAN Import HIGH PURITY',
+                               'No Comment', '3099c443', 'X...1', 'USD', 62.0, '/listing.php?ls_id=30546'), (
+                               datetime.datetime(2020, 2, 3, 7, 28), '5g COCAINE FISHSCALE PURE FLAKE 90%', 'alles gut',
+                               'b9b39bf9', 'a...f', 'USD', 315.0, '/listing.php?ls_id=30526'), (
+                               datetime.datetime(2020, 1, 31, 9, 45), '5g COCAINE FISHSCALE PURE FLAKE 90%',
+                               'No Comment', '3099c443', 'p...7', 'USD', 315.0, '/listing.php?ls_id=30526'), (
+                               datetime.datetime(2020, 1, 31, 8, 58), '10g Uncut Heroin AFGHANISTAN Import HIGH PURITY',
+                               'perfect!', '8c7e2640', 'u...7', 'USD', 365.0, '/listing.php?ls_id=30550')), feedbacks)
 
 
 class TestGetNextFeedbackUrl(ApollonBaseTest):

@@ -579,7 +579,7 @@ class ApollonScrapingFunctions(BaseFunctions):
             title = msg_and_title_td.select_one("sub").text.strip()
             buyer = buyer_td.select_one("small > a").text.strip()
             currency = "USD"
-            price = price_td.select_one("small").text.strip()
+            price = parse_float(price_td.select_one("small").text.strip())
             date_small_text = date_td.select_one("small").text.strip()
             match = re.search(r"[A-Z][a-z]{2}\s[0-9]{2},\s[0-9]{4}\s[0-2][0-9]:[0-5][0-9]", date_small_text)
             publication_date = dateparser.parse(date_small_text[match.regs[0][0]:match.regs[0][1]])

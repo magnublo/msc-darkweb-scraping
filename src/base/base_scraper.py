@@ -295,7 +295,8 @@ class BaseScraper(BaseClassWithLogger):
             category: ListingCategory = self.db_session.query(ListingCategory).filter(
                 ListingCategory.website_id == marketside_category_id,
                 ListingCategory.name == category_name,
-                ListingCategory.market == self.market_id).first()
+                ListingCategory.market == self.market_id,
+                ListingCategory.level == category_level).first()
 
             parent_category = self.db_session.query(ListingCategory.id).filter(
                 ListingCategory.name == parent_category_name, ListingCategory.market == self.market_id,
