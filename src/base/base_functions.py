@@ -246,9 +246,10 @@ class BaseFunctions(BaseClassWithLogger):
         invisible_imgs = set()
         for img in all_imgs:
             img_classes = img.attrs.get("class")
-            for img_class in img_classes:
-                if img_class in invisible_classes:
-                    invisible_imgs.add(img)
+            if img_classes:
+                for img_class in img_classes:
+                    if img_class in invisible_classes:
+                        invisible_imgs.add(img)
             img_style = img.attrs.get("style")
             if img_style == "display:none":
                 invisible_imgs.add(img)
