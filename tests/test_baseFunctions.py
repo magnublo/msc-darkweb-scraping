@@ -89,7 +89,7 @@ class TestGetCaptchaSolutionPayloadToMirrorOverviewPage(BaseTest):
         solution_payload = scrapingFunctions.get_captcha_solution_payload_to_mirror_overview_page(soup_html,
                                                                                                   "some_solution",
                                                                                                   "captcha", 'peace')
-        self.assertEqual({'id': '9BVfAyOV7t6utkz1GyQm', 'captcha': 'some_solution'}, solution_payload)
+        self.assertEqual({'peace': '9BVfAyOV7t6utkz1GyQm', 'captcha': 'some_solution'}, solution_payload)
 
 
 class TestCaptchaSolutionWasWrong(BaseTest):
@@ -125,6 +125,10 @@ class TestGetCaptchaPostParameterName(BaseTest):
         captcha_post_parameter_name = scrapingFunctions.get_captcha_post_parameter_name(soup_html)
         self.assertEqual("love", captcha_post_parameter_name)
 
+    def test_get_captcha_post_parameter_name_four(self):
+        soup_html = self._get_page_as_soup_html("saved_darkfail_captcha_page_4", html_dir=HTML_DIR)
+        captcha_post_parameter_name = scrapingFunctions.get_captcha_post_parameter_name(soup_html)
+        self.assertEqual("tock", captcha_post_parameter_name)
 
 class TestGetCaptchaIdParameterName(BaseTest):
 

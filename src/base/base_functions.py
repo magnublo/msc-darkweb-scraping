@@ -2,7 +2,7 @@ import re
 from abc import abstractstaticmethod
 from datetime import datetime
 from time import time
-from typing import Tuple, Optional, List, Dict
+from typing import Tuple, Optional, List, Dict, Set
 
 import bs4
 import dateparser
@@ -240,19 +240,8 @@ class BaseFunctions(BaseClassWithLogger):
     def get_captcha_base64_image_from_mirror_overview_page(soup_html: BeautifulSoup) -> str:
         all_imgs = set([img for img in soup_html.findAll('img')])
 
-        invisible_classes = BaseFunctions._get_invisible_classes(soup_html)
-
         # finding all images which are invisible in a typical browser
-        invisible_imgs = set()
-        for img in all_imgs:
-            img_classes = img.attrs.get("class")
-            if img_classes:
-                for img_class in img_classes:
-                    if img_class in invisible_classes:
-                        invisible_imgs.add(img)
-            img_style = img.attrs.get("style")
-            if img_style == "display:none":
-                invisible_imgs.add(img)
+        invisible_imgs = BaseFunctions._get_invisible_html_elements(soup_html, all_imgs)
 
         captcha_imgs = all_imgs.difference(invisible_imgs)
 
@@ -266,12 +255,12 @@ class BaseFunctions(BaseClassWithLogger):
 
     @staticmethod
     def get_captcha_post_parameter_name(soup_html: BeautifulSoup) -> str:
-        captcha_input_fields = soup_html.select("body > div.content > form > input[type=text]")
+        all_input_fields = set(soup_html.select("body > div.content > form > input[type=text]"))
+        invisible_input_fields = BaseFunctions._get_invisible_html_elements(soup_html, all_input_fields)
 
-        visible_captcha_input_fields = [i for i in captcha_input_fields if not(
-        ('style' in i.attrs.keys() and i.attrs['style'].find("display: none;") != -1) or (i.attrs["type"] == "hidden"))]
+        visible_captcha_input_fields = all_input_fields.difference(invisible_input_fields)
         assert len(visible_captcha_input_fields) == 1
-        visible_captcha_input_field = visible_captcha_input_fields[0]
+        visible_captcha_input_field = next(iter(visible_captcha_input_fields))
 
         name_of_captcha_post_parameter = visible_captcha_input_field['name']
 
@@ -332,6 +321,22 @@ class BaseFunctions(BaseClassWithLogger):
                 return html_input["name"]
 
         raise AssertionError("Could not find ID parameter.")
+
+    @staticmethod
+    def _get_invisible_html_elements(soup_html: BeautifulSoup, all_elements: Set[BeautifulSoup]) -> Set[BeautifulSoup]:
+        invisible_classes = BaseFunctions._get_invisible_classes(soup_html)
+        invisible_elements = set()
+        for element in all_elements:
+            element_classes = element.attrs.get("class")
+            if element_classes:
+                for element_class in element_classes:
+                    if element_class in invisible_classes:
+                        invisible_elements.add(element)
+            img_style = element.attrs.get("style")
+            if img_style and img_style.replace(" ", "")[0:12] == "display:none":
+                invisible_elements.add(element)
+
+        return invisible_elements
 
 
 def get_external_rating_tuple(market_id: str, info_string: str) -> Tuple[
