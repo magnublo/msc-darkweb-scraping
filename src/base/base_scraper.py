@@ -475,6 +475,8 @@ class BaseScraper(BaseClassWithLogger):
         web_response = self._get_web_response_with_error_catch(web_session, 'GET', self._get_login_url(),
                                                                headers=self.headers, proxies=self.proxy)
         soup_html = get_page_as_soup_html(web_response.text)
+        if self.scraping_funcs.is_logged_in(soup_html, web_session.username):
+            return web_session
 
         captcha_image_request_headers: dict = self._get_captcha_image_request_headers(self.headers)
         image_url = self.scraping_funcs.get_captcha_image_url_from_market_page(soup_html)
