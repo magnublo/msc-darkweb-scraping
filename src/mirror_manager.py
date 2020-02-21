@@ -86,11 +86,15 @@ class MirrorManager:
         last_online_timestamp = candidate_mirror.last_online_timestamp if candidate_mirror else time()
 
         if candidate_mirror and time() - last_online_timestamp > REFRESH_MIRROR_DB_LIMIT:
+            self.scraper.logger.info(
+                f"REFRESH_MIRROR_DB_LIMIT is {REFRESH_MIRROR_DB_LIMIT}, and it has been {time() - last_online_timestamp} since last online date of candidate mirror, so refreshing db.")
             if time() - self.scraper.time_last_refreshed_mirror_db > MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH:
                 self._refresh_mirror_db(db_session)
                 return self._get_new_mirror(db_session)
 
         if (not candidate_mirror) and time() - last_offline_timestamp < REFRESH_MIRROR_DB_LIMIT:
+            self.scraper.logger.info(
+                f"REFRESH_MIRROR_DB_LIMIT is {REFRESH_MIRROR_DB_LIMIT}, there is no candidate mirror, so refreshing db.")
             if time() - self.scraper.time_last_refreshed_mirror_db > MINIMUM_WAIT_BETWEEN_MIRROR_DB_REFRESH:
                 self._refresh_mirror_db(db_session)
                 return self._get_new_mirror(db_session)
@@ -137,7 +141,7 @@ class MirrorManager:
         # E.g. Empire Market has a mirror, http://empiremktxgjovhm.onion/, which is not listed on dark.fail
         # but is frequently available. Hardcoding such mirrors and concatenating with result.
         mirror_status_dict = dict(externally_retrieved_mirror_status_dict,
-                                                              **HARDCODED_MIRRORS[self.scraper.market_id])
+                                  **HARDCODED_MIRRORS[self.scraper.market_id])
 
         urls_in_retrieved_mirrors: List[str] = [key for key in mirror_status_dict.keys()]
         if not urls_in_retrieved_mirrors:
@@ -349,6 +353,6 @@ class MirrorManager:
         if candidate_mirror:
             self.scraper.logger.info(
                 f"Retrieved candidate mirror with url {candidate_mirror.url}. Was confirmed online "
-                f"{time()- candidate_mirror.last_online_timestamp} seconds ago, and confirmed offline "
-                f"{time()- candidate_mirror.last_offline_timestamp} seconds ago.")
+                f"{time() - candidate_mirror.last_online_timestamp} seconds ago, and confirmed offline "
+                f"{time() - candidate_mirror.last_offline_timestamp} seconds ago.")
         return candidate_mirror
