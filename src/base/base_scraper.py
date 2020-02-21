@@ -287,7 +287,7 @@ class BaseScraper(BaseClassWithLogger):
                     return False
                 else:
                     self.CURRENT_TASKS.add(seller_id)
-            return True
+                    return True
 
     def _add_category_junctions(self, listing_observation_id: int, listing_categories: Tuple[
         Tuple[str, Optional[int], Optional[str], Optional[int]]]) -> None:
