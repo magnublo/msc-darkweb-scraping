@@ -500,6 +500,11 @@ class TestIsSearchResult(EmpireBaseTest):
         is_search_result = scrapingFunctions.is_search_result(soup_html)
         self.assertTrue(is_search_result)
 
+    def test_is_search_result_should_be_true_three(self):
+        soup_html = self._get_page_as_soup_html("search_results/saved_empire_search_result_3")
+        is_search_result = scrapingFunctions.is_search_result(soup_html)
+        self.assertTrue(is_search_result)
+
 
 class TestGetMetaRefreshInterval(EmpireBaseTest):
 

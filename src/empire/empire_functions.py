@@ -41,7 +41,6 @@ class EmpireScrapingFunctions(BaseFunctions):
         assert redir_url[0:4].lower() == "url="
         return refresh_interval, f"{urlparse(redir_url[4:]).path}?{urlparse(redir_url[4:]).query}"
 
-
     @staticmethod
     def get_captcha_instruction(soup_html: BeautifulSoup) -> str:
         input_field: BeautifulSoup
@@ -666,7 +665,13 @@ class EmpireScrapingFunctions(BaseFunctions):
         if seller_href_of_first_result:
             return True
         else:
-            return False
+            # nothing_to_show_p = soup_html.select_one(
+            #             #     "body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > h2 > p")
+            nothing_to_show_p = soup_html.select_one("body > div:nth-child(2) > div.body-content > div.wrapper-index > div.right-content > h2")
+            if nothing_to_show_p.text.lower() == "search results":
+                return True
+            else:
+                return False
 
     @staticmethod
     def is_category_index(soup_html: BeautifulSoup) -> bool:
