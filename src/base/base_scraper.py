@@ -625,7 +625,10 @@ class BaseScraper(BaseClassWithLogger):
                 raise e
             except WEB_EXCEPTIONS_TUPLE as e:
                 self._log_and_print_error(self.db_session, e, traceback.format_exc(), print_error=False)
-                self.logger.warn(f"{url} {type(e).__name__}")
+                exception_type = type(e).__name__
+                if exception_type == BadRequestException.__name__:
+                    raise e
+                self.logger.warn(f"{url} {exception_type}")
                 if time() - self.time_last_received_response > DEAD_MIRROR_TIMEOUT:
                     new_mirror: str = self.mirror_manager.get_new_mirror()
                     if new_mirror != self.mirror_base_url:
