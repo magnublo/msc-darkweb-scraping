@@ -508,3 +508,11 @@ class TestGetMetaRefreshInterval(EmpireBaseTest):
         meta_refresh_interval, redir_url = scrapingFunctions.get_meta_refresh_interval(soup_html)
         self.assertEqual(0, meta_refresh_interval)
         self.assertEqual('/index/logindtf=1', redir_url)
+
+
+class TestIsApollon404Error(EmpireBaseTest):
+
+    def test_is_apollon_404_error(self):
+        soup_html = self._get_page_as_soup_html("custom_server_errors/apollon_404_0")
+        is_custom_error = scrapingFunctions.is_apollon_404_error(soup_html)
+        self.assertEqual(True, is_custom_error)

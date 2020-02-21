@@ -3,8 +3,9 @@ import io
 from datetime import datetime
 from math import ceil
 from multiprocessing import Queue
-from random import shuffle
+from random import shuffle, gauss
 from threading import Lock
+from time import time, sleep
 from typing import List, Tuple, Type, Optional
 
 import requests
@@ -16,7 +17,7 @@ from definitions import EMPIRE_MARKET_ID, EMPIRE_SRC_DIR, \
     EMPIRE_HTTP_HEADERS, \
     FEEDBACK_TEXT_HASH_COLUMN_LENGTH, EMPIRE_MARKET_LOGIN_PHRASE, \
     EMPIRE_MARKET_INVALID_SEARCH_RESULT_URL_PHRASE, MD5_HASH_STRING_ENCODING, EMPIRE_MARKET_CATEGORY_INDEX_URL_PATH, \
-    EMPIRE_MIN_CREDENTIALS_PER_THREAD, ROOT_DIR, EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
+    EMPIRE_MIN_CREDENTIALS_PER_THREAD, ROOT_DIR, EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS, ONE_HOUR
 from src.base.base_functions import BaseFunctions
 from src.base.base_scraper import BaseScraper
 from src.db_utils import get_column_name
@@ -117,10 +118,18 @@ class EmpireScrapingSession(BaseScraper):
         return True
 
     def _handle_custom_server_error(self) -> None:
-        raise NotImplementedError('')
+        time_since_last_response = time() - self.time_last_received_response
+        if time_since_last_response > 300:
+            wait_interval = 0.75 * ONE_HOUR
+        else:
+            wait_interval = min(gauss(time_since_last_response, time_since_last_response / 10), 0.75 * ONE_HOUR)
+        self.logger.info(f"Got CustomServerErrorException, sleeping {wait_interval} seconds.")
+        sleep(wait_interval)
 
-    def _is_custom_server_error(self, response) -> bool:
-        return False
+    def _is_custom_server_error(self, response: Response) -> bool:
+        soup_html = get_page_as_soup_html(response.text)
+        self.scraping_funcs: EmpireScrapingFunctions
+        return self.scraping_funcs.is_apollon_404_error(soup_html)
 
     def _get_mirror_failure_lock(self) -> Lock:
         return self.__mirror_failure_lock__

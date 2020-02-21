@@ -675,3 +675,8 @@ class EmpireScrapingFunctions(BaseFunctions):
             return True
         else:
             return False
+
+    @staticmethod
+    def is_apollon_404_error(soup_html: BeautifulSoup) -> bool:
+        header_with_404 = soup_html.select_one("body > div > div.page-header > h3 > span")
+        return header_with_404 and header_with_404.text == "Apollon Market™"
