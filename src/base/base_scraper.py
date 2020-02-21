@@ -483,6 +483,8 @@ class BaseScraper(BaseClassWithLogger):
         image_response = self._get_web_response_with_error_catch(web_session, 'GET', image_url,
                                                                  headers=captcha_image_request_headers,
                                                                  proxies=self.proxy)
+        if image_response.status_code == 404:
+            return self._login_and_set_cookie(web_session)
         image_bytes = image_response.content
         captcha_instruction = self.scraping_funcs.get_captcha_instruction(soup_html)
         anti_captcha_kwargs: Dict[str, any] = self._get_anti_captcha_kwargs()
