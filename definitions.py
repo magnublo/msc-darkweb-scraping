@@ -129,7 +129,7 @@ EMPIRE_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (WALL_STREET_MARKET_ID, "Wall Street Market")
 ]
 
-EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS = ("What's the captcha?",)
+EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS = ("what's the captcha?", "what's the captcha")
 
 
 #CRYPTONIA MARKET
@@ -182,7 +182,7 @@ APOLLON_HTTP_HEADERS = {
     'Accept-Language': 'nb-NO,nb;q=0.9,en-GB;q=0.8,en-US;q=0.7,en;q=0.6,no;q=0.5,nn;q=0.4'
 }
 
-APOLLON_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS = ("Captcha Code",)
+APOLLON_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS = ("captcha code",)
 
 APOLLON_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (EMPIRE_MARKET_ID, "empire"),

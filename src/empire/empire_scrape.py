@@ -67,7 +67,7 @@ class EmpireScrapingSession(BaseScraper):
         return headers
 
     def _captcha_instruction_is_generic(self, captcha_instruction: str) -> bool:
-        return captcha_instruction in EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
+        return captcha_instruction.lower() in EMPIRE_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
 
     def _apply_processing_to_captcha_image(self, image_response: bytes, captcha_instruction: str) -> bytes:
         imageStream = io.BytesIO(image_response)

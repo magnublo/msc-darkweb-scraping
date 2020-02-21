@@ -33,7 +33,7 @@ class ApollonScrapingSession(BaseScraper):
         raise NotImplementedError('')
 
     def _captcha_instruction_is_generic(self, captcha_instruction: str) -> bool:
-        return captcha_instruction in APOLLON_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
+        return captcha_instruction.lower() in APOLLON_MARKET_GENERIC_CAPTCHA_INSTRUCTIONS
 
     def _is_expected_page(self, response: requests.Response, expected_page_type: PageType) -> bool:
         return True
