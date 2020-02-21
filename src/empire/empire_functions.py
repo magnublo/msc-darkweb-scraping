@@ -39,7 +39,7 @@ class EmpireScrapingFunctions(BaseFunctions):
         refresh_interval_str, redir_url = [s.strip() for s in refresh_interval_and_redir_url.split(";")]
         refresh_interval = int(refresh_interval_str)
         assert redir_url[0:4].lower() == "url="
-        return refresh_interval, urlparse(redir_url[4:]).path + urlparse(redir_url[4:]).query
+        return refresh_interval, f"{urlparse(redir_url[4:]).path}?{urlparse(redir_url[4:]).query}"
 
 
     @staticmethod
