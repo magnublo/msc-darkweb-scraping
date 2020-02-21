@@ -34,7 +34,8 @@ from src.base.base_logger import BaseClassWithLogger
 from src.db_utils import shorten_and_sanitize_for_medium_text_column, get_engine, get_db_session, sanitize_error, \
     get_column_name
 from src.exceptions import GenericException, InternalServerErrorException, BadGatewayException, \
-    GatewayTimeoutException, EmptyResponseException, CustomServerErrorException, ServiceUnavailableException
+    GatewayTimeoutException, EmptyResponseException, CustomServerErrorException, ServiceUnavailableException, \
+    BadRequestException
 from src.mirror_manager import MirrorManager
 from src.models.bulk_price import BulkPrice
 from src.models.captcha_solution import CaptchaSolution
@@ -57,7 +58,7 @@ from src.utils import pretty_print_GET, get_error_string, print_error_to_file, e
     get_seconds_until_midnight, get_page_as_soup_html, get_proxy_port, get_schemaed_url, \
     pretty_print_POST, determine_real_country, get_estimated_finish_time_as_readable_string, \
     is_internal_server_error, is_bad_gateway, is_gateway_timed_out, is_empty_response, is_service_unavailable_error, \
-    PageType
+    PageType, is_bad_request
 
 
 class BaseScraper(BaseClassWithLogger):
@@ -691,6 +692,8 @@ class BaseScraper(BaseClassWithLogger):
             return InternalServerErrorException(response.text)
         elif is_bad_gateway(response):
             return BadGatewayException(response.text)
+        elif is_bad_request(response):
+            return BadRequestException(response.text)
         elif is_gateway_timed_out(response):
             return GatewayTimeoutException(response.text)
         elif is_empty_response(response):

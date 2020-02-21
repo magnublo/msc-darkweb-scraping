@@ -98,6 +98,10 @@ def response_history_contains_code(response: requests.Response, response_code: i
     return False
 
 
+def is_bad_request(response: requests.Response) -> bool:
+    return response_history_contains_code(response, 400)
+
+
 def is_empty_response(response: requests.Response) -> bool:
     return response.request.method == 'GET' and response.status_code == 200 and response.text.strip() == ""
 

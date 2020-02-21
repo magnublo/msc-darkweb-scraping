@@ -265,5 +265,6 @@ environment_settings.py
 /venv
 
 test.py
-*.pickle
+**.pickle
+**.sql
 **.csv

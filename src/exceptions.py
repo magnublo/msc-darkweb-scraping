@@ -35,6 +35,13 @@ class BadGatewayException(HTTPError):
         super().__init__(text)
 
 
+class BadRequestException(HTTPError):
+    DEFAULT_TEXT = "Received response code 400."
+
+    def __init__(self, text=DEFAULT_TEXT):
+        super().__init__(text)
+
+
 class InternalServerErrorException(HTTPError):
     DEFAULT_TEXT = "Received response code 500."
 
