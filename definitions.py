@@ -220,8 +220,8 @@ DARKFAIL_MARKET_SUBURLS = {
 
 HARDCODED_MIRRORS = {
     EMPIRE_MARKET_ID: {
-        "empiremktxgjovhm.onion": time(),
-        "empiremktw5g6njb.onion": time()
+        #"empiremktxgjovhm.onion": time(),
+        #"empiremktw5g6njb.onion": time()
     },
     APOLLON_MARKET_ID: {
         "apollon2tclejj73.onion": time()
