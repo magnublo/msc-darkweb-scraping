@@ -30,8 +30,8 @@ class MirrorManager:
         self.scraper.mirror_base_url = None
         self.web_session = cfscrape.Session()
         self.headers: dict = self._get_headers()
-        self.tries_per_forced_db_refresh: int = REFRESH_MIRROR_DB_LIMIT // (
-                MIRROR_TEST_TIMEOUT_LIMIT * NR_OF_TRIES_PER_MIRROR)
+        self.tries_per_forced_db_refresh: int = min(2, REFRESH_MIRROR_DB_LIMIT // (
+                MIRROR_TEST_TIMEOUT_LIMIT * NR_OF_TRIES_PER_MIRROR))
         self.tries: int = 1
 
     def get_new_mirror(self) -> str:
