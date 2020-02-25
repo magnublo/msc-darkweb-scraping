@@ -63,6 +63,4 @@ class ListingObservation(Base):
     bch_rate = Column(Float)
     fifty_percent_finalize_early = Column(Boolean)
 
-    # data analysis
-    is_weight_unit_type = Column(Boolean)
-    grams_per_unit = Column(Float)
+
