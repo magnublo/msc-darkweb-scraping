@@ -37,12 +37,60 @@ for title, unit_type in titles_and_unit_types:
         parsed_types_and_nr_of_grams.append((unit_type, str(grams)))
         continue
 
-    match = re.match(r"([0-9.,]+)(mg|mgrams|mgram|milligrams|mgs)$", unit_type, flags=re.IGNORECASE)
+    match = re.match(r"([0-9.,]*|[0-9]+\/[0-9])-?(mg|mgrams|mgram|milligrams|mgs)$", unit_type, flags=re.IGNORECASE)
 
     if match:
         start_index = match.regs[1][0]
         end_index = match.regs[1][1]
-        grams = 0.001 * parse_float(unit_type[start_index:end_index])
+        numerical_expression = unit_type[start_index:end_index]
+        if numerical_expression.find("/") != -1:
+            # fraction
+            numerator, denominator = [int(s) for s in numerical_expression.split("/")]
+            grams = (numerator / denominator) * 0.001
+        else:
+            # decimal
+            numerical_expression = numerical_expression if numerical_expression else "1"
+            grams = parse_float(numerical_expression) * 0.001
+
+        parsed_unit_types.add((title, unit_type))
+        parsed_types_and_nr_of_grams.append((unit_type, str(grams)))
+        continue
+
+    match = re.match(r"([0-9.,]*|[0-9]+\/[0-9])-?(kg|kgs|kilos|kilo|kilogram|kilograms)$", unit_type, flags=re.IGNORECASE)
+
+    if match:
+        start_index = match.regs[1][0]
+        end_index = match.regs[1][1]
+        numerical_expression = unit_type[start_index:end_index]
+        if numerical_expression.find("/") != -1:
+            # fraction
+            numerator, denominator = [int(s) for s in numerical_expression.split("/")]
+            grams = (numerator / denominator) * 1000
+        else:
+            # decimal
+            numerical_expression = numerical_expression if numerical_expression else "1"
+            grams = parse_float(numerical_expression) * 1000
+
+        parsed_unit_types.add((title, unit_type))
+        parsed_types_and_nr_of_grams.append((unit_type, str(grams)))
+        continue
+
+    match = re.match(r"([0-9.,]*|[0-9]+\/[0-9])-?(mcg|mcgs|ug|ugs|μgs|μg|microgram|microg)$", unit_type,
+                     flags=re.IGNORECASE)
+
+    if match:
+        start_index = match.regs[1][0]
+        end_index = match.regs[1][1]
+        numerical_expression = unit_type[start_index:end_index]
+        if numerical_expression.find("/") != -1:
+            # fraction
+            numerator, denominator = [int(s) for s in numerical_expression.split("/")]
+            grams = (numerator / denominator) * 1000
+        else:
+            # decimal
+            numerical_expression = numerical_expression if numerical_expression else "1"
+            grams = parse_float(numerical_expression) * 1000
+
         parsed_unit_types.add((title, unit_type))
         parsed_types_and_nr_of_grams.append((unit_type, str(grams)))
         continue
