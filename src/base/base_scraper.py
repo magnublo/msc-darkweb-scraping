@@ -806,32 +806,23 @@ class BaseScraper(BaseClassWithLogger):
         self.logger.info("Sending image to anti-catpcha.com API...")
 
         tries: int = 0
-        while True:
-            try:
+
+        captcha_solution_response = ImageToTextTask.ImageToTextTask(
+            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
+        ).captcha_handler(captcha_base64=base64_image)
+
+        while int(captcha_solution_response["errorId"]) > 0:
+            if captcha_solution_response["errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
+                self.logger.warn(
+                    f"Anti-Captcha API has no workers available, sleeping "
+                    f"{WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE} seconds and trying again...")
+                sleep(WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE)
                 captcha_solution_response = ImageToTextTask.ImageToTextTask(
                     anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
                 ).captcha_handler(captcha_base64=base64_image)
-
-                while int(captcha_solution_response["errorId"]) > 0:
-                    if captcha_solution_response["errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
-                        self.logger.warn(
-                            f"Anti-Captcha API has no workers available, sleeping "
-                            f"{WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE} seconds and trying again...")
-                        sleep(WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE)
-                        captcha_solution_response = ImageToTextTask.ImageToTextTask(
-                            anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
-                        ).captcha_handler(captcha_base64=base64_image)
-                    else:
-                        raise AntiCaptchaApiException(str(captcha_solution_response))
-                break
-            except AntiCaptchaApiException as e:
-                tries += 1
-                if tries % ANTICAPTCHA_ERROR_PER_PAUSE == 0:
-                    self.logger.critical(
-                        f"Gotten {ANTICAPTCHA_ERROR_PER_PAUSE} AntiCaptcha errors consecutively. Sleeping "
-                        f"{TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL} seconds...")
-                else:
-                    self.logger.critical(f"Got AntiCaptcha exception nr. {tries}, trying again...\n{str(e)}")
+            else:
+                raise AntiCaptchaApiException(str(captcha_solution_response))
+            break
 
         captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
                                                              func=lambda d: d["solution"]["text"])
