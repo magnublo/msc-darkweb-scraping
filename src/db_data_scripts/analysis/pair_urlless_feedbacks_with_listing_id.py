@@ -15,7 +15,8 @@ print(f"Loaded {len(listings)} listings.")
 
 l: ListingObservation
 for l in listings:
-    listings_by_seller_id_and_product_title[(l.seller_id, l.title)] = l
+    if l.title:
+        listings_by_seller_id_and_product_title[(l.seller_id, l.title.strip())] = l
 
 print("Created mapping listings_by_seller_id_and_product_title")
 
@@ -28,7 +29,7 @@ f: Feedback
 with open(f"{ROOT_SRC_DIR}/db_data_scripts/generated_sql_statements/update_listing_id_on_feedbacks.sql",
           "a") as output_file:
     for feedback in feedbacks_without_url:
-        corresponding_listing = listings_by_seller_id_and_product_title.get((feedback.seller_id, feedback.product_title))
+        corresponding_listing = listings_by_seller_id_and_product_title.get((feedback.seller_id, feedback.product_title.strip()))
         if corresponding_listing:
             output_file.write(
                 f"UPDATE `magnublo_scraping`.`feedback` SET `listing_id` = '{corresponding_listing.id}' WHERE (`id` = '{feedback.id}');\n")
