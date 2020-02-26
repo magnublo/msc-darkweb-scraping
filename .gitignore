@@ -267,3 +267,7 @@ environment_settings.py
 test.py
 
 *.csv
+*.~lock.*
+
+**.pickle
+**.sql

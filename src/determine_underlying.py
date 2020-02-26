@@ -1,59 +1,89 @@
 import multiprocessing
+import pickle
 import re
 import statistics
 import sys
-import threading
 from datetime import datetime
-from decimal import *
+from decimal import getcontext, Decimal, DivisionUndefined, InvalidOperation
+from itertools import islice
 from multiprocessing import Queue
-from threading import Lock
 from time import sleep
 from typing import List, Dict, Tuple, Optional
 
-import dateparser
 import numpy
+from sortedcontainers import SortedDict
 from sqlalchemy.orm import Session
 
+from definitions import ROOT_SRC_DIR
 from src.db_utils import get_engine, get_db_session
 from src.models.listing_observation import ListingObservation
-from src.models.scraping_session import ScrapingSession
-from itertools import islice
-from sortedcontainers import SortedDict
 
 getcontext().prec = 100
 
 MAX_VALID_PERCENT_CHANGE = 25
+FILE_PATHS = (
+        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_early_hour.csv",
+        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_early_minute.csv",
+        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_late_hour.csv",
+        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_late_minute.csv"
+        )
 
-USD_PER_CAD_DICT: SortedDict = SortedDict({})
-USD_PER_AUD_DICT: SortedDict = SortedDict({})
-USD_PER_GBP_DICT: SortedDict = SortedDict({})
-USD_PER_EUR_DICT: SortedDict = SortedDict({})
 
-with open("/home/magnus/PycharmProjects/msc/ExchangeRates_minute2.csv", 'r') as file:
-    rate_lines = file.readlines()
+def remove_leading_delimiter(curr) -> str:
+    while curr and curr[0] == ";":
+        curr = curr[1:]
+
+    return curr
+
+
+def get_currency_dictionaries():
+    usd_percad_dict: SortedDict = SortedDict({})
+    usd_per_aud_dict: SortedDict = SortedDict({})
+    usd_per_gbp_dict: SortedDict = SortedDict({})
+    usd_per_eur_dict: SortedDict = SortedDict({})
+
+    for path in FILE_PATHS:
+        with open(path, 'r') as file:
+            rate_lines = file.readlines()[6:]
+
+        for i, line in enumerate(rate_lines):
+
+            a = line.split(";")
+            eur_time, eur_rate, gbp_time, gbp_rate, cad_time, cad_rate, aud_time, aud_rate, _, _, _, _, _, _ = (line.split(";") + [None] * 2) [:14]
+
+            for time_str, rate_str, usd_per_x_dict in zip((eur_time, gbp_time, cad_time, aud_time), (eur_rate, gbp_rate, cad_rate, aud_rate),
+                                            (usd_per_eur_dict, usd_per_gbp_dict, usd_percad_dict, usd_per_aud_dict)):
+
+                if not time_str:
+                    continue
+
+                month, day, year, hour, minute, second = ([int(t) for t in re.split(r"[\/\s:]", time_str)] + [0]*3)[:6]
+                year = year + 2000 if year < 2000 else year
+                if rate_str == cad_rate:
+                    price = 1/float(rate_str)
+                else:
+                    price = float(rate_str)
+                d = datetime(year=year, month=month, day=day, hour=hour, minute=minute, second=second).timestamp()
+                usd_per_x_dict[d] = price
+
+    return usd_per_eur_dict, usd_per_gbp_dict, usd_percad_dict, usd_per_aud_dict
+
+
 
 res = {}
 
-for line, i in zip(rate_lines[6:], range(6, len(rate_lines))):
-    eur, gbp, cad, aud, _, _ = line.split(";;")
-    d: List[Tuple[datetime, float]] = []
-    for curr, usd_per_x_dict in zip((eur, gbp, cad, aud),
-                                    (USD_PER_EUR_DICT, USD_PER_GBP_DICT, USD_PER_CAD_DICT, USD_PER_AUD_DICT)):
-        time_str, price_str = curr.split(";")
-        month, day, year, hour, minute = [int(t) for t in re.split(r"[\/\s:]", time_str)]
-        year = year + 2000 if year < 2000 else year
-        price = float(price_str)
-        d = datetime(year=year, month=month, day=day, hour=hour, minute=minute).timestamp()
-        usd_per_x_dict[d] = price
+
+def get_usd_rates(line):
+    pass
+
+def get_listing_observations() -> List[tuple]:
+    with open("/home/magnus/PycharmProjects/msc/src/db_data_scripts/pickle_data/all_listings_prod_schema.pickle", "rb") as f:
+        all_listing_observations: Tuple[ListingObservation] = pickle.load(f)
 
 
-def get_listing_observations(db_session: Session) -> List[tuple]:
-    all_listing_observations = db_session.query(ListingObservation.id, ListingObservation.url,
-                                                ListingObservation.created_date,
-                                                ListingObservation.price, ListingObservation.fiat_currency,
-                                                ListingObservation.btc_rate, ListingObservation.xmr_rate,
-                                                ListingObservation.ltc_rate).all()
-    return [l for l in all_listing_observations]
+    listing_tuples = [(l.id, l.url, l.created_date, l.price, l.fiat_currency, l.btc_rate, l.xmr_rate, l.ltc_rate) for l in all_listing_observations if l.btc_rate and l.price]
+
+    return listing_tuples
 
 
 def get_listings_by_url(results: List[tuple]) -> Dict[str, List[tuple]]:
@@ -82,7 +112,7 @@ def get_rate(usd_per_x_dict: SortedDict, date_time: datetime) -> Decimal:
     return Decimal(rate)
 
 
-def get_currency_variances(listing_observations: List[Tuple]) -> Optional[Tuple]:
+def get_currency_variances(listing_observations: List[Tuple], rate_dicts: Tuple[SortedDict]) -> Optional[Tuple]:
     btcs: List[Decimal]
     xmrs: List[Decimal]
     ltcs: List[Decimal]
@@ -95,29 +125,36 @@ def get_currency_variances(listing_observations: List[Tuple]) -> Optional[Tuple]
     # id, url, created_date, price, fiat_currency, btc_rate, xmr_rate, ltc_rate
     # cleaned_listing_observations = [l for l in listing_observations if l[5] is not None]
     listing = listing_observations[0]
+    usd_per_eur_dict, usd_per_gbp_dict, usd_per_cad_dict, usd_per_aud_dict = rate_dicts
     _, url, date_time, usd_price, _, usd_per_btc, usd_per_xmr, usd_per_ltc = listing
     usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc = [d if d is None else Decimal(d) for d in
                                                         (usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc)]
     base_btc = usd_price / usd_per_btc
     base_xmr = usd_price / usd_per_xmr
     base_ltc = usd_price / usd_per_ltc if usd_per_ltc else None
-    base_cad = usd_price / get_rate(USD_PER_CAD_DICT, date_time)
-    base_aud = usd_price / get_rate(USD_PER_AUD_DICT, date_time)
-    base_gbp = usd_price / get_rate(USD_PER_GBP_DICT, date_time)
-    base_eur = usd_price / get_rate(USD_PER_EUR_DICT, date_time)
+    # base_bch = usd_price / usd_per_bch if usd_per_bch else None
+    base_cad = usd_price / get_rate(usd_per_cad_dict, date_time)
+    base_aud = usd_price / get_rate(usd_per_aud_dict, date_time)
+    base_gbp = usd_price / get_rate(usd_per_gbp_dict, date_time)
+    base_eur = usd_price / get_rate(usd_per_eur_dict, date_time)
     base_usd = usd_price
 
     for listing in listing_observations:
         _, url, date_time, usd_price, _, usd_per_btc, usd_per_xmr, usd_per_ltc = listing
         usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc = [d if d is None else Decimal(d) for d in
                                                         (usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc)]
-        btcs.append((usd_price / usd_per_btc) / base_btc)
-        xmrs.append((usd_price / usd_per_xmr) / base_xmr)
-        cads.append((usd_price / get_rate(USD_PER_CAD_DICT, date_time)) / base_cad)
-        auds.append((usd_price / get_rate(USD_PER_AUD_DICT, date_time)) / base_aud)
-        gbps.append((usd_price / get_rate(USD_PER_GBP_DICT, date_time)) / base_gbp)
-        eurs.append((usd_price / get_rate(USD_PER_EUR_DICT, date_time)) / base_eur)
-        usds.append(usd_price / base_usd)
+        if usd_price is None or usd_per_btc is None or base_btc is 0 or usd_per_btc is 0:
+            continue
+        try:
+            btcs.append((usd_price / usd_per_btc) / base_btc)
+            xmrs.append((usd_price / usd_per_xmr) / base_xmr)
+            cads.append((usd_price / get_rate(usd_per_cad_dict, date_time)) / base_cad)
+            auds.append((usd_price / get_rate(usd_per_aud_dict, date_time)) / base_aud)
+            gbps.append((usd_price / get_rate(usd_per_gbp_dict, date_time)) / base_gbp)
+            eurs.append((usd_price / get_rate(usd_per_eur_dict, date_time)) / base_eur)
+            usds.append(usd_price / base_usd)
+        except (DivisionUndefined, InvalidOperation):
+            continue
         if base_ltc:
             ltcs.append((usd_price / usd_per_ltc) / base_ltc)
         else:
@@ -147,33 +184,29 @@ def chunkify(lst, n):
     return [tuple(lst[i::n]) for i in range(n)]
 
 
-queue = multiprocessing.Queue()
-
-
-def generate_lines(url_dict: dict, keys: Tuple[str], queue: Queue, t):
-    for i, url in zip(range(len(keys)), keys):
+def generate_lines(url_dict: dict, keys: Tuple[str], queue: Queue, t, rate_dicts: Tuple[SortedDict]):
+    for i, url in enumerate(keys):
         l = len(keys)
-        vars = get_currency_variances(url_dict[url])
+        vars = get_currency_variances(url_dict[url], rate_dicts)
         if vars is not None:
             min_var, second_min_var = sorted(vars, key=lambda v: v[1])[0:2]
             queue.put(get_line(url, min_var[0], min_var[1], second_min_var[1], len(url_dict[url]), *vars))
 
-        if i % (max(l // 100, 1)) == 0:
+        if i % 20000 == 0:
             sys.stdout.write(f"\r{t} {round(i/len(keys), 2)*100} %")
             sys.stdout.flush()
     exit(0)
 
-engine = get_engine()
 
-DB_SESSION = get_db_session(engine)
+queue = multiprocessing.Queue()
+rate_dicts = get_currency_dictionaries()
 
 # assert USD_PER_CAD_DICT.keys() == USD_PER_AUD_DICT.keys() == USD_PER_GBP_DICT.keys() == USD_PER_EUR_DICT.keys()
 
-
-listings = get_listing_observations(DB_SESSION)
+listings = get_listing_observations()
 url_dict = get_listings_by_url(listings)
 
-nr_of_threads = 8
+nr_of_threads = 12
 keys = [k for k in url_dict.keys()]
 i = 0
 ts = []
@@ -182,7 +215,7 @@ for chunk in chunkify(keys, nr_of_threads):
     new_dict = {}
     for k in chunk:
         new_dict[k] = url_dict[k]
-    t = multiprocessing.Process(target=generate_lines, args=(new_dict, chunk, queue, i))
+    t = multiprocessing.Process(target=generate_lines, args=(new_dict, chunk, queue, i, rate_dicts))
     ts.append(t)
     t.start()
     i += 1
@@ -199,7 +232,7 @@ sql_lines = []
 while not queue.empty():
     sql_lines.append(queue.get())
 
-with open('insert_variances_statement.sql', 'w') as f:
+with open(f'{ROOT_SRC_DIR}/db_data_scripts/generated_sql_statements/insert_variances_statement.sql', 'w') as f:
     f.write(
         r'INSERT INTO `magnublo_scraping`.`listing_observation_currency_variances` (`url`, `underlying`, '
         r'`next_best_diff`, `btc_var`, `xmr_var`, `ltc_var`, `usd_var`, `cad_var`, `aud_var`, `gbp_var`, '
@@ -210,7 +243,6 @@ with open('insert_variances_statement.sql', 'w') as f:
     f.writelines(sql_lines[:-1])
     f.write(sql_lines[-1].strip()[:-1])
 
-DB_SESSION.close()
 
 # INSERT INTO `magnublo_scraping`.`listing_observation_currency_variances` (`listing_observation_id`, `min_var`,
 # `next_best_diff`, `btc_var`, `xmr_var`, `ltc_var`, `usd_var`, `cad_var`, `aud_var`, `gbp_var`, `eur_var`,
