@@ -12,22 +12,28 @@ from src.db_data_scripts.table_it import printTable
 
 parsed_titles = set()
 
+WORD_NUMBERS_REGEX_PART = "half|quarter|eighth|third|quarter|fifth|sixth|seventh|ninth|"
+WORD_NUMBERS_REGEX = "(half|quarter|eighth|third|quarter|fifth|sixth|seventh|ninth)"
+
 GRAM_EXPRESSIONS = "g", "grams", "gram", "gr", "gramm", "gramms"
-MILLIGRAM_EXPRESSIONS = "mg", "mgrams", "mgram", "mgr", "mgramm", "mgramms", "millig", "milligrams", "milligram", "milligr", "milligramm", "milligramms",
+MILLIGRAM_EXPRESSIONS = "mg", "mgrams", "mgram", "mgr", "mgramm", "mgramms", "millig", "milligrams", "milligram", "milligr", "milligramm", "milligramms", "мg", "мgraмs", "мgraм", "мgr", "мgraмм", "мgraммs", "мillig", "мilligraмs", "мilligraм", "мilligr", "мilligraмм", "мilligraммs"
+
+
+# NB! µ and μ are different characters
 MICROGRAM_EXPRESSIONS = "mcg", "mcgs", "ug", "ugs", "μgs", "μg", "microgram", "microg", "µg", "µgs"
 KILOGRAM_EXPRESSIONS = "kg", "kgs", "kilos", "kilo", "kilogram", "kilograms", "kgrams"
 POUND_EXPRESSIONS = "pound", "lb", "lbs", "pounds"
 OUNCE_EXPRESSIONS = "ounce", "ounces", "oz"
 
-EXTRA_UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION = "euro", "oz", "customer", "eu", "each", "gbp", r"\$", "£", "€"
+EXTRA_UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION = "euro", "oz", "customer", "eu", "each", "gbp", r"\$", "£", "€", "percent", "%"
 UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION = GRAM_EXPRESSIONS + MILLIGRAM_EXPRESSIONS + MICROGRAM_EXPRESSIONS + KILOGRAM_EXPRESSIONS + POUND_EXPRESSIONS + OUNCE_EXPRESSIONS + EXTRA_UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION
 
 EXCLUSION_LIST = "".join([f"(?!{s})" for s in UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION])
 
-ALL_MASS_EXPRESSIONS = list(GRAM_EXPRESSIONS+MILLIGRAM_EXPRESSIONS+MICROGRAM_EXPRESSIONS+KILOGRAM_EXPRESSIONS+POUND_EXPRESSIONS)
+ALL_MASS_EXPRESSIONS = list(GRAM_EXPRESSIONS+MILLIGRAM_EXPRESSIONS+MICROGRAM_EXPRESSIONS+KILOGRAM_EXPRESSIONS+POUND_EXPRESSIONS+OUNCE_EXPRESSIONS)
 ALL_MASS_EXPRESSIONS.sort(key=lambda l: len(l), reverse=True)
 
-MASS_REGEX = r"(?:^|[^$[0-9])([0-9]+|[0-9]+,[0-9]+|(?:[0-9]*\.[0-9,]+)|[0-9]\/[0-9])\s?(" + r"|".join(ALL_MASS_EXPRESSIONS) + r")"
+MASS_REGEX = r"(?:^|(?!$[0-9]+))" + r"(" + WORD_NUMBERS_REGEX_PART + r"[0-9]+|[0-9]+,[0-9]+|(?:[0-9]*\.[0-9,]+)|[0-9]\/[0-9])(?:\s|-|full)*(" + r"|".join(ALL_MASS_EXPRESSIONS) + r")"
 NUMBER_OF_UNITS_REGEX = r"(?:^|\s|x)[^€$£#A-z0-9]{0,}([0-9]+|[0-9]+,[0-9]+|(?:\(|\[)?[0-9]+(?:\)|\])?|$)(?:\s+|x|abs|!|pcs)(?:" + EXCLUSION_LIST + ")"
 
 def parse_float(f: str) -> float:
@@ -84,19 +90,21 @@ def get_nr_of_mass_units(title: str, match: re.Match) -> float:
     if numerical_expression.find("/") != -1:
         # fraction
         numerator, denominator = [int(s) for s in numerical_expression.split("/")]
-        grams = (numerator / denominator)
+        nr_of_mass_units = (numerator / denominator)
     elif numerical_expression.find("*") != -1 or numerical_expression.find("x") != -1:
         # product
         factor_one, factor_two = [float(s) for s in re.split(r"\*|x", numerical_expression)]
-        grams = (factor_one * factor_two)
-    #elif re.search(WORD_NUMBERS_REGEX_PART, numerical_expression, flags=re.IGNORECASE):
-#        grams = float(convert_to_number(str(numerical_expression))) * grams_per_unit
+        nr_of_mass_units = (factor_one * factor_two)
     else:
+        word_match = re.search(WORD_NUMBERS_REGEX, numerical_expression, flags=re.IGNORECASE)
+        if word_match:
+            numerical_expression = word_match.string
+            return float(convert_to_number(str(numerical_expression)))
         # decimal
         numerical_expression = numerical_expression if numerical_expression else "1"
-        grams = parse_float(numerical_expression)
+        nr_of_mass_units = parse_float(numerical_expression)
 
-    return grams
+    return nr_of_mass_units
 
 def get_titles() -> Set[str]:
     with open(f"{ROOT_SRC_DIR}/db_data_scripts/pickle_data/unique_titles.pickle", "rb") as f:
