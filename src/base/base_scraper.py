@@ -20,7 +20,7 @@ from requests.cookies import RequestsCookieJar, CookieConflictError
 from sqlalchemy import func
 from sqlalchemy.exc import ProgrammingError
 from sqlalchemy.orm import Session
-from urllib3.exceptions import HTTPError
+from urllib3.exceptions import HTTPError, MaxRetryError
 
 from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DATABASE_PER_THREAD, \
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
@@ -812,17 +812,25 @@ class BaseScraper(BaseClassWithLogger):
         ).captcha_handler(captcha_base64=base64_image)
 
         while int(captcha_solution_response["errorId"]) > 0:
-            if captcha_solution_response["errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
-                self.logger.warn(
-                    f"Anti-Captcha API has no workers available, sleeping "
-                    f"{WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE} seconds and trying again...")
-                sleep(WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE)
-                captcha_solution_response = ImageToTextTask.ImageToTextTask(
-                    anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
-                ).captcha_handler(captcha_base64=base64_image)
-            else:
-                raise AntiCaptchaApiException(str(captcha_solution_response))
-            break
+            try:
+                if captcha_solution_response["errorCode"] == 'ERROR_NO_SLOT_AVAILABLE':
+                    self.logger.warn(
+                        f"Anti-Captcha API has no workers available, sleeping "
+                        f"{WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE} seconds and trying again...")
+                    sleep(WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE)
+                    captcha_solution_response = ImageToTextTask.ImageToTextTask(
+                        anticaptcha_key=ANTI_CAPTCHA_ACCOUNT_KEY, **anti_captcha_kwargs
+                    ).captcha_handler(captcha_base64=base64_image)
+                else:
+                    raise AntiCaptchaApiException(str(captcha_solution_response))
+                break
+            except MaxRetryError as e:
+                sleep_interval = 120
+                self._log_and_print_error(self.db_session, e, traceback.format_exc(), print_error=False)
+                exception_type = type(e).__name__
+                self.logger.warn(exception_type)
+                self.logger.warn(f"Sleeping {sleep_interval} seconds...")
+                sleep(sleep_interval)
 
         captcha_solution = self._generic_error_catch_wrapper(captcha_solution_response,
                                                              func=lambda d: d["solution"]["text"])

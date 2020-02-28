@@ -268,3 +268,4 @@ test.py
 **.pickle
 **.sql
 **.csv
+src/db_data_scripts
