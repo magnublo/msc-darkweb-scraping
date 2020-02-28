@@ -124,4 +124,4 @@ printTable(([l for l in list(parsed_titles_and_nr_of_grams)]))
 #print("\n".join(["\t\t\t\t\t\t".join(s) for s in unparsed_unit_types]))
 #print("\n".join([p[1] for p in unparsed_unit_types]))
 print(len(parsed_titles) / len(all_titles))
-# UPDATE `magnublo_scraping`.`listing_observation` SET `is_weight_unit_type` = '1', `grams_per_unit` = '5' WHERE (`id` = '16');
+# UPDATE `magnublo_scraping`.`listing_observation` SET       `is_weight_unit_type` = '1', `grams_per_unit` = '5' WHERE (`id` = '16');
