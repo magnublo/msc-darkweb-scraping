@@ -1,0 +1,3 @@
+from src.db_data_scripts.analysis.parse_titles import get_all_titles_parsed_titles_and_parsed_titles_and_nr_of_grams
+
+all_titles, parsed_titles, parsed_titles_and_nr_of_grams = get_all_titles_parsed_titles_and_parsed_titles_and_nr_of_grams()

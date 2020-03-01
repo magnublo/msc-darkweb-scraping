@@ -10,8 +10,6 @@ from src import utils
 from src.db_data_scripts.table_it import printTable
 
 
-parsed_titles = set()
-
 WORD_NUMBERS_REGEX_PART = "half|quarter|eighth|third|quarter|fifth|sixth|seventh|ninth|"
 WORD_NUMBERS_REGEX = "(half|quarter|eighth|third|quarter|fifth|sixth|seventh|ninth)"
 
@@ -117,46 +115,53 @@ def get_titles() -> Set[str]:
     return titles
 
 
-all_titles = set([l for l in list(get_titles()) if l is not None])
-parsed_titles_and_nr_of_grams: List[Tuple[str, str]] = []
-
-
 def expression_is_blacklisted(nr_of_units: float, title: str) -> bool:
     return title.lower().find(f"first {int(nr_of_units)}") != -1
 
 
-for title in all_titles:
-    if title is None:
-        continue
-    unit_match = re.search(NUMBER_OF_UNITS_REGEX, title, flags=re.IGNORECASE)
-    if unit_match:
-        start_index = unit_match.regs[1][0]
-        end_index = unit_match.regs[1][1]
-        nr_of_units_expression = title[start_index:end_index].lower()
-        nr_of_units = parse_float(nr_of_units_expression)
-        if expression_is_blacklisted(nr_of_units, title):
+def get_all_titles_parsed_titles_and_parsed_titles_and_nr_of_grams() -> Tuple[Set[str], Set[str], Tuple[Tuple[str, str]]]:
+
+    parsed_titles = set()
+    all_titles = set([l for l in list(get_titles()) if l is not None])
+    parsed_titles_and_nr_of_grams: List[Tuple[str, str]] = []
+
+    for title in all_titles:
+        parsed_titles = set()
+        all_titles = set([l for l in list(get_titles()) if l is not None])
+        parsed_titles_and_nr_of_grams: List[Tuple[str, str]] = []
+
+        if title is None:
+            continue
+        unit_match = re.search(NUMBER_OF_UNITS_REGEX, title, flags=re.IGNORECASE)
+        if unit_match:
+            start_index = unit_match.regs[1][0]
+            end_index = unit_match.regs[1][1]
+            nr_of_units_expression = title[start_index:end_index].lower()
+            nr_of_units = parse_float(nr_of_units_expression)
+            if expression_is_blacklisted(nr_of_units, title):
+                nr_of_units = 1
+        else:
             nr_of_units = 1
-    else:
-        nr_of_units = 1
 
-    mass_match = re.search(MASS_REGEX, title, flags=re.IGNORECASE)
-    if mass_match:
-        nr_mass_units = get_nr_of_mass_units(title, mass_match)
-        grams_per_mass_unit = get_grams_per_mass_unit(title, mass_match)
-        nr_of_grams = nr_mass_units * grams_per_mass_unit * nr_of_units
+        mass_match = re.search(MASS_REGEX, title, flags=re.IGNORECASE)
+        if mass_match:
+            nr_mass_units = get_nr_of_mass_units(title, mass_match)
+            grams_per_mass_unit = get_grams_per_mass_unit(title, mass_match)
+            nr_of_grams = nr_mass_units * grams_per_mass_unit * nr_of_units
 
-        parsed_titles.add(title)
-        parsed_titles_and_nr_of_grams.append((title[:80], str(nr_of_grams)))
-        continue
+            parsed_titles.add(title)
+            parsed_titles_and_nr_of_grams.append((title[:80], str(nr_of_grams)))
+            continue
+
+    return all_titles, parsed_titles, tuple(parsed_titles_and_nr_of_grams)
 
 
-
-unparsed_titles = all_titles.difference(parsed_titles)
-print("\n".join(list(unparsed_titles)))
-parsed_list_for_print = list(parsed_titles_and_nr_of_grams)
-parsed_list_for_print.sort(key=lambda x: x[0])
-printTable(parsed_list_for_print)
-#print("\n".join(["\t\t\t\t\t\t".join(s) for s in unparsed_unit_types]))
-#print("\n".join([p[1] for p in unparsed_unit_types]))
-print(len(parsed_titles) / len(all_titles))
-# UPDATE `magnublo_scraping`.`listing_observation` SET       `is_weight_unit_type` = '1', `grams_per_unit` = '5' WHERE (`id` = '16');
+# unparsed_titles = all_titles.difference(parsed_titles)
+# print("\n".join(list(unparsed_titles)))
+# parsed_list_for_print = list(parsed_titles_and_nr_of_grams)
+# parsed_list_for_print.sort(key=lambda x: x[0])
+# printTable(parsed_list_for_print)
+# #print("\n".join(["\t\t\t\t\t\t".join(s) for s in unparsed_unit_types]))
+# #print("\n".join([p[1] for p in unparsed_unit_types]))
+# print(len(parsed_titles) / len(all_titles))
+# # UPDATE `magnublo_scraping`.`listing_observation` SET       `is_weight_unit_type` = '1', `grams_per_unit` = '5' WHERE (`id` = '16');
