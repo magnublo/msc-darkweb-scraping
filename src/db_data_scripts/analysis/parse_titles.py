@@ -109,6 +109,7 @@ def get_nr_of_mass_units(title: str, match: re.Match) -> float:
 
     return nr_of_mass_units
 
+
 def get_titles() -> Set[str]:
     with open(f"{ROOT_SRC_DIR}/db_data_scripts/pickle_data/unique_titles.pickle", "rb") as f:
         titles = pickle.load(f)
@@ -119,17 +120,13 @@ def expression_is_blacklisted(nr_of_units: float, title: str) -> bool:
     return title.lower().find(f"first {int(nr_of_units)}") != -1
 
 
-def get_all_titles_parsed_titles_and_parsed_titles_and_nr_of_grams() -> Tuple[Set[str], Set[str], Tuple[Tuple[str, str]]]:
+def get_all_titles_parsed_titles_and_parsed_titles_and_nr_of_grams() -> Tuple[Set[str], Set[str], Dict[str, float]]:
 
     parsed_titles = set()
     all_titles = set([l for l in list(get_titles()) if l is not None])
-    parsed_titles_and_nr_of_grams: List[Tuple[str, str]] = []
+    parsed_titles_and_nr_of_grams: Dict[str, float] = {}
 
     for title in all_titles:
-        parsed_titles = set()
-        all_titles = set([l for l in list(get_titles()) if l is not None])
-        parsed_titles_and_nr_of_grams: List[Tuple[str, str]] = []
-
         if title is None:
             continue
         unit_match = re.search(NUMBER_OF_UNITS_REGEX, title, flags=re.IGNORECASE)
@@ -150,10 +147,10 @@ def get_all_titles_parsed_titles_and_parsed_titles_and_nr_of_grams() -> Tuple[Se
             nr_of_grams = nr_mass_units * grams_per_mass_unit * nr_of_units
 
             parsed_titles.add(title)
-            parsed_titles_and_nr_of_grams.append((title[:80], str(nr_of_grams)))
+            parsed_titles_and_nr_of_grams[title] = nr_of_grams
             continue
 
-    return all_titles, parsed_titles, tuple(parsed_titles_and_nr_of_grams)
+    return all_titles, parsed_titles, parsed_titles_and_nr_of_grams
 
 
 # unparsed_titles = all_titles.difference(parsed_titles)

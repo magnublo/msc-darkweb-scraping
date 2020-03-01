@@ -34,10 +34,11 @@ class Feedback(Base):
     currency = Column(CHAR(CURRENCY_COLUMN_LENGTH))
     price = Column(Float)
 
-    type_of_quantity = Column(CHAR(8))
+    #analysis
+    #type_of_quantity = Column(CHAR(8))
     listing_id = Column(Integer)
-    nr_of_grams = Column(Float)
-    nr_of_liters = Column(Float)
+    #nr_of_grams = Column(Float)
+    #nr_of_liters = Column(Float)
 
 
 Index('look_up_existing_feedback', Feedback.seller_id, Feedback.text_hash, Feedback.buyer, Feedback.category,

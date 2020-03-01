@@ -64,5 +64,5 @@ class ListingObservation(Base):
     fifty_percent_finalize_early = Column(Boolean)
 
     # data analysis
-    #is_weight_unit_type = Column(Boolean)
-    #grams_per_unit = Column(Float)
+    is_weight_unit_type = Column(Boolean)
+    grams_per_unit = Column(Float)

@@ -1,6 +1,7 @@
 import pickle
 
 from definitions import ROOT_SRC_DIR
+from src.db_data_scripts.utils import get_most_recent_listing_dump_file_path
 from src.models.listing_observation import ListingObservation
 
 
@@ -14,7 +15,9 @@ class ListingIdTitleAndUnitType:
 
 unit_types = set()
 
-with open(f"{ROOT_SRC_DIR}/db_data_scripts/pickle_data/all_listings.pickle", "rb") as f:
+listing_dumpe_file_path = get_most_recent_listing_dump_file_path()
+
+with open(listing_dumpe_file_path, "rb") as f:
     listings = pickle.load(f)
 
 print(f"Loaded {len(listings)} listings.")

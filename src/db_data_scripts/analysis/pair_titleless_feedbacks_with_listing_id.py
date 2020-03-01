@@ -2,13 +2,15 @@ import pickle
 from typing import Dict, Tuple
 
 from definitions import ROOT_SRC_DIR
+from src.db_data_scripts.utils import get_most_recent_listing_dump_file_path
 from src.models.feedback import Feedback
 from src.models.listing_observation import ListingObservation
 
 destination_file = 1
 
+most_recent_listing_dump = get_most_recent_listing_dump_file_path()
 listings_by_url: Dict[str, ListingObservation] = {}
-with open(f"{ROOT_SRC_DIR}/db_data_scripts/pickle_data/all_listings.pickle", "rb") as f:
+with open(most_recent_listing_dump, "rb") as f:
     listings = pickle.load(f)
 
 print(f"Loaded {len(listings)} listings.")
