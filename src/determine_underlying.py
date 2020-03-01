@@ -1,4 +1,5 @@
 import multiprocessing
+import os
 import pickle
 import re
 import statistics
@@ -22,11 +23,11 @@ getcontext().prec = 100
 
 MAX_VALID_PERCENT_CHANGE = 25
 FILE_PATHS = (
-        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_early_hour.csv",
-        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_early_minute.csv",
-        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_late_hour.csv",
-        "/home/magnus/PycharmProjects/msc/src/csv_data/ExchangeRates_25022020_late_minute.csv"
-        )
+    "/home/magnus/PycharmProjects/msc/src/db_data_scripts/csv_data/ExchangeRates_25022020_early_hour.csv",
+    "/home/magnus/PycharmProjects/msc/src/db_data_scripts/csv_data/ExchangeRates_25022020_early_minute.csv",
+    "/home/magnus/PycharmProjects/msc/src/db_data_scripts/csv_data/ExchangeRates_25022020_late_hour.csv",
+    "/home/magnus/PycharmProjects/msc/src/db_data_scripts/csv_data/ExchangeRates_25022020_late_minute.csv"
+)
 
 
 def remove_leading_delimiter(curr) -> str:
@@ -49,18 +50,25 @@ def get_currency_dictionaries():
         for i, line in enumerate(rate_lines):
 
             a = line.split(";")
-            eur_time, eur_rate, gbp_time, gbp_rate, cad_time, cad_rate, aud_time, aud_rate, _, _, _, _, _, _ = (line.split(";") + [None] * 2) [:14]
+            eur_time, eur_rate, gbp_time, gbp_rate, cad_time, cad_rate, aud_time, aud_rate, _, _, _, _, _, _ = (
+                                                                                                                           line.split(
+                                                                                                                               ";") + [
+                                                                                                                               None] * 2)[
+                                                                                                               :14]
 
-            for time_str, rate_str, usd_per_x_dict in zip((eur_time, gbp_time, cad_time, aud_time), (eur_rate, gbp_rate, cad_rate, aud_rate),
-                                            (usd_per_eur_dict, usd_per_gbp_dict, usd_percad_dict, usd_per_aud_dict)):
+            for time_str, rate_str, usd_per_x_dict in zip((eur_time, gbp_time, cad_time, aud_time),
+                                                          (eur_rate, gbp_rate, cad_rate, aud_rate),
+                                                          (usd_per_eur_dict, usd_per_gbp_dict, usd_percad_dict,
+                                                           usd_per_aud_dict)):
 
                 if not time_str:
                     continue
 
-                month, day, year, hour, minute, second = ([int(t) for t in re.split(r"[\/\s:]", time_str)] + [0]*3)[:6]
+                month, day, year, hour, minute, second = ([int(t) for t in re.split(r"[\/\s:]", time_str)] + [0] * 3)[
+                                                         :6]
                 year = year + 2000 if year < 2000 else year
                 if rate_str == cad_rate:
-                    price = 1/float(rate_str)
+                    price = 1 / float(rate_str)
                 else:
                     price = float(rate_str)
                 d = datetime(year=year, month=month, day=day, hour=hour, minute=minute, second=second).timestamp()
@@ -69,19 +77,45 @@ def get_currency_dictionaries():
     return usd_per_eur_dict, usd_per_gbp_dict, usd_percad_dict, usd_per_aud_dict
 
 
-
 res = {}
 
 
 def get_usd_rates(line):
     pass
 
-def get_listing_observations() -> List[tuple]:
-    with open("/home/magnus/PycharmProjects/msc/src/db_data_scripts/pickle_data/all_listings_prod_schema.pickle", "rb") as f:
+
+def get_most_recent_listing_dump_file_path() -> str:
+    dir_path = f"{ROOT_SRC_DIR}/db_data_scripts/pickle_data"
+    files = os.listdir(dir_path)
+
+    files_and_dates: List[Tuple[str, datetime]] = []
+
+    for file in files:
+        match = re.match(r".+__.+__([0-3][0-9]-[0-1][0-9]-[0-9]{4})__all_listings\.pickle", file)
+        if re.match(r".+__.+__[0-3][0-9]-[0-1][0-9]-[0-9]{4}__all_listings\.pickle", file):
+            start_index = match.regs[1][0]
+            end_index = match.regs[1][1]
+            date_str = file[start_index:end_index]
+            day, month, year = [int(i) for i in date_str.split("-")]
+            files_and_dates.append((file, datetime(day=day, month=month, year=year)))
+            files_and_dates.sort(key=lambda fd: fd[1])
+    most_recent_listing_dump_file = files_and_dates[-1][0]
+    return f"{dir_path}/{most_recent_listing_dump_file}"
+
+
+def get_listing_observations(most_recent_date_in_rate_dictionaries: datetime) -> List[tuple]:
+
+    most_recent_listing_dump = get_most_recent_listing_dump_file_path()
+
+    with open(most_recent_listing_dump, "rb") as f:
         all_listing_observations: Tuple[ListingObservation] = pickle.load(f)
 
+    listing_tuples = [(l.id, l.url, l.created_date, l.price, l.fiat_currency, l.btc_rate, l.xmr_rate, l.ltc_rate) for l
+                      in all_listing_observations if
+                      l.btc_rate and l.price and l.created_date.timestamp() <= most_recent_date_in_rate_dictionaries]
 
-    listing_tuples = [(l.id, l.url, l.created_date, l.price, l.fiat_currency, l.btc_rate, l.xmr_rate, l.ltc_rate) for l in all_listing_observations if l.btc_rate and l.price]
+    print(f"Most recent currency conversion rates are from {most_recent_date_in_rate_dictionaries}.")
+    print(f"Loaded {len(listing_tuples)} valid listings from file {most_recent_listing_dump}.")
 
     return listing_tuples
 
@@ -139,10 +173,10 @@ def get_currency_variances(listing_observations: List[Tuple], rate_dicts: Tuple[
     base_eur = usd_price / get_rate(usd_per_eur_dict, date_time)
     base_usd = usd_price
 
-    for listing in listing_observations:
+    for i, listing in enumerate(listing_observations):
         _, url, date_time, usd_price, _, usd_per_btc, usd_per_xmr, usd_per_ltc = listing
         usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc = [d if d is None else Decimal(d) for d in
-                                                        (usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc)]
+                                                            (usd_price, usd_per_btc, usd_per_xmr, usd_per_ltc)]
         if usd_price is None or usd_per_btc is None or base_btc is 0 or usd_per_btc is 0:
             continue
         try:
@@ -158,7 +192,7 @@ def get_currency_variances(listing_observations: List[Tuple], rate_dicts: Tuple[
         if base_ltc:
             ltcs.append((usd_price / usd_per_ltc) / base_ltc)
         else:
-            ltcs.append(1)
+            ltcs.append((1 + 0.95 * MAX_VALID_PERCENT_CHANGE) ** i)
 
     is_valid = len(usds) > 1
     for i in range(1, len(usds)):
@@ -175,7 +209,7 @@ def get_line(url, underlying, min_var, second_min_var, n, btc_var, xmr_var, ltc_
                                                                               (btc_var[1], xmr_var[1], ltc_var[1],
                                                                                usd_var[1], cad_var[1], aud_var[1],
                                                                                gbp_var[1], eur_var[1])]
-    return f"('{url}', '{underlying}', {numpy.format_float_positional(-(min_var-second_min_var))}, {btc_var}, " \
+    return f"('{url}', '{underlying}', {numpy.format_float_positional(-(min_var - second_min_var))}, {btc_var}, " \
            f"{xmr_var}, {ltc_var}, {usd_var}, {cad_var}, " \
            f"{aud_var}, {gbp_var}, {eur_var}, {n}), \n"
 
@@ -192,10 +226,17 @@ def generate_lines(url_dict: dict, keys: Tuple[str], queue: Queue, t, rate_dicts
             min_var, second_min_var = sorted(vars, key=lambda v: v[1])[0:2]
             queue.put(get_line(url, min_var[0], min_var[1], second_min_var[1], len(url_dict[url]), *vars))
 
-        if i % 20000 == 0:
-            sys.stdout.write(f"\r{t} {round(i/len(keys), 2)*100} %")
+        if i % 2000 == 0:
+            sys.stdout.write(f"\r{t} {round(i / len(keys), 2) * 100} %")
             sys.stdout.flush()
     exit(0)
+
+
+def get_most_recent_date_in_rates(rate_dicts: Tuple[SortedDict, SortedDict, SortedDict, SortedDict]) -> datetime:
+    timestamps = [k for k in rate_dicts[0].keys()]
+    timestamps.sort()
+    most_recent_timestamp = timestamps[-1]
+    return most_recent_timestamp
 
 
 queue = multiprocessing.Queue()
@@ -203,7 +244,9 @@ rate_dicts = get_currency_dictionaries()
 
 # assert USD_PER_CAD_DICT.keys() == USD_PER_AUD_DICT.keys() == USD_PER_GBP_DICT.keys() == USD_PER_EUR_DICT.keys()
 
-listings = get_listing_observations()
+
+most_recent_date_in_rate_dictionaries = get_most_recent_date_in_rates(rate_dicts)
+listings = get_listing_observations(most_recent_date_in_rate_dictionaries)
 url_dict = get_listings_by_url(listings)
 
 nr_of_threads = 12
@@ -242,7 +285,6 @@ with open(f'{ROOT_SRC_DIR}/db_data_scripts/generated_sql_statements/insert_varia
     # noinspection SqlNoDataSourceInspection,SqlResolve
     f.writelines(sql_lines[:-1])
     f.write(sql_lines[-1].strip()[:-1])
-
 
 # INSERT INTO `magnublo_scraping`.`listing_observation_currency_variances` (`listing_observation_id`, `min_var`,
 # `next_best_diff`, `btc_var`, `xmr_var`, `ltc_var`, `usd_var`, `cad_var`, `aud_var`, `gbp_var`, `eur_var`,
