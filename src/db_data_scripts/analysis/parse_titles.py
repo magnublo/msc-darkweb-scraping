@@ -16,6 +16,7 @@ WORD_NUMBERS_REGEX_PART = "half|quarter|eighth|third|quarter|fifth|sixth|seventh
 WORD_NUMBERS_REGEX = "(half|quarter|eighth|third|quarter|fifth|sixth|seventh|ninth)"
 
 GRAM_EXPRESSIONS = "g", "grams", "gram", "gr", "gramm", "gramms"
+DECIGRAM_EXPRESSIONS = "point", "points"
 MILLIGRAM_EXPRESSIONS = "mg", "mgrams", "mgram", "mgr", "mgramm", "mgramms", "millig", "milligrams", "milligram", "milligr", "milligramm", "milligramms", "мg", "мgraмs", "мgraм", "мgr", "мgraмм", "мgraммs", "мillig", "мilligraмs", "мilligraм", "мilligr", "мilligraмм", "мilligraммs"
 
 
@@ -25,12 +26,14 @@ KILOGRAM_EXPRESSIONS = "kg", "kgs", "kilos", "kilo", "kilogram", "kilograms", "k
 POUND_EXPRESSIONS = "pound", "lb", "lbs", "pounds"
 OUNCE_EXPRESSIONS = "ounce", "ounces", "oz"
 
-EXTRA_UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION = "euro", "oz", "customer", "eu", "each", "gbp", r"\$", "£", "€", "percent", "%"
-UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION = GRAM_EXPRESSIONS + MILLIGRAM_EXPRESSIONS + MICROGRAM_EXPRESSIONS + KILOGRAM_EXPRESSIONS + POUND_EXPRESSIONS + OUNCE_EXPRESSIONS + EXTRA_UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION
+ALL_MASS_EXPRESSIONS = list(GRAM_EXPRESSIONS+DECIGRAM_EXPRESSIONS+MILLIGRAM_EXPRESSIONS+MICROGRAM_EXPRESSIONS+KILOGRAM_EXPRESSIONS+POUND_EXPRESSIONS+OUNCE_EXPRESSIONS)
+
+EXTRA_UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION = "euro", "oz", "customer", "eu", "each", "gbp", r"\$", "£", "€", "percent", "%", "to"
+UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION = tuple(ALL_MASS_EXPRESSIONS) + EXTRA_UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION
 
 EXCLUSION_LIST = "".join([f"(?!{s})" for s in UNWANTED_POSTFIXES_TO_UNIT_EXPRESSION])
 
-ALL_MASS_EXPRESSIONS = list(GRAM_EXPRESSIONS+MILLIGRAM_EXPRESSIONS+MICROGRAM_EXPRESSIONS+KILOGRAM_EXPRESSIONS+POUND_EXPRESSIONS+OUNCE_EXPRESSIONS)
+
 ALL_MASS_EXPRESSIONS.sort(key=lambda l: len(l), reverse=True)
 
 MASS_REGEX = r"(?:^|(?!$[0-9]+))" + r"(" + WORD_NUMBERS_REGEX_PART + r"[0-9]+|[0-9]+,[0-9]+|(?:[0-9]*\.[0-9,]+)|[0-9]\/[0-9])(?:\s|-|full)*(" + r"|".join(ALL_MASS_EXPRESSIONS) + r")"
@@ -79,6 +82,8 @@ def get_grams_per_mass_unit(title: str, mass_match: re.Match) -> float:
         return 453.592
     elif type_of_mass_unit in OUNCE_EXPRESSIONS:
         return 28.3495
+    elif type_of_mass_unit in DECIGRAM_EXPRESSIONS:
+        return 10**-1
     else:
         raise AssertionError
 
@@ -150,7 +155,7 @@ unparsed_titles = all_titles.difference(parsed_titles)
 print("\n".join(list(unparsed_titles)))
 parsed_list_for_print = list(parsed_titles_and_nr_of_grams)
 parsed_list_for_print.sort(key=lambda x: x[0])
-#printTable(parsed_list_for_print)
+printTable(parsed_list_for_print)
 #print("\n".join(["\t\t\t\t\t\t".join(s) for s in unparsed_unit_types]))
 #print("\n".join([p[1] for p in unparsed_unit_types]))
 print(len(parsed_titles) / len(all_titles))
