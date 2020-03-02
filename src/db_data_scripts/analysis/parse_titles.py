@@ -35,7 +35,7 @@ EXCLUSION_LIST = "".join([f"(?!{s})" for s in UNWANTED_POSTFIXES_TO_UNIT_EXPRESS
 ALL_MASS_EXPRESSIONS.sort(key=lambda l: len(l), reverse=True)
 
 MASS_REGEX = r"(?:^|(?!$[0-9]+))" + r"(" + WORD_NUMBERS_REGEX_PART + r"[0-9]+|[0-9]+,[0-9]+|(?:[0-9]*\.[0-9,]+)|[0-9]\/[0-9])(?:\s|-|full)*(" + r"|".join(ALL_MASS_EXPRESSIONS) + r")"
-NUMBER_OF_UNITS_REGEX = r"(?:^|\s|x)[^€$£#A-z0-9]{0,}([0-9]+|[0-9]+,[0-9]+|(?:\(|\[)?[0-9]+(?:\)|\])?|$)(?:\s+|x|abs|!|pcs)(?:" + EXCLUSION_LIST + ")"
+NUMBER_OF_UNITS_REGEX = r"(?:^|\s|x|\*)[^€$£#A-z0-9]{0,}(?:[0-9]+\-)?([0-9]+|[0-9]+,[0-9]+|(?:\(|\[)?[0-9]+(?:\)|\])?|$)\s?(?:\s+|x|abs|!|pcs|tab|drop)(?:" + EXCLUSION_LIST + ")"
 
 def parse_float(f: str) -> float:
     number_of_dots = len([m.start() for m in re.finditer(r"\.", f)])
