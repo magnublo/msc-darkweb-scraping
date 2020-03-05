@@ -194,6 +194,10 @@ APOLLON_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
     (CANNAZON_MARKET_ID, "cann")
 ]
 
+#DREAM MARKET
+DREAM_SRC_DIR = ROOT_SRC_DIR + "dream/"
+
+
 NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT = 10
 
 DEAD_MIRROR_TIMEOUT = 180  # if mirror has not responded in this many seconds, rotate mirror
