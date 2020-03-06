@@ -26,8 +26,8 @@ from definitions import ANTI_CAPTCHA_ACCOUNT_KEY, MAX_NR_OF_ERRORS_STORED_IN_DAT
     ERROR_FINGER_PRINT_COLUMN_LENGTH, DBMS_DISCONNECT_RETRY_INTERVALS, ONE_DAY, \
     RESCRAPE_PGP_KEY_INTERVAL, MD5_HASH_STRING_ENCODING, DEAD_MIRROR_TIMEOUT, NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT, \
     FAILED_CAPTCHAS_PER_PAUSE, \
-    TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE, ANTICAPTCHA_ERROR_PER_PAUSE, \
-    TOO_MANY_ANTICAPTCHA_ERRORS_WAIT_INTERVAL, WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE, \
+    TOO_MANY_FAILED_CAPTCHAS_WAIT_INTERVAL, WEB_EXCEPTIONS_TUPLE, DB_EXCEPTIONS_TUPLE, \
+    WAIT_BETWEEN_ANTI_CAPTCHA_NO_WORKERS_AVAILABLE, \
     MAX_TEMPORARY_ERRORS_PER_URL, COUNTRY_NAME_COLUMN_LENGTH
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
@@ -889,12 +889,13 @@ class BaseScraper(BaseClassWithLogger):
         return country.id
 
     def _release_user_credentials(self):
-        with self.user_credentials_db_lock:
-            for web_session in self.web_sessions:
-                user_credential = self.db_session.query(UserCredential).filter(
-                    UserCredential.username == web_session.username, UserCredential.market_id == self.market_id).first()
-                user_credential.thread_id = -1
-            self.db_session.commit()
+        if self.user_credentials_db_lock:
+            with self.user_credentials_db_lock:
+                for web_session in self.web_sessions:
+                    user_credential = self.db_session.query(UserCredential).filter(
+                        UserCredential.username == web_session.username, UserCredential.market_id == self.market_id).first()
+                    user_credential.thread_id = -1
+                self.db_session.commit()
 
     def _clear_all_cookies(self) -> None:
         for web_session in self.web_sessions:

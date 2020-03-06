@@ -270,21 +270,21 @@ class TestGetSubSubCategoriesUrlsAndNrsOfListings(ApollonBaseTest):
 
 class TestAcceptsCurrencies(ApollonBaseTest):
     def test_accepts_currencies_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         XMR, BCH, LTC = scrapingFunctions.accepts_currencies(soup_html)
         self.assertTupleEqual((True, True, True), (XMR, BCH, LTC))
 
 
 class TestGetSales(ApollonBaseTest):
     def test_get_sales_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         sales = scrapingFunctions.get_sales(soup_html)
         self.assertEqual(17, sales)
 
 
 class TestGetFiatPrice(ApollonBaseTest):
     def test_get_fiat_price_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         fiat_price = scrapingFunctions.get_fiat_price(soup_html)
         self.assertEqual(4.00, fiat_price)
 
@@ -297,7 +297,7 @@ class TestGetFiatPrice(ApollonBaseTest):
 class TestGetDestinationCountries(ApollonBaseTest):
 
     def test_get_destination_countries_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         destination_countries = scrapingFunctions.get_destination_countries(soup_html)
         self.assertTupleEqual(('United States',), destination_countries)
 
@@ -311,7 +311,7 @@ class TestGetDestinationCountries(ApollonBaseTest):
 class TestGetPaymentMethod(ApollonBaseTest):
 
     def test_get_payment_method_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         escrow, fifty_percent_finalize_early = scrapingFunctions.get_payment_method(soup_html)
         self.assertTupleEqual((True, False), (escrow, fifty_percent_finalize_early))
 
@@ -329,7 +329,7 @@ class TestGetPaymentMethod(ApollonBaseTest):
 class TestGetStandardizedListingType(ApollonBaseTest):
 
     def test_get_standardized_listing_type_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         listing_type = scrapingFunctions.get_standardized_listing_type(soup_html)
         self.assertEqual(ListingType.PHYSICAL, listing_type)
 
@@ -342,7 +342,7 @@ class TestGetStandardizedListingType(ApollonBaseTest):
 class TestGetQuantityInStock(ApollonBaseTest):
 
     def test_get_quantity_in_stock_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         quantity_in_stock = scrapingFunctions.get_quantity_in_stock(soup_html)
         self.assertEqual(None, quantity_in_stock)
 
@@ -360,7 +360,7 @@ class TestGetQuantityInStock(ApollonBaseTest):
 class TestGetShippingMethods(ApollonBaseTest):
 
     def test_get_shipping_methods_zero(self):
-        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        soup_html = self._get_page_as_soup_html("listings/listing_0.html")
         shipping_methods = scrapingFunctions.get_shipping_methods(soup_html)
         self.assertTupleEqual((('free USPS letter UNTRACKED no reships or refunds', 9, 'USD', 0.0, None, False),
                                ('USPS Priority TRACKED', 10, 'USD', 11.0, None, False),

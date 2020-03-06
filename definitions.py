@@ -196,6 +196,7 @@ APOLLON_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
 
 #DREAM MARKET
 DREAM_SRC_DIR = ROOT_SRC_DIR + "dream/"
+DREAM_MIN_CREDENTIALS_PER_THREAD = 0
 
 
 NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT = 10
@@ -213,13 +214,15 @@ DARKFAIL_MARKET_STRINGS = {
     EMPIRE_MARKET_ID: "Empire Market",
     CRYPTONIA_MARKET_ID: "Cryptonia Market",
     SAMSARA_MARKET_ID: "Samsara Market",
-    APOLLON_MARKET_ID: "Apollon Market"
+    APOLLON_MARKET_ID: "Apollon Market",
+    DREAM_MARKET_ID: "Dream Market"
 }
 DARKFAIL_MARKET_SUBURLS = {
     EMPIRE_MARKET_ID: "empire",
     CRYPTONIA_MARKET_ID: "cryptonia",
     SAMSARA_MARKET_ID: "samsara",
-    APOLLON_MARKET_ID: "apollon"
+    APOLLON_MARKET_ID: "apollon",
+    DREAM_MARKET_ID: "dream"
 }
 
 HARDCODED_MIRRORS = {
@@ -232,11 +235,14 @@ HARDCODED_MIRRORS = {
     },
     CRYPTONIA_MARKET_ID: {
 
+    },
+    DREAM_MARKET_ID: {
+
     }
 }
 
 Base = declarative_base()
-MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, APOLLON_MARKET_ID)
+MARKET_IDS: Tuple[str, ...] = (EMPIRE_MARKET_ID, CRYPTONIA_MARKET_ID, APOLLON_MARKET_ID, DREAM_MARKET_ID)
 
 for market_id in MARKET_IDS:
     assert market_id in DARKFAIL_MARKET_STRINGS.keys()

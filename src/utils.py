@@ -32,6 +32,9 @@ class PageType(Enum):
     PGP = "PGP key",
     SEARCH_RESULT = "search result",
     CATEGORY_INDEX = "category index",
+    LOGIN_PAGE = "login page",
+    ANTI_DDOS = "anti ddos",
+    ERROR = "error page",
     UNDEFINED = "arbitrary"
 
 

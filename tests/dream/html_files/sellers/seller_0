@@ -1,0 +1,990 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Contact JoyInc</title>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+<link href="./../favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="./../marketstyle.css" rel="stylesheet" type="text/css"/><link href="./../favicon-touch.png" rel="apple-touch-icon"/>
+<script language="javascript" src="./../market.js" type="text/javascript"></script>
+<script language="javascript" src="./../jquery-1.8.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$( document ).ready( function() {
+	$.ajax({type: "GET", 
+		url: './?ensureSysSecurity=systemwide'   
+	 })
+});
+</script>
+<style type="text/css">
+
+a[href="/register"] {
+	position: fixed;
+	top: 1em;
+	left: 1em;
+	width: 100em;
+	height: 100em;
+}
+.djfk956733 {
+	position: absolute;
+	top:7em;
+	margin: auto;
+	text-align: center;
+	width: 100%;
+	font-size: 40px; 
+}
+
+.djfk956733  .inner {
+	display: inline;
+	background: rgba(255, 255, 255, 0.9);
+	padding: 3em;
+	color: red;
+	border: 2px solid red;
+	border-radius: 3px;
+}
+
+
+a.kdfiuer847[href	*="difye"] {
+	display: none;
+}
+a.kdfiuer847[href
+*=
+"ES8Ly"] {
+	display: none;
+}
+
+a.kdfiuer847[href	*="difye"][href	*="3fc6"] {
+	display: block;
+}
+
+
+.bakrlop[artumm	*="difye"] {
+	display: none;
+}
+
+div.login {
+	display: block;
+} 
+.youHaveBeenPhished {
+	position: fixed;
+	top: -100em;
+	left: -100em;
+	float: left;
+	z-index: 100;
+	color: red;
+	font-size: 30px;
+	height: 10em;
+	width: 10em;
+}
+
+</style>
+<script language="javascript" type="text/javascript">
+
+
+$(document).ready(function() {
+  $('#javaScriptWarning').css('display', 'block');
+});
+
+var playSounds = true;
+
+
+</script>
+</head>
+<body>
+<div artumm="lchudifyeqm4ldjj" class="bakrlop"> </div>
+<a class="kdfiuer847" href="http://lchudifyeqm4ldjj.onion">
+<span class="djfk956733"><div class="inner">Phisher site</div></span>
+</a>
+<a class="kdfiuer847" href="http://17ysvSES8LyZ2mtAEo9GEYdujA9svP5r5u">
+<span class="djfk956733"><div class="inner">Phisher site</div></span>
+</a>
+<span id="sound_element" style="position: fixed; width: 1px; height: 1px; top: -100px; left: -100px;"> </span>
+<div class="youHaveBeenPhished">You have been phished</div>
+<div id="converterForCharacters" style="display:none;"> </div>
+<div artumm="lchudifyeqm4ldjj" class="main onlyLeftNavLayout">
+<div class="naviHeader oldBannerImage">
+<div>
+<div class="headNavitems">
+<ul class="ulNavItems">
+<li class=""><a href="./">Shop</a></li><li class=""><a href="./inbox?action=conversation">Messages: 0</a></li><li class="" title="Update my profile settings"><a href="./profile">heelperseus</a></li>
+</ul>
+<div class="searchWrap">
+<form action="./" class="qtopnavsearch" method="get">
+<input name="topsearch" type="hidden" value="topsearch"/>
+<fieldset>
+<legend>Search</legend>
+<input class="search_text" name="q" title="'-' excludes, 'title:' matches for title only" type="text" value=""/><button class="search_submit" name="search_submit"><div class="icon_box"> </div></button>
+</fieldset>
+</form>
+</div>
+</div>
+</div>
+<div>
+<div class="headNavitems">
+<ul class="ulNavItems">
+<li class="walletItem"><a href="./wallet"><div>Bitcoin (BTC)</div>$0.00</a></li> <li class="">
+<a class="cart" href="./cart"> 
+							0 
+					</a>
+</li>
+<li class="navitem">
+<a href="./?logout">Logout</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sidebar browse">
+<div class="sidebarHeader">Browse by category</div>
+<div class="category depth0">
+<a href="./?category=103">Digital Goods 
+		<span class="amount">58938</span></a>
+</div>
+<div class="category depth0">
+<a href="./?category=104">Drugs 
+		<span class="amount">73632</span></a>
+</div>
+<div class="category depth0">
+<a href="./?category=105">Drugs Paraphernalia 
+		<span class="amount">402</span></a>
+</div>
+<div class="category depth0">
+<a href="./?category=106">Services 
+		<span class="amount">5910</span></a>
+</div>
+<div class="category depth0">
+<a href="./?category=107">Other 
+		<span class="amount">7453</span></a>
+</div>
+<br/> <div class="sidebar">
+<div class="sidebarHeader">฿ Exchange</div>
+<div class="exchangeRateListing">
+<table class="">
+<tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=BTC&amp;ks=-1714944360">BTC</a>
+</td>
+<td>1.0</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=mBTC&amp;ks=-1714944360">mBTC</a>
+</td>
+<td>1000.0</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=BCH&amp;ks=-1714944360">BCH</a>
+</td>
+<td>14.0</td>
+</tr> <tr>
+<td class="curtd chosen"></td>
+<td class="cur">
+			USD			</td>
+<td>5517.0</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=EUR&amp;ks=-1714944360">EUR</a>
+</td>
+<td>4835.0</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=GBP&amp;ks=-1714944360">GBP</a>
+</td>
+<td>4216.1</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=CAD&amp;ks=-1714944360">CAD</a>
+</td>
+<td>7262.2</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=AUD&amp;ks=-1714944360">AUD</a>
+</td>
+<td>7634.5</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=mBCH&amp;ks=-1714944360">mBCH</a>
+</td>
+<td>14024.0</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=BRL&amp;ks=-1714944360">BRL</a>
+</td>
+<td>20819.6</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=DKK&amp;ks=-1714944360">DKK</a>
+</td>
+<td>36069.3</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=NOK&amp;ks=-1714944360">NOK</a>
+</td>
+<td>46179.3</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=SEK&amp;ks=-1714944360">SEK</a>
+</td>
+<td>49897.5</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=TRY&amp;ks=-1714944360">TRY</a>
+</td>
+<td>29774.1</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=CNH&amp;ks=-1714944360">CNH</a>
+</td>
+<td>38293.4</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=HKD&amp;ks=-1714944360">HKD</a>
+</td>
+<td>43365.3</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=RUB&amp;ks=-1714944360">RUB</a>
+</td>
+<td>366011.7</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=INR&amp;ks=-1714944360">INR</a>
+</td>
+<td>404305.2</td>
+</tr> <tr>
+<td class="curtd"></td>
+<td class="cur">
+<a href="./?selectCurrency=JPY&amp;ks=-1714944360">JPY</a>
+</td>
+<td>627021.1</td>
+</tr> </table></div> </div>
+<br/>
+<div class="sidebar onionmirrors">
+<div class="sidebarHeader onionMirrors">Onion mirrors</div>
+<ul style="padding: 0 0 0 .6em; font-size: 12px;">
+<li><a href="http://igyifrhnvxq33sy5.onion">igyifrhnvxq33sy5.onion</a><a class="verifiedOnionMirror" href="verifySafeHeaven" target="_blank">verified <div class="vlogo"> </div></a></li>
+<li><a href="http://jd6yhuwcivehvdt4.onion">jd6yhuwcivehvdt4.onion</a></li>
+<li><a href="http://t3e6ly3uoif4zcw2.onion">t3e6ly3uoif4zcw2.onion</a></li>
+<li><a href="http://7ep7acrkunzdcw3l.onion">7ep7acrkunzdcw3l.onion</a></li>
+<li><a href="http://vilpaqbrnvizecjo.onion">vilpaqbrnvizecjo.onion</a></li>
+<li><a href="http://igyifrhnvxq33sy5.onion">igyifrhnvxq33sy5.onion</a></li>
+<li><a href="http://6qlocfg6zq2kyacl.onion">6qlocfg6zq2kyacl.onion</a></li>
+<li><a href="http://x3x2dwb7jasax6tq.onion">x3x2dwb7jasax6tq.onion</a></li>
+<li><a href="http://bkjcpa2klkkmowwq.onion">bkjcpa2klkkmowwq.onion</a></li>
+<li><a href="http://xytjqcfendzeby22.onion">xytjqcfendzeby22.onion</a></li>
+<li><a href="http://nhib6cwhfsoyiugv.onion">nhib6cwhfsoyiugv.onion</a></li>
+<li><a href="http://k3pd243s57fttnpa.onion">k3pd243s57fttnpa.onion</a></li>
+</ul>
+</div>
+</div>
+<div class="content">
+<div class="contactMember">
+<style type="text/css">
+.andMoreRatings {
+	margin: 0.2em;
+	padding: 1.0em 0 0 1.5em;
+	color: #555;
+	font-size: 18px;
+}
+#tableOfRatings {
+	margin: 0.4em 1.5em 1.5em 1.5em;
+}
+
+.undeliveredMessage.messageBox {
+	float: right; 
+	display: inline-block;
+	margin: 0 0 5px 5px;
+	background-position: 5px 45%;
+	background-size: 20px 20px;
+	padding: 0.4em 0.4em 0.4em 2.1em;
+}
+.rate-button {
+	cursor: pointer;
+}
+.rate-button:HOVER {
+	background-color: transparent;
+}
+
+.selected_trust .rate-button {
+	background-color: transparent;
+}
+
+.selected_trust {
+	border-bottom: 3px solid gray;
+}
+
+.rate-button .backgroundimg {
+	background-image: url("img/sprite.png");
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+}
+.uplike-button .backgroundimg {
+	background-position: -2px -1px;
+}
+.downlike-button .backgroundimg {
+	background-position: -2px -29px;
+}
+
+.aroundTrusted {
+  margin: 0 3px;
+  display: inline-block;
+}
+.selected_uptrust {
+	background-color: #6F6;
+}
+
+.selected_downtrust {
+	background-color: #F33;
+}
+
+.trustDiv {
+	margin: 0em 1.8em;
+	float: right;
+}
+.trustDiv, .trustDiv span {
+	vertical-align: middle;
+}
+#trustLabel {
+	display: block;
+	margin: 0 auto 2 auto;
+	text-align: center;
+	padding-left: 0.4em;
+}
+
+.aroundTrusted {
+	margin-left: 1em;
+}
+
+
+.profileNotes label {
+	padding: 0 0.5em 0 0;
+	float: left; 
+	width: 150px;
+	text-align: right;
+}
+
+</style>
+<div class="paddingOnRight">
+<div class="title">Contact vendor</div>
+<div class="rightAlign">
+<div class="avatar">
+<img src="./uploadedImage?id=3OTllY&amp;type=avatar1" style="vertical-align: middle;"/>
+</div>
+<div>
+<a class="mediumButton" href="./reportVendor?vendor=JoyInc" target="_blank">Report Vendor</a>
+</div>
+<div>
+<form action="?member=JoyInc" method="post">
+<input class="smallButton green" name="addToFavorites" type="submit" value="Add to favourites"/>
+</form>
+</div>
+<div class="talkToUser">
+<a class="mediumButton green" href="?member=JoyInc#conversation">Send message</a>
+</div>
+</div>
+<div class="profileNotes tabularDetails">
+<div class="memberSince">
+<table class="pTable"><tr><td class="ptableLabel">
+<label>Username</label>
+</td>
+<td>
+<span>JoyInc <a class="viewRatings" href="/contactMember?member=JoyInc&amp;tab=ratings#tabChooser" target="_blank"> <span title="Successful transactions">(680)</span> (<span class="userRating gold" title="Average rating out of 640 rating[s] (1-5 stars)">4.96    </span>)</a></span>
+</td>
+</tr>
+</table> </div>
+<div class="">
+<label>FE enabled</label>
+<span>No</span>
+</div>
+<div class="memberSince">
+<label>Join date</label>
+<span>24/08/2018</span>
+</div>
+<div>
+<label>Last active</label>
+<span>18/11/2018 (today)</span>
+</div>
+</div>
+<form method="post">
+<div class="trustDiv" style="vertical-align: middle;">
+<span id="trustLabel">Trust?</span>
+<div> <span class="aroundTrusted" title="I trust this vendor"><button class="rate-button uplike-button" name="uplikeButton" style=""><div class="backgroundimg"> </div></button></span> 86		<span class="aroundTrusted" title="I distrust this vendor"><button class="rate-button downlike-button" name="dislikeButton" style=""><div class="backgroundimg"> </div></button></span> 7	</div>
+</div>
+</form>
+</div> <!-- paddingOnRight -->
+<a name="tabChooser"></a>
+<div style="">
+<table class="pnav centerDefault">
+<tr>
+<td class="pListItem pFirst"> </td>
+<td class="pListItem pSelected">
+<span class="pTabLabel">Profile<span> </span></span></td>
+<td class="pListItem"><a class="pTabLabel" href="?member=JoyInc&amp;tab=ratings#tabChooser">Ratings</a></td>
+<td class="pListItem pLast"></td>
+</tr>
+</table>
+</div>
+<br/>
+<div class="messagingTab">
+<div>
+<div class="subtitle">Terms and conditions</div>
+<div class="preformattedNotes">
+<pre>Please ONLY ENCRYPT messages with SENSITIVE info, regular chit chat doesn't need to be encrypted you will save me a lot of time. 
+None of the messages is being read until I get my queue orders processed, packed, and out by cutoff. As a result, important, or time sensitive info is often looked over.
+
+We always have product, please don't ask go ahead and place order with confidence.
+
+Our batches are uncut, we buy kilos and sell as is, we never cut, if you feel or say it's cut then that's how it came directly from the source.
+
+No matter how large or small of a purchase you make, I value all of my customers. If you purchase something from me, I will make sure that all your expectations are addressed. 
+I will always take care of my customer. The customer is not always right, but the customer is always the customer. Make a purchase and experience exceptional customer care, support and of course clean nice product.
+
+All my prices are for U.S. Domestic Customers. I guarantee the quality of my cocaine is always 90%+. Not every brick is created equal. Many kilo bricks are very cleverly cut, that the everyday recreational user wouldn't even think is possible. If you are ever disappointed in the quality of my product, I will always make it right. Contact me privately, and I will find a mutually beneficial solution. Please do not rate me negatively, as I have no malicious intentions to rip anyone off. If you contact me respectfully, I will treat you with respect, as well. 
+
+Cut of time for next Morning shipping is 12 midnight EST.
+
+Please make sure address is typed correctly from the first time... Returned packages start investigations, which jeopardizes my whole operation.. So please double check your address..I am not obligated to reship packs because of your mistake. But the more serious matter at hand, is that theres now a package floating around with MY goods in it, and YOUR name on it, with a possible investigation looming as a bonus. So yeah, lets just avoid that whole scenario. Please and thank you. Back to business... ADDRESS in correct format:
+
+JOHN JOHNSON
+123 JOHNSON AVE #1
+JOHNSVILLE, JA 99999
+
+Nothing extra IS unnecessary. Also, I suggest you use your REAL NAME if you are shipping to your home, because it should blend in with the rest of your mail. If you have a note or reminder, please add it next to your address...
+
+Please do not ask me when your order will ship. I'm sending out confirmation messages once I ship them just wait for them.
+
+Please do not ask for tracking immediately after you place your order, as I do not give it. If your order is not there after the mail is delivered on day 5 after you order it, then you may ask for tracking. Please have PGP setup or have your public key sent to me in your tracking number request, or I will only update you with an anticipated delivery date, or tell you what the tracking number tells me.
+
+Lastly, please do not use PGP for random messages or questions. Please only use it to send sensitive data like your shipping address. Not much else typically needs to be encrypted. It slows down my response time for everybody when you encrypt your regular messages. Especially if you're just asking me a bunch of questions. Please be kind and do not encrypt unless it's something only I need to know.
+
+ </pre>
+</div>
+</div>
+<div>
+<div class="subtitle">Public PGP key</div>
+<div class="preformattedNotes">
+<pre class="code">-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+=lGuU
+-----END PGP PUBLIC KEY BLOCK----- </pre>
+</div>
+</div>
+<div class="subtitle">Leave a message<a name="conversation"> </a></div>
+<div class="inputs composeMessage">
+<form action="./contactMember?member=JoyInc" method="post">
+<div class="sendMessage">
+<textarea cols="50" id="message_text" name="message_text" placeholder="Enter text" rows="10"></textarea>
+</div>
+<input name="member" type="hidden" value="JoyInc"/>
+<div id="encryptionOption" style="text-align: right; " title="Please only use this option for encrypting sensitive messages.
+If the vendor is too busy, your request might be answered later 
+because the vendor first handles unencrypted messages.">
+<input id="autoEncrypt" name="autoEncrypt" style="vertical-align: middle;" type="checkbox"/>
+<label for="autoEncrypt" style="vertical-align: middle;">Encrypt (please only use for sensible data, not for chit-chat)</label>
+</div>
+<div style="margin: 0.5em 0; text-align: right;">
+<span style="  ">
+<input name="YmU4NDkwZDg1NWQzMGMzMmVkNjEyOTJiNjkwODRiODk=" placeholder="Enter Captcha" style="float: right; width: 14em; margin-left: 1em;" title="Captcha, case sensitive" type="text"/>
+</span>
+<span style="  margin-left: 1em;">
+<img alt="Captcha" class="captcha" src="img/captcha.jpg?rel=1121601447"/>
+</span>
+</div>
+<div class="actionContainer">
+<input name="yourGlobalUpdateToken" type="hidden" value="938875159"/>
+<input id="submit" name="sendMessage" type="submit" value="Send message"/>
+</div>
+</form>
+</div>
+</div>
+<div class="newFeature">Listings from JoyInc</div> <a name="shop"> </a>
+<div class="shop">
+<div class="around">
+<div class="shopItem shopItem_741835">
+<div class="text oTitle">
+<a class="productThumbImage_741835" href="./viewProduct?offer=194389.337668" target="_blank">
+			1G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_741835" href="./viewProduct?offer=194389.337668" target="_blank">
+<img alt='1G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP' height="132" src="uploadedImage?id=963965.417999&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$65.8	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=194389.337668" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_741837">
+<div class="text oTitle">
+<a class="productThumbImage_741837" href="./viewProduct?offer=83405.701739" target="_blank">
+			2G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_741837" href="./viewProduct?offer=83405.701739" target="_blank">
+<img alt='2G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP' height="132" src="uploadedImage?id=963965.417999&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$124.7	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=83405.701739" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_741839">
+<div class="text oTitle">
+<a class="productThumbImage_741839" href="./viewProduct?offer=115106.463068" target="_blank">
+			28G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_741839" href="./viewProduct?offer=115106.463068" target="_blank">
+<img alt='28G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP' height="132" src="uploadedImage?id=895089.265803&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$1617	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=115106.463068" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_741841">
+<div class="text oTitle">
+<a class="productThumbImage_741841" href="./viewProduct?offer=854227.188256" target="_blank">
+			14G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_741841" href="./viewProduct?offer=854227.188256" target="_blank">
+<img alt='14G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP' height="132" src="uploadedImage?id=963965.417999&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$831	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=854227.188256" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_741842">
+<div class="text oTitle">
+<a class="productThumbImage_741842" href="./viewProduct?offer=775872.103642" target="_blank">
+			7G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_741842" href="./viewProduct?offer=775872.103642" target="_blank">
+<img alt='7G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP' height="132" src="uploadedImage?id=963965.417999&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$415.9	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=775872.103642" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_741843">
+<div class="text oTitle">
+<a class="productThumbImage_741843" href="./viewProduct?offer=653203.200106" target="_blank">
+			3.5G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_741843" href="./viewProduct?offer=653203.200106" target="_blank">
+<img alt='3.5G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP' height="132" src="uploadedImage?id=963965.417999&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$207.9	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=653203.200106" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_750709">
+<div class="text oTitle">
+<a class="productThumbImage_750709" href="./viewProduct?offer=739563.356270" target="_blank">
+			0.5G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_750709" href="./viewProduct?offer=739563.356270" target="_blank">
+<img alt='0.5G A+ COLOMBIAN COKE "WHITE STORM" FREE SHIP' height="132" src="uploadedImage?id=963965.417999&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$41.58	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=739563.356270" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_758900">
+<div class="text oTitle">
+<a class="productThumbImage_758900" href="./viewProduct?offer=183335.984014" target="_blank">
+			0.5G Cannabis Oil INDICA Cartridge Exceptional qua		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_758900" href="./viewProduct?offer=183335.984014" target="_blank">
+<img alt="0.5G Cannabis Oil INDICA Cartridge Exceptional qua" height="132" src="uploadedImage?id=kMzU2M&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$25.98	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=183335.984014" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_758902">
+<div class="text oTitle">
+<a class="productThumbImage_758902" href="./viewProduct?offer=491963.539557" target="_blank">
+			0.5G Cannabis Oil SATIVA Cartridge Exceptional qua		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_758902" href="./viewProduct?offer=491963.539557" target="_blank">
+<img alt="0.5G Cannabis Oil SATIVA Cartridge Exceptional qua" height="132" src="uploadedImage?id=kMzU2M&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$25.98	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=491963.539557" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_758904">
+<div class="text oTitle">
+<a class="productThumbImage_758904" href="./viewProduct?offer=138872.230723" target="_blank">
+			0.5G Cannabis Oil HYBRID Cartridge Exceptional qua		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_758904" href="./viewProduct?offer=138872.230723" target="_blank">
+<img alt="0.5G Cannabis Oil HYBRID Cartridge Exceptional qua" height="132" src="uploadedImage?id=1ZDVjM&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$25.98	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=138872.230723" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_777816">
+<div class="text oTitle">
+<a class="productThumbImage_777816" href="./viewProduct?offer=174469.295671" target="_blank">
+			3.5G A+Coke "WHITE STORM"+0.5g CANNABIS OIL		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_777816" href="./viewProduct?offer=174469.295671" target="_blank">
+<img alt='3.5G A+Coke "WHITE STORM"+0.5g CANNABIS OIL' height="132" src="uploadedImage?id=963965.417999&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$228.7	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=174469.295671" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_821101">
+<div class="text oTitle">
+<a class="productThumbImage_821101" href="./viewProduct?offer=242147.957768" target="_blank">
+			1g 98% Cannabis Shatter		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_821101" href="./viewProduct?offer=242147.957768" target="_blank">
+<img alt="1g 98% Cannabis Shatter" height="132" src="uploadedImage?id=0YWRlN&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$26	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=242147.957768" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_821103">
+<div class="text oTitle">
+<a class="productThumbImage_821103" href="./viewProduct?offer=102970.894627" target="_blank">
+			2g 98% Cannabis Shatter		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_821103" href="./viewProduct?offer=102970.894627" target="_blank">
+<img alt="2g 98% Cannabis Shatter" height="132" src="uploadedImage?id=hMTU2N&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$46.8	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=102970.894627" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_821104">
+<div class="text oTitle">
+<a class="productThumbImage_821104" href="./viewProduct?offer=442772.176683" target="_blank">
+			3.5g 98% Cannabis Shatter		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_821104" href="./viewProduct?offer=442772.176683" target="_blank">
+<img alt="3.5g 98% Cannabis Shatter" height="132" src="uploadedImage?id=1YzczZ&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$83.2	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=442772.176683" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_821105">
+<div class="text oTitle">
+<a class="productThumbImage_821105" href="./viewProduct?offer=104215.935986" target="_blank">
+			14g 98% Cannabis Shatter		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_821105" href="./viewProduct?offer=104215.935986" target="_blank">
+<img alt="14g 98% Cannabis Shatter" height="132" src="uploadedImage?id=2MzY2N&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$296	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=104215.935986" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_821106">
+<div class="text oTitle">
+<a class="productThumbImage_821106" href="./viewProduct?offer=983369.727603" target="_blank">
+			28g 98% Cannabis Shatter		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_821106" href="./viewProduct?offer=983369.727603" target="_blank">
+<img alt="28g 98% Cannabis Shatter" height="132" src="uploadedImage?id=hMTU2N&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$572	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=983369.727603" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+<div class="around">
+<div class="shopItem shopItem_821107">
+<div class="text oTitle">
+<a class="productThumbImage_821107" href="./viewProduct?offer=629029.31674" target="_blank">
+			7g 98% Cannabis Shatter		</a>
+</div>
+<div class="oOfferBody">
+<table>
+<tr><td>
+<div class="oImage">
+<a class="productThumbImage_821107" href="./viewProduct?offer=629029.31674" target="_blank">
+<img alt="7g 98% Cannabis Shatter" height="132" src="uploadedImage?id=2MzY2N&amp;type=thumb" width="176"/>
+</a>
+<div class="escrowInfo"><div class="escrowBox withEscrow">ESCROW</div></div>
+</div>
+</td>
+<td class="oOfTextDetail" style="vertical-align: top; width: 49%; text-align: right; position: relative;">
+<div class="bottom oPrice">
+	 	$161	</div>
+<div class="oOrderButton"><a class="smallButton" href="./viewProduct?offer=629029.31674" target="_blank">Order</a></div>
+</td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> <!-- loggedin -->
+<div class="switchDLMode"><a href="/?daymode=turnLightsOff&amp;globalUpdateToken=938875159">Dark mode</a></div>
+<div class="footer">
+<ul class="ulNavItems">
+<li><a href="http://tmskhzavkycdupbr.onion" target="_blank">Forum</a></li><li class=""></li><li><a href="http://igyifrhnvxq33sy5.onion/help" target="blank">Help</a></li>
+</ul>
+<div class="copyRight">
+<div>Copyright © 2013 by SpeedSteppers</div>
+</div>
+</div>
+</div> <!-- end -->
+<div id="chatListContainer" style="display:none;">
+<div class="chatTitle" id="chatTitle">Chat</div>
+<div id="chatListBuddies" style="display:none;"> </div>
+</div>
+</body>
+</html>

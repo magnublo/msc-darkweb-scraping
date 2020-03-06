@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head><link href="./../marketstyle.css" rel="stylesheet" type="text/css"/>
+<title>Dream Market - DDOS Protection</title>
+</head>
+<body>
+<style type="text/css">
+label {
+	display: inline-block;
+	margin-left: 1em;
+}
+.verifyHuman  {
+	margin: 3em auto 0 auto;
+	width: 520px;
+	padding: 0em;
+	border: 2px solid gray;
+	border-radius: 5px;
+	background-color: white;
+}
+.ddos {
+	text-align: center;
+	padding: .5em 0 .5em 0;
+	background-color: #D0D9F2;
+	border-bottom: 1px solid gray;
+}
+.inner {
+	padding: 1em;
+}
+.iline {
+margin-bottom: .5em;
+}
+.sdiv {
+	margin: 1em 0 0 0;
+	padding-right: 2em;
+	text-align: right;
+}
+input.result {
+	width: 10em;
+}
+div {
+	overflow: auto;
+}
+.inl {
+	display: inline-block;
+	vertical-align: middle;
+}
+</style>
+<div class="verifyHuman">
+<form action="./verifyHuman2" method="post">
+<div class="ddos">DDOS Protection</div>
+<div class="inner">
+<div class="iline">Please solve the following challenge:</div>
+<div class="iline" style="margin-top: 2em;">
+<div class="inl">
+<label for="captcha">
+<img alt="Captcha" class="captcha" src="img/captcha2"/>
+</label>
+</div>
+<div class="inl">
+<input class="result" id="captcha" name="captcha" placeholder="captcha" title="Captcha, case sensitive"/> <a href="./help#UsingCaptchas" target="_blank">(?)</a>
+</div>
+<div class="inl">
+</div>
+</div>
+<div class="sdiv">
+<input name="Solve" type="submit" value="Solve"/>
+</div>
+</div>
+</form>
+</div>
+</body>
+</html>
