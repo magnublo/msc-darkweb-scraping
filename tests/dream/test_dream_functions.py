@@ -164,3 +164,106 @@ class TestGetShippingMethods(DreamBaseTest):
         self.assertTupleEqual((('EXPRESS TRACKED TO EUROPE', None, 'BTC', 0.0025127, None, None),
                                ('EXPRESS TRACKED TO USA AND REST OF THE WORLD', None, 'BTC', 0.0034437, None, None)),
                               shipping_methods)
+
+
+class TestGetListingTitle(DreamBaseTest):
+
+    def test_get_listing_title_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        title = scrapingFunctions.get_listing_title(soup_html)
+        self.assertEqual("☢100 PILLS X Soma 350mg $49☢", title)
+
+    def test_get_listing_title_three(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_3")
+        title = scrapingFunctions.get_listing_title(soup_html)
+        self.assertEqual("Louis Vuitton Bracelet 48 AAA+", title)
+
+
+class TestGetListingText(DreamBaseTest):
+
+    def test_get_listing_text_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        listing_text = scrapingFunctions.get_listing_text(soup_html)
+        self.assertTrue(len(listing_text) > 0)
+
+    def test_get_listing_text_three(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_3")
+        listing_text = scrapingFunctions.get_listing_text(soup_html)
+        self.assertEqual("Louis Vuitton Bracelet 48 ", listing_text)
+
+
+class TestGetCategories(DreamBaseTest):
+
+    def test_get_categories_zero(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_0")
+        listing_categories = scrapingFunctions.get_categories(soup_html)
+        self.assertTupleEqual((('Drugs', 104, None, 0),), listing_categories)
+
+    def test_get_categories_one(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_1")
+        listing_categories = scrapingFunctions.get_categories(soup_html)
+        self.assertTupleEqual((('Software', 118, 'Digital Goods', 1), ('Digital Goods', 103, None, 0)),
+                              listing_categories)
+
+    def test_get_categories_two(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_2")
+        listing_categories = scrapingFunctions.get_categories(soup_html)
+        self.assertTupleEqual((('Information', 115, 'Digital Goods', 1), ('Digital Goods', 103, None, 0)),
+                              listing_categories)
+
+    def test_get_categories_three(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_3")
+        listing_categories = scrapingFunctions.get_categories(soup_html)
+        self.assertTupleEqual((('Jewellery', 137, 'Other', 1), ('Other', 107, None, 0)),
+                              listing_categories)
+
+    def test_get_categories_four(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_4")
+        listing_categories = scrapingFunctions.get_categories(soup_html)
+        self.assertTupleEqual(
+            (('Accessories', 192, 'Counterfeits', 2), ('Counterfeits', 135, 'Other', 1), ('Other', 107, None, 0)),
+            listing_categories)
+
+    def test_get_categories_five(self):
+        soup_html = self._get_page_as_soup_html("listings/listing_5")
+        listing_categories = scrapingFunctions.get_categories(soup_html)
+        self.assertTupleEqual(
+            (('Speed', 190, 'Stimulants', 2), ('Stimulants', 129, 'Drugs', 1), ('Drugs', 104, None, 0)),
+            listing_categories)
+
+
+class TestGetSellerName(DreamBaseTest):
+
+    def test_get_seller_name_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0.html")
+        name = scrapingFunctions.get_seller_name(soup_html)
+        self.assertEqual("JoyInc", name)
+
+    def test_get_seller_name_one(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_1.html")
+        name = scrapingFunctions.get_seller_name(soup_html)
+        self.assertEqual("Antonio777", name)
+
+    def test_get_seller_name_two(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_2.html")
+        name = scrapingFunctions.get_seller_name(soup_html)
+        self.assertEqual("amsterdamsupply", name)
+
+    def test_get_seller_name_three(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_3.html")
+        name = scrapingFunctions.get_seller_name(soup_html)
+        self.assertEqual("ChefRamsay", name)
+
+
+class TestGetExternalMarketRatings(DreamBaseTest):
+
+    def test_get_external_market_ratings_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        external_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((), external_ratings)
+
+    def test_get_external_market_ratings_seven(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_7")
+        external_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
+        self.assertTupleEqual((('ALPHA_BAY_MARKET', None, None, None, 402, 5, 2, None),
+                               ('HANSA_MARKET', None, None, None, 7, 0, 0, None)), external_ratings)

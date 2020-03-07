@@ -198,6 +198,26 @@ APOLLON_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
 DREAM_SRC_DIR = ROOT_SRC_DIR + "dream/"
 DREAM_MIN_CREDENTIALS_PER_THREAD = 0
 
+DREAM_MARKET_EXTERNAL_MARKET_STRINGS: List[Tuple[str, str]] = [
+    (EMPIRE_MARKET_ID, "empire"),
+    (DREAM_MARKET_ID, "dream"),
+    (BERLUSCONI_MARKET_ID, "berlusconi"),
+    (CRYPTONIA_MARKET_ID, "cryptonia"),
+    (NIGHTMARE_MARKET_ID, "nightmare"),
+    (SAMSARA_MARKET_ID, "sam"),
+    (CANNAZON_MARKET_ID, "cann"),
+    (AGORA_MARKET_ID, "agora"),
+    (NUCLEUS_MARKET_ID, "nucleus"),
+    (WALL_STREET_MARKET_ID, "wallstreet"),
+    (ALPHA_BAY_MARKET_ID, "alphabay"),
+    (CGMC_MARKET_ID, "cgmc"),
+    (HANSA_MARKET_ID, "hansa"),
+    (BLACK_BANK_MARKET_ID, "black bank"),
+    (BLACK_MARKET_RELOADED_ID, "black market reloaded"),
+    (ABRAXAS_MARKET_ID, "abraxas"),
+    (MIDDLE_EARTH_MARKET_ID, "middle earth")
+]
+
 
 NR_OF_REQUESTS_BETWEEN_PROGRESS_REPORT = 10
 

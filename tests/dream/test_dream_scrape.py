@@ -1,6 +1,9 @@
+import pickle
+from typing import Dict
 from unittest import TestCase
 
-from src.dream.dream_scrape import get_usd_price_from_rates, process_shipping_methods
+from definitions import ROOT_DIR
+from src.dream.dream_scrape import get_usd_price_from_rates, process_shipping_methods, PageMetadata
 
 RATES = {'BTC': 1.0, 'mBTC': 1000.0, 'BCH': 8.9, 'XMR': 32.4, 'USD': 11423.0, 'EUR': 9245.2, 'GBP': 8228.2,
          'CAD': 14413.3, 'AUD': 14515.0, 'mBCH': 8942.0, 'SEK': 91740.4, 'NOK': 90048.5, 'DKK': 68886.2,
@@ -38,3 +41,13 @@ class TestProcessShippingMethods(TestCase):
         self.assertTupleEqual((('EXPRESS TRACKED TO EUROPE', None, 'USD', 28.7025721, None, None),
                                ('EXPRESS TRACKED TO USA AND REST OF THE WORLD', None, 'USD', 39.3373851, None, None)),
                               shipping_methods)
+
+
+class TestPageMetadata(TestCase):
+
+    def test_page_metadata(self):
+        with open(
+            f"{ROOT_DIR}/tests/dream/pickled_metadata/1520023306128_0000_5911df8628b1f5283580126ae5cc25dfcb7ce9ca.meta", "rb") as f:
+            meta_data_dict: Dict[str, str] = pickle.load(f)
+        meta_data = PageMetadata(meta_data_dict)
+        a = 0

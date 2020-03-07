@@ -290,7 +290,7 @@ class BaseScraper(BaseClassWithLogger):
                     return True
 
     def _add_category_junctions(self, listing_observation_id: int, listing_categories: Tuple[
-        Tuple[str, Optional[int], Optional[str], Optional[int]]]) -> None:
+        Tuple[str, Optional[int], Optional[str], Optional[int]], ...]) -> None:
 
         for category_name, marketside_category_id, parent_category_name, category_level in listing_categories:
             category: ListingCategory = self.db_session.query(ListingCategory).filter(

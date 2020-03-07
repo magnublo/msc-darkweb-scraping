@@ -34,7 +34,15 @@ class Feedback(Base):
     currency = Column(CHAR(CURRENCY_COLUMN_LENGTH))
     price = Column(Float)
 
+    # Dream market
+    star_rating = Column(Integer)
+
+    def __eq__(self, other: "Feedback") -> bool:
+        return self.date_published == other.date_published and \
+               self.seller_id == other.seller_id and \
+               self.text_hash == other.text_hash and \
+               self.star_rating == other.star_rating
+
 
 Index('look_up_existing_feedback', Feedback.seller_id, Feedback.text_hash, Feedback.buyer, Feedback.category,
       Feedback.market, Feedback.date_published, Feedback.product_title)
-
