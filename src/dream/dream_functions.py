@@ -1,10 +1,11 @@
 import datetime
+import hashlib
 import re
 from typing import Tuple, Dict, List, Optional, Union
 
 from bs4 import BeautifulSoup
 
-from definitions import DREAM_MARKET_EXTERNAL_MARKET_STRINGS
+from definitions import DREAM_MARKET_EXTERNAL_MARKET_STRINGS, MD5_HASH_STRING_ENCODING, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
 from src.base.base_functions import BaseFunctions, get_external_rating_tuple
 from src.db_utils import shorten_and_sanitize_for_text_column
 from src.utils import parse_float
@@ -42,9 +43,10 @@ def get_messaging_div_text(soup_html: BeautifulSoup, headline_phrase: str) -> st
         "body > div.main.onlyLeftNavLayout > div.content > div > div.messagingTab > div")
     for div in messaging_tab_divs:
         subtitle_div = div.select_one("div.subtitle")
-        subtitle_text = subtitle_div.text.strip()
-        if subtitle_text.lower() == headline_phrase:
-            return shorten_and_sanitize_for_text_column(div.select_one("div.preformattedNotes > pre").text.strip())
+        if subtitle_div:
+            subtitle_text = subtitle_div.text.strip()
+            if subtitle_text.lower() == headline_phrase:
+                return shorten_and_sanitize_for_text_column(div.select_one("div.preformattedNotes > pre").text.strip())
 
 
 def get_username_span(soup_html: BeautifulSoup) -> BeautifulSoup:
@@ -61,6 +63,25 @@ def str_is_in_element_classes(html_element: BeautifulSoup, string: str):
         if html_class.find(string) != -1:
             return True
     return False
+
+
+def get_timedelta_from_str(time_str: str) -> datetime.timedelta:
+    # 5d
+    # 1d 22h
+    match = re.match(r"[0-2][0-9]:[0-5][0-9]", time_str)
+    if match:
+        return datetime.timedelta(days=0, hours=0, minutes=0)
+    time_str_parts = time_str.split()
+    assert len(time_str_parts) <= 2
+    day_str, hour_str = (time_str_parts + [None])[:2]
+    assert day_str[-1] == "d"
+    days = int(day_str[:-1])
+    if hour_str:
+        assert hour_str[-1] == "h"
+        hours = int(hour_str[:-1])
+    else:
+        hours = 0
+    return datetime.timedelta(days=days, hours=hours)
 
 
 class DreamScrapingFunctions(BaseFunctions):
@@ -97,7 +118,7 @@ class DreamScrapingFunctions(BaseFunctions):
         links = soup_html.select(
             "body > div.main.onlyLeftNavLayout > div.content > div > div.paddingOnRight > div.rightAlign > div > a")
         for link in links:
-            if link is not None and link.text.lower().strip() == "report vendor":
+            if link is not None and link.text.lower().strip() in ("report vendor", "report user"):
                 return True
 
     @staticmethod
@@ -130,6 +151,8 @@ class DreamScrapingFunctions(BaseFunctions):
     def page_is_not_found_error(soup_html: BeautifulSoup) -> bool:
         page_title = soup_html.select_one(
             "head > title")
+        if re.search(r"error:\s[0-9]{3}", page_title.text.strip(), flags=re.IGNORECASE):
+            return True
         return page_title is not None and " ".join(page_title.text.strip().split()[-2:]).lower() in (
             "not found", "has occured")
 
@@ -317,9 +340,9 @@ class DreamScrapingFunctions(BaseFunctions):
         a_tags = username_span.select("a")
         assert len(a_tags) <= 1
         a_tag = a_tags[0]
-        a_tag_text = a_tag.text.strip()
+        a_tag_text = "".join(a_tag.text.strip().split())
 
-        match = re.search(r"[^\s]+\s\(([0-9]+)\)\s?\(([0-9\.\s]+)\)", a_tag_text)
+        match = re.search(r"\(([0-9]+)\)\(([0-9\.\s]+)\)", a_tag_text)
         if match:
             start_index_sales_str = match.regs[1][0]
             end_index_sales_str = match.regs[1][1]
@@ -339,10 +362,11 @@ class DreamScrapingFunctions(BaseFunctions):
             "body > div.main.onlyLeftNavLayout > div.content > div > div.paddingOnRight > div.profileNotes.tabularDetails > div")
 
         for profile_div in reversed(profile_divs):
-            profile_div_span = profile_div.select_one("span")
-            if profile_div_span.text.strip().lower() == "last active":
-                profile_div_label_text = profile_div.select_one("label").text.strip()
-                day, month, year = [int(i) for i in profile_div_label_text.split()[0].split("/")]
+            profile_div_label_text = profile_div.select_one("label").text.strip()
+
+            if profile_div_label_text.lower() == "last active":
+                profile_div_span_text = profile_div.select_one("span").text.strip()
+                day, month, year = [int(i) for i in profile_div_span_text.split()[0].split("/")]
                 return datetime.datetime(day=day, month=month, year=year)
 
         raise AssertionError("Could not determine last online date")
@@ -352,11 +376,11 @@ class DreamScrapingFunctions(BaseFunctions):
         profile_divs = soup_html.select(
             "body > div.main.onlyLeftNavLayout > div.content > div > div.paddingOnRight > div.profileNotes.tabularDetails > div")
 
-        for profile_div in reversed(profile_divs)[1:]:
-            profile_div_span = profile_div.select_one("span")
-            if profile_div_span.text.strip().lower() == "join date":
-                profile_div_label_text = profile_div.select_one("label").text.strip()
-                day, month, year = [int(i) for i in profile_div_label_text.split()[0].split("/")]
+        for profile_div in profile_divs:
+            profile_div_label_text = profile_div.select_one("label").text.strip()
+            if profile_div_label_text.lower() == "join date":
+                profile_div_span_text = profile_div.select_one("span").text.strip()
+                day, month, year = [int(i) for i in profile_div_span_text.split()[0].split("/")]
                 return datetime.datetime(day=day, month=month, year=year)
 
         raise AssertionError("Could not determine registration date")
@@ -366,13 +390,13 @@ class DreamScrapingFunctions(BaseFunctions):
         profile_divs = soup_html.select(
             "body > div.main.onlyLeftNavLayout > div.content > div > div.paddingOnRight > div.profileNotes.tabularDetails > div")
 
-        for profile_div in reversed(profile_divs)[2:]:
-            profile_div_span = profile_div.select_one("span")
-            if profile_div_span.text.strip().lower() == "fe enabled":
-                profile_div_label_text = profile_div.select_one("label").text.strip().lower()
-                if profile_div_label_text == "yes":
+        for profile_div in profile_divs:
+            profile_div_label_text = profile_div.select_one("label").text.strip().lower()
+            if profile_div_label_text == "fe enabled":
+                profile_div_span = profile_div.select_one("span").text.lower()
+                if profile_div_span == "yes":
                     return True
-                elif profile_div_label_text == "no":
+                elif profile_div_span == "no":
                     return False
                 else:
                     raise AssertionError("fe enabled was neither yes nor no.")
@@ -398,3 +422,62 @@ class DreamScrapingFunctions(BaseFunctions):
                         break
 
         return tuple(external_market_verifications)
+
+    @staticmethod
+    def get_fiat_exchange_rates_from_seller_page(soup_html: BeautifulSoup) -> Dict[str, float]:
+        exchange_rates_header = soup_html.select_one(
+            "body > div.main.onlyLeftNavLayout > div.sidebar.browse > div:nth-child(8) > div.sidebarHeader")
+        assert exchange_rates_header.text.strip()[0] == "฿"
+
+        exchange_rates: Dict[str, float] = {}
+        rate_rows = [" ".join(r.text.strip().split()) for r in soup_html.select(
+            "body > div.main.onlyLeftNavLayout > div.sidebar.browse > div:nth-child(8) > div.exchangeRateListing > table > tbody > tr")]
+
+        if not rate_rows:
+            rate_rows = [" ".join(r.text.strip().split()) for r in soup_html.select(
+                "body > div.main.onlyLeftNavLayout > div.sidebar.browse > div:nth-child(8) > div.exchangeRateListing > table > tr")]
+
+        for row in rate_rows:
+            currency, rate_str = row.split()
+            exchange_rates[currency] = parse_float(rate_str)
+
+        return exchange_rates
+
+    @staticmethod
+    def get_feedback_info(feedback_row: BeautifulSoup) -> Tuple[datetime.timedelta, int, str, str, str, float, str]:
+        # date_published, star_rating, message_text, message_text_hash, buyer, price, currency
+        time_ago_td, star_td, message_text_td, buyer_name_td, price_td = feedback_row.select("td")
+        timedelta_publication_date: datetime.timedelta = get_timedelta_from_str(time_ago_td.text.strip())
+        star_rating: int = len([img for img in star_td.select("img") if img["src"].find("star_gold") != -1])
+        message_text = message_text_td.text.strip()
+        message_text_hash = hashlib.md5(
+            message_text.encode(MD5_HASH_STRING_ENCODING)
+        ).hexdigest()[:FEEDBACK_TEXT_HASH_COLUMN_LENGTH]
+        buyer = "".join(buyer_name_td.text.strip().split())
+        price_str = price_td.text.strip().split()[-1]
+        currency = infer_currency_from_symbol(price_str[0])
+        price = float(price_str[1:])
+
+        return timedelta_publication_date, star_rating, message_text, message_text_hash, buyer, price, currency
+
+    @staticmethod
+    def get_feedback_rows(soup_html: BeautifulSoup) -> Tuple[BeautifulSoup]:
+        feedback_tables = [table for table in soup_html.select("body > div.main.onlyLeftNavLayout > div.content > div > div > table") if not
+        ("pnav" in table.attrs.get("class") and "centerDefault" in table.attrs.get(
+                                                  "class"))]
+        if len(feedback_tables) == 1:
+            feedback_table = feedback_tables[0]
+            feedback_rows: List[BeautifulSoup] = [tr for tr in feedback_table.select("tbody > tr")]
+            return tuple(feedback_rows)
+        elif len(feedback_tables) == 0:
+            # noinspection PyTypeChecker
+            return ()
+        else:
+            raise AssertionError("Found 2 or more feedback tables.")
+
+    @staticmethod
+    def is_image(soup_html_str: str) -> bool:
+        if re.search(r"\(using[A-z0-9\s]+\)", soup_html_str):
+            return True
+        else:
+            return False

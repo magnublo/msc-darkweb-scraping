@@ -35,7 +35,10 @@ class PageType(Enum):
     LOGIN_PAGE = "login page",
     ANTI_DDOS = "anti ddos",
     ERROR = "error page",
-    UNDEFINED = "arbitrary"
+    META_REFRESH = "meta refresh",
+    IMAGE = "image"
+    UNDEFINED = "arbitrary",
+
 
 
 def pretty_print_GET(req) -> str:
@@ -130,8 +133,8 @@ def queue_is_empty(queue) -> bool:
     return queue.empty() and is_empty
 
 
-def get_page_as_soup_html(web_response_text: str) -> BeautifulSoup:
-    return BeautifulSoup(web_response_text, features=BEAUTIFUL_SOUP_HTML_PARSER)
+def get_page_as_soup_html(web_response_text: str, encoding: str = "utf-8") -> BeautifulSoup:
+    return BeautifulSoup(web_response_text, features=BEAUTIFUL_SOUP_HTML_PARSER, from_encoding=encoding)
 
 
 def get_logger_name(cls: object) -> str:

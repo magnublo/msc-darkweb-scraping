@@ -1,5 +1,4 @@
 import datetime
-import hashlib
 import os
 import pickle
 import re
@@ -13,7 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests import Response
 
-from definitions import DREAM_MARKET_ID, DREAM_SRC_DIR, MD5_HASH_STRING_ENCODING, FEEDBACK_TEXT_HASH_COLUMN_LENGTH
+from definitions import DREAM_MARKET_ID, DREAM_SRC_DIR
 from src.base.base_functions import BaseFunctions
 from src.base.base_logger import BaseClassWithLogger
 from src.base.base_scraper import BaseScraper
@@ -72,10 +71,16 @@ class PageMetadata:
             url_path = unprocessed_url_path[start_index:end_index]
         else:
             url_path = unprocessed_url_path
-        return "/" + url_path + "?" + urlparse_obj.query
+        if url_path[0] == "/":
+            return url_path + "?" + urlparse_obj.query
+        else:
+            return "/" + url_path + "?" + urlparse_obj.query
 
 
 class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
+
+
+    __feedback_lock__: Lock = Lock()
 
     def __init__(self, queue: Queue, nr_of_threads: int, thread_id: int, proxy: dict, session_id: int):
         self.proxy_port = 0000
@@ -99,7 +104,7 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
         self.scraping_funcs = self._get_scraping_funcs()
 
     def _handle_custom_server_error(self) -> None:
-        return
+        raise NotImplementedError('')
 
     def _get_market_id(self) -> str:
         return DREAM_MARKET_ID
@@ -108,20 +113,21 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
         return DREAM_SRC_DIR
 
     def _get_headers(self) -> dict:
-        return {}
+        raise NotImplementedError('')
 
     def _get_login_url(self) -> str:
-        return ""
+        raise NotImplementedError('')
 
     def _get_is_logged_out_phrase(self) -> str:
-        return "sdwaed"
+        raise NotImplementedError('')
 
     def populate_queue(self) -> None:
-        dir_path = f"{os.getenv('DREAM_HTML_DIR')}"
-        files = os.listdir(dir_path)
 
-        for file in [f for f in files if re.match(r"[0-9]{13}_[0-9]{4}_[a-z0-9]{40}\.html", f)]:
-            self.queue.put((f"{dir_path}/{file}",))
+        dir_paths = os.getenv('DREAM_HTML_DIRS').split()
+        for dir_path in dir_paths:
+            files = os.listdir(dir_path)
+            for file in [f for f in files if re.match(r"[0-9]{13}_[0-9]{4}_[a-z0-9]{40}\.html", f)]:
+                self.queue.put((f"{dir_path}/{file}",))
 
         self.initial_queue_size = self.queue.qsize()
 
@@ -130,21 +136,25 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
 
     def _scrape_queue_item(self, file_path: str) -> None:
 
-        with open(file_path, "r") as f:
-            soup_html = get_page_as_soup_html(f.read())
+        with open(file_path, "rb") as f:
+            soup_html = get_page_as_soup_html(f.read(), encoding="unicode_escape")
+            is_html = next(soup_html.__iter__(), None)
+            if not is_html:
+                return
 
         meta_file_path = file_path.rsplit(r".", maxsplit=1)[0] + r".meta"
 
-        with open(meta_file_path, "r") as f:
+        with open(meta_file_path, "rb") as f:
             meta_data_dict: Dict = pickle.load(f)
             meta_data: PageMetadata = PageMetadata(meta_data_dict)
 
         if self.queue.qsize() % 500 == 0:
-            self.logger.info(f"{self.queue.qsize()}/{self.initial_queue_size}")
+            nr_of_scraped = self.initial_queue_size-self.queue.qsize()
+            self.logger.info(f"{nr_of_scraped}/{self.initial_queue_size}, {round((nr_of_scraped/self.initial_queue_size)*100, 2)}%")
 
         page_type: PageType = self._determine_page_type(soup_html)
         if page_type == PageType.LISTING:
-            self._scrape_listing(soup_html, meta_data.created_date, meta_data.url)
+            # self._scrape_listing(soup_html, meta_data.created_date, meta_data.url)
             pass
         elif page_type == PageType.SELLER:
             self._scrape_seller(soup_html, meta_data.created_date, meta_data.url)
@@ -194,6 +204,8 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
         fifty_percent_finalize_early = None  # no such feature on Dream
         quantity_in_stock = None  # no such field on Dream
         standardized_listing_type = None  # no listing type field on Dream
+        promoted_listing, ltc_rate, nr_of_views, minimum_order_unit_amount, unit_type, accepts_LTC, nr_sold_since_date = (
+        None, None, None, None, None, False, None)
 
         accepts_BTC, accepts_BCH, accepts_XMR = self.scraping_funcs.accepts_currencies(soup_html)
         nr_sold = None
@@ -216,11 +228,16 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
                                                  btc_multisig=accepts_BTC_multisig,
                                                  seller_id=seller.id, price=fiat_price, fiat_currency=fiat_currency,
                                                  origin_country=origin_country_id, btc_rate=btc_rate, xmr_rate=xmr_rate,
-                                                 escrow=escrow, listing_type=None, quantity_in_stock=None,
-                                                 promoted_listing=None, ltc=False, ltc_rate=None, nr_sold=None,
-                                                 nr_sold_since_date=None, ends_in=None, nr_of_views=None,
-                                                 minimum_order_unit_amount=None, unit_type=None, bch=accepts_BCH,
-                                                 bch_rate=bch_rate, fifty_percent_finalize_early=None)
+                                                 escrow=escrow, listing_type=standardized_listing_type,
+                                                 quantity_in_stock=quantity_in_stock,
+                                                 promoted_listing=promoted_listing, ltc=accepts_LTC, ltc_rate=ltc_rate,
+                                                 nr_sold=nr_sold,
+                                                 nr_sold_since_date=nr_sold_since_date, ends_in=ends_in,
+                                                 nr_of_views=nr_of_views,
+                                                 minimum_order_unit_amount=minimum_order_unit_amount,
+                                                 unit_type=unit_type, bch=accepts_BCH,
+                                                 bch_rate=bch_rate,
+                                                 fifty_percent_finalize_early=fifty_percent_finalize_early)
 
         self.db_session.add(ListingObservation)
         self.db_session.commit()
@@ -283,11 +300,14 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
             return PageType.ANTI_DDOS
         elif self.scraping_funcs.page_is_main_page(soup_html):
             return PageType.CATEGORY_INDEX
+        elif self.scraping_funcs.is_image(str(soup_html)):
+            return PageType.IMAGE
+        elif self._is_meta_refresh(str(soup_html)):
+            return PageType.META_REFRESH
         elif self.scraping_funcs.page_is_not_found_error(soup_html):
             return PageType.ERROR
         else:
-            a = 0
-            # raise AssertionError("Unknown page type.")
+            raise AssertionError("Unknown page type.")
 
     def _fetch_seller(self, seller_name: str) -> Tuple[Optional[Seller], bool]:
 
@@ -307,7 +327,7 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
         terms_and_conditions_id: int = self._add_text(terms_and_conditions_text)
         pgp_key_content = self.scraping_funcs.get_pgp_key(soup_html)
         nr_of_sales, rating = self.scraping_funcs.get_number_of_sales_and_rating(soup_html)
-        positive_percent_received_feedback = (rating / 5) * 100
+        positive_percent_received_feedback = (rating / 5) * 100 if rating else None
         fe_enabled = self.scraping_funcs.get_fe_enabled(soup_html)
 
         disputes, orders, spendings, feedback_left, \
@@ -327,7 +347,7 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
             Tuple[str, int, float, float, int, int, int, str]] = self.scraping_funcs.get_external_market_ratings(
             soup_html)
 
-        self._scrape_feedback(seller, created_date)
+        self._scrape_feedback(soup_html=soup_html, seller=seller, created_date=created_date)
 
         seller_observation = SellerObservation(created_date=created_date, session_id=self.session_id, url=url,
                                                seller_id=seller.id, description=description,
@@ -351,7 +371,8 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
                                                xmpp_jabber_id=xmpp_jabber_id, email=email,
                                                autofinalized_orders=autofinalized_orders)
 
-        self._add_pgp_key(seller, pgp_key_content)
+        if pgp_key_content:
+            self._add_pgp_key(seller, pgp_key_content)
         self._add_external_market_verifications(seller_observation.id, external_market_verifications)
 
         if is_new_seller:
@@ -375,21 +396,31 @@ class DreamScrapingSession(BaseScraper, BaseClassWithLogger):
 
     def _scrape_feedback(self, soup_html: BeautifulSoup, seller: Seller, created_date: datetime) -> None:
         self.scraping_funcs: DreamScrapingFunctions
-        feedback_rows: Tuple[BeautifulSoup] = soup_html.select_one(
-            "body > div.main.onlyLeftNavLayout > div.content > div > div:nth-child(6) > table > tbody > tr")
+
+        feedback_rows: Tuple[BeautifulSoup] = self.scraping_funcs.get_feedback_rows(soup_html)
 
         if not feedback_rows:
             return
+        with self.__feedback_lock__:
+            self.db_session.commit()
+            earlier_feedback = self.db_session.query(Feedback).filter(Feedback.seller_id == seller.id).all()
+            fiat_exchange_rate_dict: Dict[str, float] = self.scraping_funcs.get_fiat_exchange_rates_from_seller_page(
+                soup_html)
 
-        earlier_feedback = self.db_session.query(Feedback).filter(Feedback.seller_id == seller.id).all()
-        fiat_exchange_rate_dict: Dict[str, float] = self.scraping_funcs.get_fiat_exchange_rates_from_seller_page(soup_html)
+            for feedback_row in feedback_rows:
+                timedelta_publication_date, star_rating, message_text, message_text_hash, buyer, unconverted_price, currency = self.scraping_funcs.get_feedback_info(
+                    feedback_row)
+                price = get_usd_price_from_rates(unconverted_price, currency, fiat_exchange_rates=fiat_exchange_rate_dict)
+                date_published = created_date - timedelta_publication_date
 
-        for feedback_row in feedback_rows:
-            time_ago_td, star_td, message_text_td, buyer_name_td, price_td = feedback_row.select("td")
-            date_published: datetime = created_date - get_timedelta_from_str(time_ago_td.text.strip())
-            star_rating: int = len([img for img in star_td.select("img") if img["src"].find("star_gold") != -1])
-            message_text = message_text_td.text.strip()
-            message_text_hash = hashlib.md5(
-                message_text.encode(MD5_HASH_STRING_ENCODING)
-            ).hexdigest()[:FEEDBACK_TEXT_HASH_COLUMN_LENGTH]
-            buyer = buyer_name_td.text.strip()
+                # noinspection PyTypeChecker
+                new_feedback = Feedback(created_date=created_date, date_published=date_published, market=self.market_id,
+                                        seller_id=seller.id, product_url=None, product_title=None,
+                                        session_id=self.session_id, feedback_message_text=message_text,
+                                        seller_response_message=None, text_hash=message_text_hash, category=None,
+                                        buyer=buyer, currency="USD", price=price, star_rating=star_rating)
+
+                if new_feedback not in earlier_feedback:
+                    self.db_session.add(new_feedback)
+
+            self.db_session.commit()

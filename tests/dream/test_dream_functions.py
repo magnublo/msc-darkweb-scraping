@@ -1,5 +1,8 @@
+import datetime
 import os
-from typing import Dict
+from typing import Dict, Tuple
+
+from bs4 import BeautifulSoup
 
 from definitions import ROOT_DIR
 from tests.dream.dream_base_test import DreamBaseTest
@@ -267,3 +270,80 @@ class TestGetExternalMarketRatings(DreamBaseTest):
         external_ratings = scrapingFunctions.get_external_market_ratings(soup_html)
         self.assertTupleEqual((('ALPHA_BAY_MARKET', None, None, None, 402, 5, 2, None),
                                ('HANSA_MARKET', None, None, None, 7, 0, 0, None)), external_ratings)
+
+
+class TestGetFiatExchangeRatesFromSellerPage(DreamBaseTest):
+
+    def test_get_fiat_exchange_rates_from_seller_page(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        fiat_exchange_rates = scrapingFunctions.get_fiat_exchange_rates_from_seller_page(soup_html)
+        self.assertDictEqual(
+            {'BTC': 1.0, 'mBTC': 1000.0, 'BCH': 14.0, 'USD': 5517.0, 'EUR': 4835.0, 'GBP': 4216.1, 'CAD': 7262.2,
+             'AUD': 7634.5, 'mBCH': 14024.0, 'BRL': 20819.6, 'DKK': 36069.3, 'NOK': 46179.3, 'SEK': 49897.5,
+             'TRY': 29774.1, 'CNH': 38293.4, 'HKD': 43365.3, 'RUB': 366011.7, 'INR': 404305.2, 'JPY': 627021.1},
+            fiat_exchange_rates)
+
+
+class TestGetFeedbackRows(DreamBaseTest):
+
+    def test_get_feedback_rows_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        feedback_rows: Tuple[BeautifulSoup] = scrapingFunctions.get_feedback_rows(soup_html)
+        self.assertTupleEqual((), feedback_rows)
+
+    def test_get_feedback_rows_seven(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_7")
+        feedback_rows: Tuple[BeautifulSoup] = scrapingFunctions.get_feedback_rows(soup_html)
+        self.assertTupleEqual((), feedback_rows)
+
+    def test_get_feedback_rows_eight(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_8")
+        feedback_rows: Tuple[BeautifulSoup] = scrapingFunctions.get_feedback_rows(soup_html)
+        self.assertEqual(len(feedback_rows), 300)
+
+
+class TestGetFeedbackInfo(DreamBaseTest):
+
+    def test_get_feedback_info_eight(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_8")
+        feedback_rows: Tuple[BeautifulSoup] = scrapingFunctions.get_feedback_rows(soup_html)[:4]
+        feedback_infos = []
+        for feedback_row in feedback_rows:
+            feedback_infos.append(scrapingFunctions.get_feedback_info(
+                feedback_row))
+
+        self.assertListEqual(
+            [(datetime.timedelta(days=3), 5, 'FE for Trust!!!!!! Neurkunde.....', 'ad64e631', 'S...8', 30.0, 'USD'),
+             (datetime.timedelta(days=4), 5, 'Enter your comments here', '53f74222', 'B...7', 30.0, 'USD'), (
+                 datetime.timedelta(days=1, seconds=79200), 5, 'Schnelle Lieferung und sehr gute QualitÃ¤t', '161042b0',
+                 'B...8', 30.0, 'USD'),
+             (datetime.timedelta(days=1, seconds=50400), 5, '', 'd41d8cd9', 'k...r', 28.0, 'USD')], feedback_infos)
+
+
+class TestGetPgpKey(DreamBaseTest):
+
+    def test_get_pgp_key_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        pgp_key = scrapingFunctions.get_pgp_key(soup_html)
+        self.assertTrue(len(pgp_key) > 100)
+
+    def test_get_pgp_key_two(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_2")
+        pgp_key = scrapingFunctions.get_pgp_key(soup_html)
+        self.assertTrue(pgp_key is None)
+
+
+class TestGetTermsAndConditions(DreamBaseTest):
+
+    def test_get_terms_and_conditions_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        terms_and_conditions = scrapingFunctions.get_terms_and_conditions(soup_html)
+        self.assertTrue(len(terms_and_conditions) > 100)
+
+
+class TestGetNumberOfSalesAndrating(DreamBaseTest):
+
+    def test_get_number_of_sales_and_rating_zero(self):
+        soup_html = self._get_page_as_soup_html("sellers/seller_0")
+        number_of_sales_and_rating = scrapingFunctions.get_number_of_sales_and_rating(soup_html)
+        self.assertTupleEqual(number_of_sales_and_rating, (680, 4.96))
